@@ -2,7 +2,7 @@
     import { page } from '$app/stores';
 
     import Logo from './Logo.svelte';
-    import ProfileMenu from './ProfileMenu.svelte';
+    import ProfileMenu from './AccountPopUpMenu.svelte';
 </script>
 
 <header class="z-50 py-1 border-b border-black/10 dark:border-white/10">

@@ -6,7 +6,7 @@
 
     import '../styles/app.postcss';
 
-    import AppHeader from '$components/AppHeader.svelte';
+    import AppHeader from '$components/AppHeader/AppHeader.svelte';
 
     inject({ mode: dev ? 'development' : 'production' });
 </script>

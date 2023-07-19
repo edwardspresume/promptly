@@ -1,0 +1,50 @@
+/* Default CSS Variables */
+@layer base {
+    :root {
+        /* Text and Background */
+        --text-color: rgb(0, 0, 0 / 100%);
+        --bg-primary: hsla(0, 0%, 100%, 1);
+        --bg-secondary: hsla(217, 91%, 60%, 0.33);
+
+        /* Toast Container */
+        --toastContainerLeft: 50%;
+        --toastContainerRight: 0%;
+        --toastContainerTop: 2rem;
+        --toastContainerTranslateX: -50%;
+
+        /* Toast Item */
+        --toastMargin: 0;
+        --toastColor: #000;
+        --toastBackground: #fff;
+        --toastMinHeight: 0;
+        --toastWidth: fit-content;
+        --toastBorderRadius: 8px;
+        --toastPadding: 0.9rem 1rem 0.9rem 0.63rem;
+        --toastBoxShadow: 0 3px 10px rgba(0, 0, 0, 0.1),
+            0 3px 3px rgba(0, 0, 0, 0.05);
+
+        /* Toast Message */
+        --toastMsgPadding: 0;
+
+        /* Toast Button */
+        --toastBtnWidth: 0;
+        --toastBtnFont: 1.2rem sans-serif;
+
+        --toastBarBackground: rgb(2, 154, 255);
+    }
+
+    /* Dark Mode CSS Variables */
+
+    .dark {
+        /* Text and Background */
+        --text-color: #fff;
+        --bg-primary: rgba(60, 131, 246, 0.33);
+        --bg-secondary: hsl(240, 37%, 13%);
+
+        /* Toast Item */
+        --toastBackground: #000;
+        --toastColor: #fff;
+
+        --toastBarBackground: rgb(33, 155, 255);
+    }
+}

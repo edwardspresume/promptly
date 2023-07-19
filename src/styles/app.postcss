@@ -1,0 +1,26 @@
+@import 'variables.scss';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Selectors and Media Queries */
+@custom-selector :--heading h1, h2, h3, h4, h5, h6;
+@custom-media --sm (width <= 640px);
+
+/* Define a mixin for the theme */
+@define-mixin theme $text-color, $bg-primary, $bg-secondary {
+    color: $text-color;
+    background: rgb(0, 0, 0) linear-gradient($bg-primary, $bg-secondary);
+}
+
+/* Apply the theme to the body element */
+body {
+    @mixin theme var(--text-color), var(--bg-primary), var(--bg-secondary);
+}
+
+/* Heading Styles */
+h1,
+h2 {
+    font-weight: bold;
+}

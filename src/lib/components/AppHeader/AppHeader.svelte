@@ -5,8 +5,8 @@
     import ProfileMenu from './ProfileMenu.svelte';
 </script>
 
-<header>
-    <div>
+<header class="z-50 py-1 border-b border-black/10 dark:border-white/10">
+    <div class="flex items-center justify-between max-w-5xl mx-auto ps-2 pe-2">
         <Logo />
 
         <nav class="flex items-center gap-4">

@@ -1,5 +1,11 @@
+<script>
+    import Icon from '$components/General/Icon.svelte';
+</script>
+
 <li>
     <a href="#plans" title="Upgrade to Pro" aria-label="Upgrade to Pro">
+        <Icon name="crown" />
+
         <span>
             Upgrade to <span
                 class="py-1 text-white rounded-md pe-2 ps-2 bg-gradient-to-r from-sky-500 to-indigo-500"
@@ -9,3 +15,34 @@
         </span>
     </a>
 </li>
+
+<li>
+    <a href="#feedback" title="Feedback" aria-label="Feedback">
+        <Icon name="feedback" />
+        <span>Feedback</span>
+    </a>
+</li>
+
+<style lang="postcss">
+    li {
+        transition: background-color 0.2s ease-in-out;
+
+        &:first-child {
+            border-start-start-radius: 0.5rem;
+            border-start-end-radius: 0.5rem;
+        }
+
+        &:last-child {
+            border-end-end-radius: 0.5rem;
+            border-end-start-radius: 0.5rem;
+        }
+
+        &:hover {
+            background-color: hsl(214, 16%, 78%);
+        }
+    }
+
+    :global(.dark) li:hover {
+        background-color: hsl(214, 16%, 38%);
+    }
+</style>

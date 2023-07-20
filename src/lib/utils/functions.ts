@@ -7,7 +7,7 @@
 export function onOutsideClick(targetNode: Node, callback: () => void) {
     /**
      * Event listener callback that triggers when a 'click' event occurs on the document.
-     * @param {MouseEvent} event The click event.
+     * @param event The click event.
      */
     function handleClick(event: MouseEvent) {
         // Trigger the provided callback function if the 'click' event occurred outside the targetNode.

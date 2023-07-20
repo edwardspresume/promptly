@@ -1,7 +1,7 @@
 <script lang="ts">
     import { fly } from 'svelte/transition';
 
-    import { listenForOutsideClick } from '$utils/functions';
+    import { onOutsideClick } from '$utils/functions';
 
     import AccountPopUpMenuItems from './AccountPopUpMenuItems.svelte';
 
@@ -12,8 +12,6 @@
     $: accountPopUpMenuButtonTitle = isAccountPopUpMenuVisible
         ? 'Close account pop-up menu'
         : 'Open account pop-up menu';
-
-    $: console.log(isAccountPopUpMenuVisible);
 </script>
 
 <div class="relative grid">
@@ -36,8 +34,7 @@
             on:click|stopPropagation
             on:keydown|stopPropagation
             transition:fly={{ y: 20 }}
-            use:listenForOutsideClick={() =>
-                (isAccountPopUpMenuVisible = false)}
+            use:onOutsideClick={() => (isAccountPopUpMenuVisible = false)}
             class="absolute mt-3 bg-white rounded-md shadow-xl dark:bg-black/60 backdrop-blur-md top-full"
         >
             <AccountPopUpMenuItems />

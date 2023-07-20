@@ -1,0 +1,65 @@
+import { browser } from '$app/environment';
+import type { Writable } from 'svelte/store';
+import { writable } from 'svelte/store';
+
+import { localStorageKeys } from '$utils/localStorage';
+
+/**
+ * Creates a store for managing theme preferences.
+ *
+ * @param themePreferenceKey - Local storage key for dark mode setting
+ * @returns An object containing the current dark mode preference store and a toggleDarkMode function
+ */
+export const createDarkModePreferenceStore = (themePreferenceKey: string) => {
+    if (!browser) return;
+
+    const isDarkModeEnabledStore: Writable<boolean | null> = writable(null);
+
+    try {
+        // Retrieve the initial dark mode preference from localStorage
+        const storedThemePreference = JSON.parse(
+            localStorage.getItem(themePreferenceKey) ?? 'null'
+        ) as boolean | null;
+
+        // Default to system dark mode preference if no user preference is found
+        const isDarkModeEnabled =
+            storedThemePreference ??
+            window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        // Set the initial dark mode preference in the store
+        isDarkModeEnabledStore.set(isDarkModeEnabled);
+    } catch (error) {
+        console.error('Failed to retrieve item from localStorage:', error);
+    }
+
+    /**
+     * Toggles the current dark mode preference in the store and updates the corresponding localStorage value
+     */
+    const toggleDarkMode = () => {
+        isDarkModeEnabledStore.update((currentPreference) => {
+            try {
+                const newPreference = !currentPreference;
+                // Update the dark mode preference in localStorage
+
+                localStorage.setItem(
+                    themePreferenceKey,
+                    JSON.stringify(newPreference)
+                );
+
+                return newPreference;
+            } catch (error) {
+                console.error('Failed to update item in localStorage:', error);
+                return currentPreference;
+            }
+        });
+    };
+
+    return {
+        currentDarkModePreference: isDarkModeEnabledStore,
+        toggleDarkMode,
+    };
+};
+
+export const darkModePreferenceStore = createDarkModePreferenceStore(
+    localStorageKeys.isDarkMode
+);

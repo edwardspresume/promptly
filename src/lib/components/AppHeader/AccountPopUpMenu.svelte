@@ -12,6 +12,8 @@
     $: accountPopUpMenuButtonTitle = isAccountPopUpMenuVisible
         ? 'Close account pop-up menu'
         : 'Open account pop-up menu';
+
+    $: console.log(isAccountPopUpMenuVisible);
 </script>
 
 <div class="relative grid">

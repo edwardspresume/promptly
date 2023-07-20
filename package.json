@@ -10,7 +10,7 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "eslint .",
-    "test:integration": "playwright test",
+    "test:e2e": "playwright test",
     "test:unit": "vitest -u"
   },
   "devDependencies": {
@@ -24,6 +24,8 @@
     "autoprefixer": "^10.4.14",
     "eslint": "^8.28.0",
     "eslint-plugin-svelte": "^2.30.0",
+    "happy-dom": "^10.5.2",
+    "jsdom": "^22.1.0",
     "postcss": "^8.4.24",
     "postcss-load-config": "^4.0.1",
     "sass": "^1.63.6",
@@ -44,6 +46,7 @@
     "postcss-mixins": "^9.0.4",
     "postcss-nested": "^6.0.1",
     "postcss-preset-env": "^9.0.0",
-    "postcss-simple-vars": "^7.0.1"
+    "postcss-simple-vars": "^7.0.1",
+    "remove": "^0.1.5"
   }
 }

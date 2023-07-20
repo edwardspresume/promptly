@@ -1,8 +1,8 @@
 /**
  * Attach a 'click' event listener to the document that triggers when a click occurs outside the specified targetNode.
- * @param {Node} targetNode The DOM node for outside click detection.
- * @param {() => void} callback Callback function to execute when a click occurs outside of the targetNode.
- * @returns {object} An object with a 'destroy' method for removing the 'click' event listener.
+ * @param targetNode The DOM node for outside click detection.
+ * @param callback Callback function to execute when a click occurs outside of the targetNode.
+ * @returns An object with a 'destroy' method for removing the 'click' event listener.
  */
 export function onOutsideClick(targetNode: Node, callback: () => void) {
     /**

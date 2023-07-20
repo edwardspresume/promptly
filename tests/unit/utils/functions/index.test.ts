@@ -39,7 +39,7 @@ describe('onOutsideClick', () => {
     afterEach(() => {
         mockCallback.mockReset();
 
-        if (unsubscribe) unsubscribe.destroy();
+        unsubscribe.destroy();
 
         document.body.removeChild(testDiv);
     });

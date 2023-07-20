@@ -1,5 +1,6 @@
 <script>
     import Icon from '$components/General/Icon.svelte';
+    import ThemeToggleBtn from './ThemeToggleBtn.svelte';
 </script>
 
 <li>
@@ -23,6 +24,10 @@
     </a>
 </li>
 
+<li>
+    <ThemeToggleBtn />
+</li>
+
 <style lang="postcss">
     li {
         transition: background-color 0.2s ease-in-out;
@@ -44,5 +49,15 @@
 
     :global(.dark) li:hover {
         background-color: hsl(214, 16%, 38%);
+    }
+
+    li a,
+    li :global(button) {
+        display: flex;
+        padding: 0.8rem;
+        inline-size: 100%;
+        column-gap: 0.8rem;
+        align-items: center;
+        white-space: nowrap;
     }
 </style>

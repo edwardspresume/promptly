@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
-// Define maximum lengths for prompt and tag names
+// Define maximum lengths for prompt title and text
 const MAX_PROMPT_TITLE_LENGTH = 50;
 const MAX_PROMPT_TEXT_LENGTH = 500;
-const MAX_TAG_NAME_LENGTH = 50;
 
-// Validation schema for Prompt
-export const PromptValidationSchema = z.object({
-    id: z.number().nonnegative(),
+const PromptValidationSchema = z.object({
+    id: z
+        .number()
+        .nonnegative('Invalid input: id must be a non-negative number'),
 
     // Ensures nonempty strings, not exceeding max length, and removes leading/trailing white spaces
     title: z
@@ -36,20 +36,4 @@ export const PromptValidationSchema = z.object({
     updatedAt: z.string().optional(),
 });
 
-// Validation schema for Tag
-export const TagValidationSchema = z.object({
-    id: z.number().nonnegative(),
-
-    // Ensures nonempty strings, not exceeding max length, and removes leading/trailing white spaces
-    name: z
-        .string()
-        .nonempty('Name is required')
-        .max(
-            MAX_TAG_NAME_LENGTH,
-            `Name should not exceed ${MAX_TAG_NAME_LENGTH} characters`
-        )
-        .transform((str) => str.trim()),
-
-    createdAt: z.string().optional(),
-    updatedAt: z.string().optional(),
-});
+export default PromptValidationSchema;

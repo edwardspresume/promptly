@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { createDarkModePreferenceStore } from '$stores/darkModePreferenceStore';
-import { localStorageKeys } from '$utils/localStorage';
+import { localStorageKeyNames } from '$utils/localStorage';
 
 // Overriding the environment variable to force browser mode
 vi.mock('$app/environment', () => ({ browser: true }));
@@ -10,17 +10,17 @@ describe('darkModePreferenceStore', () => {
     it('should return a store object when createDarkModePreferenceStore is called', () => {
         // The created store should not be undefined
         expect(
-            createDarkModePreferenceStore(localStorageKeys.isDarkMode)
+            createDarkModePreferenceStore(localStorageKeyNames.isDarkMode)
         ).toBeDefined();
     });
 
     it('should correctly initialize the dark mode preference from localStorage', () => {
         // Setting initial dark mode preference to true in localStorage
-        localStorage.setItem(localStorageKeys.isDarkMode, 'true');
+        localStorage.setItem(localStorageKeyNames.isDarkMode, 'true');
 
         // Create a new dark mode preference store
         const darkModePreferenceStore = createDarkModePreferenceStore(
-            localStorageKeys.isDarkMode
+            localStorageKeyNames.isDarkMode
         );
 
         let currentDarkModePreference;
@@ -35,11 +35,11 @@ describe('darkModePreferenceStore', () => {
 
     it('should toggle dark mode preference correctly', () => {
         // First, we set the initial dark mode preference to 'true' in localStorage
-        localStorage.setItem(localStorageKeys.isDarkMode, 'true');
+        localStorage.setItem(localStorageKeyNames.isDarkMode, 'true');
 
         // Then we create a new dark mode preference store
         const darkModePreferenceStore = createDarkModePreferenceStore(
-            localStorageKeys.isDarkMode
+            localStorageKeyNames.isDarkMode
         );
 
         let currentDarkModePreference;

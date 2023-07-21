@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { createDarkModePreferenceStore } from '$stores/darkModePreferenceStore';
 import { localStorageKeys } from '$utils/localStorage';
@@ -7,31 +7,13 @@ import { localStorageKeys } from '$utils/localStorage';
 vi.mock('$app/environment', () => ({ browser: true }));
 
 describe('darkModePreferenceStore', () => {
-    // Defining a mock for localStorage
-    let mockLocalStorage: Record<string, string> = {};
-
-    global.localStorage = {
-        getItem: (key: string) => mockLocalStorage[key] ?? null,
-        setItem: (key: string, value: string) =>
-            (mockLocalStorage[key] = value),
-        clear: () => (mockLocalStorage = {}),
-        length: 0,
-        key: vi.fn(),
-        removeItem: vi.fn(),
-    };
-
-    afterEach(() => localStorage.clear());
-
     it('should return a store object when createDarkModePreferenceStore is called', () => {
-        const store = createDarkModePreferenceStore(
-            localStorageKeys.isDarkMode
-        );
-
         // The created store should not be undefined
-        expect(store).toBeDefined();
+        expect(
+            createDarkModePreferenceStore(localStorageKeys.isDarkMode)
+        ).toBeDefined();
     });
 
-    // Tests that the initial theme preference is retrieved from localStorage
     it('should correctly initialize the dark mode preference from localStorage', () => {
         // Setting initial dark mode preference to true in localStorage
         localStorage.setItem(localStorageKeys.isDarkMode, 'true');

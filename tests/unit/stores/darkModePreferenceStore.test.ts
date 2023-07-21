@@ -43,7 +43,7 @@ describe('darkModePreferenceStore', () => {
 
         let currentDarkModePreference;
 
-        darkModePreferenceStore?.currentDarkModePreference.subscribe(
+        darkModePreferenceStore?.currentPreference.subscribe(
             (val) => (currentDarkModePreference = val)
         );
 
@@ -61,9 +61,9 @@ describe('darkModePreferenceStore', () => {
         );
 
         let currentDarkModePreference;
-        // We subscribe to the currentDarkModePreference store. The callback function we pass to subscribe will
+        // We subscribe to the currentPreference store. The callback function we pass to subscribe will
         // update the value of currentDarkModePreference whenever the store's value changes.
-        darkModePreferenceStore?.currentDarkModePreference.subscribe(
+        darkModePreferenceStore?.currentPreference.subscribe(
             (val) => (currentDarkModePreference = val)
         );
 

@@ -4,7 +4,7 @@
     import Icon from '$components/General/Icon.svelte';
 
     const currentDarkModePreference =
-        darkModePreferenceStore?.currentDarkModePreference;
+        darkModePreferenceStore?.currentPreference;
 
     $: isDarkMode = $currentDarkModePreference;
 

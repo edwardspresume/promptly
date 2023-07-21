@@ -7,18 +7,20 @@ import { localStorageKeys } from '$utils/localStorage';
 /**
  * Creates a store for managing theme preferences.
  *
- * @param themePreferenceKey - Local storage key for dark mode setting
+ * @param darkModePreferenceKey - Local storage key for dark mode setting
  * @returns An object containing the current dark mode preference store and a toggleDarkMode function
  */
-export const createDarkModePreferenceStore = (themePreferenceKey: string) => {
+export const createDarkModePreferenceStore = (
+    darkModePreferenceKey: string
+) => {
     if (!browser) return;
 
-    const isDarkModeEnabledStore: Writable<boolean | null> = writable(null);
+    const darkModeStore: Writable<boolean | null> = writable(null);
 
     try {
         // Retrieve the initial dark mode preference from localStorage
         const storedThemePreference = JSON.parse(
-            localStorage.getItem(themePreferenceKey) ?? 'null'
+            localStorage.getItem(darkModePreferenceKey) ?? 'null'
         ) as boolean | null;
 
         // Default to system dark mode preference if no user preference is found
@@ -27,7 +29,7 @@ export const createDarkModePreferenceStore = (themePreferenceKey: string) => {
             window.matchMedia('(prefers-color-scheme: dark)').matches;
 
         // Set the initial dark mode preference in the store
-        isDarkModeEnabledStore.set(isDarkModeEnabled);
+        darkModeStore.set(isDarkModeEnabled);
     } catch (error) {
         console.error('Failed to retrieve item from localStorage:', error);
     }
@@ -36,13 +38,13 @@ export const createDarkModePreferenceStore = (themePreferenceKey: string) => {
      * Toggles the current dark mode preference in the store and updates the corresponding localStorage value
      */
     const toggleDarkMode = () => {
-        isDarkModeEnabledStore.update((currentPreference) => {
+        darkModeStore.update((currentPreference) => {
             try {
                 const newPreference = !currentPreference;
                 // Update the dark mode preference in localStorage
 
                 localStorage.setItem(
-                    themePreferenceKey,
+                    darkModePreferenceKey,
                     JSON.stringify(newPreference)
                 );
 
@@ -55,7 +57,7 @@ export const createDarkModePreferenceStore = (themePreferenceKey: string) => {
     };
 
     return {
-        currentDarkModePreference: isDarkModeEnabledStore,
+        currentPreference: darkModeStore,
         toggleDarkMode,
     };
 };

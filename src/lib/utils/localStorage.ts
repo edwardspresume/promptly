@@ -1,18 +1,21 @@
 import { browser } from '$app/environment';
 import type { Writable } from 'svelte/store';
 
-export const localStorageKeyNames = {
-    isDarkMode: 'isDarkMode',
-    prompts: 'prompts',
-    tags: 'tags',
+/**
+ * An object containing the keys used to store values in localStorage
+ */
+export const LocalStorageKeys = {
+    IS_DARK_MODE: 'isDarkMode',
+    PROMPTS: 'prompts',
+    TAGS: 'tags',
 };
 
 /**
- * Retrieve a JSON object from local storage.
+ * Loads an array of items from local storage.
  *
- * @param {string} storageKey - The key under which the data is stored.
- * @param {T[]} defaultValue - The default value to return if no data is found.
- * @return {T[]} The retrieved object from local storage, or the default value.
+ * @param {string} storageKey - The key of the value to retrieve from localStorage
+ * @param {T[]} defaultValue - The default value to return if the value is not found in localStorage or if an error occurs
+ * @return {T[]} The array retrieved from localStorage, or the default value if the value is not found or if an error occurs
  */
 export const loadArrayFromLocalStorage = <T>(
     storageKey: string,
@@ -21,11 +24,11 @@ export const loadArrayFromLocalStorage = <T>(
     try {
         if (!browser) return defaultValue;
 
-        const localStorageValue = localStorage.getItem(storageKey);
+        const storedValue = localStorage.getItem(storageKey);
 
-        if (localStorageValue === null) return defaultValue;
+        if (storedValue === null) return defaultValue;
 
-        return JSON.parse(localStorageValue) as T[];
+        return JSON.parse(storedValue) as T[];
     } catch (error) {
         console.error('Failed to retrieve item from localStorage:', error);
         return defaultValue;
@@ -33,10 +36,10 @@ export const loadArrayFromLocalStorage = <T>(
 };
 
 /**
- * Save a JSON object to local storage.
+ * Saves an array of items to local storage.
  *
- * @param {string} key - The key under which to store the data.
- * @param {T} value - The value to store.
+ * @param {string} storageKey - The key to use when saving the value to localStorage
+ * @param {T} value - The array to save to localStorage
  */
 export const saveArrayToLocalStorage = <T>(
     storageKey: string,
@@ -51,11 +54,11 @@ export const saveArrayToLocalStorage = <T>(
 };
 
 /**
- * Updates a store and persists the update to local storage.
+ * Updates a store and persists the new array to localStorage
  *
- * @param {Writable<T[]>} store - The store to update.
- * @param {(items: T[]) => T[]} callback - The update function.
- * @param {string} storageKey - The key under which to store the data.
+ * @param {Writable<T[]>} store - The store to update
+ * @param {(items: T[]) => T[]} callback - A callback function that takes the current items in the store and returns the new items to be stored
+ * @param {string} storageKey - The key to use when saving the new items to localStorage
  */
 export const updateStoreAndSaveToStorage = <T>(
     store: Writable<T[]>,

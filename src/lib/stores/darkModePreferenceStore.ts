@@ -3,7 +3,7 @@ import type { Writable } from 'svelte/store';
 import { writable } from 'svelte/store';
 
 import type { DarkModePreferenceStore } from '$types';
-import { localStorageKeyNames } from '$utils/localStorage';
+import { LocalStorageKeys } from '$utils/localStorage';
 
 /**
  * Creates a store for managing theme preferences.
@@ -64,5 +64,5 @@ export const createDarkModePreferenceStore = (
 };
 
 export const darkModePreferenceStore = createDarkModePreferenceStore(
-    localStorageKeyNames.isDarkMode
+    LocalStorageKeys.IS_DARK_MODE
 );

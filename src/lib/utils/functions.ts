@@ -24,3 +24,9 @@ export function onOutsideClick(targetNode: Node, callback: () => void) {
         },
     };
 }
+
+/**
+ * Generates a new date string in ISO format.
+ * @returns {string} The current date and time in ISO format.
+ */
+export const createDate = () => new Date().toISOString();

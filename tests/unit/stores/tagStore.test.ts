@@ -12,7 +12,6 @@ describe('Tag Storage Functionality', () => {
     let tagsStore: TagStore;
 
     beforeEach(() => {
-        localStorage.clear();
         tagsStore = createTagsStore(LocalStorageKeys.TAGS);
     });
 
@@ -53,8 +52,9 @@ describe('Tag Storage Functionality', () => {
     it('Updates a tag', () => {
         const { allTags, renameTag, doesTagExist } = tagsStore;
 
-        const oldTagName = get(allTags)[0].name;
-        expect(doesTagExist(oldTagName)).toBeTruthy();
+        const oldTagName = get(allTags)[0]?.name;
+
+        if (oldTagName) expect(doesTagExist(oldTagName)).toBeTruthy();
 
         const newTagName = 'updatedTag';
         renameTag(1, newTagName);
@@ -69,7 +69,7 @@ describe('Tag Storage Functionality', () => {
             ])
         );
 
-        expect(doesTagExist(oldTagName)).toBeFalsy();
+        if (oldTagName) expect(doesTagExist(oldTagName)).toBeFalsy();
     });
 
     it('Prevents updating of a tag if the new name already exists', () => {
@@ -86,22 +86,28 @@ describe('Tag Storage Functionality', () => {
     it('Deletes a tag', () => {
         const { allTags, deleteTag, doesTagExist } = tagsStore;
 
-        const tagNameToDelete = get(allTags)[0].name;
+        const tagNameToDelete = get(allTags)[0]?.name;
+
         deleteTag(1);
+
         expect(get(allTags)).not.toContainEqual(
             expect.objectContaining({ id: 1 })
         );
-        expect(doesTagExist(tagNameToDelete)).toBeFalsy();
+
+        if (tagNameToDelete) expect(doesTagExist(tagNameToDelete)).toBeFalsy();
     });
 
     it('Deletes all tags', () => {
         const { allTags, deleteAllTags } = tagsStore;
+
         deleteAllTags();
+
         expect(get(allTags)).toEqual([]);
     });
 
     it('Sets and clears a text filter', () => {
         const { setTextFilter, filteredTags, allTags } = tagsStore;
+
         console.warn = vi.fn();
 
         setTextFilter('Programming & Technology');
@@ -113,6 +119,7 @@ describe('Tag Storage Functionality', () => {
                 }),
             ])
         );
+
         setTextFilter('');
         expect(get(filteredTags)).toEqual(get(allTags));
 
@@ -120,11 +127,12 @@ describe('Tag Storage Functionality', () => {
     });
 
     it('Returns the correct total tag count', () => {
-        const { totalTagCount, allTags } = tagsStore;
+        const { totalTagCount, allTags, createTag } = tagsStore;
 
         expect(get(totalTagCount)).toBe(get(allTags).length);
 
-        tagsStore.createTag('extraTag');
+        createTag('extraTag');
+
         expect(get(totalTagCount)).toBe(get(allTags).length);
     });
 

@@ -11,8 +11,11 @@ export function compareStrings(
     b: string | undefined
 ): number {
     if (typeof a === 'undefined' || typeof b === 'undefined') {
-        return a === b ? 0 : typeof a === 'undefined' ? -1 : 1;
+        if (a === b) return 0;
+        else if (typeof a === 'undefined') return -1;
+        else return 1;
     }
+
     return a.localeCompare(b);
 }
 
@@ -24,7 +27,9 @@ export function compareStrings(
  */
 export function compareDate(a: string | undefined, b: string | undefined) {
     if (typeof a === 'undefined' || typeof b === 'undefined') {
-        return a === b ? 0 : typeof a === 'undefined' ? -1 : 1;
+        if (a === b) return 0;
+        else if (typeof a === 'undefined') return -1;
+        else return 1;
     }
 
     return Date.parse(a) - Date.parse(b);
@@ -41,8 +46,11 @@ export const booleanComparator = (
     b: boolean | undefined
 ): number => {
     if (typeof a === 'undefined' || typeof b === 'undefined') {
-        return a === b ? 0 : typeof a === 'undefined' ? 1 : -1;
+        if (a === b) return 0;
+        else if (typeof a === 'undefined') return 1;
+        else return -1;
     }
+
     return (b ? 1 : 0) - (a ? 1 : 0);
 };
 

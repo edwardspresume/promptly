@@ -2,32 +2,32 @@ import { describe, expect, it, vi } from 'vitest';
 
 import {
     booleanComparator,
-    dateComparator,
+    compareDate,
+    compareStrings,
     sortItems,
-    stringComparator,
 } from '$utils/sortItems';
 
-describe('stringComparator', () => {
+describe('compareStrings', () => {
     it('compares strings correctly', () => {
-        expect(stringComparator('apple', 'banana')).toBeLessThan(0);
-        expect(stringComparator('banana', 'apple')).toBeGreaterThan(0);
-        expect(stringComparator('banana', 'banana')).toBe(0);
-        expect(stringComparator('Banana', 'banana')).toBeGreaterThan(0);
-        expect(stringComparator(undefined, 'banana')).toBeLessThan(0);
-        expect(stringComparator('banana', undefined)).toBeGreaterThan(0);
-        expect(stringComparator(undefined, undefined)).toBe(0);
+        expect(compareStrings('apple', 'banana')).toBeLessThan(0);
+        expect(compareStrings('banana', 'apple')).toBeGreaterThan(0);
+        expect(compareStrings('banana', 'banana')).toBe(0);
+        expect(compareStrings('Banana', 'banana')).toBeGreaterThan(0);
+        expect(compareStrings(undefined, 'banana')).toBeLessThan(0);
+        expect(compareStrings('banana', undefined)).toBeGreaterThan(0);
+        expect(compareStrings(undefined, undefined)).toBe(0);
     });
 });
 
-describe('dateComparator', () => {
+describe('compareDate', () => {
     it('compares dates correctly', () => {
-        expect(dateComparator('2023-01-01', '2023-01-02')).toBeLessThan(0);
-        expect(dateComparator('2023-01-02', '2023-01-01')).toBeGreaterThan(0);
-        expect(dateComparator('2023-01-01', '2023-01-01')).toBe(0);
-        expect(dateComparator('2023/01/01', '2023/01/02')).toBeLessThan(0);
-        expect(dateComparator(undefined, '2023-01-02')).toBeLessThan(0);
-        expect(dateComparator('2023-01-01', undefined)).toBeGreaterThan(0);
-        expect(dateComparator(undefined, undefined)).toBe(0);
+        expect(compareDate('2023-01-01', '2023-01-02')).toBeLessThan(0);
+        expect(compareDate('2023-01-02', '2023-01-01')).toBeGreaterThan(0);
+        expect(compareDate('2023-01-01', '2023-01-01')).toBe(0);
+        expect(compareDate('2023/01/01', '2023/01/02')).toBeLessThan(0);
+        expect(compareDate(undefined, '2023-01-02')).toBeLessThan(0);
+        expect(compareDate('2023-01-01', undefined)).toBeGreaterThan(0);
+        expect(compareDate(undefined, undefined)).toBe(0);
     });
 });
 

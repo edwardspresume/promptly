@@ -29,7 +29,7 @@ export interface TagStore {
     // Methods to manage tags
     doesTagExist: (name: string) => boolean;
     createTag: (name: string) => void;
-    updateTag: (id: number, name: string) => void;
+    renameTag: (id: number, name: string) => void;
     deleteTag: (id: number) => void;
     deleteAllTags: () => void;
 

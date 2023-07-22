@@ -6,7 +6,7 @@ import type { SortableItemProperties } from '$types';
  * @param {string | undefined} b - The second string to compare.
  * @returns {number} - A negative, zero, or positive number based on the comparison.
  */
-export function stringComparator(
+export function compareStrings(
     a: string | undefined,
     b: string | undefined
 ): number {
@@ -22,7 +22,7 @@ export function stringComparator(
  * @param {string | undefined} b - The second date to compare.
  * @returns {number} - A negative, zero, or positive number based on the comparison.
  */
-export function dateComparator(a: string | undefined, b: string | undefined) {
+export function compareDate(a: string | undefined, b: string | undefined) {
     if (typeof a === 'undefined' || typeof b === 'undefined') {
         return a === b ? 0 : typeof a === 'undefined' ? -1 : 1;
     }
@@ -58,21 +58,17 @@ export const sortItems = <T extends SortableItemProperties>(
     selectedSortOption: string
 ): T[] => {
     const sortFunctions: Record<string, (a: T, b: T) => number> = {
-        'title:ascending': (a, b) => stringComparator(a.title, b.title),
-        'title:descending': (a, b) => stringComparator(b.title, a.title),
+        'title:ascending': (a, b) => compareStrings(a.title, b.title),
+        'title:descending': (a, b) => compareStrings(b.title, a.title),
 
-        'name:ascending': (a, b) => stringComparator(a.name, b.name),
-        'name:descending': (a, b) => stringComparator(b.name, a.name),
+        'name:ascending': (a, b) => compareStrings(a.name, b.name),
+        'name:descending': (a, b) => compareStrings(b.name, a.name),
 
-        'createdAt:ascending': (a, b) =>
-            dateComparator(a.createdAt, b.createdAt),
-        'createdAt:descending': (a, b) =>
-            dateComparator(b.createdAt, a.createdAt),
+        'createdAt:ascending': (a, b) => compareDate(a.createdAt, b.createdAt),
+        'createdAt:descending': (a, b) => compareDate(b.createdAt, a.createdAt),
 
-        'updatedAt:ascending': (a, b) =>
-            dateComparator(a.updatedAt, b.updatedAt),
-        'updatedAt:descending': (a, b) =>
-            dateComparator(b.updatedAt, a.updatedAt),
+        'updatedAt:ascending': (a, b) => compareDate(a.updatedAt, b.updatedAt),
+        'updatedAt:descending': (a, b) => compareDate(b.updatedAt, a.updatedAt),
 
         'favorite_status:ascending': (a, b) =>
             booleanComparator(a.isFavorited, b.isFavorited),

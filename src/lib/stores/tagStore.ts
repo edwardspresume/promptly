@@ -68,6 +68,10 @@ export function createTagsStore(
      * @param {string} name The name of the new tag
      */
     const createTag = (name: string) => {
+        if (doesTagExist(name)) {
+            throw new Error(`Tag "${name}" already exists`);
+        }
+
         const tags = get(allTags);
         const maxId = Math.max(...tags.map((tag) => tag.id), 0);
 
@@ -90,7 +94,11 @@ export function createTagsStore(
      * @param {number} id The id of the tag to update
      * @param {string} name The new name of the tag
      */
-    const updateTag = (id: number, name: string) => {
+    const renameTag = (id: number, name: string) => {
+        if (doesTagExist(name)) {
+            throw new Error(`Tag "${name}" already exists`);
+        }
+
         updateStoreAndSaveToStorage(
             allTags,
             (tags) =>
@@ -137,7 +145,7 @@ export function createTagsStore(
         totalTagCount,
         doesTagExist,
         createTag,
-        updateTag,
+        renameTag,
         deleteTag,
         deleteAllTags,
         setTextFilter,

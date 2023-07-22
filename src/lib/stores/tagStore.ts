@@ -31,6 +31,7 @@ export function createTagsStore(
 
     /**
      * Derives the total tag count from allTags
+     @returns {number} the total tag count
      */
     const totalTagCount = derived(allTags, (tags) => tags.length);
 
@@ -134,8 +135,16 @@ export function createTagsStore(
         updateStoreAndSaveToStorage(allTags, () => [], localStorageKey);
     };
 
+    /**
+     * Sets the text filter to the specified text
+     * @param {string} text - the text to set the filter to
+     */
     const setTextFilter = (text: string) => textFilter.set(text);
 
+    /**
+     * Sets the sorting preference to the specified option
+     * @param {string} option - the option to set the sorting preference to
+     */
     const setSortingPreference = (option: string) =>
         sortingPreference.set(option);
 

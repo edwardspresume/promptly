@@ -37,3 +37,15 @@ export interface TagStore {
     setTextFilter: (text: string) => void;
     setSortingPreference: (option: string) => void;
 }
+
+/**
+ * Interface for sortable item properties.
+ * It's utilized for sorting both prompts and tags on a page.
+ */
+export interface SortableItemProperties {
+    title?: string;
+    name?: string;
+    isFavorited?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+}

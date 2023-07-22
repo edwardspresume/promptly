@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { get } from 'svelte/store';
 
@@ -102,6 +102,7 @@ describe('Tag Storage Functionality', () => {
 
     it('Sets and clears a text filter', () => {
         const { setTextFilter, filteredTags, allTags } = tagsStore;
+        console.warn = vi.fn();
 
         setTextFilter('Programming & Technology');
 
@@ -114,6 +115,8 @@ describe('Tag Storage Functionality', () => {
         );
         setTextFilter('');
         expect(get(filteredTags)).toEqual(get(allTags));
+
+        expect(console.warn).toBeCalled();
     });
 
     it('Returns the correct total tag count', () => {
@@ -143,7 +146,7 @@ describe('Tag Storage Functionality', () => {
         expect(get(filteredTags)).toEqual(sortedByNameDesc);
 
         // Test default order
-        setSortingPreference('default');
+        setSortingPreference('default:default');
         expect(get(filteredTags)).toEqual(get(tagsStore.allTags));
     });
 });

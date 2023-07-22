@@ -4,6 +4,7 @@
 
     import SearchBar from '$components/Filter/SearchBar.svelte';
     import SortSelector from '$components/Filter/SortSelector.svelte';
+    import TagList from '$components/Tags/TagList.svelte';
 </script>
 
 <svelte:head>
@@ -20,3 +21,5 @@
     <SearchBar searchTargetType="tag" />
     <SortSelector store={tagsStore} sortOptions={tagSortOptions} />
 </nav>
+
+<TagList />

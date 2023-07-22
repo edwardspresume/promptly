@@ -1,4 +1,19 @@
 /**
+ * Generates a new date string in ISO format.
+ * @returns {string} The current date and time in ISO format.
+ */
+export const createDate = () => new Date().toISOString();
+
+/**
+ * Calls the provided callback function when the Enter or Space key is pressed.
+ * @param event - The KeyboardEvent object
+ * @param callback - The function to call when the Enter or Space key is pressed
+ */
+export function handleKeyDown(event: KeyboardEvent, callback: () => void) {
+    if (event.key === 'Enter' || event.key === ' ') callback();
+}
+
+/**
  * Attach a 'click' event listener to the document that triggers when a click occurs outside the specified targetNode.
  * @param targetNode The DOM node for outside click detection.
  * @param callback Callback function to execute when a click occurs outside of the targetNode.
@@ -24,9 +39,3 @@ export function onOutsideClick(targetNode: Node, callback: () => void) {
         },
     };
 }
-
-/**
- * Generates a new date string in ISO format.
- * @returns {string} The current date and time in ISO format.
- */
-export const createDate = () => new Date().toISOString();

@@ -84,3 +84,9 @@ export interface SortableItemProperties {
     createdAt?: string;
     updatedAt?: string;
 }
+
+export interface ConfirmationInfo {
+    title: string;
+    toastMessage: string;
+    callback: () => void;
+}

@@ -11,6 +11,7 @@ import {
 } from '$utils/localStorage';
 
 import { createDate } from '$utils/functions';
+import { sortItems } from '$utils/sortItems';
 
 export function createTagsStore(
     localStorageKey: typeof LocalStorageKeys.TAGS
@@ -35,7 +36,7 @@ export function createTagsStore(
                 tag.name.toLowerCase().includes(normalizedFilterText)
             );
 
-            return filteredTags;
+               return sortItems(filteredTags, sortOption);
         }
     );
 

@@ -6,8 +6,14 @@ import type { SortableItemProperties } from '$types';
  * @param {string | undefined} b - The second string to compare.
  * @returns {number} - A negative, zero, or positive number based on the comparison.
  */
-function stringComparator(a: string | undefined, b: string | undefined) {
-    return (a ?? '').localeCompare(b ?? '');
+export function stringComparator(
+    a: string | undefined,
+    b: string | undefined
+): number {
+    if (typeof a === 'undefined' || typeof b === 'undefined') {
+        return a === b ? 0 : typeof a === 'undefined' ? -1 : 1;
+    }
+    return a.localeCompare(b);
 }
 
 /**
@@ -16,8 +22,12 @@ function stringComparator(a: string | undefined, b: string | undefined) {
  * @param {string | undefined} b - The second date to compare.
  * @returns {number} - A negative, zero, or positive number based on the comparison.
  */
-function dateComparator(a: string | undefined, b: string | undefined) {
-    return Date.parse(a ?? '') - Date.parse(b ?? '');
+export function dateComparator(a: string | undefined, b: string | undefined) {
+    if (typeof a === 'undefined' || typeof b === 'undefined') {
+        return a === b ? 0 : typeof a === 'undefined' ? -1 : 1;
+    }
+
+    return Date.parse(a) - Date.parse(b);
 }
 
 /**
@@ -26,8 +36,15 @@ function dateComparator(a: string | undefined, b: string | undefined) {
  * @param {boolean | undefined} b - The second boolean value to compare.
  * @returns {number} - A negative, zero, or positive number based on the comparison.
  */
-const booleanComparator = (a: boolean | undefined, b: boolean | undefined) =>
-    (b ? 1 : 0) - (a ? 1 : 0);
+export const booleanComparator = (
+    a: boolean | undefined,
+    b: boolean | undefined
+): number => {
+    if (typeof a === 'undefined' || typeof b === 'undefined') {
+        return a === b ? 0 : typeof a === 'undefined' ? 1 : -1;
+    }
+    return (b ? 1 : 0) - (a ? 1 : 0);
+};
 
 /**
  * A function that sorts an array of items that extend SortableItemProperties.
@@ -57,12 +74,12 @@ export const sortItems = <T extends SortableItemProperties>(
         'updatedAt:descending': (a, b) =>
             dateComparator(b.updatedAt, a.updatedAt),
 
-        'favorite_status:descending': (a, b) =>
+        'favorite_status:ascending': (a, b) =>
             booleanComparator(a.isFavorited, b.isFavorited),
     };
 
     const sortFunction = sortFunctions[selectedSortOption];
-    
+
     if (!sortFunction) {
         console.warn(
             `Invalid sort option: ${selectedSortOption}. Items are not sorted.`

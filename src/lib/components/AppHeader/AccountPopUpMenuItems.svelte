@@ -1,5 +1,6 @@
 <script>
     import Icon from '$components/General/Icon.svelte';
+    import ExportDataBtn from './ExportDataBtn.svelte';
     import ThemeToggleBtn from './ThemeToggleBtn.svelte';
 </script>
 
@@ -22,6 +23,10 @@
         <Icon name="feedback" />
         <span>Feedback</span>
     </a>
+</li>
+
+<li>
+    <ExportDataBtn />
 </li>
 
 <li>

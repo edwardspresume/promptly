@@ -24,3 +24,42 @@ h1,
 h2 {
     font-weight: bold;
 }
+
+/* Styling for disabled button */
+button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Styling for scrollbar removal */
+.remove-scrollbar::-webkit-scrollbar {
+    inline-size: 0;
+}
+
+/* Base styles for form elements */
+
+input:not([type='checkbox']):not([type='radio']),
+textarea {
+    inline-size: 100%;
+}
+
+input:not([type='checkbox']):not([type='radio']),
+select,
+textarea,
+.theme {
+    color: black;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(17, 24, 39, 0.3);
+}
+
+/* Dark mode styles for form elements */
+.dark input:not([type='checkbox']):not([type='radio']),
+.dark select,
+.dark textarea,
+.dark .theme {
+    color: white;
+    background-color: rgb(0, 0, 0, 0.6);
+    border-color: rgb(255, 255, 255, 0.2);
+}

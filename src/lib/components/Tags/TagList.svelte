@@ -5,7 +5,7 @@
     import ItemCountDisplay from '$components/General/ItemCountDisplay.svelte';
     import StatusMessage from '$components/General/StatusMessage.svelte';
     import ItemListControls from '$components/ListControls/ItemListControls.svelte';
-    import ConfirmationModal from '$components/Modal/ConfirmationModal.svelte';
+    import ConfirmationModal from '$components/Modals/ConfirmationModal.svelte';
     import TagItem from './TagItem.svelte';
 
     const NO_TAGS_AVAILABLE_MESSAGE = 'No tags available. Please add one';

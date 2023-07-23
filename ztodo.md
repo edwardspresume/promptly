@@ -4,5 +4,4 @@
 
 ## functions to test
 
-[] exportPromptsAndTagsData
 [] closeDialogOnOutsideClick

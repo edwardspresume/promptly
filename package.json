@@ -47,7 +47,6 @@
     "postcss-mixins": "^9.0.4",
     "postcss-nested": "^6.0.1",
     "postcss-preset-env": "^9.0.0",
-    "postcss-simple-vars": "^7.0.1",
-    "remove": "^0.1.5"
+    "postcss-simple-vars": "^7.0.1"
   }
 }

@@ -6,8 +6,8 @@
     import { tagSortOptions } from '$data/SortOptions';
     import tagsStore from '$stores/tagStore';
 
-    import SearchBar from '$components/Filter/SearchBar.svelte';
-    import SortSelector from '$components/Filter/SortSelector.svelte';
+    import SearchBar from '$components/Filters/SearchBar.svelte';
+    import SortSelector from '$components/Filters/SortSelector.svelte';
     import TagCreationForm from '$components/Forms/TagCreationForm.svelte';
     import TagEditForm from '$components/Forms/TagEditForm.svelte';
     import TagList from '$components/Tags/TagList.svelte';

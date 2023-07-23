@@ -5,6 +5,7 @@
 
     import FilterDisplayButton from '$components/Filters/FilterDisplayButton.svelte';
     import SearchBar from '$components/Filters/SearchBar.svelte';
+    import PromptCreationForm from '$components/Forms/PromptCreationForm.svelte';
     import PromptsFiltersModal from '$components/Modals/PromptsFiltersModal.svelte';
     import PromptList from '$components/Prompts/PromptList.svelte';
     import TabGroup from '$components/Prompts/TabGroup.svelte';
@@ -64,3 +65,8 @@
 {/if}
 
 <PromptsFiltersModal bind:promptsFiltersModalRef />
+
+<PromptCreationForm
+    bind:promptCreationModalRef
+    promptCreationFormData={data.form}
+/>

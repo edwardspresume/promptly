@@ -26,11 +26,13 @@
      * @param {CustomEvent} event - The event carrying details of the selected prompt.
      */
     const handlePromptSelection = (event: CustomEvent) => {
+        if (!event.detail) throw new Error('No prompt selected');
+
         selectedPromptForEdit = event.detail;
         promptEditModalRef.showModal();
     };
 
-    $: console.log({selectedTabIndex});
+    $: console.log({ selectedTabIndex });
 </script>
 
 <svelte:head>

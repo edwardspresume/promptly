@@ -2,6 +2,17 @@ import type { z } from 'zod';
 
 import type { Readable, Writable } from 'svelte/store';
 
+export type EnterKeyHint =
+    | 'search'
+    | 'enter'
+    | 'done'
+    | 'go'
+    | 'next'
+    | 'previous'
+    | 'send'
+    | null
+    | undefined;
+
 import type PromptValidationSchema from '$utils/validation/promptValidationSchema';
 import type TagValidationSchema from '$utils/validation/tagValidationSchema';
 

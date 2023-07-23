@@ -31,8 +31,6 @@
         selectedPromptForEdit = event.detail;
         promptEditModalRef.showModal();
     };
-
-    $: console.log({ selectedTabIndex });
 </script>
 
 <svelte:head>

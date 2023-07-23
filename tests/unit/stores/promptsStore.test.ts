@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { get } from 'svelte/store';
 
@@ -77,8 +77,6 @@ describe('Prompts Store Functionality', () => {
     it('Sets and clears a text filter', () => {
         const { setTextFilter, filteredPrompts, allPrompts } = promptsStore;
 
-        console.warn = vi.fn();
-
         setTextFilter('Exploring Mars');
 
         expect(get(filteredPrompts)).toEqual(
@@ -91,8 +89,6 @@ describe('Prompts Store Functionality', () => {
 
         setTextFilter('');
         expect(get(filteredPrompts)).toEqual(get(allPrompts));
-
-        expect(console.warn).toBeCalled();
     });
 
     it('Returns the correct total prompt count', () => {

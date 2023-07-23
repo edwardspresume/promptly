@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 // Define maximum lengths for prompt title and text
 const MAX_PROMPT_TITLE_LENGTH = 50;
-const MAX_PROMPT_TEXT_LENGTH = 500;
+const MAX_PROMPT_TEXT_LENGTH = 1000;
 
 const PromptValidationSchema = z.object({
     id: z

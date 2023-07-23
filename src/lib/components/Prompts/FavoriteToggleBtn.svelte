@@ -23,11 +23,14 @@
     class="text-gray-600 dark:text-slate-500"
     on:click|preventDefault|stopPropagation={handleFavoriteToggleClick}
 >
-    <input
-        type="checkbox"
-        checked={isFavorited}
-        name="isFavorited"
-        class="hidden"
-    />
+    <label>
+        <span class="sr-only">{buttonLabel}</span>
+        <input
+            type="checkbox"
+            checked={isFavorited}
+            name="isFavorited"
+            class="hidden"
+        />
+    </label>
     <Icon size={iconSize} {fill} name="favorite" />
 </button>

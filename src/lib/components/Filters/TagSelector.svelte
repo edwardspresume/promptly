@@ -1,0 +1,146 @@
+<script lang="ts">
+    import type { Writable } from 'svelte/store';
+
+    import type { TagSchema } from '$types';
+
+    import promptsStore from '$stores/promptsStore';
+    import tagsStore from '$stores/tagStore';
+
+    import SelectedTag from './SelectedTag.svelte';
+    import Tag from './Tag.svelte';
+    import { onOutsideClick } from '$utils/functions';
+
+    // Determines whether prompts should be filtered based on selected tags
+    export let filterPromptBasedOnTags: boolean = false;
+
+    // A writable store that keeps track of the IDs of selected tags
+    export let selectedTagIds: Writable<number[]>;
+
+    const allTags = tagsStore.allTags;
+
+    let tagSearchInput: HTMLInputElement;
+
+    let tagSearchQuery: string = '';
+    let activeTagIndex: number = 0;
+    let isTagSelectionMenuOpen: boolean = false;
+
+    // Filter tags based on the tagSearchQuery value and exclude already selected tags
+    $: filteredTags = $allTags.filter(
+        (tag) =>
+            tag.name.toLowerCase().includes(tagSearchQuery.toLowerCase()) &&
+            !$selectedTagIds.includes(tag.id)
+    );
+
+    // Update selectedTags when selectedTagIds change
+    $: selectedTags = $allTags.filter((tag) =>
+        $selectedTagIds.includes(tag.id)
+    );
+
+    /**
+     * Adds a tag to the selected tags
+     *
+     * @param {TagSchema} tag - The tag to add
+     */
+    function addTag(tag: TagSchema) {
+        selectedTagIds.update((ids) => [...ids, tag.id]);
+
+        tagSearchQuery = '';
+        activeTagIndex = 0;
+
+        tagSearchInput.focus();
+    }
+
+    /**
+     * Removes a tag from the selected tags
+     *
+     * @param {TagSchema} tag - The tag to remove
+     */
+    function removeTag(tag: TagSchema) {
+        selectedTagIds.update((ids) => ids.filter((id) => id !== tag.id));
+    }
+
+    /**
+     * Handles keyboard navigation within the tag selection menu
+     *
+     * @param {KeyboardEvent} event - The event triggered by a keyboard key press
+     */
+    function handleKeyDown(event: KeyboardEvent) {
+        if (
+            event.key === 'ArrowDown' &&
+            activeTagIndex < filteredTags.length - 1
+        ) {
+            event.preventDefault();
+            activeTagIndex++;
+        } else if (event.key === 'ArrowUp' && activeTagIndex > 0) {
+            event.preventDefault();
+            activeTagIndex--;
+        } else if (
+            event.key === 'Enter' &&
+            activeTagIndex >= 0 &&
+            activeTagIndex < filteredTags.length
+        ) {
+            event.preventDefault();
+
+            const tag = filteredTags[activeTagIndex];
+
+            if (tag) addTag(tag);
+        }
+    }
+
+    // Sets tag filter in prompts store when filterPromptBasedOnTags is true
+    $: if (filterPromptBasedOnTags) promptsStore.setTagFilter($selectedTagIds);
+</script>
+
+<form
+    use:onOutsideClick={() => (isTagSelectionMenuOpen = false)}
+    class="relative theme"
+    aria-label="Tag selection form"
+>
+    {#if selectedTags.length > 0}
+        <div class="flex flex-wrap gap-2 mb-3">
+            {#each selectedTags as tag (tag.id)}
+                <SelectedTag {tag} on:remove={() => removeTag(tag)} />
+            {/each}
+        </div>
+    {/if}
+
+    <label>
+        <span class="sr-only">Select tags</span>
+        <input
+            bind:value={tagSearchQuery}
+            bind:this={tagSearchInput}
+            on:keydown={handleKeyDown}
+            on:focus={() => (isTagSelectionMenuOpen = true)}
+            on:input={() => (activeTagIndex = 0)}
+            type="search"
+            role="combobox"
+            autocorrect="off"
+            autocomplete="off"
+            spellcheck="false"
+            aria-expanded={isTagSelectionMenuOpen}
+            aria-autocomplete="list"
+            aria-controls="tags-list"
+            placeholder="Select tags"
+            aria-activedescendant={`tag-${activeTagIndex}`}
+        />
+    </label>
+
+    {#if isTagSelectionMenuOpen && filteredTags.length > 0}
+        <fieldset
+            id="tags-list"
+            aria-label="Tags list"
+            class="z-10 absolute w-full theme left-1/2 backdrop-blur-2xl -translate-x-1/2 p-2 rounded-md mt-3 overflow-y-scroll max-h-32 sm:max-h-52 gap-3"
+        >
+            {#each filteredTags as tag, index (tag.id)}
+                <Tag
+                    {tag}
+                    {index}
+                    isActive={index === activeTagIndex}
+                    on:add={() => addTag(tag)}
+                    on:focus={() => (activeTagIndex = index)}
+                    on:hover={() => (activeTagIndex = index)}
+                />
+            {/each}
+        </fieldset>
+    {/if}
+</form>

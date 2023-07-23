@@ -5,3 +5,5 @@
 ## functions to test
 
 [] closeDialogOnOutsideClick
+[] copyPromptTextToClipboard
+[] TagSelector: handleKeyDown

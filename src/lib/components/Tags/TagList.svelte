@@ -6,7 +6,7 @@
     import ItemCountDisplay from '$components/ListControls/ItemCountDisplay.svelte';
     import ItemListControls from '$components/ListControls/ItemListControls.svelte';
     import ConfirmationModal from '$components/Modals/ConfirmationModal.svelte';
-    import TagItem from './TagItem.svelte';
+    import TagItem from '$components/Tags/TagItem.svelte';
 
     const NO_TAGS_AVAILABLE_MESSAGE = 'No tags available. Please add one';
     const NO_MATCH_MESSAGE = 'There are no tags that match your search';

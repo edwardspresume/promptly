@@ -29,6 +29,8 @@
         selectedPromptForEdit = event.detail;
         promptEditModalRef.showModal();
     };
+
+    $: console.log({selectedTabIndex});
 </script>
 
 <svelte:head>
@@ -38,7 +40,7 @@
 
 <TabGroup
     on:tabItemClicked={({ detail }) =>
-        (selectedTabIndex = detail.activeTabIndex)}
+        (selectedTabIndex = detail.selectedTabIndex)}
 />
 
 <nav

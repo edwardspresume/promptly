@@ -5,8 +5,7 @@
     export let onItemClickOrKeyPress: () => void;
 </script>
 
-<!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
-<li
+<div
     {title}
     tabindex="0"
     role="button"
@@ -16,4 +15,4 @@
     class="flex items-center justify-between gap-4 p-2 transition-colors duration-200 border rounded-md cursor-pointer hover:bg-white/40 border-white/10 dark:hover:bg-white/20 bg-white/20 dark:bg-white/5"
 >
     <slot />
-</li>
+</div>

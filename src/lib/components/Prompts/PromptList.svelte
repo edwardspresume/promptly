@@ -67,7 +67,8 @@
         displayedItemCount={displayedPromptsCount}
     />
 
-    <section
+    <ul
+        role="list"
         aria-label="List of prompts"
         bind:this={promptItemsContainerRef}
         class="mt-2 space-y-5 overflow-hidden overflow-y-scroll remove-scrollbar"
@@ -75,7 +76,7 @@
         {#each displayedPrompts as prompt (prompt.id)}
             <PromptItem on:editPrompt {prompt} />
         {/each}
-    </section>
+    </ul>
 {/if}
 
 <ItemListControls

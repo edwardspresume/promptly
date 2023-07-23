@@ -63,7 +63,8 @@
         displayedItemCount={displayedTagsCount}
     />
 
-    <section
+    <ul
+        role="list"
         aria-label="List of tags"
         bind:this={tagItemsContainerRef}
         class="mt-2 space-y-5 overflow-hidden overflow-y-scroll remove-scrollbar"
@@ -71,7 +72,7 @@
         {#each $filteredTags as tag (tag.id)}
             <TagItem {tag} on:editTag on:deleteTag={handleDeleteTagEvent} />
         {/each}
-    </section>
+    </ul>
 {/if}
 
 <ItemListControls

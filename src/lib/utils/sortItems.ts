@@ -66,6 +66,7 @@ export const sortItems = <T extends SortableItemProperties>(
     selectedSortOption: string
 ): T[] => {
     const sortFunctions: Record<string, (a: T, b: T) => number> = {
+        '': () => 0,
         'default:default': () => 0,
 
         'title:ascending': (a, b) => compareStrings(a.title, b.title),

@@ -3,12 +3,13 @@
 
     import type { TagSchema } from '$types';
 
+    import { onOutsideClick } from '$utils/functions';
+
     import promptsStore from '$stores/promptsStore';
     import tagsStore from '$stores/tagStore';
 
     import SelectedTag from './SelectedTag.svelte';
     import Tag from './Tag.svelte';
-    import { onOutsideClick } from '$utils/functions';
 
     // Determines whether prompts should be filtered based on selected tags
     export let filterPromptBasedOnTags: boolean = false;

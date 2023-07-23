@@ -10,5 +10,5 @@
 >
     <img {src} alt="Promptly logo" title="Promptly" />
 
-    <h1 class="text-2xl">Promptly</h1>
+    <span class="text-2xl">Promptly</span>
 </a>

@@ -6,6 +6,7 @@
     import FilterDisplayButton from '$components/Filters/FilterDisplayButton.svelte';
     import SearchBar from '$components/Filters/SearchBar.svelte';
     import PromptCreationForm from '$components/Forms/PromptCreationForm.svelte';
+    import PromptEditForm from '$components/Forms/PromptEditForm.svelte';
     import PromptsFiltersModal from '$components/Modals/PromptsFiltersModal.svelte';
     import PromptList from '$components/Prompts/PromptList.svelte';
     import TabGroup from '$components/Prompts/TabGroup.svelte';
@@ -69,4 +70,10 @@
 <PromptCreationForm
     bind:promptCreationModalRef
     promptCreationFormData={data.form}
+/>
+
+<PromptEditForm
+    bind:promptEditModalRef
+    promptEditFormData={data.form}
+    {selectedPromptForEdit}
 />

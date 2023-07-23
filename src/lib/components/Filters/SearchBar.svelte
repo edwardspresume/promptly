@@ -28,7 +28,7 @@
     }
 </script>
 
-<label role="search" class="flex-grow">
+<label class="flex-grow">
     <span class="sr-only">{labelText}</span>
     <input
         type="search"

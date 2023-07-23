@@ -14,7 +14,7 @@
     const filteredTags = tagsStore.filteredTags;
     const totalTagsCount = tagsStore.totalTagCount;
 
-    let tagListRef: HTMLUListElement;
+    let tagItemsContainerRef: HTMLElement;
     let confirmationModalRef: HTMLDialogElement;
 
     let statusMessage: string;
@@ -63,21 +63,21 @@
         displayedItemCount={displayedTagsCount}
     />
 
-    <ul
-        role="list"
-        bind:this={tagListRef}
+    <section
+        aria-label="List of tags"
+        bind:this={tagItemsContainerRef}
         class="mt-2 space-y-5 overflow-hidden overflow-y-scroll remove-scrollbar"
     >
         {#each $filteredTags as tag (tag.id)}
             <TagItem {tag} on:editTag on:deleteTag={handleDeleteTagEvent} />
         {/each}
-    </ul>
+    </section>
 {/if}
 
 <ItemListControls
     itemType="tag"
     totalItemCount={$totalTagsCount}
-    listRef={tagListRef}
+    itemContainerRef={tagItemsContainerRef}
     on:addItem
     on:deleteAllItems={handleDeleteAllTagsEvent}
 />

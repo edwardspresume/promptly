@@ -6,36 +6,37 @@
     import Icon from '$components/General/Icon.svelte';
 
     export let itemType: ItemType;
-    export let listRef: HTMLUListElement;
+    export let itemContainerRef: HTMLElement;
 
     const title = `Return to top of ${itemType}'s list`;
 
     let isVisible = false;
 
     function scrollToTop() {
-        listRef && listRef.scrollTo({ top: 0, behavior: 'smooth' });
+        itemContainerRef &&
+            itemContainerRef.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     const updateVisibility = () => {
-        isVisible = listRef.scrollTop > 200;
+        isVisible = itemContainerRef.scrollTop > 200;
     };
 
     $: {
-        if (listRef) {
+        if (itemContainerRef) {
             updateVisibility();
-            listRef.addEventListener('scroll', updateVisibility);
+            itemContainerRef.addEventListener('scroll', updateVisibility);
         }
     }
 
     onDestroy(() => {
-        if (listRef) {
-            listRef.removeEventListener('scroll', updateVisibility);
+        if (itemContainerRef) {
+            itemContainerRef.removeEventListener('scroll', updateVisibility);
         }
     });
 </script>
 
-<!-- Render the button only if listRef exists and it has scrolled more than 200px -->
-{#if listRef && isVisible}
+<!-- Render the button only if itemContainerRef exists and it has scrolled more than 200px -->
+{#if itemContainerRef && isVisible}
     <button
         {title}
         type="button"

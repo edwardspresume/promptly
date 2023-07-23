@@ -7,7 +7,7 @@
 
     export let itemType: ItemType;
     export let totalItemCount: number;
-    export let listRef: HTMLUListElement;
+    export let itemContainerRef: HTMLElement;
 </script>
 
 <footer class="flex items-center justify-between gap-2 py-1 mt-4 text-white">
@@ -16,7 +16,7 @@
     {/if}
 
     <div class="flex ml-auto gap-7">
-        <ScrollToTopBtn {itemType} {listRef} />
+        <ScrollToTopBtn {itemType} {itemContainerRef} />
         <AddItemBtn {itemType} on:addItem />
     </div>
 </footer>

@@ -18,7 +18,7 @@
     const filteredPrompts = promptsStore.filteredPrompts;
     const totalPromptsCount = promptsStore.totalPromptCount;
 
-    let promptListRef: HTMLUListElement;
+    let promptItemsContainerRef: HTMLElement;
     let confirmationModalRef: HTMLDialogElement;
 
     let statusMessage: string;
@@ -67,21 +67,21 @@
         displayedItemCount={displayedPromptsCount}
     />
 
-    <ul
-        role="list"
-        bind:this={promptListRef}
+    <section
+        aria-label="List of prompts"
+        bind:this={promptItemsContainerRef}
         class="mt-2 space-y-5 overflow-hidden overflow-y-scroll remove-scrollbar"
     >
         {#each displayedPrompts as prompt (prompt.id)}
             <PromptItem on:editPrompt {prompt} />
         {/each}
-    </ul>
+    </section>
 {/if}
 
 <ItemListControls
     itemType="prompt"
     totalItemCount={$totalPromptsCount}
-    listRef={promptListRef}
+    itemContainerRef={promptItemsContainerRef}
     on:addItem
     on:deleteAllItems={handleDeleteAllPromptsEvent}
 />

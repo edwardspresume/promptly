@@ -2,8 +2,8 @@
     import tagsStore from '$stores/tagStore';
     import type { ConfirmationInfo } from '$types';
 
-    import ItemCountDisplay from '$components/General/ItemCountDisplay.svelte';
     import StatusMessage from '$components/General/StatusMessage.svelte';
+    import ItemCountDisplay from '$components/ListControls/ItemCountDisplay.svelte';
     import ItemListControls from '$components/ListControls/ItemListControls.svelte';
     import ConfirmationModal from '$components/Modals/ConfirmationModal.svelte';
     import TagItem from './TagItem.svelte';

@@ -4,6 +4,7 @@
 
     import ItemCountDisplay from '$components/General/ItemCountDisplay.svelte';
     import StatusMessage from '$components/General/StatusMessage.svelte';
+    import ItemListControls from '$components/ListControls/ItemListControls.svelte';
     import ConfirmationModal from '$components/Modal/ConfirmationModal.svelte';
     import TagItem from './TagItem.svelte';
 
@@ -18,7 +19,7 @@
 
     let statusMessage: string;
     let displayedTagsCount: number;
-    let tagDeleteConfirmationInfo: ConfirmationInfo;
+    let confirmationModalInfoForTagDeletion: ConfirmationInfo;
 
     $: displayedTagsCount = $filteredTags.length;
 
@@ -29,11 +30,26 @@
     }
 
     /**
-     * Shows the confirmation modal for tag deletion
-     * @param {CustomEvent} event - Contains detail with confirmation info
+     * Event handler for the deleteTag event on the TagItem component.
+     * Extracts the confirmation info from the event and shows the confirmation modal.
+     * @param {CustomEvent} event - Custom event object containing the confirmation info in its detail property.
      */
-    function showTagDeleteConfirmationModal({ detail }: CustomEvent) {
-        tagDeleteConfirmationInfo = detail;
+    function handleDeleteTagEvent({ detail }: CustomEvent) {
+        confirmationModalInfoForTagDeletion = detail;
+        confirmationModalRef.showModal();
+    }
+
+    /**
+     * Event handler for the deleteAllItems event on the ItemListControls component.
+     * Sets the confirmation info for deleting all tags and shows the confirmation modal.
+     */
+    function handleDeleteAllTagsEvent() {
+        confirmationModalInfoForTagDeletion = {
+            title: 'Are you sure you want to delete All Tags?',
+            toastMessage: 'All Tags have been successfully deleted!',
+            callback: () => tagsStore.deleteAllTags(),
+        };
+
         confirmationModalRef.showModal();
     }
 </script>
@@ -53,16 +69,20 @@
         class="mt-2 space-y-5 overflow-hidden overflow-y-scroll remove-scrollbar"
     >
         {#each $filteredTags as tag (tag.id)}
-            <TagItem
-                {tag}
-                on:editTag
-                on:deleteTag={showTagDeleteConfirmationModal}
-            />
+            <TagItem {tag} on:editTag on:deleteTag={handleDeleteTagEvent} />
         {/each}
     </ul>
 {/if}
 
+<ItemListControls
+    itemType="tag"
+    totalItemCount={$totalTagsCount}
+    listRef={tagListRef}
+    on:addItem
+    on:deleteAllItems={handleDeleteAllTagsEvent}
+/>
+
 <ConfirmationModal
     bind:confirmationModalRef
-    confirmationInfo={tagDeleteConfirmationInfo}
+    confirmationInfo={confirmationModalInfoForTagDeletion}
 />

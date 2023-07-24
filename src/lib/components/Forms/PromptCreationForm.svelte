@@ -4,7 +4,7 @@
     import { writable } from 'svelte/store';
 
     import { notifySuccess } from '$utils/toast';
-    import PromptValidationSchema from '$utils/validation/promptValidationSchema';
+    import {PromptValidationSchema} from '$utils/validation/promptValidationSchema';
 
     import promptsStore from '$stores/promptsStore';
     import tagsStore from '$stores/tagStore';

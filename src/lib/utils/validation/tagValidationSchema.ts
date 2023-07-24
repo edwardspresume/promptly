@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
 // Define maximum lengths for tag names
-const MAX_TAG_NAME_LENGTH = 200;
+export const MAX_TAG_NAME_LENGTH = 200;
 
-const TagValidationSchema = z.object({
+export const TagValidationSchema = z.object({
     id: z
         .number()
         .nonnegative('Invalid input: id must be a non-negative number'),
@@ -21,5 +21,3 @@ const TagValidationSchema = z.object({
     createdAt: z.string().optional(),
     updatedAt: z.string().optional(),
 });
-
-export default TagValidationSchema;

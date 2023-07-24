@@ -1,10 +1,11 @@
 import { z } from 'zod';
 
-// Define maximum lengths for prompt title and text
-const MAX_PROMPT_TITLE_LENGTH = 200;
-const MAX_PROMPT_TEXT_LENGTH = 4500;
+// Define Max and Min Lengths for Prompt Title and Text
+export const MAX_PROMPT_TITLE_LENGTH = 200;
+export const MIN_PROMPT_TEXT_LENGTH = 3;
+export const MAX_PROMPT_TEXT_LENGTH = 4500;
 
-const PromptValidationSchema = z.object({
+export const PromptValidationSchema = z.object({
     id: z
         .number()
         .nonnegative('Invalid input: id must be a non-negative number'),
@@ -23,7 +24,10 @@ const PromptValidationSchema = z.object({
     text: z
         .string()
         .nonempty('Text is required')
-        .min(3, ' Text should have at least 3 characters')
+        .min(
+            MIN_PROMPT_TEXT_LENGTH,
+            ` Text should have at least ${MIN_PROMPT_TEXT_LENGTH} characters`
+        )
         .max(
             MAX_PROMPT_TEXT_LENGTH,
             `Text should not exceed ${MAX_PROMPT_TEXT_LENGTH} characters`
@@ -35,5 +39,3 @@ const PromptValidationSchema = z.object({
     createdAt: z.string().optional(),
     updatedAt: z.string().optional(),
 });
-
-export default PromptValidationSchema;

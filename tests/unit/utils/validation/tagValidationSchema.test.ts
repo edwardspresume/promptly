@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import TagValidationSchema from '$utils/validation/tagValidationSchema';
+import {
+    MAX_TAG_NAME_LENGTH,
+    TagValidationSchema,
+} from '$utils/validation/tagValidationSchema';
 
 /**
  * Generates an object representing a valid tag.
@@ -43,11 +46,11 @@ describe('TagValidationSchema', () => {
 
     it('should throw an error if name is too long', () => {
         const invalidTagData = createValidTagData({
-            name: 'a'.repeat(51),
+            name: 'a'.repeat(MAX_TAG_NAME_LENGTH + 1),
         });
 
         expect(() => TagValidationSchema.parse(invalidTagData)).toThrow(
-            'Name should not exceed 50 characters'
+            `Name should not exceed ${MAX_TAG_NAME_LENGTH} characters`
         );
     });
 });

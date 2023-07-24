@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
-import PromptValidationSchema from '$utils/validation/promptValidationSchema';
+import {
+    MAX_PROMPT_TEXT_LENGTH,
+    MAX_PROMPT_TITLE_LENGTH,
+    MIN_PROMPT_TEXT_LENGTH,
+    PromptValidationSchema,
+} from '$utils/validation/promptValidationSchema';
 
 /**
  * Generates an object representing a valid prompt.
@@ -48,11 +53,11 @@ describe('PromptValidationSchema', () => {
 
     it('should throw an error if title is too long', () => {
         const invalidPromptData = createValidPromptData({
-            title: 'a'.repeat(51),
+            title: 'a'.repeat(MAX_PROMPT_TITLE_LENGTH + 1),
         });
 
         expect(() => PromptValidationSchema.parse(invalidPromptData)).toThrow(
-            'Title should not exceed 50 characters'
+            `Title should not exceed ${MAX_PROMPT_TITLE_LENGTH} characters`
         );
     });
 
@@ -68,17 +73,17 @@ describe('PromptValidationSchema', () => {
         const invalidPromptData = createValidPromptData({ text: 'ab' });
 
         expect(() => PromptValidationSchema.parse(invalidPromptData)).toThrow(
-            'Text should have at least 3 characters'
+            `Text should have at least ${MIN_PROMPT_TEXT_LENGTH} characters`
         );
     });
 
     it('should throw an error if text is too long', () => {
         const invalidPromptData = createValidPromptData({
-            text: 'a'.repeat(501),
+            text: 'a'.repeat(MAX_PROMPT_TEXT_LENGTH + 1),
         });
 
         expect(() => PromptValidationSchema.parse(invalidPromptData)).toThrow(
-            'Text should not exceed 500 characters'
+            `Text should not exceed ${MAX_PROMPT_TEXT_LENGTH} characters`
         );
     });
 

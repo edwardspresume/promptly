@@ -6,7 +6,7 @@
     import type { ConfirmationInfo, PromptSchema } from '$types';
 
     import { notifySuccess } from '$utils/toast';
-    import PromptValidationSchema from '$utils/validation/promptValidationSchema';
+    import { PromptValidationSchema } from '$utils/validation/promptValidationSchema';
 
     import promptsStore from '$stores/promptsStore';
     import tagsStore from '$stores/tagStore';
@@ -22,7 +22,6 @@
     import FavoriteToggleBtn from '$components/Prompts/FavoriteToggleBtn.svelte';
 
     export let promptEditModalRef: HTMLDialogElement;
-
     export let selectedPromptForEdit: PromptSchema | undefined = undefined;
     export let promptEditFormData;
 
@@ -30,53 +29,33 @@
     const totalNumberOfTags = tagsStore.totalTagCount;
 
     let confirmationModalRef: HTMLDialogElement;
-
     let promptDeleteConfirmationInfo: ConfirmationInfo;
 
     let selectedTagIds = writable<number[]>([]);
     let previousPrompt: PromptSchema | undefined = undefined;
     let isPromptModified = false;
 
-    // Watch if selectedPromptForEdit is changed, and populate the form if it has
-    $: if (selectedPromptForEdit && selectedPromptForEdit !== previousPrompt) {
-        const { id, title, text, isFavorited, tagIds } = selectedPromptForEdit;
-
-        $form.id = id;
-        $form.title = title;
-        $form.text = text;
-        $form.isFavorited = isFavorited;
-        selectedTagIds.set(tagIds ?? []);
-
-        previousPrompt = selectedPromptForEdit;
-    }
-
-    // Watch if the prompt is changed, and set 'isPromptModified' accordingly
-    $: if (selectedPromptForEdit) {
-        isPromptModified =
-            $form.title.trim() !== selectedPromptForEdit.title ||
-            $form.text.trim() !== selectedPromptForEdit.text ||
-            $form.isFavorited !== selectedPromptForEdit.isFavorited ||
-            areArraysDifferent($selectedTagIds, selectedPromptForEdit.tagIds);
-    }
+    let isRefinedPromptVisible: boolean = false;
+    let refinedPrompt: string = '';
+    let isLoading: boolean = false;
 
     /**
      * Function to check if two arrays are different
-     * @param {number[]} selectedTagIds - Selected tag IDs
-     * @param {number[]} existingTagIds - Existing tag IDs
+     * @param {number[]} newTagIds - The array of new tag IDs.
+     * @param {number[]} existingTagIds - The array of existing tag IDs.
      * @returns {boolean} - Returns true if arrays are different, otherwise false
      */
-    function areArraysDifferent(
-        selectedTagIds: number[],
-        existingTagIds: number[]
-    ) {
+    function areArraysDifferent(newTagIds: number[], existingTagIds: number[]) {
         return (
-            selectedTagIds.length !== existingTagIds.length ||
-            !selectedTagIds.every((id) => existingTagIds.includes(id))
+            newTagIds.length !== existingTagIds.length ||
+            !newTagIds.every((id) => existingTagIds.includes(id))
         );
     }
 
     /**
-     * Function to delete the selected prompt
+     * Deletes the selected prompt.
+     * Calls the deletePrompt method from the promptStore.
+     * Closes the edit modal upon completion.
      */
     function deletePrompt() {
         // Callback function to delete the prompt and close the modal
@@ -92,6 +71,41 @@
         };
 
         confirmationModalRef.showModal();
+    }
+
+    /**
+     * Function to refine the input prompt using the refinePrompt API
+     * @returns {Promise<string>} The refined prompt text
+     * @throws Will throw an error if the network request fails
+     */
+    async function getRefinedPrompt() {
+        const promptText = $form.text;
+
+        try {
+            isLoading = true;
+
+            const response = await fetch('/api/refinePrompt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: promptText,
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            }
+
+            refinedPrompt = await response.text();
+
+            isRefinedPromptVisible = true;
+
+            return refinedPrompt;
+        } catch (error) {
+            console.error(`Error refining prompt: ${error}`);
+
+            alert(`Error refining prompt: ${error}`);
+        } finally {
+            isLoading = false;
+        }
     }
 
     const { form, errors, enhance } = superForm(promptEditFormData, {
@@ -121,6 +135,29 @@
             }
         },
     });
+
+    // Watch if selectedPromptForEdit is changed, and populate the form if it has
+    $: if (selectedPromptForEdit && selectedPromptForEdit !== previousPrompt) {
+        const { id, title, text, isFavorited, tagIds } = selectedPromptForEdit;
+
+        $form.id = id;
+        $form.title = title;
+        $form.text = text;
+        $form.isFavorited = isFavorited;
+        selectedTagIds.set(tagIds ?? []);
+
+        previousPrompt = selectedPromptForEdit;
+        isRefinedPromptVisible = false;
+    }
+
+    // Watch if the prompt is changed, and set 'isPromptModified' accordingly
+    $: if (selectedPromptForEdit) {
+        isPromptModified =
+            $form.title.trim() !== selectedPromptForEdit.title ||
+            $form.text.trim() !== selectedPromptForEdit.text ||
+            $form.isFavorited !== selectedPromptForEdit.isFavorited ||
+            areArraysDifferent($selectedTagIds, selectedPromptForEdit.tagIds);
+    }
 </script>
 
 <BaseModal modalTitle="Edit prompt" bind:dialogElement={promptEditModalRef}>
@@ -135,13 +172,57 @@
             errorMessage={$errors.title ?? []}
         />
 
-        <TextArea
-            name="text"
-            label="Enter prompt text"
-            placeholder="Enter prompt text"
-            bind:value={$form.text}
-            errorMessage={$errors.text ?? []}
-        />
+        {#if isRefinedPromptVisible}
+            <fieldset>
+                <div class="flex justify-end gap-2 mb-2">
+                    <button
+                        type="button"
+                        on:click={() => {
+                            $form.text = refinedPrompt;
+                            isRefinedPromptVisible = false;
+                        }}
+                        class="p-1 text-xs text-white transition-colors duration-200 bg-green-500 rounded hover:bg-green-600"
+                        >Accept</button
+                    >
+                    <button
+                        type="button"
+                        on:click={() => (isRefinedPromptVisible = false)}
+                        class="p-1 text-xs text-white transition-colors duration-200 bg-red-500 rounded hover:bg-red-600"
+                        >Discard</button
+                    >
+                </div>
+
+                <TextArea
+                    label="Improved Prompt"
+                    placeholder="Improved Prompt"
+                    bind:value={refinedPrompt}
+                    errorMessage={[]}
+                />
+            </fieldset>
+        {/if}
+
+        <fieldset>
+            <button
+                type="button"
+                on:click={getRefinedPrompt}
+                disabled={isLoading}
+                class="block p-1 mb-2 ml-auto text-xs text-white transition-colors duration-200 bg-blue-500 rounded hover:bg-blue-600"
+            >
+                {#if isLoading}
+                    <span class="animate-pulse">Refining...</span>
+                {:else}
+                    <span>Refine prompt</span>
+                {/if}
+            </button>
+
+            <TextArea
+                name="text"
+                label="Enter prompt text"
+                placeholder="Enter prompt text"
+                bind:value={$form.text}
+                errorMessage={$errors.text ?? []}
+            />
+        </fieldset>
 
         {#if $totalNumberOfTags}
             <TagSelector {selectedTagIds} />

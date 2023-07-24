@@ -4,7 +4,7 @@
     import type { TagSchema } from '$types';
 
     import { notifySuccess } from '$utils/toast';
-    import TagValidationSchema from '$utils/validation/tagValidationSchema';
+    import { TagValidationSchema } from '$utils/validation/tagValidationSchema';
 
     import tagsStore from '$stores/tagStore';
 

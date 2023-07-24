@@ -13,8 +13,8 @@ export type EnterKeyHint =
     | null
     | undefined;
 
-import type PromptValidationSchema from '$utils/validation/promptValidationSchema';
-import type TagValidationSchema from '$utils/validation/tagValidationSchema';
+import type { PromptValidationSchema } from '$utils/validation/promptValidationSchema';
+import type { TagValidationSchema } from '$utils/validation/tagValidationSchema';
 
 export type ItemType = 'prompt' | 'tag';
 

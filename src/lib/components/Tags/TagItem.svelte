@@ -29,7 +29,7 @@
     title={`Edit tag: ${tagName}`}
     onItemClickOrKeyPress={() => dispatch('editTag', tag)}
 >
-    <h3>{tagName}</h3>
+    <h3 class="select-none">{tagName}</h3>
 
     <DeleteItemBtn
         on:click={dispatchDeleteTagEvent}

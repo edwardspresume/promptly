@@ -34,10 +34,10 @@
     title={`Edit prompt: ${title}`}
     onItemClickOrKeyPress={() => dispatch('editPrompt', prompt)}
 >
-    <h3 class="flex items-center gap-2">
+    <h3 class="flex items-center gap-2 select-none">
         <Icon name="lightbulb" size={15} />
 
-        <span class="text-ellipsis overflow-hidden truncate max-w-[210px]">
+        <span>
             {title}
         </span>
     </h3>

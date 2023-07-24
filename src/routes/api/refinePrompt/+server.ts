@@ -23,7 +23,7 @@ async function fetchRefinedPrompt(promptText: string) {
     // const content = `Please enhance the clarity and effectiveness of the following prompt: ${promptText}`;
 
     const systemPrompt =
-        'Please output only the refined prompt without any prefixes or additional text.';
+        'Please output only the rephrased prompt without any prefixes or additional text.';
 
     const content = `Please rephrase the following prompt to make it more clear, effective, and detailed, while preserving its original meaning and intent: ${promptText}`;
 

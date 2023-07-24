@@ -138,6 +138,8 @@
         },
     });
 
+    let resetRefinedPromptDisplay = () => {};
+
     // Watch if selectedPromptForEdit is changed, and populate the form if it has
     $: if (selectedPromptForEdit && selectedPromptForEdit !== previousPrompt) {
         const { id, title, text, isFavorited, tagIds } = selectedPromptForEdit;
@@ -150,6 +152,9 @@
 
         previousPrompt = selectedPromptForEdit;
         isRefinedPromptVisible = false;
+        resetRefinedPromptDisplay = () => (isRefinedPromptVisible = false);
+    } else {
+        resetRefinedPromptDisplay = () => {};
     }
 
     // Watch if the prompt is changed, and set 'isPromptModified' accordingly
@@ -162,7 +167,11 @@
     }
 </script>
 
-<BaseModal modalTitle="Edit prompt" bind:dialogElement={promptEditModalRef}>
+<BaseModal
+    modalTitle="Edit prompt"
+    bind:dialogElement={promptEditModalRef}
+    on:close={resetRefinedPromptDisplay}
+>
     <form use:enhance method="POST" action="?/updatePrompt" class="grid gap-4">
         <input type="hidden" name="id" value={$form.id} />
 

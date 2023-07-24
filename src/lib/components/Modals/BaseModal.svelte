@@ -1,17 +1,23 @@
 <script lang="ts">
     import { SvelteToast } from '@zerodevx/svelte-toast';
 
+    import { createEventDispatcher } from 'svelte';
+
     import { closeDialogOnOutsideClick } from '$utils/functions';
 
     import CloseModalBtn from './CloseModalBtn.svelte';
 
     export let dialogElement: HTMLDialogElement;
     export let modalTitle: string;
+
+    const dispatch = createEventDispatcher();
+
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <dialog
+    on:close={() => dispatch('close')}
     on:click={(event) => closeDialogOnOutsideClick(event, dialogElement)}
     bind:this={dialogElement}
     class="border rounded-lg border-white/30 bg-white/5 backdrop:backdrop-blur-md backdrop:bg-black/70 max-w-md max-h-[100dvh] overflow-y-auto"

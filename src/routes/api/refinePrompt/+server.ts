@@ -1,3 +1,4 @@
+import { VITE_VERCEL_ENV_OPENAI_API_KEY } from '$env/static/private';
 import type { RequestHandler } from './$types';
 
 import { PromptValidationSchema } from '$utils/validation/promptValidationSchema';
@@ -9,7 +10,7 @@ import { PromptValidationSchema } from '$utils/validation/promptValidationSchema
  * @throws Will throw an error if the API call fails or environment variable is missing
  */
 async function fetchRefinedPrompt(promptText: string) {
-    const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+    const OPENAI_API_KEY = VITE_VERCEL_ENV_OPENAI_API_KEY;
 
     if (!OPENAI_API_KEY) {
         throw new Error(

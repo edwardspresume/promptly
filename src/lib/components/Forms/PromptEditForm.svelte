@@ -100,7 +100,7 @@
 
             return refinedPrompt;
         } catch (error) {
-            console.error(`Error refining prompt: ${error}`);
+            console.error(`Error log from client: refining prompt: ${error}`);
 
             alert(`Error refining prompt: ${error}`);
         } finally {

@@ -19,9 +19,9 @@ async function fetchRefinedPrompt(promptText: string) {
     }
 
     const systemPrompt =
-        'Please only output the refined prompt and nothing else. Please do not prefix the refined prompt output with any text.';
+        'Please output only the refined prompt without any prefixes or additional text.';
 
-    const content = `Please enhance the clarity and effectiveness of this prompt: ${promptText}`;
+    const content = `Please enhance the clarity and effectiveness of the following prompt: ${promptText}`;
 
     const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
 

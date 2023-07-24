@@ -1,6 +1,8 @@
 <script lang="ts">
     import { superForm } from 'sveltekit-superforms/client';
 
+    import { fade } from 'svelte/transition';
+
     import { writable } from 'svelte/store';
 
     import type { ConfirmationInfo, PromptSchema } from '$types';
@@ -173,7 +175,7 @@
         />
 
         {#if isRefinedPromptVisible}
-            <fieldset>
+            <fieldset transition:fade={{ delay: 250, duration: 300 }}>
                 <div class="flex justify-end gap-2 mb-2">
                     <button
                         type="button"

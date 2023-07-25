@@ -42,17 +42,17 @@
     bind:dialogElement={feedbackModalRef}
     on:close={() => isFeedbackModalOpen.set(false)}
 >
-    <h2 class="text-white mb-2">
-        Let me know if you experience any issues or have any suggestions to
-        improve this site
-    </h2>
-
     <form
         use:enhance
         method="POST"
         action="/sendFeedback"
         aria-label="Send feedback"
+        class="grid gap-4"
     >
+        <h2 class="text-white">
+            Let me know if you experience any issues or have any suggestions to
+            improve this site
+        </h2>
         <TextArea
             name="message"
             label="Message"

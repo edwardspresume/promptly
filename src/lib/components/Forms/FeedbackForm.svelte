@@ -4,7 +4,7 @@
     import { notifyError, notifySuccess } from '$utils/toast';
     import { FeedbackSchema } from '$utils/validation/feedbackSchema';
 
-    import { isFeedbackModalOpen } from '$stores/FeedbackModalStore';
+    import { isFeedbackModalOpen } from '$stores/feedbackModalStore';
 
     import BaseModal from '$components/Modals/BaseModal.svelte';
     import SubmitButton from './SubmitButton.svelte';
@@ -13,7 +13,7 @@
     export let feedbackFormData;
     let feedbackModalRef: HTMLDialogElement;
 
-    const { form, errors, enhance } = superForm(feedbackFormData, {
+    const { form, errors, enhance, delayed } = superForm(feedbackFormData, {
         id: 'feedbackForm',
         resetForm: true,
         taintedMessage: null,
@@ -61,6 +61,6 @@
             errorMessage={$errors.message ?? []}
         />
 
-        <SubmitButton />
+        <SubmitButton disabled={$delayed} />
     </form>
 </BaseModal>

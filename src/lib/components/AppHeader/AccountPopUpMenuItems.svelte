@@ -1,5 +1,5 @@
 <script>
-    import { isFeedbackModalOpen } from '$stores/FeedbackModalStore';
+    import { isFeedbackModalOpen } from '$stores/feedbackModalStore';
 
     import Icon from '$components/General/Icon.svelte';
     import ExportDataBtn from './ExportDataBtn.svelte';

@@ -52,6 +52,9 @@ devDependencies:
   '@types/jsdom':
     specifier: ^21.1.1
     version: 21.1.1
+  '@types/nodemailer':
+    specifier: ^6.4.9
+    version: 6.4.9
   '@types/sanitize-html':
     specifier: ^2.9.0
     version: 2.9.0
@@ -965,6 +968,12 @@ packages:
 
   /@types/node@20.4.4:
     resolution: {integrity: sha512-CukZhumInROvLq3+b5gLev+vgpsIqC2D0deQr/yS1WnxvmYLlJXZpaQrQiseMY+6xusl79E04UjWoqyr+t1/Ew==}
+    dev: true
+
+  /@types/nodemailer@6.4.9:
+    resolution: {integrity: sha512-XYG8Gv+sHjaOtUpiuytahMy2mM3rectgroNbs6R3djZEKmPNiIJwe9KqOJBGzKKnNZNKvnuvmugBgpq3w/S0ig==}
+    dependencies:
+      '@types/node': 20.4.4
     dev: true
 
   /@types/pug@2.0.6:

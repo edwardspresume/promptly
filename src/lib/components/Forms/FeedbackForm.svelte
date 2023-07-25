@@ -1,6 +1,7 @@
 <script lang="ts">
     import { superForm } from 'sveltekit-superforms/client';
 
+    import { notifyError, notifySuccess } from '$utils/toast';
     import { FeedbackSchema } from '$utils/validation/feedbackSchema';
 
     import { isFeedbackModalOpen } from '$stores/FeedbackModalStore';
@@ -17,6 +18,20 @@
         resetForm: true,
         taintedMessage: null,
         validators: FeedbackSchema,
+
+        onUpdated: ({ form }) => {
+            if (form.valid) {
+                notifySuccess('Message successfully sent! ', {
+                    target: 'baseModal',
+                });
+            }
+        },
+
+        onError: () => {
+            notifyError('Failed to send feedback email', {
+                target: 'baseModal',
+            });
+        },
     });
 
     $: if ($isFeedbackModalOpen) feedbackModalRef.showModal();

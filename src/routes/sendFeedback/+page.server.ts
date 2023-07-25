@@ -1,15 +1,37 @@
 import { message, superValidate } from 'sveltekit-superforms/server';
 
-import { fail } from '@sveltejs/kit';
+import type { Actions } from '../$types';
 
 import { FeedbackSchema } from '$utils/validation/feedbackSchema';
+import { error } from '@sveltejs/kit';
 
-export const actions = {
-    default: async ({ request }) => {
+export const actions: Actions = {
+    default: async ({ request, fetch }) => {
         const form = await superValidate(request, FeedbackSchema);
 
-        return form.valid
-            ? message(form, 'Feedback sent!')
-            : fail(400, { form });
+        if (!form.valid) return message(form, 'Invalid feedback message');
+
+        const { message: feedbackMessage } = form.data;
+
+        try {
+            const response = await fetch('/api/sendFeedbackToEmail', {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: feedbackMessage,
+            });
+
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+
+            return message(form, 'Feedback sent!');
+        } catch (err) {
+            const errorMessage =
+                err instanceof Error ? err.message : 'Unknown error';
+
+            throw error(500, {
+                message: errorMessage,
+            });
+        }
     },
 };

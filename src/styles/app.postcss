@@ -34,10 +34,11 @@ button[disabled] {
 }
 
 /* Styling for scrollbar removal */
-.remove-scrollbar::-webkit-scrollbar {
-    inline-size: 0;
+.remove-scrollbar::-webkit-scrollbar,
+.remove-scrollbar {
+    scrollbar-width: none;
+    inline-size: 100%;
 }
-
 /* Base styles for form elements */
 
 input:not([type='checkbox']):not([type='radio']),

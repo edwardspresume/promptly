@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { dev } from '$app/environment';
     import { inject } from '@vercel/analytics';
 
@@ -7,6 +7,7 @@
     import '../styles/app.postcss';
 
     import AppHeader from '$components/AppHeader/AppHeader.svelte';
+    import FeedbackForm from '$components/Forms/FeedbackForm.svelte';
 
     inject({ mode: dev ? 'development' : 'production' });
 </script>
@@ -22,3 +23,5 @@
 </div>
 
 <SvelteToast options={{ intro: { y: -100 } }} />
+
+<FeedbackForm />

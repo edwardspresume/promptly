@@ -35,15 +35,15 @@
     <form
         use:enhance
         method="POST"
-        action="?/sendFeedback"
+        action="/sendFeedback"
         aria-label="Send feedback"
     >
         <TextArea
             name="message"
             label="Message"
             placeholder="Message"
-            bind:value={$form.text}
-            errorMessage={$errors.text ?? []}
+            bind:value={$form.message}
+            errorMessage={$errors.message ?? []}
         />
 
         <SubmitButton />

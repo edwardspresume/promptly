@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const MIN_FEEDBACK_LENGTH = 10;
+const MIN_FEEDBACK_LENGTH = 5;
 
 export const FeedbackSchema = z.object({
     message: z

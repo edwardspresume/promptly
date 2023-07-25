@@ -4,10 +4,14 @@
 
     import { SvelteToast } from '@zerodevx/svelte-toast';
 
+    import type { LayoutData } from './$types';
+
     import '../styles/app.postcss';
 
     import AppHeader from '$components/AppHeader/AppHeader.svelte';
     import FeedbackForm from '$components/Forms/FeedbackForm.svelte';
+
+    export let data: LayoutData;
 
     inject({ mode: dev ? 'development' : 'production' });
 </script>
@@ -24,4 +28,4 @@
 
 <SvelteToast options={{ intro: { y: -100 } }} />
 
-<FeedbackForm />
+<FeedbackForm feedbackFormData={data.feedbackForm} />

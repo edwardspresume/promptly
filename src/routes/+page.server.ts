@@ -14,7 +14,7 @@ export const actions: Actions = {
     createPrompt: async ({ request }) => {
         const form = await superValidate(request, PromptValidationSchema);
 
-        form.valid
+        return form.valid
             ? message(form, 'Prompt created!')
             : message(form, 'Invalid form');
     },
@@ -22,7 +22,7 @@ export const actions: Actions = {
     updatePrompt: async ({ request }) => {
         const form = await superValidate(request, PromptValidationSchema);
 
-        form.valid
+        return form.valid
             ? message(form, 'Prompt updated!')
             : message(form, 'Invalid form');
     },

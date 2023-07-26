@@ -130,7 +130,7 @@
         <fieldset
             id="tags-list"
             aria-label="Tags list"
-            class="z-10 absolute w-full theme left-1/2 backdrop-blur-2xl -translate-x-1/2 p-2 rounded-md mt-3 overflow-y-scroll max-h-32 sm:max-h-52 gap-3"
+            class="gap-3 p-2 mt-3 overflow-y-auto rounded-md theme backdrop-blur-2xl max-h-32 sm:max-h-52"
         >
             {#each filteredTags as tag, index (tag.id)}
                 <Tag

@@ -71,11 +71,11 @@
 
 <PromptCreationForm
     bind:promptCreationModalRef
-    promptCreationFormData={data.form}
+    promptCreationFormData={data.promptForm}
 />
 
 <PromptEditForm
     bind:promptEditModalRef
-    promptEditFormData={data.form}
+    promptEditFormData={data.promptForm}
     {selectedPromptForEdit}
 />

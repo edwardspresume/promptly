@@ -13,7 +13,7 @@
     export let feedbackFormData;
     let feedbackModalRef: HTMLDialogElement;
 
-    const { form, errors, enhance, delayed } = superForm(feedbackFormData, {
+    const { form, errors, delayed, enhance } = superForm(feedbackFormData, {
         id: 'feedbackForm',
         resetForm: true,
         taintedMessage: null,
@@ -53,7 +53,7 @@
             Let me know if you experience any issues or have any suggestions to
             improve this site
         </h2>
-        
+
         <TextArea
             name="message"
             label="Message"

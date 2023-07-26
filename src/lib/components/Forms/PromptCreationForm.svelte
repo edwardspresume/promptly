@@ -3,8 +3,8 @@
 
     import { writable } from 'svelte/store';
 
-    import { notifySuccess } from '$utils/toast';
-    import {PromptValidationSchema} from '$utils/validation/promptValidationSchema';
+    import { notifyError, notifySuccess } from '$utils/toast';
+    import { PromptValidationSchema } from '$utils/validation/promptValidationSchema';
 
     import promptsStore from '$stores/promptsStore';
     import tagsStore from '$stores/tagStore';
@@ -36,31 +36,42 @@
         if ($selectedTagIds.length > 0) selectedTagIds.set([]);
     };
 
-    const { form, errors, enhance } = superForm(promptCreationFormData, {
-        id: 'createPrompt',
-        resetForm: true,
-        taintedMessage: null,
-        validators: PromptValidationSchema,
+    const { form, errors, delayed, enhance } = superForm(
+        promptCreationFormData,
+        {
+            id: 'createPrompt',
+            resetForm: true,
+            taintedMessage: null,
+            validators: PromptValidationSchema,
 
-        onUpdated: ({ form }) => {
-            if (form.valid) {
-                const { title, text, isFavorited } = form.data;
+            onUpdated: ({ form }) => {
+                if (form.valid) {
+                    const { title, text, isFavorited } = form.data;
 
-                promptsStore.createPrompt({
-                    title,
-                    text,
-                    isFavorited,
-                    tagIds: $selectedTagIds,
-                });
+                    try {
+                        promptsStore.createPrompt({
+                            title,
+                            text,
+                            isFavorited,
+                            tagIds: $selectedTagIds,
+                        });
 
-                notifySuccess('Prompt successfully created!', {
-                    target: 'baseModal',
-                });
+                        notifySuccess('Prompt successfully created!', {
+                            target: 'baseModal',
+                        });
+                    } catch (error) {
+                        console.error(error);
 
-                resetFormFields();
-            }
-        },
-    });
+                        notifyError('Failed to create prompt', {
+                            target: 'baseModal',
+                        });
+                    }
+
+                    resetFormFields();
+                }
+            },
+        }
+    );
 </script>
 
 <BaseModal modalTitle="New prompt" bind:dialogElement={promptCreationModalRef}>
@@ -101,7 +112,7 @@
                     (isFavorited = detail.isFavorited)}
             />
 
-            <SubmitButton title="Add prompt" />
+            <SubmitButton title="Add prompt" disabled={$delayed} />
         </footer>
     </form>
 </BaseModal>

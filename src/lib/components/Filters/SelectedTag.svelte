@@ -12,7 +12,7 @@
     type="button"
     title="Remove tag"
     aria-label={`Remove ${tag.name} tag`}
-    on:click|stopPropagation={() => dispatch('remove', tag)}
+    on:click|stopPropagation={() => dispatch('removeTag')}
     class="flex text-xs gap-2 px-1 text-white rounded-md dark:text-black bg-black/70 dark:bg-white select-none"
 >
     <span>{tag.name}</span>

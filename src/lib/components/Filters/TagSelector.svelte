@@ -100,7 +100,7 @@
     {#if selectedTags.length > 0}
         <div class="flex flex-wrap gap-2 mb-3">
             {#each selectedTags as tag (tag.id)}
-                <SelectedTag {tag} on:remove={() => removeTag(tag)} />
+                <SelectedTag {tag} on:removeTag={() => removeTag(tag)} />
             {/each}
         </div>
     {/if}

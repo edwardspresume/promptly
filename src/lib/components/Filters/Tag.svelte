@@ -29,7 +29,7 @@
     id={`tag-${index}`}
     class:active={isActive}
     class="block w-full text-left p-1 px-2 rounded-md select-none"
-    on:click|stopPropagation={() => dispatch('add')}
+    on:click|stopPropagation={() => dispatch('addTag')}
     on:focus={() => dispatch('focus')}
     on:mouseover={() => dispatch('hover')}
 >

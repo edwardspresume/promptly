@@ -137,7 +137,7 @@
                     {tag}
                     {index}
                     isActive={index === activeTagIndex}
-                    on:add={() => addTag(tag)}
+                    on:addTag={() => addTag(tag)}
                     on:focus={() => (activeTagIndex = index)}
                     on:hover={() => (activeTagIndex = index)}
                 />

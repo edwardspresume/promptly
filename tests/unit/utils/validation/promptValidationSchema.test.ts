@@ -61,14 +61,6 @@ describe('PromptValidationSchema', () => {
         );
     });
 
-    it('should throw an error if text is empty', () => {
-        const invalidPromptData = createValidPromptData({ text: '' });
-
-        expect(() => PromptValidationSchema.parse(invalidPromptData)).toThrow(
-            'Text is required'
-        );
-    });
-
     it('should throw an error if text is too short', () => {
         const invalidPromptData = createValidPromptData({ text: 'ab' });
 

@@ -23,7 +23,6 @@ export const PromptValidationSchema = z.object({
     // Ensures nonempty strings, within length bounds, and removes leading/trailing white spaces
     text: z
         .string()
-        .nonempty('Text is required')
         .min(
             MIN_PROMPT_TEXT_LENGTH,
             ` Text should have at least ${MIN_PROMPT_TEXT_LENGTH} characters`

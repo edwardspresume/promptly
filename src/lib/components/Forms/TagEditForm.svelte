@@ -38,7 +38,7 @@
         isTagModified = $form.name.trim() !== selectedTagForEdit.name;
     }
 
-    const { form, errors, enhance } = superForm(tagEditFormData, {
+    const { form, errors, delayed, enhance } = superForm(tagEditFormData, {
         id: 'updateTag',
         taintedMessage: null,
         validators: TagValidationSchema,
@@ -92,6 +92,9 @@
             errorMessage={$errors.name ?? []}
         />
 
-        <SubmitButton title="Update Tag" disabled={!isTagModified} />
+        <SubmitButton
+            title="Update Tag"
+            disabled={!isTagModified || $delayed}
+        />
     </form>
 </BaseModal>

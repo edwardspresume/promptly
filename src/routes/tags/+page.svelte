@@ -49,10 +49,10 @@
     on:editTag={handleTagSelection}
 />
 
-<TagCreationForm bind:tagCreationModalRef tagCreationFormData={data.form} />
+<TagCreationForm bind:tagCreationModalRef tagCreationFormData={data.tagForm} />
 
 <TagEditForm
     bind:tagEditModalRef
-    tagEditFormData={data.form}
+    tagEditFormData={data.tagForm}
     {selectedTagForEdit}
 />

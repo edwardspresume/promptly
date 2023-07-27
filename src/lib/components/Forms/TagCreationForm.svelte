@@ -13,7 +13,7 @@
     export let tagCreationModalRef: HTMLDialogElement;
     export let tagCreationFormData;
 
-    const { form, errors, enhance } = superForm(tagCreationFormData, {
+    const { form, errors, delayed, enhance } = superForm(tagCreationFormData, {
         id: 'createTag',
         resetForm: true,
         taintedMessage: null,
@@ -61,6 +61,6 @@
             errorMessage={$errors.name ?? []}
         />
 
-        <SubmitButton title="Add Tag" />
+        <SubmitButton title="Add Tag" disabled={$delayed} />
     </form>
 </BaseModal>

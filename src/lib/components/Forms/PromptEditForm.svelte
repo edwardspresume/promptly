@@ -103,7 +103,10 @@
 
             return refinedPrompt;
         } catch (error) {
-            notifyError(error, {
+            const errorMessage =
+                error instanceof Error ? error.message : 'Unknown error';
+
+            notifyError(errorMessage, {
                 target: 'baseModal',
             });
         } finally {

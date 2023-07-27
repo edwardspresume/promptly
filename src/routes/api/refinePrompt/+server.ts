@@ -1,3 +1,5 @@
+import sanitizeHtml from 'sanitize-html';
+
 import { SECRET_OPENAI_API_KEY } from '$env/static/private';
 import type { RequestHandler } from './$types';
 
@@ -73,19 +75,40 @@ async function fetchRefinedPrompt(promptText: string) {
 }
 
 export const POST: RequestHandler = async ({ request }) => {
+    if (request.headers.get('content-type') !== 'text/plain') {
+        return new Response(`Unsupported content type. Expected text/plain`, {
+            status: 415,
+        });
+    }
+
     const promptText = await request.text();
 
     const promptTextSchema = PromptValidationSchema.pick({ text: true });
     const parseResult = promptTextSchema.safeParse({ text: promptText });
 
     if (!parseResult.success) {
-        return new Response(
-            `Invalid prompt text: ${parseResult.error.message}`,
-            { status: 400 }
-        );
+        const errorMessage = parseResult.error
+            .flatten()
+            .fieldErrors.text?.join(', ');
+
+        return new Response(errorMessage, {
+            status: 400,
+        });
     }
 
-    const refinedPrompt = await fetchRefinedPrompt(promptText);
+    try {
+        const sanitizedPromptText = sanitizeHtml(promptText);
 
-    return new Response(refinedPrompt);
+        const refinedPrompt = await fetchRefinedPrompt(sanitizedPromptText);
+
+        return new Response(refinedPrompt, {
+            status: 200,
+            statusText: 'Refined prompt successfully generated!',
+        });
+    } catch (error) {
+        console.error(error);
+        return new Response('An error occurred while refining the prompt.', {
+            status: 500,
+        });
+    }
 };

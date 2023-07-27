@@ -7,7 +7,7 @@
 
     import type { ConfirmationInfo, PromptSchema } from '$types';
 
-    import { notifySuccess } from '$utils/toast';
+    import { notifyError, notifySuccess } from '$utils/toast';
     import { PromptValidationSchema } from '$utils/validation/promptValidationSchema';
 
     import promptsStore from '$stores/promptsStore';
@@ -93,7 +93,8 @@
             });
 
             if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`);
+                const error = await response.text();
+                throw new Error(error);
             }
 
             refinedPrompt = await response.text();
@@ -102,15 +103,15 @@
 
             return refinedPrompt;
         } catch (error) {
-            console.error(`Error log from client: refining prompt: ${error}`);
-
-            alert(`Error refining prompt: ${error}`);
+            notifyError(error, {
+                target: 'baseModal',
+            });
         } finally {
             isLoading = false;
         }
     }
 
-    const { form, errors, enhance } = superForm(promptEditFormData, {
+    const { form, errors, delayed, enhance } = superForm(promptEditFormData, {
         id: 'updatePrompt',
         taintedMessage: null,
         validators: PromptValidationSchema,
@@ -119,21 +120,28 @@
             if (form.valid) {
                 const { id, title, text, isFavorited } = form.data;
 
-                promptsStore.updatePrompt(id, {
-                    title,
-                    text,
-                    tagIds: $selectedTagIds,
-                    isFavorited,
-                });
+                try {
+                    promptsStore.updatePrompt(id, {
+                        title,
+                        text,
+                        tagIds: $selectedTagIds,
+                        isFavorited,
+                    });
 
-                // Update 'selectedPromptForEdit' with the new prompt data after updating the prompt
-                selectedPromptForEdit =
-                    $allPrompts.find((prompt) => prompt.id === id) ??
-                    selectedPromptForEdit;
+                    // Update 'selectedPromptForEdit' with the new prompt data after updating the prompt
+                    selectedPromptForEdit =
+                        $allPrompts.find((prompt) => prompt.id === id) ??
+                        selectedPromptForEdit;
 
-                notifySuccess('Prompt successfully updated!', {
-                    target: 'baseModal',
-                });
+                    notifySuccess('Prompt successfully updated!', {
+                        target: 'baseModal',
+                    });
+                } catch (error) {
+                    console.error(error);
+                    notifyError('Failed to update prompt', {
+                        target: 'baseModal',
+                    });
+                }
             }
         },
     });
@@ -261,7 +269,10 @@
                     ($form.isFavorited = detail.isFavorited)}
             />
 
-            <SubmitButton title="Update prompt" disabled={!isPromptModified} />
+            <SubmitButton
+                title="Update prompt"
+                disabled={!isPromptModified || $delayed}
+            />
         </footer>
     </form>
 </BaseModal>

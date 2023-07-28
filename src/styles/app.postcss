@@ -10,17 +10,6 @@
 @custom-selector :--heading h1, h2, h3, h4, h5, h6;
 @custom-media --sm (width <= 640px);
 
-/* Define a mixin for the theme */
-@define-mixin theme $text-color, $bg-primary, $bg-secondary {
-    color: $text-color;
-    background: rgb(0, 0, 0) linear-gradient($bg-primary, $bg-secondary);
-}
-
-/* Apply the theme to the body element */
-body {
-    @mixin theme var(--text-color), var(--bg-primary), var(--bg-secondary);
-}
-
 /* Heading Styles */
 h1,
 h2 {
@@ -36,8 +25,8 @@ button[disabled] {
 /* Styling for scrollbar removal */
 .remove-scrollbar::-webkit-scrollbar,
 .remove-scrollbar {
-    scrollbar-width: none;
     inline-size: 100%;
+    scrollbar-width: none;
 }
 /* Base styles for form elements */
 
@@ -50,11 +39,11 @@ input:not([type='checkbox']):not([type='radio']),
 select,
 textarea,
 .theme {
-    color: black;
+    color: var(--text-primary);
     padding: 0.5rem;
     border-radius: 0.375rem;
-    background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(17, 24, 39, 0.3);
+    background: var(--bg-secondary);
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 /* Dark mode styles for form elements */
@@ -62,7 +51,5 @@ textarea,
 .dark select,
 .dark textarea,
 .dark .theme {
-    color: white;
-    background-color: rgb(0, 0, 0, 0.6);
-    border-color: rgb(255, 255, 255, 0.2);
+    border-color: rgb(255, 255, 255, 0.1);
 }

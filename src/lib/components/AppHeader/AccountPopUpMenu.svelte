@@ -35,7 +35,7 @@
             on:keydown|stopPropagation
             transition:fly={{ y: 20 }}
             use:onOutsideClick={() => (isAccountPopUpMenuVisible = false)}
-            class="absolute mt-3 bg-white rounded-md shadow-xl dark:bg-black/60 backdrop-blur-md top-full"
+            class="absolute mt-3 rounded-md shadow-xl bg-secondary top-full backdrop-blur-md"
         >
             <AccountPopUpMenuItems />
         </menu>

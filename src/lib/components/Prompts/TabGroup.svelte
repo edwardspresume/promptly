@@ -52,7 +52,7 @@
             class={`px-4 flex items-center text-lg gap-2 py-2 border-b-2 transition-colors duration-200 ease-in-out ${
                 selectedTabIndex === index
                     ? 'border-black dark:border-white'
-                    : 'border-transparent text-gray-500 dark:text-gray-500 hover:bg-white/30 dark:hover:bg-black/30'
+                    : 'border-transparent text-gray-500 dark:text-gray-500 hover:bg-white/60 dark:hover:bg-black/40'
             }`}
         >
             <Icon name={iconName} size={18} />

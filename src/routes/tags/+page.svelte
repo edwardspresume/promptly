@@ -39,7 +39,7 @@
 
 <h1 class="text-xl text-center mb-7">Tag Management</h1>
 
-<nav class="flex flex-col gap-3 mb-8 sm:flex-row">
+<nav class="flex flex-col gap-3 mb-5 sm:flex-row">
     <SearchBar searchTargetType="tag" />
     <SortSelector store={tagsStore} sortOptions={tagSortOptions} />
 </nav>

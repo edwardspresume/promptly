@@ -2,9 +2,10 @@
 @layer base {
     :root {
         /* Text and Background */
-        --text-color: rgb(0, 0, 0 / 100%);
-        --bg-primary: hsla(0, 0%, 100%, 1);
-        --bg-secondary: hsla(217, 91%, 60%, 0.33);
+        --text-primary: rgb(0, 0, 0 / 100%);
+        // --bg-primary: #f7f7f8;
+        --bg-primary: #efede6;
+        --bg-secondary: #fff;
 
         /* Toast Container */
         --toastContainerLeft: 50%;
@@ -37,9 +38,9 @@
 
     .dark {
         /* Text and Background */
-        --text-color: #fff;
-        --bg-primary: rgba(60, 131, 246, 0.33);
-        --bg-secondary: hsl(240, 37%, 13%);
+        --text-primary: rgb(255, 255, 255 / 100%);
+        --bg-primary: #14284b;
+        --bg-secondary: rgba(0, 0, 0, 0.6);
 
         /* Toast Item */
         --toastBackground: #000;

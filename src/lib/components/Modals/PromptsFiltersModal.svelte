@@ -36,7 +36,7 @@
     on:click={(event) =>
         closeDialogOnOutsideClick(event, promptsFiltersModalRef)}
     bind:this={promptsFiltersModalRef}
-    class="relative w-3/4 h-full max-w-sm max-h-full m-0 ml-auto dark:text-white dark:bg-black/60 backdrop-blur-xl backdrop:bg-violet-700/20"
+    class="w-3/4 h-full max-w-sm max-h-full m-0 ml-auto bg-secondary text-primary backdrop-blur-xl backdrop:bg-violet-700/10"
 >
     <header class="flex justify-between pb-5 border-b border-white/10 mb-7">
         <h2 class="text-lg font-bold">Filters</h2>

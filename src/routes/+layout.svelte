@@ -16,7 +16,9 @@
     inject({ mode: dev ? 'development' : 'production' });
 </script>
 
-<div class="h-[100dvh] flex flex-col pb-6">
+<div
+    class="h-[100dvh] flex flex-col pb-6 bg-primary text-primary transition-colors duration-200"
+>
     <AppHeader />
 
     <main

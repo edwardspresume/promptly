@@ -6,7 +6,7 @@
     role="status"
     aria-live="polite"
     aria-atomic="true"
-    class="py-1 mx-auto mt-6 text-xl text-center border rounded-md pe-2 border-white/10 bg-white/20 w-fit ps-2"
+    class="mx-auto mt-6 text-xl text-center rounded-md theme w-fit"
 >
     <h3>
         {message}

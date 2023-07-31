@@ -10,5 +10,5 @@
 >
     <img {src} alt="Promptly logo" title="Promptly" width="33" height="50" />
 
-    <span class="text-2xl">Promptly</span>
+    <span class="text-2xl font-bold">Promptly</span>
 </a>

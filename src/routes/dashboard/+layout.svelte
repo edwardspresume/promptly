@@ -1,7 +1,4 @@
 <script lang="ts">
-    import { dev } from '$app/environment';
-    import { inject } from '@vercel/analytics';
-
     import { SvelteToast } from '@zerodevx/svelte-toast';
 
     import type { LayoutData } from './$types';
@@ -12,8 +9,6 @@
     import FeedbackForm from '$dashboardComponents/Forms/FeedbackForm.svelte';
 
     export let data: LayoutData;
-
-    inject({ mode: dev ? 'development' : 'production' });
 </script>
 
 <div

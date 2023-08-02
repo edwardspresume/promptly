@@ -86,7 +86,7 @@
         try {
             isLoading = true;
 
-            const response = await fetch('/api/refinePrompt', {
+            const response = await fetch('/dashboard/api/refinePrompt', {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain' },
                 body: promptText,

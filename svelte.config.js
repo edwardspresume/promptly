@@ -16,12 +16,12 @@ const config = {
         alias: {
             $assets: 'src/assets',
 
-            $dashboardComponents: 'src/routes/dashboard/lib/components',
-            $dashboardStores: 'src/routes/dashboard/lib/stores',
-            $dashboardUtils: 'src/routes/dashboard/lib/utils',
-            $dashboardData: 'src/routes/dashboard/lib/data',
-            $dashboardTypes: 'src/routes/dashboard/types',
-            $dashboardAssets: 'src/routes/dashboard/assets',
+            $dashboardComponents: 'src/routes/(app)/dashboard/lib/components',
+            $dashboardStores: 'src/routes/(app)/dashboard/lib/stores',
+            $dashboardUtils: 'src/routes/(app)/dashboard/lib/utils',
+            $dashboardData: 'src/routes/(app)/dashboard/lib/data',
+            $dashboardTypes: 'src/routes/(app)/dashboard/types',
+            $dashboardAssets: 'src/routes/(app)/dashboard/assets',
         },
     },
 

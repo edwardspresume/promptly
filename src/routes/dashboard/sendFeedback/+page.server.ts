@@ -1,6 +1,6 @@
 import { message, superValidate } from 'sveltekit-superforms/server';
 
-import type { Actions } from '../$types';
+import type { Actions } from './$types';
 
 import { FeedbackSchema } from '$dashboardUtils/validation/feedbackSchema';
 import { error } from '@sveltejs/kit';

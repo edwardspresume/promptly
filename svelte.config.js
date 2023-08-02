@@ -16,10 +16,10 @@ const config = {
         alias: {
             $assets: 'src/assets',
 
-            $dashboardComponents: 'src/routes/dashboard/components',
-            $dashboardStores: 'src/routes/dashboard/stores',
-            $dashboardUtils: 'src/routes/dashboard/utils',
-            $dashboardData: 'src/routes/dashboard/data',
+            $dashboardComponents: 'src/routes/dashboard/lib/components',
+            $dashboardStores: 'src/routes/dashboard/lib/stores',
+            $dashboardUtils: 'src/routes/dashboard/lib/utils',
+            $dashboardData: 'src/routes/dashboard/lib/data',
             $dashboardTypes: 'src/routes/dashboard/types',
             $dashboardAssets: 'src/routes/dashboard/assets',
         },

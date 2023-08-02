@@ -15,6 +15,8 @@ const config = {
 
         alias: {
             $assets: 'src/assets',
+            $globalComponents: 'src/lib/components',
+            $globalStyles: 'src/styles/global.postcss',
 
             $dashboardComponents: 'src/routes/(app)/dashboard/lib/components',
             $dashboardStores: 'src/routes/(app)/dashboard/lib/stores',

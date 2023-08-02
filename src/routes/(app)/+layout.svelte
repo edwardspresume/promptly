@@ -3,7 +3,7 @@
 
     import type { LayoutData } from './$types';
 
-    import './styles/app.postcss';
+    import '$globalStyles';
 
     import AppHeader from '$dashboardComponents/AppHeader/AppHeader.svelte';
     import FeedbackForm from '$dashboardComponents/Forms/FeedbackForm.svelte';

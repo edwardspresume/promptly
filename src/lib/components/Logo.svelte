@@ -1,11 +1,14 @@
 <script>
     import src from '$assets/logo_3_small.png';
+
+    export let href;
+    export let title;
 </script>
 
 <a
-    href="/dashboard"
-    title="Go to homepage"
-    aria-label="Go to homepage"
+    {href}
+    {title}
+    aria-label={title}
     class="flex items-center gap-1"
 >
     <img {src} alt="Promptly logo" title="Promptly" width="33" height="50" />

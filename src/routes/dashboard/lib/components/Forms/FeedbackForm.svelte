@@ -45,7 +45,7 @@
     <form
         use:enhance
         method="POST"
-        action="/sendFeedback"
+        action="./sendFeedback"
         aria-label="Send feedback"
         class="grid gap-4"
     >

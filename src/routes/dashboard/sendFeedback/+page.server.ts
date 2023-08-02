@@ -14,7 +14,7 @@ export const actions: Actions = {
         const { message: feedbackMessage } = form.data;
 
         try {
-            const response = await fetch('/api/sendFeedbackToEmail', {
+            const response = await fetch('./api/sendFeedbackToEmail', {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain' },
                 body: feedbackMessage,

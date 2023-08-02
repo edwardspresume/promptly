@@ -5,18 +5,18 @@
 <ul class="flex gap-3">
     <li>
         <a
-            href="/"
+            href="/dashboard"
             aria-label="Go to Prompts Page"
-            aria-current={$page.url.pathname === '/' ? 'page' : undefined}
+            aria-current={$page.url.pathname === '/dashboard' ? 'page' : undefined}
             class="transition-colors duration-200 hover:text-violet-600 dark:hover:text-violet-400"
             >Prompts</a
         >
     </li>
     <li>
         <a
-            href="/tags"
+            href="/dashboard/tags"
             aria-label="Go to Tags Page"
-            aria-current={$page.url.pathname === '/tags' ? 'page' : undefined}
+            aria-current={$page.url.pathname === '/dashboard/tags' ? 'page' : undefined}
             class="transition-colors duration-200 hover:text-violet-600 dark:hover:text-violet-400"
             >Tags</a
         >

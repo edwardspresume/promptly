@@ -3,7 +3,7 @@
 </script>
 
 <a
-    href="/"
+    href="/dashboard"
     title="Go to homepage"
     aria-label="Go to homepage"
     class="flex items-center gap-1"

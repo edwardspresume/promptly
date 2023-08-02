@@ -49,7 +49,7 @@
         aria-label="Send feedback"
         class="grid gap-4"
     >
-        <h2 class="text-white">
+        <h2 class="text-primary">
             Let me know if you experience any issues or have any suggestions to
             improve this site
         </h2>

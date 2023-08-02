@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
-    import type { TagSchema } from '$types';
+    import type { TagSchema } from '$dashboardTypes';
 
     export let tag: TagSchema;
 

@@ -1,11 +1,11 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
-    import tagsStore from '$stores/tagStore';
-    import type { ConfirmationInfo, TagSchema } from '$types';
+    import tagsStore from '$dashboardStores/tagStore';
+    import type { ConfirmationInfo, TagSchema } from '$dashboardTypes';
 
-    import DeleteItemBtn from '$components/General/DeleteItemBtn.svelte';
-    import ListItem from '$components/General/ListItem.svelte';
+    import DeleteItemBtn from '$dashboardComponents/General/DeleteItemBtn.svelte';
+    import ListItem from '$dashboardComponents/General/ListItem.svelte';
 
     export let tag: TagSchema;
 

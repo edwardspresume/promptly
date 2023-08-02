@@ -3,18 +3,18 @@
 
     import { writable } from 'svelte/store';
 
-    import { notifyError, notifySuccess } from '$utils/toast';
-    import { PromptValidationSchema } from '$utils/validation/promptValidationSchema';
+    import { notifyError, notifySuccess } from '$dashboardUtils/toast';
+    import { PromptValidationSchema } from '$dashboardUtils/validation/promptValidationSchema';
 
-    import promptsStore from '$stores/promptsStore';
-    import tagsStore from '$stores/tagStore';
+    import promptsStore from '$dashboardStores/promptsStore';
+    import tagsStore from '$dashboardStores/tagStore';
 
-    import TagSelector from '$components/Filters/TagSelector.svelte';
-    import SubmitButton from '$components/Forms/SubmitButton.svelte';
-    import TextArea from '$components/Forms/TextArea.svelte';
-    import TextInput from '$components/Forms/TextInput.svelte';
-    import BaseModal from '$components/Modals/BaseModal.svelte';
-    import FavoriteToggleBtn from '$components/Prompts/FavoriteToggleBtn.svelte';
+    import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
+    import SubmitButton from '$dashboardComponents/Forms/SubmitButton.svelte';
+    import TextArea from '$dashboardComponents/Forms/TextArea.svelte';
+    import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
+    import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
+    import FavoriteToggleBtn from '$dashboardComponents/Prompts/FavoriteToggleBtn.svelte';
 
     export let promptCreationModalRef: HTMLDialogElement;
     export let promptCreationFormData;

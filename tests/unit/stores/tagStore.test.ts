@@ -2,11 +2,11 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { get } from 'svelte/store';
 
-import defaultTags from '$data/defaultTags';
-import { createTagsStore } from '$stores/tagStore';
-import type { TagStore } from '$types';
-import { LocalStorageKeys } from '$utils/localStorage';
-import { compareStrings } from '$utils/sortItems';
+import defaultTags from '$dashboardData/defaultTags';
+import { createTagsStore } from '$dashboardStores/tagStore';
+import type { TagStore } from '$dashboardTypes';
+import { LocalStorageKeys } from '$dashboardUtils/localStorage';
+import { compareStrings } from '$dashboardUtils/sortItems';
 
 describe('Tag Storage Functionality', () => {
     let tagsStore: TagStore;

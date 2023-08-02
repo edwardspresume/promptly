@@ -1,17 +1,17 @@
 <script lang="ts">
     import { superForm } from 'sveltekit-superforms/client';
 
-    import type { TagSchema } from '$types';
+    import type { TagSchema } from '$dashboardTypes';
 
-    import { notifySuccess } from '$utils/toast';
-    import { TagValidationSchema } from '$utils/validation/tagValidationSchema';
+    import { notifySuccess } from '$dashboardUtils/toast';
+    import { TagValidationSchema } from '$dashboardUtils/validation/tagValidationSchema';
 
-    import tagsStore from '$stores/tagStore';
+    import tagsStore from '$dashboardStores/tagStore';
 
     // Import components
-    import SubmitButton from '$components/Forms/SubmitButton.svelte';
-    import TextInput from '$components/Forms/TextInput.svelte';
-    import BaseModal from '$components/Modals/BaseModal.svelte';
+    import SubmitButton from '$dashboardComponents/Forms/SubmitButton.svelte';
+    import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
+    import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
 
     // Props
     export let tagEditModalRef: HTMLDialogElement;

@@ -6,7 +6,7 @@ import {
     LocalStorageKeys,
     saveArrayToLocalStorage,
     updateStoreAndSaveToStorage,
-} from '$utils/localStorage';
+} from '$dashboardUtils/localStorage';
 
 // Overriding the environment variable to force browser mode
 vi.mock('$app/environment', () => ({ browser: true }));

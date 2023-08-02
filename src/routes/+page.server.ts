@@ -2,7 +2,7 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 
 import type { Actions, PageServerLoad } from './$types';
 
-import { PromptValidationSchema } from '$utils/validation/promptValidationSchema';
+import { PromptValidationSchema } from '$dashboardUtils/validation/promptValidationSchema';
 
 export const load = (async (event) => {
     const promptForm = await superValidate(event, PromptValidationSchema);

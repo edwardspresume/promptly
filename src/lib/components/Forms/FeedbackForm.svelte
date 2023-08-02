@@ -1,12 +1,12 @@
 <script lang="ts">
     import { superForm } from 'sveltekit-superforms/client';
 
-    import { notifyError, notifySuccess } from '$utils/toast';
-    import { FeedbackSchema } from '$utils/validation/feedbackSchema';
+    import { notifyError, notifySuccess } from '$dashboardUtils/toast';
+    import { FeedbackSchema } from '$dashboardUtils/validation/feedbackSchema';
 
-    import { isFeedbackModalOpen } from '$stores/feedbackModalStore';
+    import { isFeedbackModalOpen } from '$dashboardStores/feedbackModalStore';
 
-    import BaseModal from '$components/Modals/BaseModal.svelte';
+    import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
     import SubmitButton from './SubmitButton.svelte';
     import TextArea from './TextArea.svelte';
 

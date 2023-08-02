@@ -1,7 +1,7 @@
 <script lang="ts">
     import { fly } from 'svelte/transition';
 
-    import { onOutsideClick } from '$utils/functions';
+    import { onOutsideClick } from '$dashboardUtils/functions';
 
     import AccountPopUpMenuItems from './AccountPopUpMenuItems.svelte';
 

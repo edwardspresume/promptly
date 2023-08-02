@@ -3,7 +3,7 @@ import sanitizeHtml from 'sanitize-html';
 import { SECRET_OPENAI_API_KEY } from '$env/static/private';
 import type { RequestHandler } from './$types';
 
-import { PromptValidationSchema } from '$utils/validation/promptValidationSchema';
+import { PromptValidationSchema } from '$dashboardUtils/validation/promptValidationSchema';
 
 /**
  * Function to improve the prompt using OpenAI API

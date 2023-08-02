@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { darkModePreferenceStore } from '$stores/darkModePreferenceStore';
+    import { darkModePreferenceStore } from '$dashboardStores/darkModePreferenceStore';
 
-    import Icon from '$components/General/Icon.svelte';
+    import Icon from '$dashboardComponents/General/Icon.svelte';
 
     const currentDarkModePreference =
         darkModePreferenceStore?.currentPreference;

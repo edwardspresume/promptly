@@ -2,7 +2,7 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 
 import type { Actions, PageServerLoad } from './$types';
 
-import { TagValidationSchema } from '$utils/validation/tagValidationSchema';
+import { TagValidationSchema } from '$dashboardUtils/validation/tagValidationSchema';
 
 export const load = (async (event) => {
     const tagForm = await superValidate(event, TagValidationSchema);

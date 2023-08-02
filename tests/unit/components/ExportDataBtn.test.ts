@@ -2,14 +2,14 @@ import { JSDOM } from 'jsdom';
 import * as store from 'svelte/store';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import promptsStore from '$stores/promptsStore';
-import tagsStore from '$stores/tagStore';
+import promptsStore from '$dashboardStores/promptsStore';
+import tagsStore from '$dashboardStores/tagStore';
 
 import {
     downloadData,
     exportPromptsAndTagsData,
     prepareDataForExport,
-} from '$components/AppHeader/ExportDataBtn.svelte';
+} from '$dashboardComponents/AppHeader/ExportDataBtn.svelte';
 
 let getSpy: any;
 let downloadLinkSpy: any;

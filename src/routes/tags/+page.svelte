@@ -1,16 +1,16 @@
 <script lang="ts">
     import type { PageData } from './$types';
 
-    import type { TagSchema } from '$types';
+    import type { TagSchema } from '$dashboardTypes';
 
-    import { tagSortOptions } from '$data/SortOptions';
-    import tagsStore from '$stores/tagStore';
+    import { tagSortOptions } from '$dashboardData/SortOptions';
+    import tagsStore from '$dashboardStores/tagStore';
 
-    import SearchBar from '$components/Filters/SearchBar.svelte';
-    import SortSelector from '$components/Filters/SortSelector.svelte';
-    import TagCreationForm from '$components/Forms/TagCreationForm.svelte';
-    import TagEditForm from '$components/Forms/TagEditForm.svelte';
-    import TagList from '$components/Tags/TagList.svelte';
+    import SearchBar from '$dashboardComponents/Filters/SearchBar.svelte';
+    import SortSelector from '$dashboardComponents/Filters/SortSelector.svelte';
+    import TagCreationForm from '$dashboardComponents/Forms/TagCreationForm.svelte';
+    import TagEditForm from '$dashboardComponents/Forms/TagEditForm.svelte';
+    import TagList from '$dashboardComponents/Tags/TagList.svelte';
 
     export let data: PageData;
 

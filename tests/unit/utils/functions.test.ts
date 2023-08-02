@@ -11,7 +11,7 @@ import {
     vi,
 } from 'vitest';
 
-import { onOutsideClick } from '$utils/functions';
+import { onOutsideClick } from '$dashboardUtils/functions';
 
 // Tests onOutsideClick util correctly calls callback
 // when user interacts outside element

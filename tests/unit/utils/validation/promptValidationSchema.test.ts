@@ -5,7 +5,7 @@ import {
     MAX_PROMPT_TITLE_LENGTH,
     MIN_PROMPT_TEXT_LENGTH,
     PromptValidationSchema,
-} from '$utils/validation/promptValidationSchema';
+} from '$dashboardUtils/validation/promptValidationSchema';
 
 /**
  * Generates an object representing a valid prompt.

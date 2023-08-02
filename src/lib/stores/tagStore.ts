@@ -1,17 +1,17 @@
 import { derived, get, writable } from 'svelte/store';
 
-import type { TagSchema, TagStore } from '$types';
+import type { TagSchema, TagStore } from '$dashboardTypes';
 
-import defaultTags from '$data/defaultTags';
+import defaultTags from '$dashboardData/defaultTags';
 
 import {
     LocalStorageKeys,
     loadArrayFromLocalStorage,
     updateStoreAndSaveToStorage,
-} from '$utils/localStorage';
+} from '$dashboardUtils/localStorage';
 
-import { createDate } from '$utils/functions';
-import { sortItems } from '$utils/sortItems';
+import { createDate } from '$dashboardUtils/functions';
+import { sortItems } from '$dashboardUtils/sortItems';
 
 /**
  * This function creates a tags store using the specified local storage key.

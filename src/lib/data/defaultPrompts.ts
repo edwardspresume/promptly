@@ -1,4 +1,4 @@
-import type { PromptSchema } from '$types';
+import type { PromptSchema } from '$dashboardTypes';
 
 const defaultPrompts: PromptSchema[] = [
     {

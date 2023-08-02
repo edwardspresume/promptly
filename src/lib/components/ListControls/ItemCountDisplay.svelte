@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ItemType } from '$types';
+    import type { ItemType } from '$dashboardTypes';
 
     export let itemType: ItemType;
     export let totalItemCount: number;

@@ -1,4 +1,4 @@
-import type { SortOption } from '$types';
+import type { SortOption } from '$dashboardTypes';
 
 /**
  * Creates a sort option object.

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
-    import Icon from '$components/General/Icon.svelte';
+    import Icon from '$dashboardComponents/General/Icon.svelte';
 
     const dispatch = createEventDispatcher();
 

@@ -1,7 +1,7 @@
 <script>
-    import { isFeedbackModalOpen } from '$stores/feedbackModalStore';
+    import { isFeedbackModalOpen } from '$dashboardStores/feedbackModalStore';
 
-    import Icon from '$components/General/Icon.svelte';
+    import Icon from '$dashboardComponents/General/Icon.svelte';
     import ExportDataBtn from './ExportDataBtn.svelte';
     import ThemeToggleBtn from './ThemeToggleBtn.svelte';
 </script>

@@ -8,8 +8,8 @@
 
     import '../styles/app.postcss';
 
-    import AppHeader from '$components/AppHeader/AppHeader.svelte';
-    import FeedbackForm from '$components/Forms/FeedbackForm.svelte';
+    import AppHeader from '$dashboardComponents/AppHeader/AppHeader.svelte';
+    import FeedbackForm from '$dashboardComponents/Forms/FeedbackForm.svelte';
 
     export let data: LayoutData;
 

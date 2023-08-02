@@ -2,11 +2,11 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { get } from 'svelte/store';
 
-import defaultPrompts from '$data/defaultPrompts';
-import { createPromptsStore } from '$stores/promptsStore';
-import type { PromptStore } from '$types';
-import { LocalStorageKeys } from '$utils/localStorage';
-import { compareStrings } from '$utils/sortItems';
+import defaultPrompts from '$dashboardData/defaultPrompts';
+import { createPromptsStore } from '$dashboardStores/promptsStore';
+import type { PromptStore } from '$dashboardTypes';
+import { LocalStorageKeys } from '$dashboardUtils/localStorage';
+import { compareStrings } from '$dashboardUtils/sortItems';
 
 describe('Prompts Store Functionality', () => {
     let promptsStore: PromptStore;

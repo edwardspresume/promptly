@@ -1,12 +1,12 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
-    import type { PromptSchema } from '$types';
+    import type { PromptSchema } from '$dashboardTypes';
 
-    import promptsStore from '$stores/promptsStore';
+    import promptsStore from '$dashboardStores/promptsStore';
 
-    import Icon from '$components/General/Icon.svelte';
-    import ListItem from '$components/General/ListItem.svelte';
+    import Icon from '$dashboardComponents/General/Icon.svelte';
+    import ListItem from '$dashboardComponents/General/ListItem.svelte';
     import CopyPromptTextBtn from './CopyPromptTextBtn.svelte';
     import FavoriteToggleBtn from './FavoriteToggleBtn.svelte';
 

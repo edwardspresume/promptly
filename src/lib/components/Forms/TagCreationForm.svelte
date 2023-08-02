@@ -1,14 +1,14 @@
 <script lang="ts">
     import { superForm } from 'sveltekit-superforms/client';
 
-    import { notifySuccess } from '$utils/toast';
-    import { TagValidationSchema } from '$utils/validation/tagValidationSchema';
+    import { notifySuccess } from '$dashboardUtils/toast';
+    import { TagValidationSchema } from '$dashboardUtils/validation/tagValidationSchema';
 
-    import tagsStore from '$stores/tagStore';
+    import tagsStore from '$dashboardStores/tagStore';
 
-    import SubmitButton from '$components/Forms/SubmitButton.svelte';
-    import TextInput from '$components/Forms/TextInput.svelte';
-    import BaseModal from '$components/Modals/BaseModal.svelte';
+    import SubmitButton from '$dashboardComponents/Forms/SubmitButton.svelte';
+    import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
+    import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
 
     export let tagCreationModalRef: HTMLDialogElement;
     export let tagCreationFormData;

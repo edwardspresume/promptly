@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
     MAX_TAG_NAME_LENGTH,
     TagValidationSchema,
-} from '$utils/validation/tagValidationSchema';
+} from '$dashboardUtils/validation/tagValidationSchema';
 
 /**
  * Generates an object representing a valid tag.

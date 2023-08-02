@@ -1,9 +1,9 @@
 <script lang="ts">
     import { onDestroy } from 'svelte';
 
-    import type { ItemType } from '$types';
+    import type { ItemType } from '$dashboardTypes';
 
-    import Icon from '$components/General/Icon.svelte';
+    import Icon from '$dashboardComponents/General/Icon.svelte';
 
     export let itemType: ItemType;
     export let itemContainerRef: HTMLElement;

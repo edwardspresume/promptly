@@ -5,7 +5,7 @@ import {
     compareDate,
     compareStrings,
     sortItems,
-} from '$utils/sortItems';
+} from '$dashboardUtils/sortItems';
 
 describe('compareStrings', () => {
     it('compares strings correctly', () => {

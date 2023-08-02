@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { handleKeyDown } from '$utils/functions';
+    import { handleKeyDown } from '$dashboardUtils/functions';
 
     export let title: string;
     export let onItemClickOrKeyPress: () => void;

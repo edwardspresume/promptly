@@ -2,7 +2,7 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 
 import type { Actions } from '../$types';
 
-import { FeedbackSchema } from '$utils/validation/feedbackSchema';
+import { FeedbackSchema } from '$dashboardUtils/validation/feedbackSchema';
 import { error } from '@sveltejs/kit';
 
 export const actions: Actions = {

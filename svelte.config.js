@@ -14,12 +14,14 @@ const config = {
         adapter: adapter(),
 
         alias: {
-            $components: 'src/lib/components',
-            $stores: 'src/lib/stores',
-            $utils: 'src/lib/utils',
-            $data: 'src/lib/data',
-            $types: 'src/types',
             $assets: 'src/assets',
+
+            $dashboardComponents: 'src/routes/dashboard/components',
+            $dashboardStores: 'src/routes/dashboard/stores',
+            $dashboardUtils: 'src/routes/dashboard/utils',
+            $dashboardData: 'src/routes/dashboard/data',
+            $dashboardTypes: 'src/routes/dashboard/types',
+            $dashboardAssets: 'src/routes/dashboard/assets',
         },
     },
 

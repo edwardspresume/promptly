@@ -1,12 +1,12 @@
 <script lang="ts">
     import type { Writable } from 'svelte/store';
 
-    import type { TagSchema } from '$types';
+    import type { TagSchema } from '$dashboardTypes';
 
-    import { onOutsideClick } from '$utils/functions';
+    import { onOutsideClick } from '$dashboardUtils/functions';
 
-    import promptsStore from '$stores/promptsStore';
-    import tagsStore from '$stores/tagStore';
+    import promptsStore from '$dashboardStores/promptsStore';
+    import tagsStore from '$dashboardStores/tagStore';
 
     import SelectedTag from './SelectedTag.svelte';
     import Tag from './Tag.svelte';

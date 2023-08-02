@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type { ConfirmationInfo } from '$types';
-    import { closeDialogOnOutsideClick } from '$utils/functions';
-    import { notifySuccess } from '$utils/toast';
+    import type { ConfirmationInfo } from '$dashboardTypes';
+    import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
+    import { notifySuccess } from '$dashboardUtils/toast';
 
-    import Icon from '$components/General/Icon.svelte';
+    import Icon from '$dashboardComponents/General/Icon.svelte';
 
     export let confirmationModalRef: HTMLDialogElement;
     export let confirmationInfo: ConfirmationInfo;

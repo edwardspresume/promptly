@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { ItemType } from '$types';
+    import type { ItemType } from '$dashboardTypes';
 
-    import promptsStore from '$stores/promptsStore';
-    import tagsStore from '$stores/tagStore';
+    import promptsStore from '$dashboardStores/promptsStore';
+    import tagsStore from '$dashboardStores/tagStore';
 
     export let searchTargetType: ItemType;
 

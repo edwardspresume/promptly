@@ -1,15 +1,15 @@
 <script lang="ts">
     import type { PageData } from './$types';
 
-    import type { PromptSchema } from '$types';
+    import type { PromptSchema } from '$dashboardTypes';
 
-    import FilterDisplayButton from '$components/Filters/FilterDisplayButton.svelte';
-    import SearchBar from '$components/Filters/SearchBar.svelte';
-    import PromptCreationForm from '$components/Forms/PromptCreationForm.svelte';
-    import PromptEditForm from '$components/Forms/PromptEditForm.svelte';
-    import PromptsFiltersModal from '$components/Modals/PromptsFiltersModal.svelte';
-    import PromptList from '$components/Prompts/PromptList.svelte';
-    import TabGroup from '$components/Prompts/TabGroup.svelte';
+    import FilterDisplayButton from '$dashboardComponents/Filters/FilterDisplayButton.svelte';
+    import SearchBar from '$dashboardComponents/Filters/SearchBar.svelte';
+    import PromptCreationForm from '$dashboardComponents/Forms/PromptCreationForm.svelte';
+    import PromptEditForm from '$dashboardComponents/Forms/PromptEditForm.svelte';
+    import PromptsFiltersModal from '$dashboardComponents/Modals/PromptsFiltersModal.svelte';
+    import PromptList from '$dashboardComponents/Prompts/PromptList.svelte';
+    import TabGroup from '$dashboardComponents/Prompts/TabGroup.svelte';
 
     export let data: PageData;
 

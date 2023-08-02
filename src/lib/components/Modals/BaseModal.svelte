@@ -3,7 +3,7 @@
 
     import { createEventDispatcher } from 'svelte';
 
-    import { closeDialogOnOutsideClick } from '$utils/functions';
+    import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
 
     import CloseModalBtn from './CloseModalBtn.svelte';
 

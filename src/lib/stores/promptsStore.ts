@@ -1,16 +1,16 @@
 import { derived, get, writable } from 'svelte/store';
 
-import defaultPrompts from '$data/defaultPrompts';
-import type { PromptSchema, PromptStore } from '$types';
+import defaultPrompts from '$dashboardData/defaultPrompts';
+import type { PromptSchema, PromptStore } from '$dashboardTypes';
 
 import {
     LocalStorageKeys,
     loadArrayFromLocalStorage,
     updateStoreAndSaveToStorage,
-} from '$utils/localStorage';
+} from '$dashboardUtils/localStorage';
 
-import { createDate } from '$utils/functions';
-import { sortItems } from '$utils/sortItems';
+import { createDate } from '$dashboardUtils/functions';
+import { sortItems } from '$dashboardUtils/sortItems';
 
 /**
  * This function creates a prompts store using the specified local storage key.

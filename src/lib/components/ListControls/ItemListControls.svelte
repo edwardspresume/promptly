@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type { ItemType } from '$types';
+    import type { ItemType } from '$dashboardTypes';
 
-    import AddItemBtn from '$components/ListControls/AddItemBtn.svelte';
-    import DeleteAllItemsBtn from '$components/ListControls/DeleteAllItemsBtn.svelte';
-    import ScrollToTopBtn from '$components/ListControls/ScrollToTopBtn.svelte';
+    import AddItemBtn from '$dashboardComponents/ListControls/AddItemBtn.svelte';
+    import DeleteAllItemsBtn from '$dashboardComponents/ListControls/DeleteAllItemsBtn.svelte';
+    import ScrollToTopBtn from '$dashboardComponents/ListControls/ScrollToTopBtn.svelte';
 
     export let itemType: ItemType;
     export let totalItemCount: number;

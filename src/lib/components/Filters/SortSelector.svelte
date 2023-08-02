@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { PromptStore, SortOption, TagStore } from '$types';
+    import type { PromptStore, SortOption, TagStore } from '$dashboardTypes';
 
     // The store to which the selected sort option should be applied.
     export let store: PromptStore | TagStore;

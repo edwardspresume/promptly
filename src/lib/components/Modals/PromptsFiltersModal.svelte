@@ -1,15 +1,15 @@
 <script lang="ts">
     import { writable } from 'svelte/store';
 
-    import { closeDialogOnOutsideClick } from '$utils/functions';
+    import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
 
-    import { promptSortOptions } from '$data/SortOptions';
+    import { promptSortOptions } from '$dashboardData/SortOptions';
 
-    import promptsStore from '$stores/promptsStore';
-    import tagsStore from '$stores/tagStore';
+    import promptsStore from '$dashboardStores/promptsStore';
+    import tagsStore from '$dashboardStores/tagStore';
 
-    import SortSelector from '$components/Filters/SortSelector.svelte';
-    import TagSelector from '$components/Filters/TagSelector.svelte';
+    import SortSelector from '$dashboardComponents/Filters/SortSelector.svelte';
+    import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
     import CloseModalBtn from './CloseModalBtn.svelte';
 
     export let promptsFiltersModalRef: HTMLDialogElement;

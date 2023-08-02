@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { createDarkModePreferenceStore } from '$stores/darkModePreferenceStore';
-import { LocalStorageKeys } from '$utils/localStorage';
+import { createDarkModePreferenceStore } from '$dashboardStores/darkModePreferenceStore';
+import { LocalStorageKeys } from '$dashboardUtils/localStorage';
 
 // Overriding the environment variable to force browser mode
 vi.mock('$app/environment', () => ({ browser: true }));

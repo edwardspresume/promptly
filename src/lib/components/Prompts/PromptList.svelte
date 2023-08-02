@@ -1,11 +1,11 @@
 <script lang="ts">
-    import promptsStore from '$stores/promptsStore';
-    import type { ConfirmationInfo, PromptSchema } from '$types';
+    import promptsStore from '$dashboardStores/promptsStore';
+    import type { ConfirmationInfo, PromptSchema } from '$dashboardTypes';
 
-    import StatusMessage from '$components/General/StatusMessage.svelte';
-    import ItemCountDisplay from '$components/ListControls/ItemCountDisplay.svelte';
-    import ItemListControls from '$components/ListControls/ItemListControls.svelte';
-    import ConfirmationModal from '$components/Modals/ConfirmationModal.svelte';
+    import StatusMessage from '$dashboardComponents/General/StatusMessage.svelte';
+    import ItemCountDisplay from '$dashboardComponents/ListControls/ItemCountDisplay.svelte';
+    import ItemListControls from '$dashboardComponents/ListControls/ItemListControls.svelte';
+    import ConfirmationModal from '$dashboardComponents/Modals/ConfirmationModal.svelte';
     import PromptItem from './PromptItem.svelte';
 
     export let isShowingOnlyFavorites: boolean = false;

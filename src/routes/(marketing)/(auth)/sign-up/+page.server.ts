@@ -1,4 +1,4 @@
-import { superValidate } from 'sveltekit-superforms/server';
+import { message, superValidate } from 'sveltekit-superforms/server';
 
 import type { Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
@@ -13,6 +13,10 @@ export const load = (async (event) => {
 
 export const actions: Actions = {
     signUp: async ({ request }) => {
+        const form = await superValidate(request, EmailAuthSchema);
+
+        if (!form.valid) return message(form, 'Invalid form');
+
         return {
             status: 200,
             body: {

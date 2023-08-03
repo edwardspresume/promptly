@@ -1,9 +1,28 @@
 <script>
+    import { superForm } from 'sveltekit-superforms/client';
+
+    import { EmailAuthSchema } from '$marketingUtils/validation/EmailAuthSchema';
+
     import Icon from '$globalComponents/Icon.svelte';
     import SubmitButton from '$globalComponents/SubmitButton.svelte';
+
+    export let authFormData;
+
+    const { form, errors, enhance, delayed } = superForm(authFormData, {
+        id: 'signUp',
+        resetForm: true,
+        taintedMessage: null,
+        validators: EmailAuthSchema,
+    });
 </script>
 
-<form method="Post" action="?/signUp" class="grid gap-5">
+<form
+    use:enhance
+    method="Post"
+    action="?/signUp"
+    aria-label="Sign up Form"
+    class="grid gap-5"
+>
     <fieldset>
         <button
             type="button"
@@ -26,13 +45,17 @@
         <span>Email</span>
 
         <input
+            bind:value={$form.email}
             type="email"
             name="email"
+            aria-label="Email"
             autocomplete="email"
             enterkeyhint="enter"
             placeholder="you@example.com"
         />
+
+        <small class="text-red-500">{$errors.email ?? []}</small>
     </label>
 
-    <SubmitButton title="Sign up" extraStyles="mt-5" />
+    <SubmitButton title="Sign up" extraStyles="mt-5" disabled={$delayed} />
 </form>

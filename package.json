@@ -45,6 +45,8 @@
   },
   "type": "module",
   "dependencies": {
+    "@supabase/auth-helpers-sveltekit": "^0.10.2",
+    "@supabase/supabase-js": "^2.31.0",
     "@vercel/analytics": "^1.0.1",
     "nodemailer": "^6.9.4",
     "openai": "^3.3.0",

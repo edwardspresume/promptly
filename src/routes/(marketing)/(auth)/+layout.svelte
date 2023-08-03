@@ -14,7 +14,7 @@
     </main>
 
     <aside
-        class="hidden min-h-full bg-center bg-cover lg:block"
+        class="hidden min-h-full bg-center bg-cover border-l border-gray-700 lg:block"
         style="background-image: url('/test.png');"
     />
 </div>

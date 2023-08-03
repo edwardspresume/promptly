@@ -8,12 +8,15 @@
 
     export let authFormData;
 
-    const { form, errors, enhance, delayed } = superForm(authFormData, {
-        id: 'signUp',
-        resetForm: true,
-        taintedMessage: null,
-        validators: EmailAuthSchema,
-    });
+    const { form, errors, enhance, delayed, message } = superForm(
+        authFormData,
+        {
+            id: 'signUp',
+            resetForm: true,
+            taintedMessage: null,
+            validators: EmailAuthSchema,
+        }
+    );
 </script>
 
 <form
@@ -23,6 +26,12 @@
     aria-label="Sign up Form"
     class="grid gap-5"
 >
+    {#if $message}
+        <p class="p-3 text-center bg-green-600 rounded-md font-bold">
+            {$message}
+        </p>
+    {/if}
+
     <fieldset>
         <button
             type="button"

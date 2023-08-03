@@ -9,7 +9,7 @@ const MESSAGES = {
     INVALID_EMAIL: 'Invalid email',
     SERVER_ERROR: 'Server error. Try again later',
     CHECK_EMAIL:
-        'Please check your email for a magic link to log into the website.',
+        'Sign up successful! Please check your email for a magic link to log into your dashboard',
 };
 
 export const load = (async (event) => {
@@ -19,7 +19,7 @@ export const load = (async (event) => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-    signUp: async ({ request, locals: { supabase } }) => {
+    signUp: async ({ request, url, locals: { supabase } }) => {
         const form = await superValidate(request, EmailAuthSchema);
 
         if (!form.valid) return message(form, MESSAGES.INVALID_EMAIL);
@@ -29,7 +29,7 @@ export const actions: Actions = {
         const { error } = await supabase.auth.signInWithOtp({
             email,
             options: {
-                emailRedirectTo: 'https://example.com/welcome',
+                emailRedirectTo: `${url.origin}/auth/callback`,
             },
         });
 

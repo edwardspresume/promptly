@@ -12,7 +12,7 @@ export const load = (async (event) => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-    signUp: async ({ fetch, session, body }) => {
+    signUp: async ({ request }) => {
         return {
             status: 200,
             body: {

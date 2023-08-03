@@ -34,5 +34,5 @@
         />
     </label>
 
-    <SubmitButton title="Sign up" />
+    <SubmitButton title="Sign up" buttonStyle="mt-5" />
 </form>

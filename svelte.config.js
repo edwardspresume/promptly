@@ -18,6 +18,9 @@ const config = {
             $globalComponents: 'src/lib/components',
             $globalStyles: 'src/styles/global.postcss',
 
+            $marketingUtils: 'src/routes/(marketing)/lib/utils',
+            $marketingComponents: 'src/routes/(marketing)/lib/components',
+
             $dashboardComponents: 'src/routes/(app)/dashboard/lib/components',
             $dashboardStores: 'src/routes/(app)/dashboard/lib/stores',
             $dashboardUtils: 'src/routes/(app)/dashboard/lib/utils',

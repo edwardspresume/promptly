@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { PageData } from './$types';
 
-    import Form from '../lib/components/Form.svelte';
-    import Header from '../lib/components/Header.svelte';
+    import Form from '$marketingComponents/Form.svelte';
+    import Header from '$marketingComponents/Header.svelte';
 
     export let data: PageData;
 </script>

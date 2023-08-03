@@ -9,7 +9,7 @@
     type="submit"
     aria-label={title}
     aria-disabled={disabled}
-    class="p-2 font-bold w-full text-white transition-colors duration-200 bg-indigo-500 rounded-md whitespace-nowrap hover:bg-indigo-700"
+    class="w-full p-3 font-bold text-white transition-colors duration-200 rounded-md bg-violet-600 whitespace-nowrap hover:bg-violet-700"
 >
     {title}
 </button>

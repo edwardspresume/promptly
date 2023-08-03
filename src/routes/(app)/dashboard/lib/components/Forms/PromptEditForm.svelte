@@ -14,7 +14,7 @@
     import tagsStore from '$dashboardStores/tagStore';
 
     import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
-    import SubmitButton from '$dashboardComponents/Forms/SubmitButton.svelte';
+    import SubmitButton from '$globalComponents/SubmitButton.svelte';
     import TextArea from '$dashboardComponents/Forms/TextArea.svelte';
     import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
     import DeleteItemBtn from '$dashboardComponents/General/DeleteItemBtn.svelte';

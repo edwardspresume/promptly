@@ -1,7 +1,7 @@
 <script lang="ts">
     import { notifySuccess } from '$dashboardUtils/toast';
 
-    import Icon from '$dashboardComponents/General/Icon.svelte';
+    import Icon from '$globalComponents/Icon.svelte';
 
     export let promptText: string;
     export let iconSize: number = 22;

@@ -3,7 +3,7 @@
     import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
     import { notifySuccess } from '$dashboardUtils/toast';
 
-    import Icon from '$dashboardComponents/General/Icon.svelte';
+    import Icon from '$globalComponents/Icon.svelte';
 
     export let confirmationModalRef: HTMLDialogElement;
     export let confirmationInfo: ConfirmationInfo;

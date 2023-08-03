@@ -7,7 +7,7 @@
     import { isFeedbackModalOpen } from '$dashboardStores/feedbackModalStore';
 
     import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
-    import SubmitButton from './SubmitButton.svelte';
+    import SubmitButton from '$globalComponents/SubmitButton.svelte';
     import TextArea from './TextArea.svelte';
 
     export let feedbackFormData;

@@ -1,17 +1,20 @@
 <script lang="ts">
     import type { LayoutData } from './$types';
 
-    import Logo from '$globalComponents/Logo.svelte';
-
+    import '$globalStyles';
 
     export let data: LayoutData;
 </script>
 
-<div class="h-[100dvh] bg-[#14284b]">
-    <header>
-        <Logo href='/dashboard' title='Go to homepage' />
-    </header>
-    <main>
+<div
+    class="grid grid-cols-1 lg:grid-cols-[minmax(0,40rem),1fr] min-h-[100dvh] items-center transition-colors duration-200 bg-primary text-primary"
+>
+    <main class="w-full max-w-xl p-4 mx-auto lg:p-16">
         <slot />
     </main>
+
+    <aside
+        class="hidden min-h-full bg-center bg-cover lg:block"
+        style="background-image: url('/test.png');"
+    />
 </div>

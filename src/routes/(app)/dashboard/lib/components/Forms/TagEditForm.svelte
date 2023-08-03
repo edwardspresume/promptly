@@ -9,7 +9,7 @@
     import tagsStore from '$dashboardStores/tagStore';
 
     // Import components
-    import SubmitButton from '$dashboardComponents/Forms/SubmitButton.svelte';
+    import SubmitButton from '$globalComponents/SubmitButton.svelte';
     import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
     import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
 

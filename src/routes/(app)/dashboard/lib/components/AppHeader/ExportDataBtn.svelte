@@ -1,9 +1,10 @@
 <script context="module" lang="ts">
+    import { get } from 'svelte/store';
+    
     import promptsStore from '$dashboardStores/promptsStore';
     import tagsStore from '$dashboardStores/tagStore';
-    import { get } from 'svelte/store';
 
-    import Icon from '$dashboardComponents/General/Icon.svelte';
+    import Icon from '$globalComponents/Icon.svelte';
 
     /**
      * Function to prepare data for export, creating a downloadable JSON file

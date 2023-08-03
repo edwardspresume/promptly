@@ -1,7 +1,7 @@
 <script lang="ts">
     import { removeLastToast } from '$dashboardUtils/toast';
 
-    import Icon from '$dashboardComponents/General/Icon.svelte';
+    import Icon from '$globalComponents/Icon.svelte';
 
     export let dialogElement: HTMLDialogElement;
 

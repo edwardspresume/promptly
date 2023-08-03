@@ -3,7 +3,7 @@
 
     import type { ItemType } from '$dashboardTypes';
 
-    import Icon from '$dashboardComponents/General/Icon.svelte';
+    import Icon from '$globalComponents/Icon.svelte';
 
     export let itemType: ItemType;
     export let itemContainerRef: HTMLElement;

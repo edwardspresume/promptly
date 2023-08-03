@@ -5,7 +5,7 @@
 
     import promptsStore from '$dashboardStores/promptsStore';
 
-    import Icon from '$dashboardComponents/General/Icon.svelte';
+    import Icon from '$globalComponents/Icon.svelte';
     import ListItem from '$dashboardComponents/General/ListItem.svelte';
     import CopyPromptTextBtn from './CopyPromptTextBtn.svelte';
     import FavoriteToggleBtn from './FavoriteToggleBtn.svelte';

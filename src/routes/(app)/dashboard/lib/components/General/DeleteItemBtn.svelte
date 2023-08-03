@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
-    import Icon from './Icon.svelte';
+    import Icon from '$globalComponents/Icon.svelte';
 
     export let iconSize: number = 22;
     export let buttonTitle: string = '';

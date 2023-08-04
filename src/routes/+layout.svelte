@@ -10,19 +10,13 @@
     $: ({ supabase, session } = data);
 
     $: if (session?.user) {
-        userSessionStore.set(session);
-
-        console.log('main layout:', session);
+        userSessionStore.set(session?.user);
     }
 
     onMount(() => {
         const {
             data: { subscription },
         } = supabase.auth.onAuthStateChange((event, _session) => {
-            if (_session?.user) {
-                userSessionStore.set(_session);
-            }
-
             if (_session?.expires_at !== session?.expires_at) {
                 invalidate('supabase:auth');
             }

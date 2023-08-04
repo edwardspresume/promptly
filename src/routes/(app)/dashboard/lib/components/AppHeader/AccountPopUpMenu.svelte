@@ -2,6 +2,7 @@
     import { fly } from 'svelte/transition';
 
     import { onOutsideClick } from '$dashboardUtils/functions';
+    import { userSessionStore } from '$globalStores/userSessionStore';
 
     import AccountPopUpMenuItems from './AccountPopUpMenuItems.svelte';
 
@@ -12,6 +13,11 @@
     $: accountPopUpMenuButtonTitle = isAccountPopUpMenuVisible
         ? 'Close account pop-up menu'
         : 'Open account pop-up menu';
+
+    let userAvatarUrl = $userSessionStore?.user_metadata?.avatar_url;
+    let userEmail = $userSessionStore?.email?.charAt(0).toUpperCase();
+    let userFirstName =
+        $userSessionStore?.user_metadata?.full_name?.split(' ')[0][0];
 </script>
 
 <div class="relative grid">
@@ -25,7 +31,15 @@
         class="w-12 h-12 border rounded-full bg-gradient-to-b from-blue-500 to-purple-500 dark:border-blue-500 border-violet-500"
         on:click|stopPropagation={() =>
             (isAccountPopUpMenuVisible = !isAccountPopUpMenuVisible)}
-    />
+    >
+        {#if userAvatarUrl}
+            <img src={userAvatarUrl} alt="User's avatar" class="rounded-full" />
+        {:else if userFirstName}
+            <span class="text-2xl">{userFirstName}</span>
+        {:else if userEmail}
+            <span class="text-2xl">{userEmail}</span>
+        {/if}
+    </button>
 
     {#if isAccountPopUpMenuVisible}
         <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->

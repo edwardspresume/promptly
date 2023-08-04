@@ -84,7 +84,7 @@ describe('sortItems', () => {
     });
 
     it('sorts items by isFavorited in descending order', () => {
-        const sortedItems = sortItems(items, 'favorite_status:ascending');
+        const sortedItems = sortItems(items, 'favoriteStatus:ascending');
 
         expect(sortedItems[0]?.isFavorited).toBe(true);
     });

@@ -44,7 +44,7 @@ export const promptSortOptions = [
     { label: 'Default', field: 'default', direction: 'default' },
     {
         label: 'Favorites',
-        field: 'favorite_status',
+        field: 'favoriteStatus',
         direction: 'ascending',
     },
     { label: 'Title: A-Z', field: 'title', direction: 'ascending' },

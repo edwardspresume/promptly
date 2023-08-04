@@ -81,7 +81,7 @@ export const sortItems = <T extends SortableItemProperties>(
         'updatedAt:ascending': (a, b) => compareDate(a.updatedAt, b.updatedAt),
         'updatedAt:descending': (a, b) => compareDate(b.updatedAt, a.updatedAt),
 
-        'favorite_status:ascending': (a, b) =>
+        'favoriteStatus:ascending': (a, b) =>
             booleanComparator(a.isFavorited, b.isFavorited),
     };
 

@@ -1,16 +1,20 @@
 import { message, superValidate } from 'sveltekit-superforms/server';
 
-import type { Actions } from '@sveltejs/kit';
+import { redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 import { EmailAuthSchema } from '$marketingUtils/validation/EmailAuthSchema';
+import type { Provider } from '@supabase/supabase-js';
 
 const MESSAGES = {
     INVALID_EMAIL: 'Invalid email',
     SERVER_ERROR: 'Server error. Try again later',
-    CHECK_EMAIL:
-        'Sign up successful! Please check your email for a magic link to log into your dashboard',
+    OATH_PROVIDER_ERROR: 'Provider not supported',
+    SIGNUP_CONFIRMATION_EMAIL:
+        'Your sign up successful! Please check your email for a confirmation link to log into your dashboard',
 };
+
+const SUPPORTED_OAUTH_PROVIDERS = ['google'];
 
 export const load = (async (event) => {
     const emailAuthForm = await superValidate(event, EmailAuthSchema);
@@ -21,6 +25,31 @@ export const load = (async (event) => {
 export const actions: Actions = {
     signUp: async ({ request, url, locals: { supabase } }) => {
         const form = await superValidate(request, EmailAuthSchema);
+
+        const oathProvider = url.searchParams.get('provider') as Provider;
+
+        if (oathProvider) {
+            if (!SUPPORTED_OAUTH_PROVIDERS.includes(oathProvider)) {
+                return message(form, MESSAGES.OATH_PROVIDER_ERROR, {
+                    status: 400,
+                });
+            }
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: oathProvider,
+                options: {
+                    redirectTo: `${url.origin}/auth/callback`,
+                },
+            });
+
+            if (error) {
+                console.error(error);
+                return message(form, MESSAGES.SERVER_ERROR, {
+                    status: 500,
+                });
+            }
+
+            throw redirect(303, data.url);
+        }
 
         if (!form.valid) return message(form, MESSAGES.INVALID_EMAIL);
 
@@ -34,11 +63,12 @@ export const actions: Actions = {
         });
 
         if (error) {
+            console.error(error);
             return message(form, MESSAGES.SERVER_ERROR, {
                 status: 500,
             });
         }
 
-        return message(form, MESSAGES.CHECK_EMAIL);
+        return message(form, MESSAGES.SIGNUP_CONFIRMATION_EMAIL);
     },
 };

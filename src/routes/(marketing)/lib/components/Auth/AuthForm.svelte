@@ -19,22 +19,15 @@
     );
 </script>
 
-<form
-    use:enhance
-    method="Post"
-    action="?/signUp"
-    aria-label="Sign up Form"
-    class="grid gap-5"
->
-    {#if $message}
-        <p class="p-3 text-center bg-green-600 rounded-md font-bold">
-            {$message}
-        </p>
-    {/if}
+{#if $message}
+    <p class="p-3 text-center bg-green-600 rounded-md font-bold mb-8">
+        {$message}
+    </p>
+{/if}
 
+<form method="Post" aria-label="Sign up with social oath form" class="mb-5">
     <fieldset>
         <button
-            type="button"
             formaction="?/signUp&provider=google"
             aria-label="Continue with Google"
             class="flex items-center justify-center w-full gap-2 p-3 transition-opacity rounded-md bg-secondary hover:opacity-80"
@@ -43,7 +36,15 @@
             <span> Continue with Google </span>
         </button>
     </fieldset>
+</form>
 
+<form
+    use:enhance
+    method="Post"
+    action="?/signUp"
+    aria-label="Sign up with email form"
+    class="grid gap-5"
+>
     <div class="flex items-center">
         <div class="flex-grow mr-3 border-t border-gray-500" />
         <div>or</div>

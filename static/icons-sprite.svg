@@ -2,17 +2,27 @@
 
     <!--! Google -->
     <symbol viewBox="0 0 32 32" id="google">
-        <path fill="currentColor"
+        <path
             d="M27.39 13.82H16.21v4.63h6.44c-.6 2.95-3.11 4.64-6.44 4.64a7.09 7.09 0 0 1 0-14.18a7 7 0 0 1 4.42 1.58L24.12 7a12 12 0 1 0-7.91 21c6 0 11.45-4.36 11.45-12a9.56 9.56 0 0 0-.27-2.18Z">
         </path>
     </symbol>
 
 
 
-    <!--! Sign out -->
-    <symbol viewBox="0 0 24 24" id="sign-out">
+    <!--! Login -->
+
+    <symbol viewBox="0 0 24 24" id="login">
         <path
-            d="M5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h7v2H5v14h7v2H5Zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5l-5 5Z">
+            d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5l-5-5m9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14Z">
+        </path>
+    </symbol>
+
+
+
+    <!--! Logout -->
+    <symbol viewBox="0 0 24 24" id="logout">
+        <path
+            d="m17 8l-1.4 1.4l1.6 1.6H9v2h8.2l-1.6 1.6L17 16l4-4l-4-4M5 5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2H5V5Z">
         </path>
     </symbol>
 

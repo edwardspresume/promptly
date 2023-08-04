@@ -7,14 +7,14 @@
     export let data: PageData;
 </script>
 
-<AuthHeader heading="Sign up" subheading="Create an account to get started." />
+<AuthHeader heading="Welcome back" subheading="Sign in to your account" />
 
 <AuthForm
-    formAction="signUp"
-    buttonTitle="Sign up"
+    formAction="signIn"
+    buttonTitle="Sign in"
     authFormData={data.emailAuthForm}
 />
 
 <p class="mt-10 text-center">
-    Already have an account? <a href="/sign-in" class="underline">Sign in</a>
+    Don't haven an account? <a href="/sign-up" class="underline">Sign up</a>
 </p>

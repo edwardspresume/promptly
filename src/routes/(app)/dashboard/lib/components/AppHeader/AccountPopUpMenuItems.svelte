@@ -3,6 +3,7 @@
 
     import Icon from '$globalComponents/Icon.svelte';
     import ExportDataBtn from './ExportDataBtn.svelte';
+    import LoginLogoutBtn from './LoginLogoutBtn.svelte';
     import ThemeToggleBtn from './ThemeToggleBtn.svelte';
 </script>
 
@@ -39,6 +40,10 @@
     <ThemeToggleBtn />
 </li>
 
+<li>
+    <LoginLogoutBtn />
+</li>
+
 <style lang="postcss">
     li {
         transition: background-color 0.2s ease-in-out;
@@ -62,7 +67,7 @@
         background-color: hsl(214, 16%, 38%);
     }
 
-    li a,
+    li :global(a),
     li :global(button) {
         display: flex;
         padding: 0.8rem;

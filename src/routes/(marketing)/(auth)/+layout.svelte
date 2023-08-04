@@ -1,9 +1,5 @@
 <script lang="ts">
-    import type { LayoutData } from './$types';
-
     import '$globalStyles';
-
-    export let data: LayoutData;
 </script>
 
 <div

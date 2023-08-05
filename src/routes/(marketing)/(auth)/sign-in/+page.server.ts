@@ -16,8 +16,14 @@ const MESSAGES = {
 
 const SUPPORTED_OAUTH_PROVIDERS = ['google'];
 
-export const load = (async (event) => {
-    const emailAuthForm = await superValidate(event, EmailAuthSchema);
+export const load = (async ({ request, locals: { getSession } }) => {
+    const session = await getSession();
+    const emailAuthForm = await superValidate(request, EmailAuthSchema);
+
+    // If the user is already signed in, redirect them to the dashboard
+    if (session) {
+        throw redirect(303, '/dashboard');
+    }
 
     return { emailAuthForm };
 }) satisfies PageServerLoad;

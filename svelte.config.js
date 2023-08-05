@@ -15,6 +15,9 @@ const config = {
 
         alias: {
             $assets: 'src/assets',
+
+            $dataBaseTypes: 'src/lib/global/database.types.ts',
+
             $globalComponents: 'src/lib/global/components',
             $globalStores: 'src/lib/global/stores',
             $globalStyles: 'src/styles/global.postcss',

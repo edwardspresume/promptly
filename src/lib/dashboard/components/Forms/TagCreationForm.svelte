@@ -6,9 +6,9 @@
 
     import tagsStore from '$dashboardStores/tagStore';
 
-    import SubmitButton from '$globalComponents/SubmitButton.svelte';
     import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
     import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
+    import SubmitButton from '$globalComponents/SubmitButton.svelte';
 
     export let tagCreationModalRef: HTMLDialogElement;
     export let tagCreationFormData;

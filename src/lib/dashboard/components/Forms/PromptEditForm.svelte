@@ -14,7 +14,6 @@
     import tagsStore from '$dashboardStores/tagStore';
 
     import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
-    import SubmitButton from '$globalComponents/SubmitButton.svelte';
     import TextArea from '$dashboardComponents/Forms/TextArea.svelte';
     import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
     import DeleteItemBtn from '$dashboardComponents/General/DeleteItemBtn.svelte';
@@ -22,6 +21,7 @@
     import ConfirmationModal from '$dashboardComponents/Modals/ConfirmationModal.svelte';
     import CopyPromptTextBtn from '$dashboardComponents/Prompts/CopyPromptTextBtn.svelte';
     import FavoriteToggleBtn from '$dashboardComponents/Prompts/FavoriteToggleBtn.svelte';
+    import SubmitButton from '$globalComponents/SubmitButton.svelte';
 
     export let promptEditModalRef: HTMLDialogElement;
     export let selectedPromptForEdit: PromptSchema | undefined = undefined;

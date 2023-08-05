@@ -15,19 +15,18 @@ const config = {
 
         alias: {
             $assets: 'src/assets',
-            $globalComponents: 'src/lib/components',
-            $globalStores: 'src/lib/stores',
+            $globalComponents: 'src/lib/global/components',
+            $globalStores: 'src/lib/global/stores',
             $globalStyles: 'src/styles/global.postcss',
 
-            $marketingUtils: 'src/routes/(marketing)/lib/utils',
-            $marketingComponents: 'src/routes/(marketing)/lib/components',
+            $marketingUtils: 'src/lib/marketing/utils',
+            $marketingComponents: 'src/lib/marketing/components',
 
-            $dashboardComponents: 'src/routes/(app)/dashboard/lib/components',
-            $dashboardStores: 'src/routes/(app)/dashboard/lib/stores',
-            $dashboardUtils: 'src/routes/(app)/dashboard/lib/utils',
-            $dashboardData: 'src/routes/(app)/dashboard/lib/data',
-            $dashboardTypes: 'src/routes/(app)/dashboard/types',
-            $dashboardAssets: 'src/routes/(app)/dashboard/assets',
+            $dashboardComponents: 'src/lib/dashboard/components',
+            $dashboardStores: 'src/lib/dashboard/stores',
+            $dashboardUtils: 'src/lib/dashboard/utils',
+            $dashboardData: 'src/lib/dashboard/data',
+            $dashboardTypes: 'src/lib/dashboard/types',
         },
     },
 

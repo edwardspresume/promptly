@@ -10,11 +10,11 @@
     import tagsStore from '$dashboardStores/tagStore';
 
     import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
-    import SubmitButton from '$globalComponents/SubmitButton.svelte';
     import TextArea from '$dashboardComponents/Forms/TextArea.svelte';
     import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
     import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
     import FavoriteToggleBtn from '$dashboardComponents/Prompts/FavoriteToggleBtn.svelte';
+    import SubmitButton from '$globalComponents/SubmitButton.svelte';
 
     export let promptCreationModalRef: HTMLDialogElement;
     export let promptCreationFormData;

@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
     import { get } from 'svelte/store';
-    
+
     import promptsStore from '$dashboardStores/promptsStore';
     import tagsStore from '$dashboardStores/tagStore';
 

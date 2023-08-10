@@ -2,7 +2,7 @@
     import { fly } from 'svelte/transition';
 
     import { onOutsideClick } from '$dashboardUtils/functions';
-    import { userSessionStore } from '$globalStores/userSessionStore';
+    import { userSessionStore } from '$globalStores/userAndSupabaseStores';
 
     import AccountPopUpMenuItems from './AccountPopUpMenuItems.svelte';
 

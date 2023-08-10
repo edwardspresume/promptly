@@ -2,7 +2,10 @@
     import { invalidate } from '$app/navigation';
     import { onMount } from 'svelte';
 
-    import { userSessionStore } from '$globalStores/userSessionStore';
+    import {
+        supabaseStore,
+        userSessionStore,
+    } from '$globalStores/userAndSupabaseStores';
 
     export let data;
 
@@ -10,6 +13,7 @@
     $: ({ supabase, session } = data);
 
     $: if (session?.user) {
+        supabaseStore.set(supabase);
         userSessionStore.set(session?.user);
     }
 

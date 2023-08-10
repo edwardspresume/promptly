@@ -1,5 +1,5 @@
 <script>
-    import { userSessionStore } from '$globalStores/userSessionStore';
+    import { userSessionStore } from '$globalStores/userAndSupabaseStores';
 
     import Icon from '$globalComponents/Icon.svelte';
 </script>

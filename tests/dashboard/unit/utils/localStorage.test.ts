@@ -2,9 +2,9 @@ import { writable } from 'svelte/store';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
-    loadArrayFromLocalStorage,
+    loadItemsFromLocalStorage,
     LocalStorageKeys,
-    saveArrayToLocalStorage,
+    saveItemsToLocalStorage,
     updateStoreAndSaveToStorage,
 } from '$dashboardUtils/localStorage';
 
@@ -23,15 +23,15 @@ describe('localStorage functions', () => {
     });
 
     it('should save and load data to/from localStorage', () => {
-        saveArrayToLocalStorage(testKey, testData);
+        saveItemsToLocalStorage(testKey, testData);
 
-        const loadedData = loadArrayFromLocalStorage(testKey, []);
+        const loadedData = loadItemsFromLocalStorage(testKey, []);
 
         expect(loadedData).toEqual(testData);
     });
 
     it('should return default value if key does not exist in localStorage', () => {
-        const loadedData = loadArrayFromLocalStorage(
+        const loadedData = loadItemsFromLocalStorage(
             'nonExistingKey',
             defaultValue
         );
@@ -51,7 +51,7 @@ describe('localStorage functions', () => {
         });
 
         // Check that the value was saved to localStorage
-        const loadedData = loadArrayFromLocalStorage(testKey, []);
+        const loadedData = loadItemsFromLocalStorage(testKey, []);
         expect(loadedData).toEqual(newValue);
     });
 

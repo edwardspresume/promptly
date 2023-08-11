@@ -2,20 +2,10 @@
     import { invalidate } from '$app/navigation';
     import { onMount } from 'svelte';
 
-    import {
-        supabaseStore,
-        userSessionStore,
-    } from '$globalStores/userAndSupabaseStores';
-
     export let data;
 
     let { supabase, session } = data;
     $: ({ supabase, session } = data);
-
-    $: if (session?.user) {
-        supabaseStore.set(supabase);
-        userSessionStore.set(session?.user);
-    }
 
     onMount(() => {
         const {

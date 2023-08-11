@@ -4,9 +4,7 @@ import { z } from 'zod';
 export const MAX_TAG_NAME_LENGTH = 200;
 
 export const TagValidationSchema = z.object({
-    id: z
-        .number()
-        .nonnegative('Invalid input: id must be a non-negative number'),
+    id: z.string().uuid('Invalid input: id must be a valid UUID'),
 
     // Ensures nonempty strings, not exceeding max length, and removes leading/trailing white spaces
     name: z

@@ -6,9 +6,7 @@ export const MIN_PROMPT_TEXT_LENGTH = 3;
 export const MAX_PROMPT_TEXT_LENGTH = 4500;
 
 export const PromptValidationSchema = z.object({
-    id: z
-        .number()
-        .nonnegative('Invalid input: id must be a non-negative number'),
+    id: z.string().uuid('Invalid input: id must be a valid UUID').optional(),
 
     // Ensures nonempty strings, not exceeding max length, and removes leading/trailing white spaces
     title: z
@@ -34,7 +32,7 @@ export const PromptValidationSchema = z.object({
         .transform((str) => str.trim()),
 
     isFavorited: z.boolean(),
-    tagIds: z.array(z.number()),
+    tagIds: z.array(z.string()),
     createdAt: z.string().optional(),
     updatedAt: z.string().optional(),
 });

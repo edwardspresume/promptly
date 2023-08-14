@@ -5,7 +5,7 @@ import type { PromptSchema, PromptStore } from '$dashboardTypes';
 
 import {
     LocalStorageKeys,
-    loadItemsFromLocalStorage,
+    getItemsFromLocalStorage,
     updateStoreAndSaveToStorage,
 } from '$dashboardUtils/localStorage';
 
@@ -22,7 +22,7 @@ import { sortItems } from '$dashboardUtils/sortItems';
 export function createPromptsStore(
     localStorageKey: typeof LocalStorageKeys.PROMPTS
 ): PromptStore {
-    const initialPrompts = loadItemsFromLocalStorage(
+    const initialPrompts = getItemsFromLocalStorage(
         localStorageKey,
         defaultPrompts
     );

@@ -52,28 +52,6 @@ export interface PromptStore {
     setSortingPreference: (option: string) => void;
 }
 
-export interface TagStore {
-    // Store holding all tags
-    allTags: Writable<TagSchema[]>;
-
-    // Store holding tags after applying filters and sorting
-    filteredTags: Readable<TagSchema[]>;
-
-    // Store holding the total count of tags
-    totalTagCount: Readable<number>;
-
-    // Methods to manage tags
-    doesTagExist: (name: string) => boolean;
-    createTag: (name: string) => void;
-    renameTag: (id: number, name: string) => void;
-    deleteTag: (id: number) => void;
-    deleteAllTags: () => void;
-
-    // Methods to manage filters and sorting
-    setTextFilter: (text: string) => void;
-    setSortingPreference: (option: string) => void;
-}
-
 /**
  * Defines the structure of a sort option. Each sort option has a label, a value,
  * and an announcement message that is used to inform the user about the sorting action.

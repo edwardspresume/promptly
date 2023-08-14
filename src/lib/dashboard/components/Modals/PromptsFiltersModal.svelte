@@ -6,16 +6,15 @@
     import { promptSortOptions } from '$dashboardData/SortOptions';
 
     import promptsStore from '$dashboardStores/promptsStore';
-    import tagsStore from '$dashboardStores/tagStore';
 
     import SortSelector from '$dashboardComponents/Filters/SortSelector.svelte';
     import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
+    import { totalTagsCountStore } from '$dashboardStores/tagStore';
     import CloseModalBtn from './CloseModalBtn.svelte';
 
     export let promptsFiltersModalRef: HTMLDialogElement;
 
-    const totalNumberOfTags = tagsStore.totalTagCount;
-    let selectedTagIds = writable<number[]>([]);
+    let selectedTagIds = writable<string[]>([]);
     let selectedSortOption: string;
 
     /**
@@ -45,12 +44,12 @@
 
     <div class="grid gap-4">
         <SortSelector
-            store={promptsStore}
+            itemType="prompt"
             sortOptions={promptSortOptions}
             bind:selectedSortOption
         />
 
-        {#if $totalNumberOfTags}
+        {#if $totalTagsCountStore}
             <TagSelector {selectedTagIds} filterPromptBasedOnTags={true} />
         {/if}
 

@@ -7,25 +7,23 @@
     import { PromptValidationSchema } from '$dashboardUtils/validation/promptValidationSchema';
 
     import promptsStore from '$dashboardStores/promptsStore';
-    import tagsStore from '$dashboardStores/tagStore';
 
     import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
     import TextArea from '$dashboardComponents/Forms/TextArea.svelte';
     import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
     import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
     import FavoriteToggleBtn from '$dashboardComponents/Prompts/FavoriteToggleBtn.svelte';
+    import { totalTagsCountStore } from '$dashboardStores/tagStore';
     import SubmitButton from '$globalComponents/SubmitButton.svelte';
 
     export let promptCreationModalRef: HTMLDialogElement;
     export let promptCreationFormData;
 
-    const totalNumberOfTags = tagsStore.totalTagCount;
-
     // Boolean to track if the prompt is marked as favorite
     let isFavorited = false;
 
     // Writable store to keep track of the selected tags by their IDs
-    let selectedTagIds = writable<number[]>([]);
+    let selectedTagIds = writable<string[]>([]);
 
     /**
      * Reset the form fields after a successful submission
@@ -98,7 +96,7 @@
             errorMessage={$errors.text ?? []}
         />
 
-        {#if $totalNumberOfTags}
+        {#if $totalTagsCountStore}
             <TagSelector {selectedTagIds} />
         {/if}
 

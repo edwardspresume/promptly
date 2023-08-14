@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
-    loadItemsFromLocalStorage,
+    getItemsFromLocalStorage,
     LocalStorageKeys,
     saveItemsToLocalStorage,
     updateStoreAndSaveToStorage,
@@ -25,13 +25,13 @@ describe('localStorage functions', () => {
     it('should save and load data to/from localStorage', () => {
         saveItemsToLocalStorage(testKey, testData);
 
-        const loadedData = loadItemsFromLocalStorage(testKey, []);
+        const loadedData = getItemsFromLocalStorage(testKey, []);
 
         expect(loadedData).toEqual(testData);
     });
 
     it('should return default value if key does not exist in localStorage', () => {
-        const loadedData = loadItemsFromLocalStorage(
+        const loadedData = getItemsFromLocalStorage(
             'nonExistingKey',
             defaultValue
         );
@@ -51,7 +51,7 @@ describe('localStorage functions', () => {
         });
 
         // Check that the value was saved to localStorage
-        const loadedData = loadItemsFromLocalStorage(testKey, []);
+        const loadedData = getItemsFromLocalStorage(testKey, []);
         expect(loadedData).toEqual(newValue);
     });
 

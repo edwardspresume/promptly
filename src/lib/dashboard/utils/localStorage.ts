@@ -16,7 +16,7 @@ export const LocalStorageKeys = {
  * @param {T[]} defaultValue Default value if no value is found in localStorage or if an error occurs
  * @return {T[]} Retrieved array or default value
  */
-export const loadItemsFromLocalStorage = <T>(
+export const getItemsFromLocalStorage = <T>(
     storageKey: string,
     defaultValue: T[]
 ): T[] => {

@@ -10,8 +10,8 @@ import {
     userSessionStore,
 } from '$globalStores/userAndSupabaseStores';
 
-import { allTagsStore } from '$dashboardStores/testStore';
-import { loadTagsFromLocalStorage } from '$dashboardUtils/tagLocalStorageMethods';
+import { allTagsStore } from '$dashboardStores/tagStore';
+import { getTagsFromLocalStorage } from '$dashboardUtils/tagLocalStorageMethods';
 
 export const load = async ({ fetch, data, depends }) => {
     depends('supabase:auth');
@@ -43,7 +43,7 @@ export const load = async ({ fetch, data, depends }) => {
 
         allTagsStore.set(tags);
     } else {
-        allTagsStore.set(loadTagsFromLocalStorage());
+        allTagsStore.set(getTagsFromLocalStorage());
     }
     return { supabase, session };
 };

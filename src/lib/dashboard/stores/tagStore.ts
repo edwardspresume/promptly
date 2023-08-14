@@ -1,167 +1,51 @@
-import { derived, get, writable } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 
-import type { TagSchema, TagStore } from '$dashboardTypes';
+import type { TagSchema } from '$dashboardTypes';
 
-import defaultTags from '$dashboardData/defaultTags';
-
-import {
-    LocalStorageKeys,
-    loadArrayFromLocalStorage,
-    updateStoreAndSaveToStorage,
-} from '$dashboardUtils/localStorage';
-
-import { createDate } from '$dashboardUtils/functions';
 import { sortItems } from '$dashboardUtils/sortItems';
 
 /**
- * This function creates a tags store using the specified local storage key.
- * It retrieves existing tags, provides methods for tag manipulation, and manages filtered and sorted tags.
- *
- * @param {LocalStorageKeys.TAGS} localStorageKey - the key used to retrieve and store tags data from/in local storage
- * @returns {TagStore} a tag store with various utility methods
+ * Store for managing the text filter for displaying tags.
  */
-export function createTagsStore(
-    localStorageKey: typeof LocalStorageKeys.TAGS
-): TagStore {
-    const initialTags = loadArrayFromLocalStorage(localStorageKey, defaultTags);
+export const tagTextFilter = writable<string>('');
 
-    const allTags = writable(initialTags);
-    const textFilter = writable<string>('');
-    const sortingPreference = writable<string>('');
+/**
+ * Store for managing the sorting preference for displaying tags.
+ */
+export const tagSortingPreference = writable<string>('');
 
-    /**
-     * Derives the total tag count from allTags
-     @returns {number} the total tag count
-     */
-    const totalTagCount = derived(allTags, (tags) => tags.length);
+/**
+ * Store to manage all tags.
+ */
+export const allTagsStore = writable<TagSchema[]>([]);
 
-    /**
-     * Derives filtered and sorted tags based on filter text and sort option
-     */
-    const filteredTags = derived(
-        [allTags, textFilter, sortingPreference],
-        ([tags, filterText, sortOption]) => {
-            const normalizedFilterText = filterText.toLowerCase();
+/**
+ * Derived store to calculate the total count of tags.
+ */
+export const totalTagsCountStore = derived(
+    allTagsStore,
+    ($allTagsStore) => $allTagsStore.length
+);
 
-            const filteredTags = tags.filter((tag) =>
-                tag.name.toLowerCase().includes(normalizedFilterText)
-            );
+/**
+ * Derived store to manage filtered and sorted tags based on user preferences.
+ *
+ * @param {Array} tags - List of all tags.
+ * @param {string} textFilter - Text to filter tags by.
+ * @param {string} sortOption - Sorting option to apply on filtered tags.
+ * @returns {Array<TagSchema>} Filtered and sorted tags.
+ */
+export const filteredTagsStore = derived(
+    [allTagsStore, tagTextFilter, tagSortingPreference],
+    ([tags, textFilter, sortOption]) => {
+        const normalizedFilterText = textFilter.toLowerCase();
 
-            return sortItems(filteredTags, sortOption);
-        }
-    );
-
-    /**
-     * Checks if a tag with a specific name exists in the list
-     * @param {string} name The tag name to check
-     * @returns {boolean} true if tag exists, false otherwise
-     */
-    const doesTagExist = (name: string) => {
-        const normalizedName = name.trim().toLowerCase();
-
-        const tags = get(allTags);
-
-        return tags.some((tag) => tag.name.toLowerCase() === normalizedName);
-    };
-
-    /**
-     * Creates a new tag with the specified name and adds it to the store
-     * @param {string} name The name of the new tag
-     */
-    const createTag = (name: string) => {
-        if (doesTagExist(name)) {
-            throw new Error(`Tag "${name}" already exists`);
-        }
-
-        const tags = get(allTags);
-        const maxId = Math.max(...tags.map((tag) => tag.id), 0);
-
-        const newTag: TagSchema = {
-            id: maxId + 1,
-            name,
-            createdAt: createDate(),
-            updatedAt: createDate(),
-        };
-
-        updateStoreAndSaveToStorage(
-            allTags,
-            (tags) => [newTag, ...tags],
-            localStorageKey
+        // Apply the text filter to the tags
+        const filteredTags = tags.filter((tag) =>
+            tag.name.toLowerCase().includes(normalizedFilterText)
         );
-    };
 
-    /**
-     * Updates a tag with the specified ID by setting its name and update timestamp
-     * @param {number} id The id of the tag to update
-     * @param {string} name The new name of the tag
-     */
-    const renameTag = (id: number, name: string) => {
-        if (doesTagExist(name)) {
-            throw new Error(`Tag "${name}" already exists`);
-        }
-
-        updateStoreAndSaveToStorage(
-            allTags,
-            (tags) =>
-                tags.map((tag) =>
-                    tag.id !== id
-                        ? tag
-                        : {
-                              ...tag,
-                              name,
-                              updatedAt: createDate(),
-                          }
-                ),
-            localStorageKey
-        );
-    };
-
-    /**
-     * Deletes a tag with the specified ID from the store
-     * @param {number} id The id of the tag to delete
-     */
-    const deleteTag = (id: number) => {
-        updateStoreAndSaveToStorage(
-            allTags,
-            (tags) => tags.filter((tag) => tag.id !== id),
-            localStorageKey
-        );
-    };
-
-    /**
-     * Deletes all tags from the store
-     */
-    const deleteAllTags = () => {
-        updateStoreAndSaveToStorage(allTags, () => [], localStorageKey);
-    };
-
-    /**
-     * Sets the text filter to the specified text
-     * @param {string} text - the text to set the filter to
-     */
-    const setTextFilter = (text: string) => textFilter.set(text);
-
-    /**
-     * Sets the sorting preference to the specified option
-     * @param {string} option - the option to set the sorting preference to
-     */
-    const setSortingPreference = (option: string) =>
-        sortingPreference.set(option);
-
-    return {
-        allTags,
-        filteredTags,
-        totalTagCount,
-        doesTagExist,
-        createTag,
-        renameTag,
-        deleteTag,
-        deleteAllTags,
-        setTextFilter,
-        setSortingPreference,
-    };
-}
-
-const tagsStore = createTagsStore(LocalStorageKeys.TAGS);
-
-export default tagsStore;
+        // Apply the sorting option to the filtered tags
+        return sortItems(filteredTags, sortOption);
+    }
+);

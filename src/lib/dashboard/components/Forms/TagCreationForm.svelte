@@ -1,10 +1,14 @@
 <script lang="ts">
     import { superForm } from 'sveltekit-superforms/client';
 
+    import { userSessionStore } from '$globalStores/userAndSupabaseStores';
+
+    import {
+        addTagToLocalStorage,
+        doesTagExist,
+    } from '$dashboardUtils/tagLocalStorageMethods';
     import { notifySuccess } from '$dashboardUtils/toast';
     import { TagValidationSchema } from '$dashboardUtils/validation/tagValidationSchema';
-
-    import tagsStore from '$dashboardStores/tagStore';
 
     import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
     import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
@@ -19,10 +23,10 @@
         taintedMessage: null,
         validators: TagValidationSchema,
 
-        onSubmit: ({ data, cancel }) => {
-            const name = data.get('name') as string;
+        onSubmit: ({ formData, cancel }) => {
+            const name = formData.get('name') as string;
 
-            if (tagsStore.doesTagExist(name)) {
+            if (doesTagExist(name)) {
                 errors.set({
                     name: ['A tag with this name already exists'],
                 });
@@ -33,9 +37,11 @@
 
         onUpdated: ({ form }) => {
             if (form.valid) {
-                const { name } = form.data;
-
-                tagsStore.createTag(name);
+                // Create tag in local storage if user is not logged in
+                if (!$userSessionStore) {
+                    const { name } = form.data;
+                    addTagToLocalStorage(name);
+                }
 
                 notifySuccess('Tag successfully created! ', {
                     target: 'baseModal',

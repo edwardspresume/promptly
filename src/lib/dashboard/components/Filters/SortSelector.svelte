@@ -1,21 +1,26 @@
 <script lang="ts">
-    import type { PromptStore, SortOption, TagStore } from '$dashboardTypes';
+    import { tagSortingPreference } from '$dashboardStores/tagStore';
 
-    // The store to which the selected sort option should be applied.
-    export let store: PromptStore | TagStore;
+    import type { ItemType, SortOption } from '$dashboardTypes';
+
+    export let itemType: ItemType;
 
     // The available sort options for the select element.
     export let sortOptions: SortOption[];
 
     // The currently selected sort option.
     export let selectedSortOption: string = '';
+
+    function setSortingPreference() {
+        if (itemType === 'tag') tagSortingPreference.set(selectedSortOption);
+    }
 </script>
 
 <select
     title="Sort options"
     aria-label="Sort options"
     bind:value={selectedSortOption}
-    on:change={() => store.setSortingPreference(selectedSortOption)}
+    on:change={setSortingPreference}
 >
     <option value="" disabled selected>Sort by</option>
     {#each sortOptions as { value, label, announceMessage }}

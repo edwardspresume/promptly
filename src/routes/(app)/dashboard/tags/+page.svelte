@@ -4,7 +4,6 @@
     import type { TagSchema } from '$dashboardTypes';
 
     import { tagSortOptions } from '$dashboardData/SortOptions';
-    import tagsStore from '$dashboardStores/tagStore';
 
     import SearchBar from '$dashboardComponents/Filters/SearchBar.svelte';
     import SortSelector from '$dashboardComponents/Filters/SortSelector.svelte';
@@ -41,7 +40,7 @@
 
 <nav class="flex flex-col gap-3 mb-5 sm:flex-row">
     <SearchBar searchTargetType="tag" />
-    <SortSelector store={tagsStore} sortOptions={tagSortOptions} />
+    <SortSelector itemType="tag" sortOptions={tagSortOptions} />
 </nav>
 
 <TagList

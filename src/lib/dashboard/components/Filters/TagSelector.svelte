@@ -6,7 +6,7 @@
     import { onOutsideClick } from '$dashboardUtils/functions';
 
     import promptsStore from '$dashboardStores/promptsStore';
-    import tagsStore from '$dashboardStores/tagStore';
+    import { allTagsStore } from '$dashboardStores/tagStore';
 
     import SelectedTag from './SelectedTag.svelte';
     import Tag from './Tag.svelte';
@@ -15,9 +15,7 @@
     export let filterPromptBasedOnTags: boolean = false;
 
     // A writable store that keeps track of the IDs of selected tags
-    export let selectedTagIds: Writable<number[]>;
-
-    const allTags = tagsStore.allTags;
+    export let selectedTagIds: Writable<string[]>;
 
     let tagSearchInput: HTMLInputElement;
 
@@ -26,14 +24,14 @@
     let isTagSelectionMenuOpen: boolean = false;
 
     // Filter tags based on the tagSearchQuery value and exclude already selected tags
-    $: filteredTags = $allTags.filter(
+    $: filteredTags = $allTagsStore.filter(
         (tag) =>
-            tag.name.toLowerCase().includes(tagSearchQuery.toLowerCase()) &&
-            !$selectedTagIds.includes(tag.id)
+            !$selectedTagIds.includes(tag.id) &&
+            tag.name.toLowerCase().includes(tagSearchQuery.toLowerCase())
     );
 
     // Update selectedTags when selectedTagIds change
-    $: selectedTags = $allTags.filter((tag) =>
+    $: selectedTags = $allTagsStore.filter((tag) =>
         $selectedTagIds.includes(tag.id)
     );
 

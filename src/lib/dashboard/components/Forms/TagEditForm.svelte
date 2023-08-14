@@ -3,12 +3,16 @@
 
     import type { TagSchema } from '$dashboardTypes';
 
+    import { allTagsStore } from '$dashboardStores/tagStore';
+    import { userSessionStore } from '$globalStores/userAndSupabaseStores';
+
+    import {
+        doesTagExist,
+        updateTagInLocalStorage,
+    } from '$dashboardUtils/tagLocalStorageMethods';
     import { notifySuccess } from '$dashboardUtils/toast';
     import { TagValidationSchema } from '$dashboardUtils/validation/tagValidationSchema';
 
-    import tagsStore from '$dashboardStores/tagStore';
-
-    // Import components
     import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
     import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
     import SubmitButton from '$globalComponents/SubmitButton.svelte';
@@ -17,8 +21,6 @@
     export let tagEditModalRef: HTMLDialogElement;
     export let selectedTagForEdit: TagSchema | undefined = undefined;
     export let tagEditFormData;
-
-    const allTags = tagsStore.allTags;
 
     let previousTag: TagSchema | undefined = undefined;
     let isTagModified: boolean = false;
@@ -43,10 +45,10 @@
         taintedMessage: null,
         validators: TagValidationSchema,
 
-        onSubmit: ({ data, cancel }) => {
-            const name = data.get('name') as string;
+        onSubmit: ({ formData, cancel }) => {
+            const name = formData.get('name') as string;
 
-            if (tagsStore.doesTagExist(name)) {
+            if (doesTagExist(name)) {
                 errors.set({
                     name: ['A tag with this name already exists'],
                 });
@@ -60,11 +62,14 @@
                 const { id, name } = form.data;
 
                 // Update the tag name in the store
-                tagsStore.renameTag(id, name);
+                if (!$userSessionStore) {
+                    updateTagInLocalStorage(id, name);
+                }
 
                 // Update 'selectedTagForEdit' with the new tag name after updating the tag
                 selectedTagForEdit =
-                    $allTags.find((tag) => tag.id === id) ?? selectedTagForEdit;
+                    $allTagsStore.find((tag) => tag.id === id) ??
+                    selectedTagForEdit;
 
                 notifySuccess('Tag successfully updated!', {
                     target: 'baseModal',

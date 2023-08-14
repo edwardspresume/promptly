@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { invalidateAll } from '$app/navigation';
+
     import type { ConfirmationInfo } from '$dashboardTypes';
     import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
     import { notifySuccess } from '$dashboardUtils/toast';
@@ -22,8 +24,10 @@
     /**
      * Executes the callback, closes the modal dialog, and displays a success notification
      */
-    function executeCallbackAndCloseModal() {
-        callback();
+    async function executeCallbackAndCloseModal() {
+        await callback();
+
+        invalidateAll();
 
         confirmationModalRef.close();
 

@@ -2,7 +2,7 @@
     import type { ItemType } from '$dashboardTypes';
 
     import promptsStore from '$dashboardStores/promptsStore';
-    import tagsStore from '$dashboardStores/tagStore';
+    import { tagTextFilter } from '$dashboardStores/tagStore';
 
     export let searchTargetType: ItemType;
 
@@ -18,7 +18,7 @@
     $: {
         if (searchTargetType === 'tag') {
             labelText = `Search tags by name`;
-            tagsStore.setTextFilter(searchQuery);
+            tagTextFilter.set(searchQuery);
         }
 
         if (searchTargetType === 'prompt') {

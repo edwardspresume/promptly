@@ -1,6 +1,16 @@
 <script lang="ts">
-    import tagsStore from '$dashboardStores/tagStore';
     import type { ConfirmationInfo } from '$dashboardTypes';
+
+    import {
+        filteredTagsStore,
+        totalTagsCountStore,
+    } from '$dashboardStores/tagStore';
+    import { userSessionStore } from '$globalStores/userAndSupabaseStores';
+
+    import {
+        deleteAllTagsFromLocalStorage,
+        deleteTagFromDatabaseRequest,
+    } from '$dashboardUtils/tagLocalStorageMethods';
 
     import StatusMessage from '$dashboardComponents/General/StatusMessage.svelte';
     import ItemCountDisplay from '$dashboardComponents/ListControls/ItemCountDisplay.svelte';
@@ -11,9 +21,6 @@
     const NO_TAGS_AVAILABLE_MESSAGE = 'No tags available. Please add one';
     const NO_MATCH_MESSAGE = 'There are no tags that match your search';
 
-    const filteredTags = tagsStore.filteredTags;
-    const totalTagsCount = tagsStore.totalTagCount;
-
     let tagItemsContainerRef: HTMLElement;
     let confirmationModalRef: HTMLDialogElement;
 
@@ -21,13 +28,7 @@
     let displayedTagsCount: number;
     let confirmationModalInfoForTagDeletion: ConfirmationInfo;
 
-    $: displayedTagsCount = $filteredTags.length;
-
-    $: {
-        if ($totalTagsCount === 0) statusMessage = NO_TAGS_AVAILABLE_MESSAGE;
-        else if (displayedTagsCount === 0) statusMessage = NO_MATCH_MESSAGE;
-        else statusMessage = '';
-    }
+    $: displayedTagsCount = $filteredTagsStore.length;
 
     /**
      * Event handler for the deleteTag event on the TagItem component.
@@ -40,6 +41,18 @@
     }
 
     /**
+     * Callback function to delete all tags.
+     * It either sends an HTTP request or deletes it from local storage.
+     */
+    async function deleteTagCallBack() {
+        if ($userSessionStore) {
+            await deleteTagFromDatabaseRequest('?/deleteAllTags');
+        } else {
+            deleteAllTagsFromLocalStorage();
+        }
+    }
+
+    /**
      * Event handler for the deleteAllItems event on the ItemListControls component.
      * Sets the confirmation info for deleting all tags and shows the confirmation modal.
      */
@@ -47,10 +60,17 @@
         confirmationModalInfoForTagDeletion = {
             title: 'Are you sure you want to delete All Tags?',
             toastMessage: 'All Tags have been successfully deleted!',
-            callback: () => tagsStore.deleteAllTags(),
+            callback: deleteTagCallBack,
         };
 
         confirmationModalRef.showModal();
+    }
+
+    $: {
+        if ($totalTagsCountStore === 0)
+            statusMessage = NO_TAGS_AVAILABLE_MESSAGE;
+        else if (displayedTagsCount === 0) statusMessage = NO_MATCH_MESSAGE;
+        else statusMessage = '';
     }
 </script>
 
@@ -59,7 +79,7 @@
 {:else}
     <ItemCountDisplay
         itemType="tag"
-        totalItemCount={$totalTagsCount}
+        totalItemCount={$totalTagsCountStore}
         displayedItemCount={displayedTagsCount}
     />
 
@@ -68,7 +88,7 @@
         bind:this={tagItemsContainerRef}
         class="mt-2 space-y-5 overflow-hidden overflow-y-scroll remove-scrollbar"
     >
-        {#each $filteredTags as tag (tag.id)}
+        {#each $filteredTagsStore as tag (tag.id)}
             <TagItem {tag} on:editTag on:deleteTag={handleDeleteTagEvent} />
         {/each}
     </section>
@@ -76,7 +96,7 @@
 
 <ItemListControls
     itemType="tag"
-    totalItemCount={$totalTagsCount}
+    totalItemCount={$totalTagsCountStore}
     itemContainerRef={tagItemsContainerRef}
     on:addItem
     on:deleteAllItems={handleDeleteAllTagsEvent}

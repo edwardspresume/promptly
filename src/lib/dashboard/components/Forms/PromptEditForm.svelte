@@ -11,7 +11,6 @@
     import { PromptValidationSchema } from '$dashboardUtils/validation/promptValidationSchema';
 
     import promptsStore from '$dashboardStores/promptsStore';
-    import tagsStore from '$dashboardStores/tagStore';
 
     import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
     import TextArea from '$dashboardComponents/Forms/TextArea.svelte';
@@ -22,18 +21,18 @@
     import CopyPromptTextBtn from '$dashboardComponents/Prompts/CopyPromptTextBtn.svelte';
     import FavoriteToggleBtn from '$dashboardComponents/Prompts/FavoriteToggleBtn.svelte';
     import SubmitButton from '$globalComponents/SubmitButton.svelte';
+    import { totalTagsCountStore } from '$dashboardStores/tagStore';
 
     export let promptEditModalRef: HTMLDialogElement;
     export let selectedPromptForEdit: PromptSchema | undefined = undefined;
     export let promptEditFormData;
 
     const allPrompts = promptsStore.allPrompts;
-    const totalNumberOfTags = tagsStore.totalTagCount;
 
     let confirmationModalRef: HTMLDialogElement;
     let promptDeleteConfirmationInfo: ConfirmationInfo;
 
-    let selectedTagIds = writable<number[]>([]);
+    let selectedTagIds = writable<string[]>([]);
     let previousPrompt: PromptSchema | undefined = undefined;
     let isPromptModified = false;
 
@@ -43,11 +42,11 @@
 
     /**
      * Function to check if two arrays are different
-     * @param {number[]} newTagIds - The array of new tag IDs.
-     * @param {number[]} existingTagIds - The array of existing tag IDs.
+     * @param {string[]} newTagIds - The array of new tag IDs.
+     * @param {string[]} existingTagIds - The array of existing tag IDs.
      * @returns {boolean} - Returns true if arrays are different, otherwise false
      */
-    function areArraysDifferent(newTagIds: number[], existingTagIds: number[]) {
+    function areArraysDifferent(newTagIds: string[], existingTagIds: string[]) {
         return (
             newTagIds.length !== existingTagIds.length ||
             !newTagIds.every((id) => existingTagIds.includes(id))
@@ -246,7 +245,7 @@
             />
         </fieldset>
 
-        {#if $totalNumberOfTags}
+        {#if $totalTagsCountStore}
             <TagSelector {selectedTagIds} />
         {/if}
 

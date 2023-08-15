@@ -7,6 +7,11 @@ import type { Actions, PageServerLoad } from './$types';
 
 type TagOperation = 'create' | 'update' | 'delete' | 'deleteAll';
 
+interface TagData {
+    name: string;
+    user_id: string;
+}
+
 import { TagValidationSchema } from '$dashboardUtils/validation/tagValidationSchema';
 
 /**
@@ -50,8 +55,13 @@ const handleTagOperation = async (
     tagForm?: SuperValidated<typeof TagValidationSchema>,
     tagId?: string | null
 ) => {
+    // Check for undefined or null tagId for update and delete operations
+    if ((tagOperation === 'update' || tagOperation === 'delete') && !tagId) {
+        console.error('Tag ID is undefined or null');
+        return { status: 400, body: { message: 'Tag ID is required' } };
+    }
     // Prepare tag data if it's not a delete or deleteAll operation
-    const tagData =
+    const tagData: TagData | Record<string, never> =
         tagForm && tagOperation !== 'delete' && tagOperation !== 'deleteAll'
             ? { name: tagForm.data.name, user_id: session.user.id }
             : {};
@@ -116,7 +126,7 @@ export const actions: Actions = {
 
     deleteTag: async ({ request, locals: { getSession, supabase } }) => {
         const formData = new URLSearchParams(await request.text());
-        const tagId = formData.get('tagId');
+        const tagId = formData.get('itemId');
 
         const session = await getSession();
 

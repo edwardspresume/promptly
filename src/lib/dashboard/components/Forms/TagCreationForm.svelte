@@ -3,10 +3,8 @@
 
     import { userSessionStore } from '$globalStores/userAndSupabaseStores';
 
-    import {
-        addTagToLocalStorage,
-        doesTagExist,
-    } from '$dashboardUtils/tagLocalStorageMethods';
+    import { doesTagExist } from '$dashboardStores/tagStore';
+    import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
     import { notifySuccess } from '$dashboardUtils/toast';
     import { TagValidationSchema } from '$dashboardUtils/validation/tagValidationSchema';
 
@@ -40,7 +38,7 @@
                 // Create tag in local storage if user is not logged in
                 if (!$userSessionStore) {
                     const { name } = form.data;
-                    addTagToLocalStorage(name);
+                    tagLocalStorageManager.addItem({ name });
                 }
 
                 notifySuccess('Tag successfully created! ', {

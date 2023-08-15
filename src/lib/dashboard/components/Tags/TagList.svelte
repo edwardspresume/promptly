@@ -7,10 +7,8 @@
     } from '$dashboardStores/tagStore';
     import { userSessionStore } from '$globalStores/userAndSupabaseStores';
 
-    import {
-        deleteAllTagsFromLocalStorage,
-        deleteTagFromDatabaseRequest,
-    } from '$dashboardUtils/tagLocalStorageMethods';
+    import { deleteItemFromDatabaseRequest } from '$dashboardUtils/databaseUtils';
+    import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 
     import StatusMessage from '$dashboardComponents/General/StatusMessage.svelte';
     import ItemCountDisplay from '$dashboardComponents/ListControls/ItemCountDisplay.svelte';
@@ -46,9 +44,9 @@
      */
     async function deleteTagCallBack() {
         if ($userSessionStore) {
-            await deleteTagFromDatabaseRequest('?/deleteAllTags');
+            await deleteItemFromDatabaseRequest('?/deleteAllTags');
         } else {
-            deleteAllTagsFromLocalStorage();
+            tagLocalStorageManager.deleteAllItems();
         }
     }
 

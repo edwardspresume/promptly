@@ -5,10 +5,8 @@
 
     import { userSessionStore } from '$globalStores/userAndSupabaseStores';
 
-    import {
-        deleteTagFromDatabaseRequest,
-        deleteTagFromLocalStorage,
-    } from '$dashboardUtils/tagLocalStorageMethods';
+    import { deleteItemFromDatabaseRequest } from '$dashboardUtils/databaseUtils';
+    import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 
     import DeleteItemBtn from '$dashboardComponents/General/DeleteItemBtn.svelte';
     import ListItem from '$dashboardComponents/General/ListItem.svelte';
@@ -27,9 +25,9 @@
      */
     async function deleteTagCallBack() {
         if ($userSessionStore) {
-            await deleteTagFromDatabaseRequest('?/deleteTag', tagId);
+            await deleteItemFromDatabaseRequest('?/deleteTag', tagId);
         } else {
-            deleteTagFromLocalStorage(tagId!);
+            tagLocalStorageManager.deleteItem(tagId!);
         }
     }
 

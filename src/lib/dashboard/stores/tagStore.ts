@@ -1,4 +1,4 @@
-import { derived, writable } from 'svelte/store';
+import { derived, get, writable } from 'svelte/store';
 
 import type { TagSchema } from '$dashboardTypes';
 
@@ -49,3 +49,16 @@ export const filteredTagsStore = derived(
         return sortItems(filteredTags, sortOption);
     }
 );
+
+/**
+ * Checks if a tag with a specific name exists in the list.
+ * @param {string} tagName Name of the tag to check
+ * @returns {boolean} true if tag exists, false otherwise
+ */
+export const doesTagExist = (tagName: string) => {
+    const normalizedName = tagName.trim().toLowerCase();
+
+    const currentTags = get(allTagsStore);
+
+    return currentTags.some((tag) => tag.name.toLowerCase() === normalizedName);
+};

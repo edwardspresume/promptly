@@ -3,13 +3,10 @@
 
     import type { TagSchema } from '$dashboardTypes';
 
-    import { allTagsStore } from '$dashboardStores/tagStore';
+    import { allTagsStore, doesTagExist } from '$dashboardStores/tagStore';
     import { userSessionStore } from '$globalStores/userAndSupabaseStores';
 
-    import {
-        doesTagExist,
-        updateTagInLocalStorage,
-    } from '$dashboardUtils/tagLocalStorageMethods';
+    import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
     import { notifySuccess } from '$dashboardUtils/toast';
     import { TagValidationSchema } from '$dashboardUtils/validation/tagValidationSchema';
 
@@ -63,7 +60,7 @@
 
                 // Update the tag name in the store
                 if (!$userSessionStore) {
-                    updateTagInLocalStorage(id, name);
+                    tagLocalStorageManager.updateItem(id, { name });
                 }
 
                 // Update 'selectedTagForEdit' with the new tag name after updating the tag

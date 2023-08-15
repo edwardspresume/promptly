@@ -4,8 +4,10 @@ import { get, type Writable } from 'svelte/store';
 import defaultPrompts from '$dashboardData/defaultPrompts';
 import defaultTags from '$dashboardData/defaultTags';
 
+import { allPromptsStore } from '$dashboardStores/promptsStore';
 import { allTagsStore } from '$dashboardStores/tagStore';
-import { allPromptsStore } from '$dashboardStores/testStore';
+
+import { createDate } from './functions';
 
 /**
  * An object containing the keys used to store values in localStorage
@@ -54,10 +56,14 @@ function updateStoreAndSaveToStorage<T>(
     updateFunction: (items: T[]) => T[],
     storageKey: string
 ) {
-    // Get and update items
-    const updatedItems = updateFunction(get(store));
-    store.set(updatedItems);
-    localStorage.setItem(storageKey, JSON.stringify(updatedItems));
+    try {
+        // Get and update items
+        const updatedItems = updateFunction(get(store));
+        store.set(updatedItems);
+        localStorage.setItem(storageKey, JSON.stringify(updatedItems));
+    } catch (error) {
+        console.error('Failed to update store:', error);
+    }
 }
 
 /**
@@ -90,8 +96,8 @@ export function createStorageManager<T extends Identifiable>(
             const newItem: Partial<T> = {
                 id: newUUID,
                 ...item,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
+                createdAt: createDate(),
+                updatedAt: createDate(),
             };
 
             updateStoreAndSaveToStorage(
@@ -111,7 +117,7 @@ export function createStorageManager<T extends Identifiable>(
                             : {
                                   ...item,
                                   ...updatedItem,
-                                  updatedAt: new Date().toISOString(),
+                                  updatedAt: createDate(),
                               }
                     ),
                 localStorageKey

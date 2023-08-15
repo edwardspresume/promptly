@@ -3,10 +3,8 @@
 
     import { writable } from 'svelte/store';
 
-    import { notifyError, notifySuccess } from '$dashboardUtils/toast';
+    import { notifySuccess } from '$dashboardUtils/toast';
     import { PromptValidationSchema } from '$dashboardUtils/validation/promptValidationSchema';
-
-    import promptsStore from '$dashboardStores/promptsStore';
 
     import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
     import TextArea from '$dashboardComponents/Forms/TextArea.svelte';
@@ -14,7 +12,9 @@
     import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
     import FavoriteToggleBtn from '$dashboardComponents/Prompts/FavoriteToggleBtn.svelte';
     import { totalTagsCountStore } from '$dashboardStores/tagStore';
+    import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
     import SubmitButton from '$globalComponents/SubmitButton.svelte';
+    import { userSessionStore } from '$globalStores/userAndSupabaseStores';
 
     export let promptCreationModalRef: HTMLDialogElement;
     export let promptCreationFormData;
@@ -44,26 +44,20 @@
 
             onUpdated: ({ form }) => {
                 if (form.valid) {
-                    const { title, text, isFavorited } = form.data;
+                    if (!$userSessionStore) {
+                        const { title, text, isFavorited } = form.data;
 
-                    try {
-                        promptsStore.createPrompt({
+                        promptLocalStorageManager.addItem({
                             title,
                             text,
                             isFavorited,
                             tagIds: $selectedTagIds,
                         });
-
-                        notifySuccess('Prompt successfully created!', {
-                            target: 'baseModal',
-                        });
-                    } catch (error) {
-                        console.error(error);
-
-                        notifyError('Failed to create prompt', {
-                            target: 'baseModal',
-                        });
                     }
+
+                    notifySuccess('Prompt successfully created!', {
+                        target: 'baseModal',
+                    });
 
                     resetFormFields();
                 }
@@ -104,6 +98,7 @@
             class="flex pt-5 mt-6 border-t gap-7 border-white/10 justify-evenly"
         >
             <FavoriteToggleBtn
+                context="PromptCreationForm"
                 {isFavorited}
                 iconSize={26}
                 on:favoriteToggled={({ detail }) =>

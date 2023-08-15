@@ -3,9 +3,8 @@
 
     import type { PromptSchema } from '$dashboardTypes';
 
-    import promptsStore from '$dashboardStores/promptsStore';
-
     import ListItem from '$dashboardComponents/General/ListItem.svelte';
+    import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
     import Icon from '$globalComponents/Icon.svelte';
     import CopyPromptTextBtn from './CopyPromptTextBtn.svelte';
     import FavoriteToggleBtn from './FavoriteToggleBtn.svelte';
@@ -26,7 +25,8 @@
      */
     function handleFavoriteStatusToggle(event: CustomEvent) {
         isFavorited = event.detail.isFavorited;
-        promptsStore.toggleFavorite(id);
+
+        promptLocalStorageManager.updateItem(id!, { isFavorited });
     }
 </script>
 
@@ -44,8 +44,9 @@
 
     <div class="flex items-center gap-x-4">
         <FavoriteToggleBtn
-            iconSize={20}
+            context="PromptItem"
             {isFavorited}
+            iconSize={20}
             on:favoriteToggled={(event) => handleFavoriteStatusToggle(event)}
         />
 

@@ -26,4 +26,12 @@ export const actions: Actions = {
             ? message(form, 'Prompt updated!')
             : message(form, 'Invalid form');
     },
+
+    toggleFavorite: async ({ request }) => {
+        console.log(await request.formData());
+
+        return {
+            message: 'Favorite toggled!',
+        };
+    },
 };

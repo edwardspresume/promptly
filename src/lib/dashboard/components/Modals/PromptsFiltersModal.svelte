@@ -5,11 +5,11 @@
 
     import { promptSortOptions } from '$dashboardData/SortOptions';
 
-    import promptsStore from '$dashboardStores/promptsStore';
+    import { promptSortingPreference } from '$dashboardStores/promptsStore';
+    import { totalTagsCountStore } from '$dashboardStores/tagStore';
 
     import SortSelector from '$dashboardComponents/Filters/SortSelector.svelte';
     import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
-    import { totalTagsCountStore } from '$dashboardStores/tagStore';
     import CloseModalBtn from './CloseModalBtn.svelte';
 
     export let promptsFiltersModalRef: HTMLDialogElement;
@@ -25,7 +25,7 @@
         if ($selectedTagIds.length > 0) selectedTagIds.set([]);
 
         selectedSortOption = '';
-        promptsStore.setSortingPreference('');
+        promptSortingPreference.set('');
     }
 </script>
 

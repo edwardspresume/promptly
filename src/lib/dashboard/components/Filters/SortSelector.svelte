@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { promptSortingPreference } from '$dashboardStores/promptsStore';
     import { tagSortingPreference } from '$dashboardStores/tagStore';
 
     import type { ItemType, SortOption } from '$dashboardTypes';
@@ -13,6 +14,9 @@
 
     function setSortingPreference() {
         if (itemType === 'tag') tagSortingPreference.set(selectedSortOption);
+
+        if (itemType === 'prompt')
+            promptSortingPreference.set(selectedSortOption);
     }
 </script>
 

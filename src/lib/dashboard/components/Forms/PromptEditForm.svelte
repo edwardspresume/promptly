@@ -7,10 +7,13 @@
 
     import type { ConfirmationInfo, PromptSchema } from '$dashboardTypes';
 
+    import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
     import { notifyError, notifySuccess } from '$dashboardUtils/toast';
     import { PromptValidationSchema } from '$dashboardUtils/validation/promptValidationSchema';
 
-    import promptsStore from '$dashboardStores/promptsStore';
+    import { totalTagsCountStore } from '$dashboardStores/tagStore';
+    import { allPromptsStore } from '$dashboardStores/promptsStore';
+    import { userSessionStore } from '$globalStores/userAndSupabaseStores';
 
     import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
     import TextArea from '$dashboardComponents/Forms/TextArea.svelte';
@@ -21,13 +24,10 @@
     import CopyPromptTextBtn from '$dashboardComponents/Prompts/CopyPromptTextBtn.svelte';
     import FavoriteToggleBtn from '$dashboardComponents/Prompts/FavoriteToggleBtn.svelte';
     import SubmitButton from '$globalComponents/SubmitButton.svelte';
-    import { totalTagsCountStore } from '$dashboardStores/tagStore';
 
     export let promptEditModalRef: HTMLDialogElement;
     export let selectedPromptForEdit: PromptSchema | undefined = undefined;
     export let promptEditFormData;
-
-    const allPrompts = promptsStore.allPrompts;
 
     let confirmationModalRef: HTMLDialogElement;
     let promptDeleteConfirmationInfo: ConfirmationInfo;
@@ -61,7 +61,7 @@
     function deletePrompt() {
         // Callback function to delete the prompt and close the modal
         function callback() {
-            promptsStore.deletePrompt($form.id);
+            promptLocalStorageManager.deleteItem($form.id);
             promptEditModalRef.close();
         }
 
@@ -122,28 +122,23 @@
             if (form.valid) {
                 const { id, title, text, isFavorited } = form.data;
 
-                try {
-                    promptsStore.updatePrompt(id, {
+                if (!$userSessionStore) {
+                    promptLocalStorageManager.updateItem(id, {
                         title,
                         text,
-                        tagIds: $selectedTagIds,
                         isFavorited,
-                    });
-
-                    // Update 'selectedPromptForEdit' with the new prompt data after updating the prompt
-                    selectedPromptForEdit =
-                        $allPrompts.find((prompt) => prompt.id === id) ??
-                        selectedPromptForEdit;
-
-                    notifySuccess('Prompt successfully updated!', {
-                        target: 'baseModal',
-                    });
-                } catch (error) {
-                    console.error(error);
-                    notifyError('Failed to update prompt', {
-                        target: 'baseModal',
+                        tagIds: $selectedTagIds,
                     });
                 }
+
+                // Update 'selectedPromptForEdit' with the new prompt data after updating the prompt
+                selectedPromptForEdit =
+                    $allPromptsStore.find((prompt) => prompt.id === id) ??
+                    selectedPromptForEdit;
+
+                notifySuccess('Prompt successfully updated!', {
+                    target: 'baseModal',
+                });
             }
         },
     });
@@ -265,6 +260,7 @@
             />
 
             <FavoriteToggleBtn
+                context="PromptEditForm"
                 isFavorited={$form.isFavorited}
                 iconSize={26}
                 on:favoriteToggled={({ detail }) =>

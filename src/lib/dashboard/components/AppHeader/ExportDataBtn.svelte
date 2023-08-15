@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
     import { get } from 'svelte/store';
 
-    import promptsStore from '$dashboardStores/promptsStore';
+    import { allPromptsStore } from '$dashboardStores/promptsStore';
     import { allTagsStore } from '$dashboardStores/tagStore';
 
     import Icon from '$globalComponents/Icon.svelte';
@@ -13,7 +13,7 @@
      */
     export function prepareDataForExport() {
         // Retrieve prompts and tags data from the store
-        const prompts = get(promptsStore.allPrompts);
+        const prompts = get(allPromptsStore);
         const tags = get(allTagsStore);
 
         // Combine the data into a single object

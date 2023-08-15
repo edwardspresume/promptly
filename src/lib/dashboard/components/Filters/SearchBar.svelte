@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { ItemType } from '$dashboardTypes';
 
-    import promptsStore from '$dashboardStores/promptsStore';
+    import { promptTextFilter } from '$dashboardStores/promptsStore';
     import { tagTextFilter } from '$dashboardStores/tagStore';
 
     export let searchTargetType: ItemType;
@@ -23,7 +23,7 @@
 
         if (searchTargetType === 'prompt') {
             labelText = `Search prompts by title`;
-            promptsStore.setTextFilter(searchQuery);
+            promptTextFilter.set(searchQuery);
         }
     }
 </script>

@@ -1,6 +1,6 @@
 import type { z } from 'zod';
 
-import type { Readable, Writable } from 'svelte/store';
+import type { Writable } from 'svelte/store';
 
 export type EnterKeyHint =
     | 'search'
@@ -27,29 +27,6 @@ export interface DarkModePreferenceStore {
 
     // Method to toggle the current dark mode preference
     toggleDarkMode: () => void;
-}
-
-export interface PromptStore {
-    // Store holding all prompts
-    allPrompts: Writable<PromptSchema[]>;
-
-    // Store holding prompts after applying filters and sorting
-    filteredPrompts: Readable<PromptSchema[]>;
-
-    // Store holding the total count of prompts
-    totalPromptCount: Readable<number>;
-
-    // Methods to manage prompts
-    createPrompt: (prompt: Partial<PromptSchema>) => void;
-    updatePrompt: (id: number, updatedPrompt: Partial<PromptSchema>) => void;
-    deletePrompt: (id: number) => void;
-    deleteAllPrompts: () => void;
-    toggleFavorite: (id: number) => void;
-
-    // Methods to manage filters and sorting
-    setTextFilter: (text: string) => void;
-    setTagFilter: (tags: number[]) => void;
-    setSortingPreference: (option: string) => void;
 }
 
 /**

@@ -5,7 +5,7 @@
 
     import { onOutsideClick } from '$dashboardUtils/functions';
 
-    import promptsStore from '$dashboardStores/promptsStore';
+    import { tagsFilter } from '$dashboardStores/promptsStore';
     import { allTagsStore } from '$dashboardStores/tagStore';
 
     import SelectedTag from './SelectedTag.svelte';
@@ -87,7 +87,7 @@
     }
 
     // Sets tag filter in prompts store when filterPromptBasedOnTags is true
-    $: if (filterPromptBasedOnTags) promptsStore.setTagFilter($selectedTagIds);
+    $: if (filterPromptBasedOnTags) tagsFilter.set($selectedTagIds);
 </script>
 
 <form

@@ -1,6 +1,10 @@
 <script lang="ts">
-    import promptsStore from '$dashboardStores/promptsStore';
+    import {
+        filteredPromptsStore,
+        totalPromptCountStore,
+    } from '$dashboardStores/promptsStore';
     import type { ConfirmationInfo, PromptSchema } from '$dashboardTypes';
+    import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 
     import StatusMessage from '$dashboardComponents/General/StatusMessage.svelte';
     import ItemCountDisplay from '$dashboardComponents/ListControls/ItemCountDisplay.svelte';
@@ -15,9 +19,6 @@
     const NO_FAVORITE_PROMPTS_MESSAGE =
         'Your favorites list is currently empty';
 
-    const filteredPrompts = promptsStore.filteredPrompts;
-    const totalPromptsCount = promptsStore.totalPromptCount;
-
     let promptItemsContainerRef: HTMLElement;
     let confirmationModalRef: HTMLDialogElement;
 
@@ -28,14 +29,14 @@
 
     $: {
         displayedPrompts = isShowingOnlyFavorites
-            ? $filteredPrompts.filter((prompt) => prompt.isFavorited)
-            : $filteredPrompts;
+            ? $filteredPromptsStore.filter((prompt) => prompt.isFavorited)
+            : $filteredPromptsStore;
 
         displayedPromptsCount = displayedPrompts.length;
     }
 
     $: {
-        if ($totalPromptsCount === 0)
+        if ($totalPromptCountStore === 0)
             statusMessage = NO_PROMPTS_AVAILABLE_MESSAGE;
         else if (isShowingOnlyFavorites && displayedPromptsCount === 0)
             statusMessage = NO_FAVORITE_PROMPTS_MESSAGE;
@@ -51,7 +52,7 @@
         confirmationModalInfoForPromptDeletion = {
             title: 'Are you sure you want to delete All Prompts?',
             toastMessage: 'All Prompts have been successfully deleted!',
-            callback: () => promptsStore.deleteAllPrompts(),
+            callback: () => promptLocalStorageManager.deleteAllItems(),
         };
 
         confirmationModalRef.showModal();
@@ -63,7 +64,7 @@
 {:else}
     <ItemCountDisplay
         itemType="prompt"
-        totalItemCount={$totalPromptsCount}
+        totalItemCount={$totalPromptCountStore}
         displayedItemCount={displayedPromptsCount}
     />
 
@@ -80,7 +81,7 @@
 
 <ItemListControls
     itemType="prompt"
-    totalItemCount={$totalPromptsCount}
+    totalItemCount={$totalPromptCountStore}
     itemContainerRef={promptItemsContainerRef}
     on:addItem
     on:deleteAllItems={handleDeleteAllPromptsEvent}

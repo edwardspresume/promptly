@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ConfirmationInfo } from '$dashboardTypes';
+    import type { ConfirmationInfo } from '$dashboardTypes/dashboardTypes';
 
     import {
         filteredTagsStore,

@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { PageData } from './$types';
 
-    import type { PromptSchema } from '$dashboardTypes';
+    import type { PromptSchema } from '$dashboardTypes/dashboardTypes';
 
     import FilterDisplayButton from '$dashboardComponents/Filters/FilterDisplayButton.svelte';
     import SearchBar from '$dashboardComponents/Filters/SearchBar.svelte';

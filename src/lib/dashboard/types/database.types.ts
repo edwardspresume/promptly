@@ -17,8 +17,8 @@ export interface Database {
           full_name: string | null
           id: string
           is_active: boolean
-          is_pro_user: boolean
           last_login: string
+          subscription_plan: Database["public"]["Enums"]["subscription_plan"]
           updated_at: string
           username: string | null
         }
@@ -29,8 +29,8 @@ export interface Database {
           full_name?: string | null
           id: string
           is_active?: boolean
-          is_pro_user?: boolean
           last_login?: string
+          subscription_plan?: Database["public"]["Enums"]["subscription_plan"]
           updated_at?: string
           username?: string | null
         }
@@ -41,8 +41,8 @@ export interface Database {
           full_name?: string | null
           id?: string
           is_active?: boolean
-          is_pro_user?: boolean
           last_login?: string
+          subscription_plan?: Database["public"]["Enums"]["subscription_plan"]
           updated_at?: string
           username?: string | null
         }
@@ -60,31 +60,34 @@ export interface Database {
           created_at: string
           id: string
           is_favorited: boolean
-          tagIds: number[] | null
+          tag_ids: string[] | null
           text: string
           title: string
           updated_at: string
           user_id: string
+          visibility: Database["public"]["Enums"]["prompt_visibility"]
         }
         Insert: {
           created_at?: string
           id?: string
           is_favorited?: boolean
-          tagIds?: number[] | null
+          tag_ids?: string[] | null
           text: string
           title: string
           updated_at?: string
           user_id: string
+          visibility?: Database["public"]["Enums"]["prompt_visibility"]
         }
         Update: {
           created_at?: string
           id?: string
           is_favorited?: boolean
-          tagIds?: number[] | null
+          tag_ids?: string[] | null
           text?: string
           title?: string
           updated_at?: string
           user_id?: string
+          visibility?: Database["public"]["Enums"]["prompt_visibility"]
         }
         Relationships: [
           {
@@ -134,7 +137,8 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      prompt_visibility: "private" | "public"
+      subscription_plan: "free" | "pro" | "enterprise"
     }
     CompositeTypes: {
       [_ in never]: never

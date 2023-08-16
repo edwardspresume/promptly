@@ -1,4 +1,4 @@
-import type { PromptSchema } from '$dashboardTypes';
+import type { PromptSchema } from '$dashboardTypes/dashboardTypes';
 
 /**
  * Creates a new prompt with the provided title and text. The function returns a prompt object

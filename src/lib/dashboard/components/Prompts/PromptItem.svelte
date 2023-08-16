@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
-    import type { PromptSchema } from '$dashboardTypes';
+    import type { PromptSchema } from '$dashboardTypes/dashboardTypes';
 
     import ListItem from '$dashboardComponents/General/ListItem.svelte';
     import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';

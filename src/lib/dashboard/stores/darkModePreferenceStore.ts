@@ -2,7 +2,7 @@ import { browser } from '$app/environment';
 import type { Writable } from 'svelte/store';
 import { writable } from 'svelte/store';
 
-import type { DarkModePreferenceStore } from '$dashboardTypes';
+import type { DarkModePreferenceStore } from '$dashboardTypes/dashboardTypes';
 
 /**
  * Creates a store for managing theme preferences.

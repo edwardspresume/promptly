@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
-    import type { ItemType } from '$dashboardTypes';
+    import type { ItemType } from '$dashboardTypes/dashboardTypes';
 
     export let itemType: ItemType;
 

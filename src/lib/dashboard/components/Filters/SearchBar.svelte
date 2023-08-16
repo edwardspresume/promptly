@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ItemType } from '$dashboardTypes';
+    import type { ItemType } from '$dashboardTypes/dashboardTypes';
 
     import { promptTextFilter } from '$dashboardStores/promptsStore';
     import { tagTextFilter } from '$dashboardStores/tagStore';

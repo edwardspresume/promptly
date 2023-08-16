@@ -4,7 +4,7 @@ import { get } from 'svelte/store';
 
 import defaultTags from '$dashboardData/defaultTags';
 import { createTagsStore } from '$dashboardStores/tagStore';
-import type { TagStore } from '$dashboardTypes';
+import type { TagStore } from '$dashboardTypes/dashboardTypes';
 import { LocalStorageKeys } from '$dashboardUtils/localStorage';
 import { compareStrings } from '$dashboardUtils/sortItems';
 

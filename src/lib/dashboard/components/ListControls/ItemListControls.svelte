@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ItemType } from '$dashboardTypes';
+    import type { ItemType } from '$dashboardTypes/dashboardTypes';
 
     import AddItemBtn from '$dashboardComponents/ListControls/AddItemBtn.svelte';
     import DeleteAllItemsBtn from '$dashboardComponents/ListControls/DeleteAllItemsBtn.svelte';

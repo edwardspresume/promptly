@@ -2,7 +2,7 @@
     import { promptSortingPreference } from '$dashboardStores/promptsStore';
     import { tagSortingPreference } from '$dashboardStores/tagStore';
 
-    import type { ItemType, SortOption } from '$dashboardTypes';
+    import type { ItemType, SortOption } from '$dashboardTypes/dashboardTypes';
 
     export let itemType: ItemType;
 

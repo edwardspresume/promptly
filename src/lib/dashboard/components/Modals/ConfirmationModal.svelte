@@ -1,7 +1,7 @@
 <script lang="ts">
     import { invalidateAll } from '$app/navigation';
 
-    import type { ConfirmationInfo } from '$dashboardTypes';
+    import type { ConfirmationInfo } from '$dashboardTypes/dashboardTypes';
     import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
     import { notifySuccess } from '$dashboardUtils/toast';
 

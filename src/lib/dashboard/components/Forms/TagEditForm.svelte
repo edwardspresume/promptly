@@ -1,7 +1,7 @@
 <script lang="ts">
     import { superForm } from 'sveltekit-superforms/client';
 
-    import type { TagSchema } from '$dashboardTypes';
+    import type { TagSchema } from '$dashboardTypes/dashboardTypes';
 
     import { allTagsStore, doesTagExist } from '$dashboardStores/tagStore';
     import { userSessionStore } from '$globalStores/userAndSupabaseStores';

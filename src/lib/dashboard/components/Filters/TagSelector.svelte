@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Writable } from 'svelte/store';
 
-    import type { TagSchema } from '$dashboardTypes';
+    import type { TagSchema } from '$dashboardTypes/dashboardTypes';
 
     import { onOutsideClick } from '$dashboardUtils/functions';
 

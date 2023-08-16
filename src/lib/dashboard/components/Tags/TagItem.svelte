@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
-    import type { ConfirmationInfo, TagSchema } from '$dashboardTypes';
+    import type { ConfirmationInfo, TagSchema } from '$dashboardTypes/dashboardTypes';
 
     import { userSessionStore } from '$globalStores/userAndSupabaseStores';
 

@@ -1,4 +1,4 @@
-import type { SortableItemProperties } from '$dashboardTypes';
+import type { SortableItemProperties } from '$dashboardTypes/dashboardTypes';
 
 /**
  * A utility function to compare strings.

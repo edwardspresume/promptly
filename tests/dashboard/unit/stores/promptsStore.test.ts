@@ -4,7 +4,7 @@ import { get } from 'svelte/store';
 
 import defaultPrompts from '$dashboardData/defaultPrompts';
 import { createPromptsStore } from '$dashboardStores/promptsStore';
-import type { PromptStore } from '$dashboardTypes';
+import type { PromptStore } from '$dashboardTypes/dashboardTypes';
 import { LocalStorageKeys } from '$dashboardUtils/localStorage';
 import { compareStrings } from '$dashboardUtils/sortItems';
 

@@ -5,7 +5,7 @@
 
     import { writable } from 'svelte/store';
 
-    import type { ConfirmationInfo, PromptSchema } from '$dashboardTypes';
+    import type { ConfirmationInfo, PromptSchema } from '$dashboardTypes/dashboardTypes';
 
     import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
     import { notifyError, notifySuccess } from '$dashboardUtils/toast';

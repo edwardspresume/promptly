@@ -1,4 +1,4 @@
-import type { TagSchema } from '$dashboardTypes';
+import type { TagSchema } from '$dashboardTypes/dashboardTypes';
 
 /**
  * Creates a new tag with the provided name. The createdAt and updatedAt fields are

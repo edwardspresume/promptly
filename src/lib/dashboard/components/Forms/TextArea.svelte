@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { EnterKeyHint } from '$dashboardTypes';
+    import type { EnterKeyHint } from '$dashboardTypes/dashboardTypes';
 
     export let value: string = '';
     export let name: string = '';

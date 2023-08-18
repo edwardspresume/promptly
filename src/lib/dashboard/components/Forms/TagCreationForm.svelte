@@ -6,7 +6,7 @@
     import { doesTagExist } from '$dashboardStores/tagStore';
     import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
     import { notifySuccess } from '$dashboardUtils/toast';
-    import { TagValidationSchema } from '$dashboardUtils/validation/tagValidationSchema';
+    import { tagsCrudSchema } from '$databaseDir/tagsCrudSchema';
 
     import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
     import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
@@ -19,10 +19,12 @@
         id: 'createTag',
         resetForm: true,
         taintedMessage: null,
-        validators: TagValidationSchema,
+        validators: tagsCrudSchema,
 
         onSubmit: ({ formData, cancel }) => {
             const name = formData.get('name') as string;
+
+            console.log($errors);
 
             if (doesTagExist(name)) {
                 errors.set({

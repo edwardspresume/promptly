@@ -1,6 +1,6 @@
 import { derived, get, writable } from 'svelte/store';
 
-import type { TagSchema } from '$databaseDir/schema.ts';
+import type { TagSchema } from '$databaseDir/schema';
 
 import { sortItems } from '$dashboardUtils/sortItems';
 

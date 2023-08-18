@@ -1,14 +1,14 @@
 <script lang="ts">
     import { superForm } from 'sveltekit-superforms/client';
 
-    import type { TagSchema } from '$databaseDir/schema.ts';
+    import type { TagSchema } from '$databaseDir/schema';
+    import { tagsCrudSchema } from '$databaseDir/tagsCrudSchema';
 
     import { allTagsStore, doesTagExist } from '$dashboardStores/tagStore';
     import { userSessionStore } from '$globalStores/userAndSupabaseStores';
 
     import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
     import { notifySuccess } from '$dashboardUtils/toast';
-    import { TagValidationSchema } from '$dashboardUtils/validation/tagValidationSchema';
 
     import TextInput from '$dashboardComponents/Forms/TextInput.svelte';
     import BaseModal from '$dashboardComponents/Modals/BaseModal.svelte';
@@ -40,7 +40,7 @@
     const { form, errors, delayed, enhance } = superForm(tagEditFormData, {
         id: 'updateTag',
         taintedMessage: null,
-        validators: TagValidationSchema,
+        validators: tagsCrudSchema,
 
         onSubmit: ({ formData, cancel }) => {
             const name = formData.get('name') as string;

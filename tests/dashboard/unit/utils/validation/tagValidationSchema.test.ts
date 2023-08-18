@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 
 import {
     MAX_TAG_NAME_LENGTH,
-    TagValidationSchema,
-} from '$dashboardUtils/validation/tagValidationSchema';
+    tagsCrudSchema,
+} from '$databaseDir/tagsCrudSchema';
 
 /**
  * Generates an object representing a valid tag.
@@ -21,17 +21,17 @@ function createValidTagData(overrides = {}) {
     };
 }
 
-describe('TagValidationSchema', () => {
+describe('tagsCrudSchema', () => {
     it('should successfully validate a valid tag without throwing an error', () => {
         const validTagData = createValidTagData();
 
-        expect(() => TagValidationSchema.parse(validTagData)).not.toThrow();
+        expect(() => tagsCrudSchema.parse(validTagData)).not.toThrow();
     });
 
     it('should throw an error if id is negative', () => {
         const invalidTagData = createValidTagData({ id: -1 });
 
-        expect(() => TagValidationSchema.parse(invalidTagData)).toThrow(
+        expect(() => tagsCrudSchema.parse(invalidTagData)).toThrow(
             'Invalid input: id must be a non-negative number'
         );
     });
@@ -39,7 +39,7 @@ describe('TagValidationSchema', () => {
     it('should throw an error if name is empty', () => {
         const invalidTagData = createValidTagData({ name: '' });
 
-        expect(() => TagValidationSchema.parse(invalidTagData)).toThrow(
+        expect(() => tagsCrudSchema.parse(invalidTagData)).toThrow(
             'Name is required'
         );
     });
@@ -49,7 +49,7 @@ describe('TagValidationSchema', () => {
             name: 'a'.repeat(MAX_TAG_NAME_LENGTH + 1),
         });
 
-        expect(() => TagValidationSchema.parse(invalidTagData)).toThrow(
+        expect(() => tagsCrudSchema.parse(invalidTagData)).toThrow(
             `Name should not exceed ${MAX_TAG_NAME_LENGTH} characters`
         );
     });

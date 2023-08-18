@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { PageData } from './$types';
 
-    import type { TagSchema } from '$databaseDir/schema.ts';
+    import type { TagSchema } from '$databaseDir/schema';
 
     import { tagSortOptions } from '$dashboardData/SortOptions';
 

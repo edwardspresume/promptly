@@ -95,6 +95,7 @@ export function createStorageManager<T extends Identifiable>(
 
             const newItem: Partial<T> = {
                 id: newUUID,
+                userId: '0000000',
                 ...item,
                 createdAt: createDate(),
                 updatedAt: createDate(),

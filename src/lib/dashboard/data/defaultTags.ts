@@ -1,4 +1,4 @@
-import type { TagSchema } from '$databaseDir/schema.ts';
+import type { TagSchema } from '$databaseDir/schema';
 
 /**
  * Creates a new tag with the provided name. The createdAt and updatedAt fields are

@@ -4,7 +4,7 @@
 
 import { Session, SupabaseClient } from '@supabase/supabase-js';
 
-import type { Database } from '$dashboardTypes/database.types';
+import type { Database } from '$databaseDir/database.types';
 
 declare global {
     namespace App {

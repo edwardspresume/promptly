@@ -1,17 +1,18 @@
-import type { TagSchema } from '$dashboardTypes/dashboardTypes';
+import type { TagSchema } from '$databaseDir/schema.ts';
 
 /**
  * Creates a new tag with the provided name. The createdAt and updatedAt fields are
  * set to the current date and time.
  *
  * @param  name - The name for the new tag
- * @returns The newly created tag with ID, name, createdAt, and updatedAt fields
+ * @returns The newly created tag with ID, userId, name, createdAt, and updatedAt fields
  */
 function createTag(name: string): TagSchema {
     const currentDate = new Date().toISOString();
 
     return {
         id: crypto.randomUUID(),
+        userId: '0000000',
         name,
         createdAt: currentDate,
         updatedAt: currentDate,

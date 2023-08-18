@@ -2,6 +2,7 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 
 import type { Actions, PageServerLoad } from './$types';
 
+import { handleItemOperation } from '$dashboardUtils/itemDatabaseOperations.server';
 import { PromptValidationSchema } from '$dashboardUtils/validation/promptValidationSchema';
 
 export const load = (async (event) => {
@@ -11,12 +12,25 @@ export const load = (async (event) => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-    createPrompt: async ({ request }) => {
-        const form = await superValidate(request, PromptValidationSchema);
+    createPrompt: async ({ request, locals: { getSession, supabase } }) => {
+        const promptForm = await superValidate(request, PromptValidationSchema);
 
-        return form.valid
-            ? message(form, 'Prompt created!')
-            : message(form, 'Invalid form');
+        if (!promptForm.valid) return message(promptForm, 'Invalid form');
+
+        const session = await getSession();
+
+        if (session) {
+            await handleItemOperation(
+                'prompts',
+                'create',
+                supabase,
+                promptForm,
+                null,
+                session.user.id
+            );
+        }
+
+        return message(promptForm, 'Prompt created!');
     },
 
     updatePrompt: async ({ request }) => {

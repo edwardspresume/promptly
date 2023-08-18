@@ -1,4 +1,4 @@
-import type { PromptSchema } from '$dashboardTypes/dashboardTypes';
+import type { PromptSchema } from '$databaseSchema';
 
 /**
  * Creates a new prompt with the provided title and text. The function returns a prompt object
@@ -12,10 +12,12 @@ function createPrompt(title: string, text: string): PromptSchema {
 
     return {
         id: crypto.randomUUID(),
+        userId: '0000000',
         title,
         text,
         isFavorited: false,
         tagIds: [],
+        visibility: 'private',
         createdAt: currentDate,
         updatedAt: currentDate,
     };

@@ -1,5 +1,3 @@
-import type { z } from 'zod';
-
 import type { Writable } from 'svelte/store';
 
 export type EnterKeyHint =
@@ -13,13 +11,7 @@ export type EnterKeyHint =
     | null
     | undefined;
 
-import type { PromptValidationSchema } from '$dashboardUtils/validation/promptValidationSchema';
-import type { TagValidationSchema } from '$dashboardUtils/validation/tagValidationSchema';
-
 export type ItemType = 'prompt' | 'tag';
-
-export type PromptSchema = z.infer<typeof PromptValidationSchema>;
-export type TagSchema = z.infer<typeof TagValidationSchema>;
 
 export interface DarkModePreferenceStore {
     // Store holding the current dark mode preference

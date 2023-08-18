@@ -29,7 +29,7 @@ const config = {
             $dashboardData: 'src/lib/dashboard/data',
             $dashboardTypes: 'src/lib/dashboard/types',
 
-            $databaseSchema: 'src/lib/dashboard/database/schema.ts',
+            $databaseDir: 'src/lib/dashboard/database',
         },
     },
 

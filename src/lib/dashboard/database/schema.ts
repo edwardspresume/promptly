@@ -1,3 +1,7 @@
+import type { z } from 'zod';
+
+import { createInsertSchema, createSelectSchema,  } from 'drizzle-zod';
+
 import {
     boolean,
     pgEnum,
@@ -130,3 +134,12 @@ export const tags = pgTable(
         };
     }
 );
+
+const selectPromptsSchema = createSelectSchema(prompts);
+const selectTagsSchema = createSelectSchema(tags);
+
+export const insertPromptsSchema = createInsertSchema(prompts);
+export const insertTagsSchema = createInsertSchema(tags);
+
+export type PromptSchema = z.infer<typeof selectPromptsSchema>;
+export type TagSchema = z.infer<typeof selectTagsSchema>;

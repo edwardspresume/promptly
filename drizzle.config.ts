@@ -4,7 +4,7 @@ import type { Config } from 'drizzle-kit';
 dotenv.config();
 
 export default {
-    schema: './drizzle/schema.ts',
+    schema: 'src/lib/dashboard/database/schema.ts',
     out: './drizzle',
     driver: 'pg',
     verbose: true,

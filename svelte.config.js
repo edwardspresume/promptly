@@ -28,6 +28,8 @@ const config = {
             $dashboardUtils: 'src/lib/dashboard/utils',
             $dashboardData: 'src/lib/dashboard/data',
             $dashboardTypes: 'src/lib/dashboard/types',
+
+            $databaseSchema: 'src/lib/dashboard/database/schema.ts',
         },
     },
 

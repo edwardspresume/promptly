@@ -4,7 +4,7 @@
     import { writable } from 'svelte/store';
 
     import { notifySuccess } from '$dashboardUtils/toast';
-    import { PromptValidationSchema } from '$dashboardUtils/validation/promptValidationSchema';
+    import { promptsCrudSchema } from '$databaseDir/promptsCrudSchema';
 
     import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
     import TextArea from '$dashboardComponents/Forms/TextArea.svelte';
@@ -40,7 +40,7 @@
             id: 'createPrompt',
             resetForm: true,
             taintedMessage: null,
-            validators: PromptValidationSchema,
+            validators: promptsCrudSchema,
 
             onUpdated: ({ form }) => {
                 if (form.valid) {

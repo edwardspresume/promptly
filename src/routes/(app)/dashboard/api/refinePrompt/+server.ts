@@ -3,7 +3,7 @@ import sanitizeHtml from 'sanitize-html';
 import { SECRET_OPENAI_API_KEY } from '$env/static/private';
 import type { RequestHandler } from './$types';
 
-import { PromptValidationSchema } from '$dashboardUtils/validation/promptValidationSchema';
+import { promptsCrudSchema } from '$databaseDir/promptsCrudSchema';
 
 /**
  * Function to improve the prompt using OpenAI API
@@ -83,7 +83,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
     const promptText = await request.text();
 
-    const promptTextSchema = PromptValidationSchema.pick({ text: true });
+    const promptTextSchema = promptsCrudSchema.pick({ text: true });
     const parseResult = promptTextSchema.safeParse({ text: promptText });
 
     if (!parseResult.success) {

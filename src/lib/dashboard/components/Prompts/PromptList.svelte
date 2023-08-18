@@ -4,9 +4,9 @@
         totalPromptCountStore,
     } from '$dashboardStores/promptsStore';
 
-    import type { PromptSchema } from '$databaseDir/schema.ts';
     import type { ConfirmationInfo } from '$dashboardTypes/dashboardTypes';
     import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
+    import type { PromptSchema } from '$databaseDir/schema';
 
     import StatusMessage from '$dashboardComponents/General/StatusMessage.svelte';
     import ItemCountDisplay from '$dashboardComponents/ListControls/ItemCountDisplay.svelte';

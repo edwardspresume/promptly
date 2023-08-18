@@ -1,6 +1,6 @@
 import type { z } from 'zod';
 
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import { createSelectSchema } from 'drizzle-zod';
 
 import {
     boolean,
@@ -140,7 +140,3 @@ const selectTagsSchema = createSelectSchema(tags);
 
 export type PromptSchema = z.infer<typeof selectPromptsSchema>;
 export type TagSchema = z.infer<typeof selectTagsSchema>;
-
-
-
-export const promptsCrudSchema = createInsertSchema(prompts);

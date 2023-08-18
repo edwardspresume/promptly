@@ -4,8 +4,8 @@ import {
     MAX_PROMPT_TEXT_LENGTH,
     MAX_PROMPT_TITLE_LENGTH,
     MIN_PROMPT_TEXT_LENGTH,
-    PromptValidationSchema,
-} from '$dashboardUtils/validation/promptValidationSchema';
+    promptsCrudSchema,
+} from '$databaseDir/promptsCrudSchema';
 
 /**
  * Generates an object representing a valid prompt.
@@ -26,19 +26,17 @@ function createValidPromptData(overrides = {}) {
     };
 }
 
-describe('PromptValidationSchema', () => {
+describe('promptsCrudSchema', () => {
     it('should successfully validate a valid prompt without throwing an error', () => {
         const validPromptData = createValidPromptData();
 
-        expect(() =>
-            PromptValidationSchema.parse(validPromptData)
-        ).not.toThrow();
+        expect(() => promptsCrudSchema.parse(validPromptData)).not.toThrow();
     });
 
     it('should throw an error if id is negative', () => {
         const invalidPromptData = createValidPromptData({ id: -1 });
 
-        expect(() => PromptValidationSchema.parse(invalidPromptData)).toThrow(
+        expect(() => promptsCrudSchema.parse(invalidPromptData)).toThrow(
             'Invalid input: id must be a non-negative number'
         );
     });
@@ -46,7 +44,7 @@ describe('PromptValidationSchema', () => {
     it('should throw an error if title is empty', () => {
         const invalidPromptData = createValidPromptData({ title: '' });
 
-        expect(() => PromptValidationSchema.parse(invalidPromptData)).toThrow(
+        expect(() => promptsCrudSchema.parse(invalidPromptData)).toThrow(
             'Title is required'
         );
     });
@@ -56,7 +54,7 @@ describe('PromptValidationSchema', () => {
             title: 'a'.repeat(MAX_PROMPT_TITLE_LENGTH + 1),
         });
 
-        expect(() => PromptValidationSchema.parse(invalidPromptData)).toThrow(
+        expect(() => promptsCrudSchema.parse(invalidPromptData)).toThrow(
             `Title should not exceed ${MAX_PROMPT_TITLE_LENGTH} characters`
         );
     });
@@ -64,7 +62,7 @@ describe('PromptValidationSchema', () => {
     it('should throw an error if text is too short', () => {
         const invalidPromptData = createValidPromptData({ text: 'ab' });
 
-        expect(() => PromptValidationSchema.parse(invalidPromptData)).toThrow(
+        expect(() => promptsCrudSchema.parse(invalidPromptData)).toThrow(
             `Text should have at least ${MIN_PROMPT_TEXT_LENGTH} characters`
         );
     });
@@ -74,7 +72,7 @@ describe('PromptValidationSchema', () => {
             text: 'a'.repeat(MAX_PROMPT_TEXT_LENGTH + 1),
         });
 
-        expect(() => PromptValidationSchema.parse(invalidPromptData)).toThrow(
+        expect(() => promptsCrudSchema.parse(invalidPromptData)).toThrow(
             `Text should not exceed ${MAX_PROMPT_TEXT_LENGTH} characters`
         );
     });
@@ -82,7 +80,7 @@ describe('PromptValidationSchema', () => {
     it('should throw an error if tagIds is not an array', () => {
         const invalidPromptData = createValidPromptData({ tagIds: '1' });
 
-        expect(() => PromptValidationSchema.parse(invalidPromptData)).toThrow(
+        expect(() => promptsCrudSchema.parse(invalidPromptData)).toThrow(
             'Expected array, received string'
         );
     });

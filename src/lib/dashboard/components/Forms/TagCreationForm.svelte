@@ -24,8 +24,6 @@
         onSubmit: ({ formData, cancel }) => {
             const name = formData.get('name') as string;
 
-            console.log($errors);
-
             if (doesTagExist(name)) {
                 errors.set({
                     name: ['A tag with this name already exists'],

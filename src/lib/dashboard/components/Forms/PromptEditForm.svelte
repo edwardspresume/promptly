@@ -5,15 +5,16 @@
 
     import { writable } from 'svelte/store';
 
-    import type { PromptSchema } from '$databaseDir/schema.ts';
     import type { ConfirmationInfo } from '$dashboardTypes/dashboardTypes';
+    import type { PromptSchema } from '$databaseDir/schema';
 
     import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
     import { notifyError, notifySuccess } from '$dashboardUtils/toast';
-    import { PromptValidationSchema } from '$dashboardUtils/validation/promptValidationSchema';
+    import { promptsCrudSchema } from '$databaseDir/promptsCrudSchema';
 
-    import { totalTagsCountStore } from '$dashboardStores/tagStore';
+
     import { allPromptsStore } from '$dashboardStores/promptsStore';
+    import { totalTagsCountStore } from '$dashboardStores/tagStore';
     import { userSessionStore } from '$globalStores/userAndSupabaseStores';
 
     import TagSelector from '$dashboardComponents/Filters/TagSelector.svelte';
@@ -117,7 +118,7 @@
     const { form, errors, delayed, enhance } = superForm(promptEditFormData, {
         id: 'updatePrompt',
         taintedMessage: null,
-        validators: PromptValidationSchema,
+        validators: promptsCrudSchema,
 
         onUpdated: ({ form }) => {
             if (form.valid) {

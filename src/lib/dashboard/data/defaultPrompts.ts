@@ -1,4 +1,4 @@
-import type { PromptSchema } from '$databaseSchema';
+import type { PromptSchema } from '$databaseDir/schema.ts';
 
 /**
  * Creates a new prompt with the provided title and text. The function returns a prompt object

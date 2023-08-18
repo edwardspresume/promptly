@@ -1,6 +1,6 @@
 import { derived, writable } from 'svelte/store';
 
-import type { PromptSchema } from '$dashboardTypes/dashboardTypes';
+import type { PromptSchema } from '$databaseDir/schema.ts';
 
 import { sortItems } from '$dashboardUtils/sortItems';
 

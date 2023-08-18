@@ -3,7 +3,9 @@
         filteredPromptsStore,
         totalPromptCountStore,
     } from '$dashboardStores/promptsStore';
-    import type { ConfirmationInfo, PromptSchema } from '$dashboardTypes/dashboardTypes';
+
+    import type { PromptSchema } from '$databaseDir/schema.ts';
+    import type { ConfirmationInfo } from '$dashboardTypes/dashboardTypes';
     import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 
     import StatusMessage from '$dashboardComponents/General/StatusMessage.svelte';

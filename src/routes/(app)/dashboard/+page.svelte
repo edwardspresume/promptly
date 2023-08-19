@@ -10,6 +10,7 @@
     import PromptsFiltersModal from '$dashboardComponents/Modals/PromptsFiltersModal.svelte';
     import PromptList from '$dashboardComponents/Prompts/PromptList.svelte';
     import TabGroup from '$dashboardComponents/Prompts/TabGroup.svelte';
+    import { allPromptsStore } from '$dashboardStores/promptsStore';
 
     export let data: PageData;
 
@@ -31,6 +32,9 @@
         selectedPromptForEdit = event.detail;
         promptEditModalRef.showModal();
     };
+
+    $: console.log($allPromptsStore);
+    
 </script>
 
 <svelte:head>

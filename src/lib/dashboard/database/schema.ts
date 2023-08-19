@@ -1,6 +1,5 @@
-import type { z } from 'zod';
-
 import { createSelectSchema } from 'drizzle-zod';
+import type { z } from 'zod';
 
 import {
     boolean,

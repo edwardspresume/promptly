@@ -28,6 +28,8 @@
 
         promptLocalStorageManager.updateItem(id!, { isFavorited });
     }
+
+    $: console.log(text);
 </script>
 
 <ListItem

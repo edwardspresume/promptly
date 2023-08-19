@@ -1,122 +1,52 @@
 import { message, superValidate } from 'sveltekit-superforms/server';
 
-import type { Database } from '$dataBaseTypes';
-import type { Session, SupabaseClient } from '@supabase/supabase-js';
-import type { SuperValidated } from 'sveltekit-superforms';
 import type { Actions, PageServerLoad } from './$types';
 
-type TagOperation = 'create' | 'update' | 'delete' | 'deleteAll';
-
-interface TagData {
-    name: string;
-    user_id: string;
-}
-
-import { TagValidationSchema } from '$dashboardUtils/validation/tagValidationSchema';
-
-/**
- * Function to build the appropriate Supabase query for the tag operation.
- * @param {TagOperation} operation The tag operation.
- * @param {SupabaseClient<Database>} supabase Initialized Supabase client.
- * @param {object} tagData The tag data.
- * @param {string | null | undefined} tagId Optional tag ID.
- */
-function buildQuery(
-    operation: TagOperation,
-    supabase: SupabaseClient<Database>,
-    tagData: object,
-    tagId?: string | null,
-    userId?: string
-) {
-    switch (operation) {
-        case 'create':
-            return supabase.from('tags').insert([tagData]);
-        case 'update':
-            return supabase.from('tags').update(tagData).eq('id', tagId);
-        case 'delete':
-            return supabase.from('tags').delete().eq('id', tagId);
-        case 'deleteAll':
-            return supabase.from('tags').delete().eq('user_id', userId);
-    }
-}
-
-/**
- * Function to perform create, update, or delete operation on a tag.
- * @param {TagOperation} tagOperation Specifies the operation type.
- * @param {Session} session User session.
- * @param {SupabaseClient<Database>} supabase Initialized Supabase client.
- * @param {SuperValidated<typeof TagValidationSchema> | undefined} tagForm Form data validated against the TagValidationSchema.
- * @param {string | null | undefined} tagId Optional tag ID, required for update and delete operations.
- */
-const handleTagOperation = async (
-    tagOperation: TagOperation,
-    session: Session,
-    supabase: SupabaseClient<Database>,
-    tagForm?: SuperValidated<typeof TagValidationSchema>,
-    tagId?: string | null
-) => {
-    // Check for undefined or null tagId for update and delete operations
-    if ((tagOperation === 'update' || tagOperation === 'delete') && !tagId) {
-        console.error('Tag ID is undefined or null');
-        return { status: 400, body: { message: 'Tag ID is required' } };
-    }
-    // Prepare tag data if it's not a delete or deleteAll operation
-    const tagData: TagData | Record<string, never> =
-        tagForm && tagOperation !== 'delete' && tagOperation !== 'deleteAll'
-            ? { name: tagForm.data.name, user_id: session.user.id }
-            : {};
-
-    // Build the query based on the tag operation
-    const query = buildQuery(
-        tagOperation,
-        supabase,
-        tagData,
-        tagId,
-        session.user.id
-    );
-
-    const { error } = await query;
-
-    if (error) {
-        console.error(error);
-        return message(tagForm, `Error ${tagOperation} tag`);
-    }
-};
+import { handleItemOperation } from '$databaseDir/itemOperations.server';
+import { tagsCrudSchema } from '$databaseDir/tagsCrudSchema';
 
 export const load = (async (event) => {
-    const tagForm = await superValidate(event, TagValidationSchema);
+    const tagForm = await superValidate(event, tagsCrudSchema);
 
     return { tagForm };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-    createTag: async ({ request, locals: { getSession, supabase } }) => {
-        const tagForm = await superValidate(request, TagValidationSchema);
+    createTag: async ({ request, locals: { getSession } }) => {
+        const tagForm = await superValidate(request, tagsCrudSchema);
 
         if (!tagForm.valid) return message(tagForm, 'Invalid form');
 
         const session = await getSession();
 
         if (session) {
-            await handleTagOperation('create', session, supabase, tagForm);
+            const formData = {
+                userId: session.user.id,
+                name: tagForm.data.name,
+            };
+
+            await handleItemOperation('tags', 'create', formData);
         }
 
         return message(tagForm, 'Tag created!');
     },
 
-    updateTag: async ({ request, locals: { getSession, supabase } }) => {
-        const tagForm = await superValidate(request, TagValidationSchema);
+    updateTag: async ({ request, locals: { getSession } }) => {
+        const tagForm = await superValidate(request, tagsCrudSchema);
 
         if (!tagForm.valid) return message(tagForm, 'Invalid form');
 
         const session = await getSession();
 
         if (session) {
-            await handleTagOperation(
+            const formData = {
+                name: tagForm.data.name,
+            };
+
+            await handleItemOperation(
+                'tags',
                 'update',
-                session,
-                supabase,
-                tagForm,
+                formData,
                 tagForm.data.id
             );
         }
@@ -124,20 +54,14 @@ export const actions: Actions = {
         return message(tagForm, 'Tag updated!');
     },
 
-    deleteTag: async ({ request, locals: { getSession, supabase } }) => {
+    deleteTag: async ({ request, locals: { getSession } }) => {
         const formData = new URLSearchParams(await request.text());
         const tagId = formData.get('itemId');
 
         const session = await getSession();
 
         if (session) {
-            await handleTagOperation(
-                'delete',
-                session,
-                supabase,
-                undefined,
-                tagId
-            );
+            await handleItemOperation('tags', 'delete', null, tagId);
         }
 
         return {
@@ -148,11 +72,17 @@ export const actions: Actions = {
         };
     },
 
-    deleteAllTags: async ({ locals: { getSession, supabase } }) => {
+    deleteAllTags: async ({ locals: { getSession } }) => {
         const session = await getSession();
 
         if (session) {
-            await handleTagOperation('deleteAll', session, supabase);
+            await handleItemOperation(
+                'tags',
+                'deleteAll',
+                null,
+                null,
+                session.user.id
+            );
         }
 
         return {

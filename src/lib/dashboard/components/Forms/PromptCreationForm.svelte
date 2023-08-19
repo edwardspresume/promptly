@@ -1,7 +1,7 @@
 <script lang="ts">
     import { superForm } from 'sveltekit-superforms/client';
 
-    import { writable } from 'svelte/store';
+    import { derived, writable } from 'svelte/store';
 
     import { notifySuccess } from '$dashboardUtils/toast';
     import { promptsCrudSchema } from '$databaseDir/promptsCrudSchema';
@@ -24,6 +24,9 @@
 
     // Writable store to keep track of the selected tags by their IDs
     let selectedTagIds = writable<string[]>([]);
+    let selectedTagIdsString = derived(selectedTagIds, ($selectedTagIds) =>
+        JSON.stringify($selectedTagIds)
+    );
 
     /**
      * Reset the form fields after a successful submission
@@ -64,6 +67,9 @@
             },
         }
     );
+
+    $: console.log($selectedTagIdsString);
+    $: console.log($errors);
 </script>
 
 <BaseModal modalTitle="New prompt" bind:dialogElement={promptCreationModalRef}>
@@ -74,6 +80,8 @@
         aria-label="Prompt Creation form"
         class="grid gap-4"
     >
+        <!-- <input type="hidden" name="tagIds" bind:value={$selectedTagIdsString} /> -->
+
         <TextInput
             name="title"
             label="Enter prompt title"

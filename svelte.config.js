@@ -16,21 +16,21 @@ const config = {
 		alias: {
 			$assets: 'src/assets',
 
-			$globalComponents: '$lib/global/components',
-			$globalUtils: '$lib/global/utils',
-			$globalStores: '$lib/global/stores',
+			$globalComponents: 'src/lib/global/components',
+			$globalUtils: 'src/lib/global/utils',
+			$globalStores: 'src/lib/global/stores',
 			$globalStyles: 'src/styles/global.postcss',
 
-			$marketingComponents: '$lib/marketing/components',
-			$marketingUtils: '$lib/marketing/utils',
+			$marketingComponents: 'src/lib/marketing/components',
+			$marketingUtils: 'src/lib/marketing/utils',
 
-			$appComponents: '$lib/app/components',
-			$appUtils: '$lib/app/utils',
-			$appStores: '$lib/app/stores',
-			$appData: '$lib/app/data',
-			$appTypes: '$lib/app/types',
+			$appComponents: 'src/lib/app/components',
+			$appUtils: 'src/lib/app/utils',
+			$appStores: 'src/lib/app/stores',
+			$appData: 'src/lib/app/data',
+			$appTypes: 'src/lib/app/types',
 
-			$databaseDir: '$lib/app/database'
+			$databaseDir: 'src/lib/app/database'
 		}
 	},
 

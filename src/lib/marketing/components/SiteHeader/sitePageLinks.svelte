@@ -1,7 +1,9 @@
 <ul class="flex gap-4">
 	<li>
-		<a href="/dashboard/prompts" aria-label="Go to the dashboard" class="p-1 rounded bg-primary"
-			>Dashboard</a
+		<a
+			href="/dashboard/prompts"
+			aria-label="Go to the dashboard"
+			class="p-1 px-2 rounded bg-primary">Dashboard</a
 		>
 	</li>
 

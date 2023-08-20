@@ -1,3 +1,7 @@
+<script>
+	import DashboardLink from '$marketingComponents/DashboardLink.svelte';
+</script>
+
 <section class="text-center">
 	<h1 class="text-4xl md:text-8xl">
 		Prompt <span class="text-primary">AI</span>
@@ -12,8 +16,5 @@
 		Central app to save, manage, and test your prompts.
 	</p>
 
-	<nav>
-		<a href="/dashboard/prompts" class="p-2 px-3 text-xl rounded bg-primary text-bold">Try it out</a
-		>
-	</nav>
+	<DashboardLink text="Try it out" extraStyles="p-2 px-3 text-xl" />
 </section>

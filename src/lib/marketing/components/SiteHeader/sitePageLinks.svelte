@@ -1,10 +1,10 @@
+<script>
+	import DashboardLink from '$marketingComponents/DashboardLink.svelte';
+</script>
+
 <ul class="flex gap-4">
 	<li>
-		<a
-			href="/dashboard/prompts"
-			aria-label="Go to the dashboard"
-			class="p-1 px-2 rounded bg-primary">Dashboard</a
-		>
+		<DashboardLink />
 	</li>
 
 	<li>

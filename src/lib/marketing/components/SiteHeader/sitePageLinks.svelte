@@ -3,7 +3,7 @@
 	import DashboardLink from '$marketingComponents/DashboardLink.svelte';
 </script>
 
-<ul class="flex items-center gap-4">
+<ul class="flex items-center gap-3 sm:gap-4">
 	<li>
 		<DashboardLink />
 	</li>

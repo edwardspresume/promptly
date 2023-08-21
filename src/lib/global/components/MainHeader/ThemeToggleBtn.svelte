@@ -39,7 +39,7 @@
 	aria-label={buttonText}
 	aria-checked={isDarkMode}
 	on:click={toggleDarkMode}
-	class="p-1 transition-colors duration-300 rounded hover:bg-accent"
+	class="p-1 transition-colors duration-300 rounded-md hover:bg-accent"
 >
 	<Icon name={iconName} />
 	{#if !hideText}

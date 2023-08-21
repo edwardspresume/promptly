@@ -12,7 +12,7 @@
 		</span>
 	</h1>
 
-	<p class="mt-5 mb-12 text-lg text-muted-foreground">
+	<p class="mt-6 mb-12 text-lg text-muted-foreground">
 		Central app to save, manage, and test your prompts.
 	</p>
 

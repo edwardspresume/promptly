@@ -21,6 +21,9 @@ const config = {
 			$globalStores: 'src/lib/global/stores',
 			$globalStyles: 'src/styles/global.postcss',
 
+			$authComponents: 'src/lib/auth/components',
+			$authSchemas: 'src/lib/auth/schemas',
+
 			$marketingComponents: 'src/lib/marketing/components',
 			$marketingUtils: 'src/lib/marketing/utils',
 

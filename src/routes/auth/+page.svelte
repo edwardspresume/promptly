@@ -2,12 +2,10 @@
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 
+	import AuthForm from '$authComponents/AuthForm.svelte';
 	import * as Tabs from '$globalComponents/ui/tabs';
-	import AuthForm from '$lib/auth/components/AuthForm.svelte';
 
 	export let data: PageData;
-
-	console.log($page.url);
 
 	let initialTabValue = $page.url.searchParams.get('signup') === 'true' ? 'signUp' : 'signIn';
 </script>
@@ -21,11 +19,11 @@
 			</Tabs.List>
 
 			<Tabs.Content value="signIn">
-				<AuthForm formType="signIn" />
+				<AuthForm authFormData={data.authEmailForm} formType="signIn" />
 			</Tabs.Content>
 
 			<Tabs.Content value="signUp">
-				<AuthForm formType="signUp" />
+				<AuthForm authFormData={data.authEmailForm} formType="signUp" />
 			</Tabs.Content>
 		</Tabs.Root>
 	</section>

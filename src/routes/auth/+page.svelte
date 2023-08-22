@@ -3,6 +3,8 @@
 	import type { PageData } from './$types';
 
 	import AuthForm from '$authComponents/AuthForm.svelte';
+	import Icon from '$globalComponents/Icon.svelte';
+	import Button from '$globalComponents/ui/button/button.svelte';
 	import * as Tabs from '$globalComponents/ui/tabs';
 
 	export let data: PageData;
@@ -10,10 +12,19 @@
 	let initialTabValue = $page.url.searchParams.get('signup') === 'true' ? 'signUp' : 'signIn';
 </script>
 
+<svelte:head>
+	<title>Sign In or Sign Up - Manage Your AI Prompts with Promptly</title>
+
+	<meta
+		name="description"
+		content="Join Promptly to save, manage, and test your AI prompts in one central location. Sign in or sign up now to get started."
+	/>
+</svelte:head>
+
 <main class="grid grid-cols-1 lg:grid-cols-[minmax(0,40rem),1fr] min-h-[100dvh] items-center">
 	<section class="w-full max-w-xl p-4 mx-auto lg:p-16">
 		<Tabs.Root value={initialTabValue}>
-			<Tabs.List class="grid w-full grid-cols-2 mb-3">
+			<Tabs.List class="grid w-full grid-cols-2 mb-4">
 				<Tabs.Trigger value="signIn">Sign in</Tabs.Trigger>
 				<Tabs.Trigger value="signUp">Sign up</Tabs.Trigger>
 			</Tabs.List>
@@ -26,6 +37,12 @@
 				<AuthForm authFormData={data.authEmailForm} formType="signUp" />
 			</Tabs.Content>
 		</Tabs.Root>
+
+		<Button href="/" variant="link" class="flex items-center gap-2 mx-auto mt-10 text-lg w-fit">
+			<Icon name="home" />
+
+			<span>Return to homepage</span>
+		</Button>
 	</section>
 
 	<figure

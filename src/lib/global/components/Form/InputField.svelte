@@ -13,17 +13,18 @@
 	export let errorMessage: object | undefined;
 	export let enterkeyhint: EnterKeyHint = 'enter';
 	export let labelIsScreenReaderOnly: boolean = false;
-
-	let id = `${name}-1`;
 </script>
 
-<fieldset>
-	<Label for={id} class={labelIsScreenReaderOnly ? 'sr-only' : ''}>
+<Label class="grid gap-2">
+	<span class={labelIsScreenReaderOnly ? 'sr-only' : ''}>
 		{label}
-	</Label>
+	</span>
+
+	{#if errorMessage}
+		<p class="text-red-500">{errorMessage}</p>
+	{/if}
 
 	<Input
-		{id}
 		{name}
 		{type}
 		bind:value
@@ -32,8 +33,13 @@
 		{enterkeyhint}
 		spellcheck="true"
 		aria-label={label}
+		aria-invalid={errorMessage ? 'true' : undefined}
 		{...$$restProps}
 	/>
+</Label>
 
-	<small class="text-red-500 text-muted-foreground">{errorMessage}</small>
-</fieldset>
+<style>
+	:global(input[aria-invalid='true']) {
+		border-color: red;
+	}
+</style>

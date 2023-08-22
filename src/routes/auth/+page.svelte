@@ -1,15 +1,20 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 
 	import * as Tabs from '$globalComponents/ui/tabs';
 	import AuthForm from '$lib/auth/components/AuthForm.svelte';
 
 	export let data: PageData;
+
+	console.log($page.url);
+
+	let initialTabValue = $page.url.searchParams.get('signup') === 'true' ? 'signUp' : 'signIn';
 </script>
 
 <main class="grid grid-cols-1 lg:grid-cols-[minmax(0,40rem),1fr] min-h-[100dvh] items-center">
 	<section class="w-full max-w-xl p-4 mx-auto lg:p-16">
-		<Tabs.Root value="signIn">
+		<Tabs.Root value={initialTabValue}>
 			<Tabs.List class="grid w-full grid-cols-2 mb-3">
 				<Tabs.Trigger value="signIn">Sign in</Tabs.Trigger>
 				<Tabs.Trigger value="signUp">Sign up</Tabs.Trigger>

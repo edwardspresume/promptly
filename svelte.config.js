@@ -24,13 +24,13 @@ const config = {
 			$marketingComponents: 'src/lib/marketing/components',
 			$marketingUtils: 'src/lib/marketing/utils',
 
-			$appComponents: 'src/lib/app/components',
-			$appUtils: 'src/lib/app/utils',
-			$appStores: 'src/lib/app/stores',
-			$appData: 'src/lib/app/data',
-			$appTypes: 'src/lib/app/types',
+			$dashboardComponents: 'src/lib/dashboard/components',
+			$dashboardUtils: 'src/lib/dashboard/utils',
+			$dashboardStores: 'src/lib/dashboard/stores',
+			$dashboardData: 'src/lib/dashboard/data',
+			$dashboardTypes: 'src/lib/dashboard/types',
 
-			$databaseDir: 'src/lib/app/database'
+			$databaseDir: 'src/lib/dashboard/database'
 		}
 	},
 

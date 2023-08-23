@@ -19,6 +19,7 @@ const config = {
 			$globalComponents: 'src/lib/global/components',
 			$globalUtils: 'src/lib/global/utils',
 			$globalStores: 'src/lib/global/stores',
+			$globalTypes: 'src/lib/global/types',
 			$globalStyles: 'src/styles/global.postcss',
 
 			$authComponents: 'src/lib/auth/components',

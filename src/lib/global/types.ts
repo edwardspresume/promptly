@@ -8,3 +8,5 @@ export type EnterKeyHint =
 	| 'send'
 	| null
 	| undefined;
+
+export type FormStatusMessage = { status: 'error' | 'success' | 'warning'; text: string };

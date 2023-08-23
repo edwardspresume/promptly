@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { EnterKeyHint } from '$lib/global/types';
+	import type { EnterKeyHint } from '$globalTypes';
 
 	import Input from '$globalComponents/ui/input/input.svelte';
 	import Label from '$globalComponents/ui/label/label.svelte';

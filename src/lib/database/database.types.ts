@@ -60,7 +60,7 @@ export interface Database {
           created_at: string
           id: string
           is_favorited: boolean
-          tag_ids: string[] | null
+          tag_ids: string[]
           text: string
           title: string
           updated_at: string
@@ -71,7 +71,7 @@ export interface Database {
           created_at?: string
           id?: string
           is_favorited?: boolean
-          tag_ids?: string[] | null
+          tag_ids: string[]
           text: string
           title: string
           updated_at?: string
@@ -82,7 +82,7 @@ export interface Database {
           created_at?: string
           id?: string
           is_favorited?: boolean
-          tag_ids?: string[] | null
+          tag_ids?: string[]
           text?: string
           title?: string
           updated_at?: string
@@ -93,7 +93,7 @@ export interface Database {
           {
             foreignKeyName: "prompts_user_id_fkey"
             columns: ["user_id"]
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           }
         ]
@@ -124,7 +124,7 @@ export interface Database {
           {
             foreignKeyName: "tags_user_id_fkey"
             columns: ["user_id"]
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           }
         ]

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 
-	import Logo from '$globalComponents/MainHeader/Logo.svelte';
-	import MainHeader from '$globalComponents/MainHeader/MainHeader.svelte';
-	import DashboardPageLinks from '$dashboardComponents/DashboardHeader/DashboardPageLinks.svelte';
+	import Logo from '$globalComponents/mainHeader/Logo.svelte';
+	import MainHeader from '$globalComponents/mainHeader/MainHeader.svelte';
+	import DashboardPageLinks from '$dashboardComponents/dashboardHeader/DashboardPageLinks.svelte';
 	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;

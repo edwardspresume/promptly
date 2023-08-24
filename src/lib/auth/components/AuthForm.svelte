@@ -5,8 +5,8 @@
 
 	import { EmailAuthValidationSchema, OAuthProviderSchema } from '$authSchemas/authSchemas';
 
-	import InputField from '$globalComponents/Form/InputField.svelte';
-	import SubmitButton from '$globalComponents/Form/SubmitButton.svelte';
+	import InputField from '$globalComponents/form/InputField.svelte';
+	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
 	import OAuthForm from './OAuthForm.svelte';
 
 	export let emailFormData: SuperValidated<typeof EmailAuthValidationSchema>;

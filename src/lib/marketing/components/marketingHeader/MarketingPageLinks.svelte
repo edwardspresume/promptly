@@ -1,5 +1,5 @@
 <script>
-	import ThemeToggleBtn from '$globalComponents/MainHeader/ThemeToggleBtn.svelte';
+	import ThemeToggleBtn from '$globalComponents/mainHeader/ThemeToggleBtn.svelte';
 	import DashboardLink from '$marketingComponents/DashboardLink.svelte';
 </script>
 

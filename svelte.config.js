@@ -34,7 +34,7 @@ const config = {
 			$dashboardData: 'src/lib/dashboard/data',
 			$dashboardTypes: 'src/lib/dashboard/types',
 
-			$databaseDir: 'src/lib/dashboard/database'
+			$databaseDir: 'src/lib/database'
 		}
 	},
 

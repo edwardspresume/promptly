@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms/client';
 
-	import { OAuthProviderSchema } from '$authSchemas/AuthSchemas';
+	import { OAuthProviderSchema } from '$authSchemas/authSchemas';
 
 	import Icon from '$globalComponents/Icon.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';

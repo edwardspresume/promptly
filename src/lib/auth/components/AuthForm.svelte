@@ -3,7 +3,7 @@
 
 	import { superForm } from 'sveltekit-superforms/client';
 
-	import { EmailAuthValidationSchema, OAuthProviderSchema } from '$authSchemas/AuthSchemas';
+	import { EmailAuthValidationSchema, OAuthProviderSchema } from '$authSchemas/authSchemas';
 
 	import InputField from '$globalComponents/Form/InputField.svelte';
 	import SubmitButton from '$globalComponents/Form/SubmitButton.svelte';

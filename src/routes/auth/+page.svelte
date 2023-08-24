@@ -9,7 +9,10 @@
 
 	export let data: PageData;
 
-	let initialTabValue = $page.url.searchParams.get('signup') === 'true' ? 'signUp' : 'signIn';
+	const emailFormData = data.authEmailForm;
+	const oAuthFormData = data.oAuthForm;
+
+	const initialTabValue = $page.url.searchParams.get('signup') === 'true' ? 'signUp' : 'signIn';
 </script>
 
 <svelte:head>
@@ -21,8 +24,8 @@
 	/>
 </svelte:head>
 
-<main class="grid grid-cols-1 lg:grid-cols-[minmax(0,40rem),1fr] min-h-[100dvh] items-center">
-	<section class="w-full max-w-xl p-4 mx-auto lg:p-16">
+<main class="grid grid-cols-1 lg:grid-cols-[minmax(0,44rem),1fr] min-h-[100dvh] items-center">
+	<section class="w-full max-w-xl p-4 mx-auto lg:p-4">
 		<Tabs.Root value={initialTabValue}>
 			<Tabs.List class="grid w-full grid-cols-2 mb-4">
 				<Tabs.Trigger value="signIn">Sign in</Tabs.Trigger>
@@ -30,11 +33,11 @@
 			</Tabs.List>
 
 			<Tabs.Content value="signIn">
-				<AuthForm authFormData={data.authEmailForm} formType="signIn" />
+				<AuthForm {emailFormData} {oAuthFormData} formType="signIn" />
 			</Tabs.Content>
 
 			<Tabs.Content value="signUp">
-				<AuthForm authFormData={data.authEmailForm} formType="signUp" />
+				<AuthForm {emailFormData} {oAuthFormData} formType="signUp" />
 			</Tabs.Content>
 		</Tabs.Root>
 

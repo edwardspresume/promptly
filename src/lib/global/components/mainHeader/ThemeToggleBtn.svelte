@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Icon from '$globalComponents/Icon.svelte';
+	import Button from '$globalComponents/ui/button/button.svelte';
 
 	// Property to control the visibility of the button text.
 	export let hideText: boolean = true;
@@ -31,18 +32,19 @@
 	$: buttonText = isDarkMode ? 'Switch to Light mode' : 'Switch to Dark mode';
 </script>
 
-<button
+<Button
+	size="icon"
 	role="switch"
 	type="button"
+	variant="ghost"
 	aria-live="polite"
 	title={buttonText}
 	aria-label={buttonText}
 	aria-checked={isDarkMode}
 	on:click={toggleDarkMode}
-	class="p-1 transition-colors duration-300 rounded-md hover:bg-accent"
 >
 	<Icon name={iconName} />
 	{#if !hideText}
 		<span>{buttonText}</span>
 	{/if}
-</button>
+</Button>

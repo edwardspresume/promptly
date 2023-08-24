@@ -1,6 +1,7 @@
-export type NavigationLink = {
+export type NavLink = {
 	title: string;
 	href: string;
+	ariaLabel: string;
 };
 
 export enum RoutePaths {

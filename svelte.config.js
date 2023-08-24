@@ -27,12 +27,14 @@ const config = {
 
 			$marketingComponents: 'src/lib/marketing/components',
 			$marketingUtils: 'src/lib/marketing/utils',
+			$marketingNavLinks: 'src/lib/marketing/navLinks.ts',
 
 			$dashboardComponents: 'src/lib/dashboard/components',
 			$dashboardUtils: 'src/lib/dashboard/utils',
 			$dashboardStores: 'src/lib/dashboard/stores',
 			$dashboardData: 'src/lib/dashboard/data',
 			$dashboardTypes: 'src/lib/dashboard/types',
+			$dashboardNavLinks: 'src/lib/dashboard/navLinks.ts',
 
 			$databaseDir: 'src/lib/database'
 		}

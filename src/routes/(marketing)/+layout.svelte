@@ -1,14 +1,14 @@
 <script>
 	import Logo from '$globalComponents/mainHeader/Logo.svelte';
 	import MainHeader from '$globalComponents/mainHeader/MainHeader.svelte';
-	import MarketingPageLinks from '$marketingComponents/marketingHeader/MarketingPageLinks.svelte';
+	import MarketingHeaderLinks from '$marketingComponents/marketingHeader/MarketingHeaderLinks.svelte';
 </script>
 
 <div class="h-[100dvh] flex flex-col">
 	<MainHeader>
 		<Logo href="/" linkTitle="Go to homepage" slot="logo" />
 
-		<MarketingPageLinks slot="nav" />
+		<MarketingHeaderLinks slot="nav" />
 	</MainHeader>
 
 	<main class="flex-1">

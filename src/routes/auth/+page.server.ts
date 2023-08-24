@@ -6,7 +6,7 @@ import type { Actions, PageServerLoad } from './$types';
 
 import type { FormStatusMessage } from '$globalTypes';
 
-import { EmailAuthValidationSchema, OAuthProviderSchema } from '$authSchemas/AuthSchemas';
+import { EmailAuthValidationSchema, OAuthProviderSchema } from '$authSchemas/authSchemas';
 
 import { checkEmailExists } from '$databaseDir/utils.server';
 

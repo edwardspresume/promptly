@@ -1,7 +1,7 @@
 <script>
 	import Logo from '$globalComponents/MainHeader/Logo.svelte';
 	import MainHeader from '$globalComponents/MainHeader/MainHeader.svelte';
-	import SitePageLinks from '$marketingComponents/SiteHeader/sitePageLinks.svelte';
+	import SitePageLinks from '$marketingComponents/SiteHeader/SitePageLinks.svelte';
 </script>
 
 <div class="h-[100dvh] flex flex-col">

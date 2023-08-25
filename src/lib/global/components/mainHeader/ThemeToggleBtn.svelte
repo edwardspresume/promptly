@@ -5,6 +5,8 @@
 	// Property to control the visibility of the button text.
 	export let hideText: boolean = true;
 
+	export let extraStyles: string = '';
+
 	//  Variable to store the dark mode state.
 	let isDarkMode: boolean = false;
 
@@ -42,6 +44,7 @@
 	aria-label={buttonText}
 	aria-checked={isDarkMode}
 	on:click={toggleDarkMode}
+	class={extraStyles}
 >
 	<Icon name={iconName} />
 	{#if !hideText}

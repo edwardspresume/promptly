@@ -13,8 +13,8 @@
 	</Popover.Trigger>
 
 	<Popover.Content class="p-2 mt-2 w-fit">
-		<ul class="grid gap-2">
+		<menu class="grid gap-2">
 			<AccountPopUpMenuItems />
-		</ul>
+		</menu>
 	</Popover.Content>
 </Popover.Root>

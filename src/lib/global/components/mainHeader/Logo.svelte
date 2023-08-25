@@ -11,7 +11,7 @@
 	{href}
 	title={linkTitle}
 	aria-label={linkTitle}
-	class="gap-1 text-secondary-foreground"
+	class="gap-1 px-2 text-secondary-foreground"
 >
 	<img {src} alt="Promptly logo" title="Promptly" width="33" height="50" />
 

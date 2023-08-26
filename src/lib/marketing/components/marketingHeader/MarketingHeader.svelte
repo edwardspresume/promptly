@@ -4,7 +4,7 @@
 </script>
 
 <header class="py-1 border-b">
-	<div class="container flex items-center justify-between px-1">
+	<div class="container flex items-center justify-between">
 		<Logo href="/" linkTitle="Go to homepage" />
 
 		<nav>

@@ -2,6 +2,7 @@
 	import Icon from '$globalComponents/Icon.svelte';
 	import ThemeToggleBtn from '$globalComponents/mainHeader/ThemeToggleBtn.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
+	import LoginLogoutBtn from './LoginLogoutBtn.svelte';
 </script>
 
 <li>
@@ -27,6 +28,10 @@
 
 <li>
 	<ThemeToggleBtn hideText={false} />
+</li>
+
+<li>
+	<LoginLogoutBtn />
 </li>
 
 <style lang="postcss">

@@ -1,10 +1,18 @@
 <script lang="ts">
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 
-	import DashboardHeader from '$dashboardComponents/dashboardHeader/DashboardHeader.svelte';
 	import type { LayoutData } from './$types';
 
+	import { userProfileStore } from '$dashboardStores/userProfileStore';
+
+	import DashboardHeader from '$dashboardComponents/dashboardHeader/DashboardHeader.svelte';
+
 	export let data: LayoutData;
+
+	let { session, userProfile } = data;
+	$: ({ session, userProfile } = data);
+
+	$: session?.user && userProfile ? userProfileStore.set(userProfile) : userProfileStore.set(null);
 </script>
 
 <div class="h-[100dvh] flex flex-col pb-6">

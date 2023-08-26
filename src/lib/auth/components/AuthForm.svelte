@@ -1,16 +1,13 @@
 <script lang="ts">
-	import type { SuperValidated } from 'sveltekit-superforms';
-
 	import { superForm } from 'sveltekit-superforms/client';
 
-	import { EmailAuthValidationSchema, OAuthProviderSchema } from '$authSchemas/authSchemas';
+	import { page } from '$app/stores';
+
+	import { EmailAuthValidationSchema } from '$authSchemas/authSchemas';
 
 	import InputField from '$globalComponents/form/InputField.svelte';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
 	import OAuthForm from './OAuthForm.svelte';
-
-	export let emailFormData: SuperValidated<typeof EmailAuthValidationSchema>;
-	export let oAuthFormData: SuperValidated<typeof OAuthProviderSchema>;
 
 	export let formType: 'signIn' | 'signUp';
 
@@ -29,7 +26,7 @@
 
 	let { buttonTitle, heading, subHeading } = formText[formType];
 
-	const { enhance, form, errors, delayed, message } = superForm(emailFormData, {
+	const { enhance, form, errors, delayed, message } = superForm($page.data.authEmailForm, {
 		id: formType,
 		resetForm: true,
 		taintedMessage: false,
@@ -84,5 +81,5 @@
 		<div class="flex-grow ml-3 border-t border-gray-500" />
 	</div>
 
-	<OAuthForm {formType} {oAuthFormData} />
+	<OAuthForm {formType} />
 </section>

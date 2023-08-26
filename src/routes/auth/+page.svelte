@@ -1,16 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import type { PageData } from './$types';
 
 	import AuthForm from '$authComponents/AuthForm.svelte';
 	import Icon from '$globalComponents/Icon.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
 	import * as Tabs from '$globalComponents/ui/tabs';
-
-	export let data: PageData;
-
-	const emailFormData = data.authEmailForm;
-	const oAuthFormData = data.oAuthForm;
 
 	const initialTabValue = $page.url.searchParams.get('signup') === 'true' ? 'signUp' : 'signIn';
 </script>
@@ -33,11 +27,11 @@
 			</Tabs.List>
 
 			<Tabs.Content value="signIn">
-				<AuthForm {emailFormData} {oAuthFormData} formType="signIn" />
+				<AuthForm formType="signIn" />
 			</Tabs.Content>
 
 			<Tabs.Content value="signUp">
-				<AuthForm {emailFormData} {oAuthFormData} formType="signUp" />
+				<AuthForm formType="signUp" />
 			</Tabs.Content>
 		</Tabs.Root>
 

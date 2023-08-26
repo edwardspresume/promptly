@@ -4,11 +4,9 @@ import { message, setError, superValidate } from 'sveltekit-superforms/server';
 import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-import type { FormStatusMessage } from '$globalTypes';
-
 import { EmailAuthValidationSchema, OAuthProviderSchema } from '$authSchemas/authSchemas';
 
-import { checkEmailExists } from '$databaseDir/utils.server';
+import { checkEmailExists, type FormStatusMessage } from '$databaseDir/utils.server';
 
 const AUTH_MESSAGES = {
 	INVALID_EMAIL: 'The email you entered is invalid. Please enter a valid email address.',
@@ -23,9 +21,15 @@ const AUTH_MESSAGES = {
 	SUCCESSFUL_SIGNUP: `You have successfully signed up! Please check your email for a confirmation link. If you don't receive it within a few minutes, check your spam folder.`
 };
 
-export const load: PageServerLoad = (event) => {
-	const authEmailForm = superValidate(event, EmailAuthValidationSchema);
-	const oAuthForm = superValidate(event, OAuthProviderSchema);
+export const load: PageServerLoad = async ({ request, parent }) => {
+	const { session } = await parent();
+
+	if (session) {
+		throw redirect(303, '/dashboard/prompts');
+	}
+
+	const authEmailForm = superValidate(request, EmailAuthValidationSchema);
+	const oAuthForm = superValidate(request, OAuthProviderSchema);
 
 	return { authEmailForm, oAuthForm };
 };
@@ -46,23 +50,22 @@ export const actions: Actions = {
 
 		const formType = authEmailForm.data.formType;
 
-		// Check if the email already exists when signing up.
-		const isEmailExists = await checkEmailExists(authEmailForm.data.email);
+		try {
+			// Check if the email already exists when signing up.
+			const isEmailExists = await checkEmailExists(authEmailForm.data.email);
 
-		// Handle the case where checkEmailExists returns null (error).
-		if (isEmailExists === null) {
+			if (formType === 'signUp' && isEmailExists) {
+				return setError(authEmailForm, 'email', 'E-mail already exists');
+			}
+		} catch (error) {
 			return message(
 				authEmailForm,
 				{
 					status: 'error',
-					text: AUTH_MESSAGES.SERVER_ERROR
+					text: 'An error occurred while verifying your email. Please try again.'
 				},
 				{ status: 500 }
 			);
-		}
-
-		if (formType === 'signUp' && isEmailExists) {
-			return setError(authEmailForm, 'email', 'E-mail already exists');
 		}
 
 		// Attempt to sign in or sign up with the given email.

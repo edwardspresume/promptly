@@ -4,6 +4,8 @@ import { message, setError, superValidate } from 'sveltekit-superforms/server';
 import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
+import { RoutePaths } from '$globalTypes';
+
 import { EmailAuthValidationSchema, OAuthProviderSchema } from '$authSchemas/authSchemas';
 
 import { checkEmailExists, type FormStatusMessage } from '$databaseDir/utils.server';
@@ -25,7 +27,7 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 	const { session } = await parent();
 
 	if (session) {
-		throw redirect(303, '/dashboard/prompts');
+		throw redirect(303, RoutePaths.DASHBOARD_PROMPTS);
 	}
 
 	const authEmailForm = superValidate(request, EmailAuthValidationSchema);

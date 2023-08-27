@@ -9,6 +9,7 @@
 	export let name: string = '';
 	export let label: string = '';
 	export let placeholder: string = '';
+	export let spellcheck: boolean = true;
 	export let autocomplete: string = 'on';
 	export let errorMessage: object | undefined;
 	export let enterkeyhint: EnterKeyHint = 'enter';
@@ -27,11 +28,12 @@
 	<Input
 		{name}
 		{type}
+		dir="auto"
 		bind:value
+		{spellcheck}
 		{placeholder}
 		{autocomplete}
 		{enterkeyhint}
-		spellcheck="true"
 		aria-label={label}
 		aria-invalid={errorMessage ? 'true' : undefined}
 		{...$$restProps}

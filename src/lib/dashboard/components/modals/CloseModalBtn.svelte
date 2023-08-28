@@ -18,7 +18,7 @@
 	variant="ghost"
 	title="Close modal"
 	aria-label="Close modal"
-	class="hover:text-red-700"
+	class="hover:text-red-500"
 	on:click={handleCloseModal}
 >
 	<Icon name="close" size={24} />

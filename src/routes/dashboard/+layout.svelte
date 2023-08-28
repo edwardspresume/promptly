@@ -6,6 +6,7 @@
 	import { userProfileStore } from '$dashboardStores/userProfileStore';
 
 	import DashboardHeader from '$dashboardComponents/dashboardHeader/DashboardHeader.svelte';
+	import FeedbackForm from '$dashboardComponents/forms/FeedbackForm.svelte';
 
 	export let data: LayoutData;
 
@@ -22,5 +23,7 @@
 		<slot />
 	</main>
 </div>
+
+<FeedbackForm />
 
 <SvelteToast options={{ intro: { y: -100 } }} />

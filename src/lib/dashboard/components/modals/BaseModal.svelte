@@ -16,17 +16,13 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-
-<!-- <dialog
-	class="backdrop:backdrop-blur-md backdrop:bg-black/70  max-h-[100dvh] overflow-y-auto" -->
 <dialog
-	tabindex="-1"
 	bind:this={dialogElement}
 	on:close={() => dispatch('close')}
 	on:click={(event) => closeDialogOnOutsideClick(event, dialogElement)}
-	class="max-w-md p-6 border rounded-lg shadow-lg w-[96%] bg-background backdrop:bg-background/80 backdrop:backdrop-blur-sm text-foreground"
+	class="max-w-md p-6 border rounded-lg shadow-lg w-[96%] bg-background backdrop:bg-background/80 backdrop:backdrop-blur-sm text-foreground max-h-[100dvh] overflow-y-auto"
 >
-	<header class="mb-10">
+	<header class="mb-12">
 		<div class="flex items-center justify-between gap-6">
 			<h3 class="text-xl font-bold leading-none">{modalTitle}</h3>
 

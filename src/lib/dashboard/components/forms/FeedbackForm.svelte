@@ -1,11 +1,23 @@
 <script lang="ts">
+	import { superForm } from 'sveltekit-superforms/client';
+
 	import { isFeedbackModalOpen } from '$dashboardStores/feedbackModalStore';
+	import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
 
 	import BaseModal from '$dashboardComponents/modals/BaseModal.svelte';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
 	import TextArea from '$globalComponents/form/TextArea.svelte';
 
+	export let feedbackFormData;
+
 	let feedbackModalRef: HTMLDialogElement;
+
+	const { enhance, form, errors, delayed } = superForm(feedbackFormData, {
+		id: 'feedbackForm',
+		resetForm: true,
+		taintedMessage: null,
+		validators: FeedbackValidationSchema
+	});
 
 	$: if ($isFeedbackModalOpen) feedbackModalRef?.showModal();
 </script>
@@ -17,6 +29,7 @@
 	on:close={() => isFeedbackModalOpen.set(false)}
 >
 	<form
+		use:enhance
 		method="POST"
 		action="/dashboard/sendFeedback"
 		aria-label="Send feedback"
@@ -28,8 +41,10 @@
 			label="Message"
 			placeholder="Message"
 			labelIsScreenReaderOnly={true}
+			bind:value={$form.message}
+			errorMessage={$errors.message}
 		/>
 
-		<SubmitButton />
+		<SubmitButton disabled={$delayed} />
 	</form>
 </BaseModal>

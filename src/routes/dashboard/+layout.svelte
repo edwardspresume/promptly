@@ -10,8 +10,8 @@
 
 	export let data: LayoutData;
 
-	let { session, userProfile } = data;
-	$: ({ session, userProfile } = data);
+	let { session, userProfile, feedbackForm } = data;
+	$: ({ session, userProfile, feedbackForm } = data);
 
 	$: session?.user && userProfile ? userProfileStore.set(userProfile) : userProfileStore.set(null);
 </script>
@@ -24,6 +24,6 @@
 	</main>
 </div>
 
-<FeedbackForm />
+<FeedbackForm feedbackFormData={feedbackForm} />
 
 <SvelteToast options={{ intro: { y: -100 } }} />

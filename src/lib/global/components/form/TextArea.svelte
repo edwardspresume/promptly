@@ -1,16 +1,14 @@
 <script lang="ts">
 	import type { EnterKeyHint } from '$globalTypes';
 
-	import Input from '$globalComponents/ui/input/input.svelte';
 	import Label from '$globalComponents/ui/label/label.svelte';
+	import Textarea from '$globalComponents/ui/textarea/textarea.svelte';
 
-	export let type: string;
 	export let value: string = '';
 	export let name: string = '';
 	export let label: string = '';
 	export let placeholder: string = '';
 	export let spellcheck: boolean = true;
-	export let autocomplete: string = 'on';
 	export let errorMessage: object | undefined;
 	export let enterkeyhint: EnterKeyHint = 'enter';
 	export let labelIsScreenReaderOnly: boolean = false;
@@ -25,14 +23,12 @@
 		<p class="text-red-500">{errorMessage}</p>
 	{/if}
 
-	<Input
+	<Textarea
 		{name}
-		{type}
 		dir="auto"
 		bind:value
 		{spellcheck}
 		{placeholder}
-		{autocomplete}
 		{enterkeyhint}
 		aria-label={label}
 		aria-invalid={errorMessage ? 'true' : undefined}

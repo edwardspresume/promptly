@@ -6,7 +6,10 @@ import type { Actions, PageServerLoad } from './$types';
 
 import { RoutePaths } from '$globalTypes';
 
-import { EmailAuthValidationSchema, OAuthProviderSchema } from '$authSchemas/authSchemas';
+import {
+	EmailAuthValidationSchema,
+	OAuthProviderValidationSchema
+} from '$authValidationSchemas/authValidationSchemas';
 
 import { checkEmailExists, type FormStatusMessage } from '$databaseDir/utils.server';
 
@@ -31,7 +34,7 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 	}
 
 	const authEmailForm = superValidate(request, EmailAuthValidationSchema);
-	const oAuthForm = superValidate(request, OAuthProviderSchema);
+	const oAuthForm = superValidate(request, OAuthProviderValidationSchema);
 
 	return { authEmailForm, oAuthForm };
 };
@@ -93,9 +96,9 @@ export const actions: Actions = {
 	},
 
 	oauth: async ({ request, url, locals: { supabase } }) => {
-		const oauthForm = await superValidate<typeof OAuthProviderSchema, FormStatusMessage>(
+		const oauthForm = await superValidate<typeof OAuthProviderValidationSchema, FormStatusMessage>(
 			request,
-			OAuthProviderSchema
+			OAuthProviderValidationSchema
 		);
 
 		if (!oauthForm.valid) {

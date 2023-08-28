@@ -1,4 +1,6 @@
 <script>
+	import { isFeedbackModalOpen } from '$dashboardStores/feedbackModalStore';
+
 	import Icon from '$globalComponents/Icon.svelte';
 	import ThemeToggleBtn from '$globalComponents/mainHeader/ThemeToggleBtn.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
@@ -20,7 +22,12 @@
 </li>
 
 <li>
-	<Button variant="ghost" title="Feedback" aria-label="Feedback">
+	<Button
+		variant="ghost"
+		title="Feedback"
+		aria-label="Feedback"
+		on:click={() => isFeedbackModalOpen.set(true)}
+	>
 		<Icon name="feedback" />
 		<span>Feedback</span>
 	</Button>

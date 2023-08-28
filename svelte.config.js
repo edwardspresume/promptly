@@ -14,28 +14,35 @@ const config = {
 		adapter: adapter(),
 
 		alias: {
+			// General assets and styles
 			$assets: 'src/assets',
+			$globalStyles: 'src/styles/global.postcss',
 
+			// Global aliases
 			$globalComponents: 'src/lib/global/components',
 			$globalUtils: 'src/lib/global/utils',
 			$globalStores: 'src/lib/global/stores',
 			$globalTypes: 'src/lib/global/types',
-			$globalStyles: 'src/styles/global.postcss',
 
+			// Auth aliases
 			$authComponents: 'src/lib/auth/components',
-			$authSchemas: 'src/lib/auth/schemas',
+			$authValidationSchemas: 'src/lib/auth/validations',
 
+			// Marketing aliases
 			$marketingComponents: 'src/lib/marketing/components',
 			$marketingUtils: 'src/lib/marketing/utils',
 			$marketingNavLinks: 'src/lib/marketing/navLinks.ts',
 
+			// Dashboard aliases
 			$dashboardComponents: 'src/lib/dashboard/components',
 			$dashboardUtils: 'src/lib/dashboard/utils',
 			$dashboardStores: 'src/lib/dashboard/stores',
 			$dashboardData: 'src/lib/dashboard/data',
 			$dashboardTypes: 'src/lib/dashboard/types',
+			$dashboardValidationSchemas: 'src/lib/dashboard/validations',
 			$dashboardNavLinks: 'src/lib/dashboard/navLinks.ts',
 
+			// Database aliases
 			$databaseDir: 'src/lib/database'
 		}
 	},

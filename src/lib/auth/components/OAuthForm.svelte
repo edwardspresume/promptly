@@ -3,7 +3,7 @@
 
 	import { page } from '$app/stores';
 
-	import { OAuthProviderSchema } from '$authSchemas/authSchemas';
+    import { OAuthProviderValidationSchema } from '$authValidationSchemas/authValidationSchemas';
 
 	import Icon from '$globalComponents/Icon.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
@@ -11,7 +11,7 @@
 	export let formType: 'signIn' | 'signUp';
 
 	const authText = formType === 'signIn' ? 'Sign in' : 'Sign up';
-	const providers = OAuthProviderSchema.shape.provider.options;
+	const providers = OAuthProviderValidationSchema.shape.provider.options;
 
 	const { enhance, message } = superForm($page.data.oAuthForm, {
 		id: `oauth${formType}`,

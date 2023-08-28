@@ -9,6 +9,6 @@ export const EmailAuthValidationSchema = z.object({
 	formType: z.string()
 });
 
-export const OAuthProviderSchema = z.object({
+export const OAuthProviderValidationSchema = z.object({
 	provider: z.enum(['Google', 'Discord', 'Github'])
 });

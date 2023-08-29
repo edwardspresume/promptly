@@ -93,3 +93,12 @@ export const tagsTable = pgTable(
 		};
 	}
 );
+
+export type ProfileSchema = Pick<
+	typeof profilesTable.$inferSelect,
+	'username' | 'email' | 'fullName' | 'avatarUrl'
+>;
+
+export type PromptSchema = typeof promptsTable.$inferSelect;
+
+export type TagSchema = typeof tagsTable.$inferSelect;

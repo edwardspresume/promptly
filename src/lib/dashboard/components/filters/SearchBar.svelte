@@ -31,7 +31,7 @@
 	}
 </script>
 
-<Label>
+<Label class="flex-grow">
 	<span class="sr-only">{labelText}</span>
 
 	<Input

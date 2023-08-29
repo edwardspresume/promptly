@@ -2,7 +2,7 @@
 	import { dev } from '$app/environment';
 	import { inject } from '@vercel/analytics';
 
-	import { invalidate } from '$app/navigation';
+	import { invalidate, onNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 
 	import '$globalStyles';
@@ -11,6 +11,17 @@
 
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		return new Promise((oldStateCaptureResolve) => {
+			document.startViewTransition(async () => {
+				oldStateCaptureResolve();
+				await navigation.complete;
+			});
+		});
+	});
 
 	onMount(() => {
 		const {

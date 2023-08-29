@@ -21,7 +21,7 @@
 	--toastBorder: 1px hsl(var(--border)) solid;
 	--toastBoxShadow: 0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.05);
 
-	@apply grid grid-cols-[auto,auto] gap-4;
+	@apply grid grid-cols-[auto,auto] gap-5;
 	grid-template-areas:
 		'toastMsg toastBtn'
 		'toastProgressBar toastProgressBar';
@@ -30,7 +30,7 @@
 ._toastMsg {
 	--toastMsgPadding: 0;
 
-	@apply grid grid-cols-[auto,auto] gap-3 items-center max-w-sm;
+	@apply grid grid-cols-[auto,auto] gap-2 items-center max-w-sm;
 	grid-area: toastMsg;
 }
 

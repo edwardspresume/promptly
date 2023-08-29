@@ -5,6 +5,7 @@
 	import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
 
 	import BaseModal from '$dashboardComponents/modals/BaseModal.svelte';
+	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
 	import TextArea from '$globalComponents/form/TextArea.svelte';
 
@@ -12,11 +13,25 @@
 
 	let feedbackModalRef: HTMLDialogElement;
 
-	const { enhance, form, errors, delayed } = superForm(feedbackFormData, {
+	const { enhance, form, errors, message, delayed } = superForm(feedbackFormData, {
 		id: 'feedbackForm',
 		resetForm: true,
 		taintedMessage: null,
-		validators: FeedbackValidationSchema
+		validators: FeedbackValidationSchema,
+
+		onUpdated: () => {
+			if ($message.statusType === 'error') {
+				notifyError($message.text, {
+					target: 'baseModal'
+				});
+			}
+
+			if ($message.statusType === 'success') {
+				notifySuccess($message.text, {
+					target: 'baseModal'
+				});
+			}
+		}
 	});
 
 	$: if ($isFeedbackModalOpen) feedbackModalRef?.showModal();
@@ -31,7 +46,7 @@
 	<form
 		use:enhance
 		method="POST"
-		action="/dashboard/sendFeedback"
+		action="/dashboard/sendFeedbackToEmail"
 		aria-label="Send feedback"
 		class="grid gap-5"
 	>

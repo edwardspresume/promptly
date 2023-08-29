@@ -48,7 +48,7 @@ export const actions: Actions = {
 
 		if (!authEmailForm.valid) {
 			return message(authEmailForm, {
-				status: 'error',
+				statusType: 'error',
 				text: AUTH_MESSAGES.INVALID_EMAIL
 			});
 		}
@@ -66,7 +66,7 @@ export const actions: Actions = {
 			return message(
 				authEmailForm,
 				{
-					status: 'error',
+					statusType: 'error',
 					text: 'An error occurred while verifying your email. Please try again.'
 				},
 				{ status: 500 }
@@ -84,13 +84,13 @@ export const actions: Actions = {
 
 			return message(
 				authEmailForm,
-				{ status: 'error', text: AUTH_MESSAGES.SERVER_ERROR },
+				{ statusType: 'error', text: AUTH_MESSAGES.SERVER_ERROR },
 				{ status: 500 }
 			);
 		}
 
 		return message(authEmailForm, {
-			status: 'success',
+			statusType: 'success',
 			text: formType === 'signIn' ? AUTH_MESSAGES.SUCCESSFUL_LOGIN : AUTH_MESSAGES.SUCCESSFUL_SIGNUP
 		});
 	},
@@ -104,7 +104,7 @@ export const actions: Actions = {
 		if (!oauthForm.valid) {
 			return message(
 				oauthForm,
-				{ status: 'error', text: AUTH_MESSAGES.UNSUPPORTED_OAUTH_PROVIDER },
+				{ statusType: 'error', text: AUTH_MESSAGES.UNSUPPORTED_OAUTH_PROVIDER },
 				{ status: 400 }
 			);
 		}
@@ -120,7 +120,7 @@ export const actions: Actions = {
 			console.error(error);
 			return message(
 				oauthForm,
-				{ status: 'error', text: AUTH_MESSAGES.SERVER_ERROR },
+				{ statusType: 'error', text: AUTH_MESSAGES.SERVER_ERROR },
 				{ status: 500 }
 			);
 		}

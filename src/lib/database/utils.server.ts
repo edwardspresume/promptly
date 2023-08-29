@@ -3,8 +3,7 @@ import { drizzleClient } from './drizzleClient.server';
 
 import { profilesTable } from './schemas/schema';
 
-export type FormStatusMessage = { status: 'error' | 'success' | 'warning'; text: string };
-
+export type FormStatusMessage = { statusType: 'error' | 'success' | 'warning'; text: string };
 
 /**
  * Checks whether the given email exists in the profiles table.

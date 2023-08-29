@@ -39,8 +39,8 @@
 		<p
 			role="alert"
 			aria-live="polite"
-			title={$message.status === 'error' ? 'Error message' : 'Success message'}
-			class="p-3 mb-8 font-bold text-center rounded-md {$message.status === 'error'
+			title={$message.statusType === 'error' ? 'Error message' : 'Success message'}
+			class="p-3 mb-8 font-bold text-center rounded-md {$message.statusType === 'error'
 				? 'bg-red-600'
 				: 'bg-green-600'}"
 		>

@@ -6,6 +6,11 @@
 
 import { toast } from '@zerodevx/svelte-toast';
 
+
+// Get the type of the options parameter of the toast.push function.
+type ToastOptions = Parameters<typeof toast.push>[1];
+
+
 /**
  * Creates the HTML content for the toast notification.
  * @param {string} iconClass - The CSS class for the icon to be displayed in the toast.
@@ -21,7 +26,7 @@ function createToastContent(iconClass: string, message: string) {
  * @param {string} message - The message to be displayed in the toast.
  * @param {object} [options={}] - Optional configuration for the toast.
  */
-export const notifySuccess = (message: string, options: Record<string, unknown> = {}) => {
+export const notifySuccess = (message: string, options?: ToastOptions) => {
 	const content = createToastContent('check_mark', message);
 	toast.push(content, options);
 };
@@ -31,7 +36,7 @@ export const notifySuccess = (message: string, options: Record<string, unknown> 
  * @param {string} message - The message to be displayed in the toast.
  * @param {object} [options={}] - Optional configuration for the toast.
  */
-export const notifyError = (message: string, options: Record<string, unknown> = {}) => {
+export const notifyError = (message: string, options?: ToastOptions) => {
 	const content = createToastContent('error_mark', message);
 	toast.push(content, options);
 };

@@ -1,20 +1,50 @@
+/* Toast Container */
+
 ._toastContainer {
-	display: grid;
-	row-gap: 0.7rem;
-	inline-size: fit-content;
-	transform: translateX(var(--toastContainerTranslateX, 0%));
+	--toastContainerRight: 0%;
+	--toastContainerLeft: 50%;
+	--toastContainerTop: 2rem;
+	/* --toastContainerTranslateX: -50%; */
+
+	@apply grid gap-3 w-fit -translate-x-1/2;
 }
 
+/* Toast Item */
 ._toastItem {
-	display: flex;
-	column-gap: 2rem;
-	white-space: nowrap;
+	--toastColor: var(--foreground);
+	--toastBackground: hsl(var(--background));
+	--toastMargin: 0;
+	--toastMinHeight: 0;
+	--toastWidth: fit-content;
+	--toastBorderRadius: var(--radius);
+	--toastPadding: 0.9rem 1rem 0.9rem 0.63rem;
+	--toastBorder: 1px hsl(var(--border)) solid;
+	--toastBoxShadow: 0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.05);
+
+	@apply grid grid-cols-[auto,auto] gap-4;
+	grid-template-areas:
+		'toastMsg toastBtn'
+		'toastProgressBar toastProgressBar';
 }
 
 ._toastMsg {
-	display: flex;
-	column-gap: 0.5rem;
-	align-items: center;
+	--toastMsgPadding: 0;
+
+	@apply grid grid-cols-[auto,auto] gap-3 items-center max-w-sm;
+	grid-area: toastMsg;
+}
+
+._toastBtn {
+	--toastBtnWidth: 0;
+	--toastBtnFont: 1.2rem sans-serif;
+
+	grid-area: toastBtn;
+}
+
+._toastBar {
+	--toastBarBackground: rgb(2, 154, 255);
+
+	grid-area: toastProgressBar;
 }
 
 .check_mark {

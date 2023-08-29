@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm';
 import { drizzleClient } from './drizzleClient.server';
 
-import { profilesTable } from './schemas/schema';
+import { profilesTable } from './schema';
 
 export type FormStatusMessage = { statusType: 'error' | 'success' | 'warning'; text: string };
 

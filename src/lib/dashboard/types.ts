@@ -23,7 +23,8 @@ export interface SortOption {
 }
 
 export interface ConfirmationInfo {
-	title: string;
+	heading: string;
+	subheading: string;
 	toastMessage: string;
 	callback: () => void;
 }

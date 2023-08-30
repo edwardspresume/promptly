@@ -20,11 +20,11 @@
 	bind:this={dialogElement}
 	on:close={() => dispatch('close')}
 	on:click={(event) => closeDialogOnOutsideClick(event, dialogElement)}
-	class="max-w-md p-6 border rounded-lg shadow-lg w-[96%] bg-background backdrop:bg-background/80 backdrop:backdrop-blur-sm text-foreground max-h-[100dvh] overflow-y-auto"
+	class="max-h-[100dvh] overflow-y-auto"
 >
 	<header class="mb-12">
 		<div class="flex items-center justify-between gap-6">
-			<h3 class="text-xl font-bold leading-none">{modalTitle}</h3>
+			<h3 class="text-xl leading-none">{modalTitle}</h3>
 
 			<CloseModalBtn {dialogElement} />
 		</div>
@@ -38,33 +38,3 @@
 
 	<SvelteToast target="baseModal" options={{ intro: { y: -100 } }} />
 </dialog>
-
-<style lang="postcss">
-	dialog {
-		animation: fadeIn 0.4s ease-in-out;
-
-		&::backdrop {
-			animation: fadeInBackdrop 0.4s ease-in-out;
-		}
-	}
-
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-			transform: scale(0.9);
-		}
-		to {
-			opacity: 1;
-			transform: scale(1);
-		}
-	}
-
-	@keyframes fadeInBackdrop {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
-</style>

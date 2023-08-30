@@ -2,8 +2,7 @@
 	import type { PageData } from './$types';
 
 	import { tagSortOptions } from '$dashboardData/SortOptions';
-
-	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
+	import { filteredTagsStore, totalTagsCountStore } from '$dashboardStores/tagsStore';
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 
@@ -76,6 +75,7 @@
 	itemType="tag"
 	itemsListRef={tagsListRef}
 	totalItems={$totalTagsCountStore}
+	displayedItems={$filteredTagsStore.length}
 	on:deleteAllItems={handleDeleteAllTagsEvent}
 />
 

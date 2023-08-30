@@ -3,21 +3,19 @@ import { superValidate } from 'sveltekit-superforms/server';
 import type { LayoutServerLoad } from './$types';
 
 import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
-import { getUserProfile } from '$databaseDir/utils.server';
+import { getUserProfile, getUserPrompts, getUserTags } from '$databaseDir/utils.server';
 
 export const load = (async ({ request, locals: { getSession } }) => {
-	const feedbackForm = await superValidate(request, FeedbackValidationSchema);
+	const feedbackForm = superValidate(request, FeedbackValidationSchema);
 
 	const userId = (await getSession())?.user.id;
 
 	if (userId) {
-		try {
-			const userProfile = await getUserProfile(userId);
+		const userProfile = getUserProfile(userId);
+		const userPrompts = getUserPrompts(userId);
+		const userTags = getUserTags(userId);
 
-			return { feedbackForm, userProfile };
-		} catch (error) {
-			console.error('Error fetching user profile:', error);
-		}
+		return { feedbackForm, userProfile, userPrompts, userTags };
 	}
 
 	return { feedbackForm };

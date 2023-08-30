@@ -3,6 +3,8 @@
 	import ListStateNotifier from '$dashboardComponents/list/ListStateNotifier.svelte';
 	import { filteredTagsStore, totalTagsCountStore } from '$dashboardStores/tagsStore';
 
+	import TagItem from './TagItem.svelte';
+
 	const NO_TAGS_AVAILABLE_MESSAGE = 'No tags available. Please add one';
 	const NO_MATCH_MESSAGE = 'There are no tags that match your search';
 
@@ -25,4 +27,12 @@
 		totalItems={$totalTagsCountStore}
 		displayedItems={displayedTagsCount}
 	/>
+	<section
+		aria-label="List of tags"
+		class="mt-2 space-y-5 overflow-hidden overflow-y-scroll remove-scrollbar"
+	>
+		{#each $filteredTagsStore as tag}
+			<TagItem {tag} />
+		{/each}
+	</section>
 {/if}

@@ -71,3 +71,10 @@ input[aria-invalid='true'],
 textarea[aria-invalid='true'] {
 	@apply border-red-500;
 }
+
+/* Styling for scrollbar removal */
+.remove-scrollbar::-webkit-scrollbar,
+.remove-scrollbar {
+	inline-size: 100%;
+	scrollbar-width: none;
+}

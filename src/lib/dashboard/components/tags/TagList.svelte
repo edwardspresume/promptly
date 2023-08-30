@@ -1,14 +1,16 @@
 <script lang="ts">
-	import ListCounter from '$dashboardComponents/list/ListCounter.svelte';
-	import ListStateNotifier from '$dashboardComponents/list/ListStateNotifier.svelte';
 	import { filteredTagsStore, totalTagsCountStore } from '$dashboardStores/tagsStore';
 
+	import ListCounter from '$dashboardComponents/list/ListCounter.svelte';
+	import ListStateNotifier from '$dashboardComponents/list/ListStateNotifier.svelte';
 	import TagItem from './TagItem.svelte';
 
 	const NO_TAGS_AVAILABLE_MESSAGE = 'No tags available. Please add one';
 	const NO_MATCH_MESSAGE = 'There are no tags that match your search';
 
 	let stateMessage: string;
+	let tagItemsContainerRef: HTMLElement;
+
 
 	$: displayedTagsCount = $filteredTagsStore.length;
 
@@ -32,7 +34,7 @@
 		class="mt-2 space-y-5 overflow-hidden overflow-y-scroll remove-scrollbar"
 	>
 		{#each $filteredTagsStore as tag}
-			<TagItem {tag} />
+			<TagItem {tag} on:deleteTag />
 		{/each}
 	</section>
 {/if}

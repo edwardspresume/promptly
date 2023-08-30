@@ -1,9 +1,25 @@
 <script lang="ts">
 	import { tagSortOptions } from '$dashboardData/SortOptions';
 
+	import type { ConfirmationInfo } from '$dashboardTypes';
+
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
 	import SortSelector from '$dashboardComponents/filters/SortSelector.svelte';
+	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
 	import TagList from '$dashboardComponents/tags/TagList.svelte';
+
+	let confirmationModalRef: HTMLDialogElement;
+	let confirmationModalInfoForTagDeletion: ConfirmationInfo;
+
+	/**
+	 * Event handler for the deleteTag event on the TagItem component.
+	 * Extracts the confirmation info from the event and shows the confirmation modal.
+	 * @param {CustomEvent} event - Custom event object containing the confirmation info in its detail property.
+	 */
+	function handleDeleteTagEvent({ detail }: CustomEvent) {
+		confirmationModalInfoForTagDeletion = detail;
+		confirmationModalRef.showModal();
+	}
 </script>
 
 <svelte:head>
@@ -18,4 +34,9 @@
 	<SortSelector itemType="tag" sortOptions={tagSortOptions} />
 </nav>
 
-<TagList />
+<TagList on:deleteTag={handleDeleteTagEvent} />
+
+<ConfirmationModal
+	bind:confirmationModalRef
+	confirmationInfo={confirmationModalInfoForTagDeletion}
+/>

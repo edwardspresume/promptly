@@ -10,16 +10,6 @@
 	const dispatch = createEventDispatcher();
 </script>
 
-<!-- <button
-	type="button"
-	title={buttonTitle}
-	aria-label={buttonTitle}
-	on:click|stopPropagation={() => dispatch('click')}
-	class="transition-colors duration-200 text-slate-800 hover:text-red-500 dark:hover:text-red-500 dark:text-slate-300"
->
-	<Icon name="delete" size={iconSize} />
-</button> -->
-
 <Button
 	size="icon"
 	type="button"
@@ -27,7 +17,7 @@
 	title={buttonTitle}
 	aria-label={buttonTitle}
 	on:click={() => dispatch('click')}
-	class="hover:text-red-500 h-fit w-fit"
+	class="p-1 hover:text-red-500 h-fit w-fit"
 >
 	<Icon name="delete" size={iconSize} />
 </Button>

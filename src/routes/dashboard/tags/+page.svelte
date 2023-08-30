@@ -1,14 +1,20 @@
 <script lang="ts">
+	import type { PageData } from './$types';
+
 	import { tagSortOptions } from '$dashboardData/SortOptions';
 
 	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
 	import type { ConfirmationInfo } from '$dashboardTypes';
+	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
 	import SortSelector from '$dashboardComponents/filters/SortSelector.svelte';
 	import ListControls from '$dashboardComponents/list/ListControls.svelte';
 	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
 	import TagList from '$dashboardComponents/tags/TagList.svelte';
+
+	export let data: PageData;
+	$: ({ session, supabase } = data);
 
 	let tagsListRef: HTMLElement;
 	let confirmationModalRef: HTMLDialogElement;
@@ -21,6 +27,33 @@
 	 */
 	function handleDeleteTagEvent({ detail }: CustomEvent) {
 		confirmationModalInfoForTagDeletion = detail;
+		confirmationModalRef.showModal();
+	}
+
+	/**
+	 * Callback function to delete all tags.
+	 * It either sends an HTTP request or deletes it from local storage.
+	 */
+	async function deleteTagCallBack() {
+		if (session !== null) {
+			await supabase.from('tags').delete().eq('user_id', session.user.id);
+		} else {
+			tagLocalStorageManager.deleteAllItems();
+		}
+	}
+
+	/**
+	 * Event handler for the deleteAllItems event on the ItemListControls component.
+	 * Sets the confirmation info for deleting all tags and shows the confirmation modal.
+	 */
+	function handleDeleteAllTagsEvent() {
+		confirmationModalInfoForTagDeletion = {
+			heading: 'Delete All Tags',
+			subheading: 'Are you sure you want to delete All Tags?',
+			toastMessage: 'All Tags have been successfully deleted!',
+			callback: deleteTagCallBack
+		};
+
 		confirmationModalRef.showModal();
 	}
 </script>
@@ -39,7 +72,12 @@
 
 <TagList bind:tagsListRef on:deleteTag={handleDeleteTagEvent} />
 
-<ListControls itemType="tag" totalItems={$totalTagsCountStore} itemsListRef={tagsListRef} />
+<ListControls
+	itemType="tag"
+	itemsListRef={tagsListRef}
+	totalItems={$totalTagsCountStore}
+	on:deleteAllItems={handleDeleteAllTagsEvent}
+/>
 
 <ConfirmationModal
 	bind:confirmationModalRef

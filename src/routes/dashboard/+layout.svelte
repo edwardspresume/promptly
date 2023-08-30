@@ -17,9 +17,6 @@
 
 	export let data: LayoutData;
 
-	// Initialize data from the layout
-	let { session, userProfile, userPrompts, userTags, feedbackForm } = data;
-
 	// Update the data if it changes
 	$: ({ session, userProfile, userPrompts, userTags, feedbackForm } = data);
 

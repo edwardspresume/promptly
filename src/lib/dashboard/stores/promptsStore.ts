@@ -28,8 +28,8 @@ export const allPromptsStore = writable<PromptSchema[]>([]);
  * Derived store to calculate the total count of prompts.
  */
 export const totalPromptCountStore = derived(
-    allPromptsStore,
-    ($allPromptsStore) => $allPromptsStore.length
+	allPromptsStore,
+	($allPromptsStore) => $allPromptsStore.length
 );
 
 /**
@@ -42,24 +42,20 @@ export const totalPromptCountStore = derived(
  * @returns {Array<PromptSchema>} Filtered and sorted prompts.
  */
 export const filteredPromptsStore = derived(
-    [allPromptsStore, tagsFilter, promptTextFilter, promptSortingPreference],
-    ([prompts, tagsFilter, textFilter, sortOption]) => {
-        const normalizedFilterText = textFilter.toLowerCase();
+	[allPromptsStore, tagsFilter, promptTextFilter, promptSortingPreference],
+	([prompts, tagsFilter, textFilter, sortOption]) => {
+		const normalizedFilterText = textFilter.toLowerCase();
 
-        // Apply the text filter to the prompts
-        const filteredPrompts = prompts.filter((prompt) => {
-            const matchesTags = tagsFilter.every((tag) =>
-                prompt.tagIds.includes(tag)
-            );
+		// Apply the text filter to the prompts
+		const filteredPrompts = prompts.filter((prompt) => {
+			const matchesTags = tagsFilter.every((tag) => prompt.tagIds.includes(tag));
 
-            const matchesText = prompt.title
-                .toLowerCase()
-                .includes(normalizedFilterText);
+			const matchesText = prompt.title.toLowerCase().includes(normalizedFilterText);
 
-            return matchesTags && matchesText;
-        });
+			return matchesTags && matchesText;
+		});
 
-        // Apply the sorting option to the filtered prompts
-        return sortItems(filteredPrompts, sortOption);
-    }
+		// Apply the sorting option to the filtered prompts
+		return sortItems(filteredPrompts, sortOption);
+	}
 );

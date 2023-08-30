@@ -4,6 +4,7 @@
 	import Icon from '$globalComponents/Icon.svelte';
 	import ThemeToggleBtn from '$globalComponents/mainHeader/ThemeToggleBtn.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
+	import ExportDataBtn from './ExportDataBtn.svelte';
 	import LoginLogoutBtn from './LoginLogoutBtn.svelte';
 </script>
 
@@ -31,6 +32,10 @@
 		<Icon name="feedback" />
 		<span>Feedback</span>
 	</Button>
+</li>
+
+<li>
+	<ExportDataBtn />
 </li>
 
 <li>

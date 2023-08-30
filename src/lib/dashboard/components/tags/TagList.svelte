@@ -5,12 +5,12 @@
 	import ListStateNotifier from '$dashboardComponents/list/ListStateNotifier.svelte';
 	import TagItem from './TagItem.svelte';
 
+	export let tagsListRef: HTMLElement;
+
 	const NO_TAGS_AVAILABLE_MESSAGE = 'No tags available. Please add one';
 	const NO_MATCH_MESSAGE = 'There are no tags that match your search';
 
 	let stateMessage: string;
-	let tagItemsContainerRef: HTMLElement;
-
 
 	$: displayedTagsCount = $filteredTagsStore.length;
 
@@ -30,10 +30,11 @@
 		displayedItems={displayedTagsCount}
 	/>
 	<section
+		bind:this={tagsListRef}
 		aria-label="List of tags"
-		class="mt-2 space-y-5 overflow-hidden overflow-y-scroll remove-scrollbar"
+		class="p-1 mt-2 space-y-5 overflow-hidden overflow-y-scroll remove-scrollbar"
 	>
-		{#each $filteredTagsStore as tag}
+		{#each $filteredTagsStore as tag (tag.id)}
 			<TagItem {tag} on:deleteTag />
 		{/each}
 	</section>

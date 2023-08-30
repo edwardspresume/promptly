@@ -1,13 +1,16 @@
 <script lang="ts">
 	import { tagSortOptions } from '$dashboardData/SortOptions';
 
+	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
 	import type { ConfirmationInfo } from '$dashboardTypes';
 
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
 	import SortSelector from '$dashboardComponents/filters/SortSelector.svelte';
+	import ListControls from '$dashboardComponents/list/ListControls.svelte';
 	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
 	import TagList from '$dashboardComponents/tags/TagList.svelte';
 
+	let tagsListRef: HTMLElement;
 	let confirmationModalRef: HTMLDialogElement;
 	let confirmationModalInfoForTagDeletion: ConfirmationInfo;
 
@@ -34,7 +37,9 @@
 	<SortSelector itemType="tag" sortOptions={tagSortOptions} />
 </nav>
 
-<TagList on:deleteTag={handleDeleteTagEvent} />
+<TagList bind:tagsListRef on:deleteTag={handleDeleteTagEvent} />
+
+<ListControls itemType="tag" totalItems={$totalTagsCountStore} itemsListRef={tagsListRef} />
 
 <ConfirmationModal
 	bind:confirmationModalRef

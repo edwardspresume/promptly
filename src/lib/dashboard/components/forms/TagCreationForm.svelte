@@ -4,6 +4,8 @@
 	import { page } from '$app/stores';
 
 	import { doesTagExist } from '$dashboardStores/tagsStore';
+	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
+	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
 	import { TagValidationSchema } from '$dashboardValidationSchemas/tagValidationSchema';
 
 	import BaseModal from '$dashboardComponents/modals/BaseModal.svelte';
@@ -12,7 +14,7 @@
 
 	export let tagCreationModalRef: HTMLDialogElement;
 
-	const { enhance, form, errors, delayed } = superForm($page.data.tagForm, {
+	const { enhance, form, errors, delayed, message } = superForm($page.data.tagForm, {
 		id: 'createTag',
 		resetForm: true,
 		taintedMessage: null,
@@ -27,6 +29,26 @@
 				});
 
 				cancel();
+			}
+		},
+
+		onUpdated: ({ form }) => {
+			if ($message.statusType === 'success') {
+				// Create tag in local storage if user is not logged in
+				if ($page.data.session == null) {
+					const { name } = form.data;
+					tagLocalStorageManager.addItem({ name });
+				}
+
+				notifySuccess($message.text, {
+					target: 'baseModal'
+				});
+			}
+
+			if ($message.statusType === 'error') {
+				notifyError($message.text, {
+					target: 'baseModal'
+				});
 			}
 		}
 	});

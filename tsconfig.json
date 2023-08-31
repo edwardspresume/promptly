@@ -4,13 +4,15 @@
 		"allowJs": true,
 		"checkJs": true,
 		"esModuleInterop": true,
-		"noUncheckedIndexedAccess": true,
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
 
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noUncheckedIndexedAccess": true,
 		"types": ["vitest/globals"]
 	}
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias

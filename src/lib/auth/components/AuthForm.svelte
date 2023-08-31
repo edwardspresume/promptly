@@ -3,7 +3,7 @@
 
 	import { page } from '$app/stores';
 
-    import { EmailAuthValidationSchema } from '$authValidationSchemas/authValidationSchemas';
+	import { EmailAuthValidationSchema } from '$authValidationSchemas/authValidationSchemas';
 
 	import InputField from '$globalComponents/form/InputField.svelte';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';

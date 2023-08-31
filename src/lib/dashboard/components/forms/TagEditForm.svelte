@@ -90,6 +90,6 @@
 			labelIsScreenReaderOnly={true}
 		/>
 
-		<SubmitButton title="Update Tag" disabled={!isTagModified || $delayed} />
+		<SubmitButton title="Update Tag" disabled={!isTagModified || $delayed} showSpinner={$delayed} />
 	</form>
 </BaseModal>

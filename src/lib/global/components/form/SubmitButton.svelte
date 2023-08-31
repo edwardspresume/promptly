@@ -5,6 +5,8 @@
 	export let title: string = 'Submit';
 	export let extraStyles: string = '';
 	export let disabled: boolean = false;
+	export let showSpinner: boolean | null = null;
+
 	export let size: 'default' | 'sm' | 'lg' | 'icon' = 'lg';
 </script>
 
@@ -16,7 +18,7 @@
 	aria-disabled={disabled}
 	class="font-bold flex gap-2 items-center {extraStyles}"
 >
-	{#if disabled}
+	{#if showSpinner === null ? disabled : showSpinner}
 		<Icon name="loading-spinner" animateSpin={true} />
 	{/if}
 

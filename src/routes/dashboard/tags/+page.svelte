@@ -5,10 +5,12 @@
 	import { filteredTagsStore, totalTagsCountStore } from '$dashboardStores/tagsStore';
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
+	import type { TagSchema } from '$databaseDir/schema';
 
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
 	import SortSelector from '$dashboardComponents/filters/SortSelector.svelte';
 	import TagCreationForm from '$dashboardComponents/forms/TagCreationForm.svelte';
+	import TagEditForm from '$dashboardComponents/forms/TagEditForm.svelte';
 	import ListControls from '$dashboardComponents/list/ListControls.svelte';
 	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
 	import TagList from '$dashboardComponents/tags/TagList.svelte';
@@ -17,6 +19,8 @@
 	$: ({ session, supabase } = data);
 
 	let tagsListRef: HTMLElement;
+	let tagEditModalRef: HTMLDialogElement;
+	let selectedTagForEdit: TagSchema;
 	let tagCreationModalRef: HTMLDialogElement;
 	let confirmationModalRef: HTMLDialogElement;
 	let confirmationModalInfoForTagDeletion: ConfirmationInfo;
@@ -57,6 +61,15 @@
 
 		confirmationModalRef.showModal();
 	}
+
+	/**
+	 * Handles the tag selection event and opens the tag edit modal
+	 * @param {CustomEvent} event - The custom event triggered on tag selection
+	 */
+	const handleTagSelection = ({ detail }: CustomEvent) => {
+		selectedTagForEdit = detail;
+		tagEditModalRef.showModal();
+	};
 </script>
 
 <svelte:head>
@@ -71,7 +84,7 @@
 	<SortSelector itemType="tag" sortOptions={tagSortOptions} />
 </nav>
 
-<TagList bind:tagsListRef on:deleteTag={handleDeleteTagEvent} />
+<TagList bind:tagsListRef on:editTag={handleTagSelection} on:deleteTag={handleDeleteTagEvent} />
 
 <ListControls
 	itemType="tag"
@@ -88,3 +101,5 @@
 />
 
 <TagCreationForm bind:tagCreationModalRef />
+
+<TagEditForm bind:tagEditModalRef {selectedTagForEdit} />

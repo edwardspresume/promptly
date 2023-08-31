@@ -29,9 +29,11 @@
 			<CloseModalBtn {dialogElement} />
 		</div>
 
-		<p class="mt-1 text-sm text-muted-foreground">
-			{modalDescription}
-		</p>
+		{#if modalDescription}
+			<p class="mt-1 text-sm text-muted-foreground">
+				{modalDescription}
+			</p>
+		{/if}
 	</header>
 
 	<slot />

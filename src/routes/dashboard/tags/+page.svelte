@@ -8,6 +8,7 @@
 
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
 	import SortSelector from '$dashboardComponents/filters/SortSelector.svelte';
+	import TagCreationForm from '$dashboardComponents/forms/TagCreationForm.svelte';
 	import ListControls from '$dashboardComponents/list/ListControls.svelte';
 	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
 	import TagList from '$dashboardComponents/tags/TagList.svelte';
@@ -16,6 +17,7 @@
 	$: ({ session, supabase } = data);
 
 	let tagsListRef: HTMLElement;
+	let tagCreationModalRef: HTMLDialogElement;
 	let confirmationModalRef: HTMLDialogElement;
 	let confirmationModalInfoForTagDeletion: ConfirmationInfo;
 
@@ -76,6 +78,7 @@
 	itemsListRef={tagsListRef}
 	totalItems={$totalTagsCountStore}
 	displayedItems={$filteredTagsStore.length}
+	on:addItem={() => tagCreationModalRef.showModal()}
 	on:deleteAllItems={handleDeleteAllTagsEvent}
 />
 
@@ -83,3 +86,5 @@
 	bind:confirmationModalRef
 	confirmationInfo={confirmationModalInfoForTagDeletion}
 />
+
+<TagCreationForm bind:tagCreationModalRef />

@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import { drizzleClient } from './drizzleClient.server';
 
 import { profilesTable, promptsTable, tagsTable } from './schema';
@@ -63,7 +63,8 @@ export async function getUserPrompts(userId: string) {
 		const userPrompts = await drizzleClient
 			.select()
 			.from(promptsTable)
-			.where(eq(promptsTable.userId, userId));
+			.where(eq(promptsTable.userId, userId))
+			.orderBy(desc(promptsTable.createdAt));
 
 		return userPrompts ?? null;
 	} catch (error) {
@@ -83,7 +84,8 @@ export async function getUserTags(userId: string) {
 		const userTags = await drizzleClient
 			.select()
 			.from(tagsTable)
-			.where(eq(tagsTable.userId, userId));
+			.where(eq(tagsTable.userId, userId))
+			.orderBy(desc(tagsTable.createdAt));
 
 		return userTags ?? null;
 	} catch (error) {

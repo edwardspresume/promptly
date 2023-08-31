@@ -44,7 +44,7 @@
 	}
 </script>
 
-<ListItem title={`Edit tag: ${tagName}`} on:click on:keydown>
+<ListItem title={`Edit tag: ${tagName}`} onItemClickOrKeyPress={() => dispatch('editTag', tag)}>
 	<h2 class="font-normal select-none">{tagName}</h2>
 
 	<DeleteItemBtn buttonTitle={`Delete tag: ${tagName}`} on:click={dispatchDeleteTagEvent} />

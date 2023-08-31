@@ -35,7 +35,7 @@
 		class="p-1 mt-2 space-y-5 overflow-hidden overflow-y-scroll remove-scrollbar"
 	>
 		{#each $filteredTagsStore as tag (tag.id)}
-			<TagItem {tag} on:deleteTag />
+			<TagItem {tag} on:editTag on:deleteTag />
 		{/each}
 	</section>
 {/if}

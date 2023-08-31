@@ -35,7 +35,7 @@
 		onUpdated: ({ form }) => {
 			if ($message.statusType === 'success') {
 				// Create tag in local storage if user is not logged in
-				if ($page.data.session == null) {
+				if ($page.data.session === null) {
 					const { name } = form.data;
 					tagLocalStorageManager.addItem({ name });
 				}
@@ -43,25 +43,15 @@
 				notifySuccess($message.text, {
 					target: 'baseModal'
 				});
-			}
-
-			if ($message.statusType === 'error') {
-				notifyError($message.text, {
-					target: 'baseModal'
-				});
+			} else if ($message.statusType === 'error') {
+				notifyError($message.text, { target: 'baseModal' });
 			}
 		}
 	});
 </script>
 
 <BaseModal bind:dialogElement={tagCreationModalRef} modalTitle="Create Tag">
-	<form
-		use:enhance
-		method="POST"
-		action="?/createTag"
-		aria-label="Tag Creation Form"
-		class="grid gap-4"
-	>
+	<form use:enhance method="POST" aria-label="Tag Creation Form" class="grid gap-4">
 		<InputField
 			type="text"
 			name="name"

@@ -12,7 +12,10 @@ export const createDate = () => new Date().toISOString();
  * @param callback - The function to call when the Enter or Space key is pressed
  */
 export function handleKeyDown(event: KeyboardEvent, callback: () => void) {
-	if (event.key === 'Enter' || event.key === ' ') callback();
+	if (event.key === 'Enter' || event.key === ' ') {
+		event.preventDefault(); // Prevent default behavior of Enter key
+		callback();
+	}
 }
 
 /**

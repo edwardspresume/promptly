@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
+	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import type { PromptSchema } from '$databaseDir/schema';
 
 	import ListItem from '$dashboardComponents/list/ListItem.svelte';
 	import Icon from '$globalComponents/Icon.svelte';
 	import CopyPromptTextBtn from './CopyPromptTextBtn.svelte';
+	import FavoriteToggleBtn from './FavoriteToggleBtn.svelte';
 
 	export let prompt: PromptSchema;
 
@@ -15,6 +17,13 @@
 
 	$: {
 		({ id: promptId, title, text, isFavorited } = prompt);
+	}
+
+	/**
+	 *  Toggles the favorite status of the prompt
+	 */
+	function handleFavoriteStatusToggle() {
+		promptLocalStorageManager.updateItem(promptId, { isFavorited: !isFavorited });
 	}
 </script>
 
@@ -30,7 +39,14 @@
 		</span>
 	</h2>
 
-	<div class="flex items-center gap-x-4 text-muted-foreground">
+	<div class="flex items-center gap-1 text-muted-foreground">
+		<FavoriteToggleBtn
+			iconSize={20}
+			{isFavorited}
+			context="PromptItem"
+			on:favoriteToggled={handleFavoriteStatusToggle}
+		/>
+
 		<CopyPromptTextBtn promptTextToCopy={text} toastNotificationTarget="dashboardLayout" />
 	</div>
 </ListItem>

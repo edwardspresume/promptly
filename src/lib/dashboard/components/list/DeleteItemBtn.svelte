@@ -8,6 +8,11 @@
 	export let buttonTitle: string = '';
 
 	const dispatch = createEventDispatcher();
+
+	function handleClick(event: Event) {
+		event.stopPropagation();
+		dispatch('click');
+	}
 </script>
 
 <Button
@@ -16,7 +21,7 @@
 	variant="ghost"
 	title={buttonTitle}
 	aria-label={buttonTitle}
-	on:click={() => dispatch('click')}
+	on:click={handleClick}
 	class="p-1 hover:text-red-500 h-fit w-fit"
 >
 	<Icon name="delete" size={iconSize} />

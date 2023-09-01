@@ -30,7 +30,7 @@
 
 		confirmationModalRef.close();
 
-		if (toastMessage) notifySuccess(toastMessage);
+		if (toastMessage) notifySuccess(toastMessage, { target: 'dashboardLayout' });
 	}
 </script>
 

@@ -42,4 +42,4 @@
 
 <FeedbackForm feedbackFormData={feedbackForm} />
 
-<SvelteToast options={{ intro: { y: -100 } }} />
+<SvelteToast target="dashboardLayout" options={{ intro: { y: -100 } }} />

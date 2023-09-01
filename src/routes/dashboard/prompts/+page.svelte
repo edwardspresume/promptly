@@ -1,6 +1,7 @@
 <script lang="ts">
 	import FilterDisplayButton from '$dashboardComponents/filters/FilterDisplayButton.svelte';
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
+	import PromptList from '$dashboardComponents/prompts/PromptList.svelte';
 	import TabGroup from '$dashboardComponents/prompts/TabGroup.svelte';
 
 	let promptsFiltersModalRef: HTMLDialogElement;
@@ -17,6 +18,11 @@
 
 <nav aria-label="Filter prompts" class="flex flex-col gap-3 my-5 sm:flex-row">
 	<SearchBar searchTargetType="prompt" />
-
 	<FilterDisplayButton on:showFilters={() => promptsFiltersModalRef.showModal()} />
 </nav>
+
+{#if selectedTabIndex === 0}
+	<PromptList />
+{:else if selectedTabIndex === 1}
+	<PromptList isShowingOnlyFavorites={true} />
+{/if}

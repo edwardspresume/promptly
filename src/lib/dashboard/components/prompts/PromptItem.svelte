@@ -5,6 +5,7 @@
 
 	import ListItem from '$dashboardComponents/list/ListItem.svelte';
 	import Icon from '$globalComponents/Icon.svelte';
+	import CopyPromptTextBtn from './CopyPromptTextBtn.svelte';
 
 	export let prompt: PromptSchema;
 
@@ -28,4 +29,8 @@
 			{title}
 		</span>
 	</h2>
+
+	<div class="flex items-center gap-x-4 text-muted-foreground">
+		<CopyPromptTextBtn promptTextToCopy={text} toastNotificationTarget="dashboardLayout" />
+	</div>
 </ListItem>

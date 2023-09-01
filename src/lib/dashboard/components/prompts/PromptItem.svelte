@@ -1,7 +1,10 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { createEventDispatcher } from 'svelte';
 
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
+	import { notifyError } from '$dashboardUtils/toastUtils';
 	import type { PromptSchema } from '$databaseDir/schema';
 
 	import ListItem from '$dashboardComponents/list/ListItem.svelte';
@@ -22,8 +25,36 @@
 	/**
 	 *  Toggles the favorite status of the prompt
 	 */
-	function handleFavoriteStatusToggle() {
-		promptLocalStorageManager.updateItem(promptId, { isFavorited: !isFavorited });
+	async function handleFavoriteStatusToggle() {
+		if ($page.data.session) {
+			try {
+				// Prepare form data
+				const formData = new FormData();
+				formData.append('isFavorited', String(!isFavorited));
+				formData.append('promptId', String(promptId));
+
+				// Send an asynchronous request to the server
+				const response = await fetch('?/toggleFavorite', {
+					method: 'POST',
+					body: formData
+				});
+
+				if (!response.ok) {
+					throw new Error('Failed to toggle favorite. Please try again.');
+				}
+
+				invalidateAll();
+			} catch (error) {
+				const errorMessage =
+					error instanceof Error ? error.message : 'Failed to toggle favorite. Please try again.';
+
+				notifyError(errorMessage, {
+					target: 'dashboardLayout'
+				});
+			}
+		} else {
+			promptLocalStorageManager.updateItem(promptId, { isFavorited: !isFavorited });
+		}
 	}
 </script>
 
@@ -43,7 +74,6 @@
 		<FavoriteToggleBtn
 			iconSize={20}
 			{isFavorited}
-			context="PromptItem"
 			on:favoriteToggled={handleFavoriteStatusToggle}
 		/>
 

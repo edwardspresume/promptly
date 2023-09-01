@@ -16,7 +16,7 @@
 			{#if userAvatarUrl}
 				<Avatar.Image src={userAvatarUrl} alt="Profile avatar" />
 			{:else}
-				<Avatar.Fallback class="bg-gradient-to-b from-blue-500 to-purple-500" style="display:block">
+				<Avatar.Fallback class="bg-gradient-to-b from-blue-500 to-purple-500" style="display:flex">
 					{fullNameInitial || emailInitial}
 				</Avatar.Fallback>
 			{/if}

@@ -19,7 +19,7 @@
 	class="font-bold flex gap-2 items-center {extraStyles}"
 >
 	{#if showSpinner === null ? disabled : showSpinner}
-		<Icon name="loading-spinner" animateSpin={true} />
+		<Icon name="loading-spinner" extraStyles="animate-spin" />
 	{/if}
 
 	<span>

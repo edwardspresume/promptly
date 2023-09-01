@@ -5,8 +5,7 @@
 	// The size of the icon in pixels
 	export let size: number = 20;
 
-	// Whether or not to animate the icon
-	export let animateSpin: boolean = false;
+	export let extraStyles: string = '';
 
 	// The fill color of the icon
 	export let fill: string = 'currentColor';
@@ -25,7 +24,7 @@
 	aria-hidden="true"
 	width={`${sizeInRem}rem`}
 	height={`${sizeInRem}rem`}
-	class={animateSpin ? 'animate-spin' : ''}
+	class={extraStyles}
 >
 	<use xlink:href={`/icons-sprite.svg#${name}`} />
 </svg>

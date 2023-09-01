@@ -62,6 +62,6 @@
 			labelIsScreenReaderOnly={true}
 		/>
 
-		<SubmitButton title="Add Tag" disabled={$delayed} />
+		<SubmitButton title={$delayed ? 'Creating...' : 'Create Tag'} disabled={$delayed} />
 	</form>
 </BaseModal>

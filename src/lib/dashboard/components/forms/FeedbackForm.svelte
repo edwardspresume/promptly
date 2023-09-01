@@ -60,6 +60,6 @@
 			errorMessage={$errors.message}
 		/>
 
-		<SubmitButton disabled={$delayed} />
+		<SubmitButton title={$delayed ? 'Sending...' : 'Send'} disabled={$delayed} />
 	</form>
 </BaseModal>

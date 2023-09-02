@@ -1,9 +1,10 @@
 import { desc, eq } from 'drizzle-orm';
 import { drizzleClient } from './drizzleClient.server';
 
+import type { StatusType } from '$globalTypes';
 import { profilesTable, promptsTable, tagsTable } from './schema';
 
-export type FormStatusMessage = { statusType: 'error' | 'success' | 'warning'; text: string };
+export type FormStatusMessage = { statusType: StatusType; text: string };
 
 /**
  * Checks whether the given email exists in the profiles table.

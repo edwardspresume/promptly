@@ -1,3 +1,5 @@
+import type { StatusType } from "$globalTypes";
+
 export type ItemType = 'prompt' | 'tag';
 
 /**
@@ -26,5 +28,5 @@ export interface ConfirmationInfo {
 	heading: string;
 	subheading: string;
 	toastMessage: string;
-	callback: () => void;
+	callback: () => Promise<{ statusType: StatusType }>;
 }

@@ -1,3 +1,5 @@
+export type StatusType = 'success' | 'error' | 'warning' | 'info';
+
 export type NavLink = {
 	title: string;
 	href: string;

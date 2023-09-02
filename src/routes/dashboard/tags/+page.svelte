@@ -6,6 +6,7 @@
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import type { TagSchema } from '$databaseDir/schema';
+	import type { StatusType } from '$globalTypes';
 
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
 	import SortSelector from '$dashboardComponents/filters/SortSelector.svelte';
@@ -30,33 +31,43 @@
 	 * Extracts the confirmation info from the event and shows the confirmation modal.
 	 * @param {CustomEvent} event - Custom event object containing the confirmation info in its detail property.
 	 */
-	function handleDeleteTagEvent({ detail }: CustomEvent) {
+	function handleDeleteSingleTagEvent({ detail }: CustomEvent) {
 		confirmationModalInfoForTagDeletion = detail;
 		confirmationModalRef.showModal();
 	}
 
 	/**
 	 * Callback function to delete all tags.
-	 * It either sends an HTTP request or deletes it from local storage.
+	 * It either deletes all tags from the database or from the local storage depending on the user's authentication status.
+	 * @async
+	 * @returns {Promise<{statusType: StatusType}>}
 	 */
-	async function deleteTagCallBack() {
-		if (session !== null) {
-			await supabase.from('tags').delete().eq('user_id', session.user.id);
-		} else {
-			tagLocalStorageManager.deleteAllItems();
+	async function deleteAllTagsCallBack(): Promise<{ statusType: StatusType }> {
+		try {
+			if (session !== null) {
+				const { error } = await supabase.from('tags').delete().eq('user_id', session.user.id);
+				if (error) throw new Error(`Supabase error: ${error.message}`);
+			} else {
+				tagLocalStorageManager.deleteAllItems();
+			}
+
+			return { statusType: 'success' };
+		} catch (e) {
+			console.error('Failed to delete all tags');
+			return { statusType: 'error' };
 		}
 	}
 
 	/**
-	 * Event handler for the deleteAllItems event on the ItemListControls component.
+	 * Event handler for the deleteAllItems event on the ListControl component.
 	 * Sets the confirmation info for deleting all tags and shows the confirmation modal.
 	 */
 	function handleDeleteAllTagsEvent() {
 		confirmationModalInfoForTagDeletion = {
 			heading: 'Delete All Tags',
-			subheading: 'Are you sure you want to delete All Tags?',
+			subheading: 'Are you sure you want to delete All your Tags?',
 			toastMessage: 'All Tags have been successfully deleted!',
-			callback: deleteTagCallBack
+			callback: deleteAllTagsCallBack
 		};
 
 		confirmationModalRef.showModal();
@@ -84,7 +95,11 @@
 	<SortSelector itemType="tag" sortOptions={tagSortOptions} />
 </nav>
 
-<TagList bind:tagListRef on:editTag={handleTagSelection} on:deleteTag={handleDeleteTagEvent} />
+<TagList
+	bind:tagListRef
+	on:editTag={handleTagSelection}
+	on:deleteTag={handleDeleteSingleTagEvent}
+/>
 
 <ListControls
 	itemType="tag"

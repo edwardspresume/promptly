@@ -2,7 +2,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
-	import { notifySuccess } from '$dashboardUtils/toastUtils';
+	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
 	import Button from '$globalComponents/ui/button/button.svelte';
 
 	export let confirmationModalRef: HTMLDialogElement;
@@ -22,15 +22,30 @@
 
 	/**
 	 * Executes the callback, closes the modal dialog, and displays a success notification
+	 * @async
 	 */
 	async function executeCallbackAndCloseModal() {
-		await callback();
+		try {
+			const result = await callback();
 
-		await invalidateAll();
+			confirmationModalRef.close();
 
-		confirmationModalRef.close();
+			// Handle error case
+			if (result.statusType === 'error') {
+				notifyError('Something went wrong. Please try again later.', { target: 'dashboardLayout' });
+				return;
+			}
 
-		if (toastMessage) notifySuccess(toastMessage, { target: 'dashboardLayout' });
+			await invalidateAll();
+
+			// Show success message if any
+			if (toastMessage) {
+				notifySuccess(toastMessage, { target: 'dashboardLayout' });
+			}
+		} catch (e) {
+			console.error('Failed to execute callback and close modal');
+			notifyError('An unexpected error occurred. Please try again.', { target: 'dashboardLayout' });
+		}
 	}
 </script>
 
@@ -39,7 +54,7 @@
 <dialog
 	on:click={(event) => closeDialogOnOutsideClick(event, confirmationModalRef)}
 	bind:this={confirmationModalRef}
-    class='scaleInWithFadeKeyFrame'
+	class="scaleInWithFadeKeyFrame"
 >
 	<header>
 		<h3 class="text-xl">{heading}</h3>

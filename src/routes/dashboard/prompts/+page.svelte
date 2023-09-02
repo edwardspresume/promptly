@@ -1,18 +1,76 @@
 <script lang="ts">
+	import type { PageData } from './$types';
+
 	import { totalPromptCountStore } from '$dashboardStores/promptsStore';
+	import type { ConfirmationInfo } from '$dashboardTypes';
+	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
+	import type { StatusType } from '$globalTypes';
 
 	import FilterDisplayButton from '$dashboardComponents/filters/FilterDisplayButton.svelte';
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
 	import ListControls from '$dashboardComponents/list/ListControls.svelte';
+	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
 	import PromptsFiltersModal from '$dashboardComponents/modals/PromptsFiltersModal.svelte';
 	import PromptList from '$dashboardComponents/prompts/PromptList.svelte';
 	import TabGroup from '$dashboardComponents/prompts/TabGroup.svelte';
 
+	export let data: PageData;
+	$: ({ session, supabase } = data);
+
 	let promptListRef: HTMLElement;
+	let confirmationModalRef: HTMLDialogElement;
 	let promptsFiltersModalRef: HTMLDialogElement;
-	let displayedPromptsCount: number;
 
 	let selectedTabIndex: number = 0;
+	let displayedPromptsCount: number;
+	let confirmationModalInfoForPromptDeletion: ConfirmationInfo;
+
+	/**
+	 * Event handler for the deleteTag event on the TagItem component.
+	 * Extracts the confirmation info from the event and shows the confirmation modal.
+	 * @param {CustomEvent} event - Custom event object containing the confirmation info in its detail property.
+	 */
+	function handleDeleteTagEvent({ detail }: CustomEvent) {
+		confirmationModalInfoForTagDeletion = detail;
+		confirmationModalRef.showModal();
+	}
+
+	/**
+	 * Callback function to delete all prompts.
+	 * It either deletes all prompts from the database or from the local storage depending on the user's authentication status.
+	 * @async
+	 * @returns {Promise<{statusType: StatusType}>}
+	 */
+	async function deleteAllPromptsCallBack(): Promise<{ statusType: StatusType }> {
+		try {
+			if (session !== null) {
+				const { error } = await supabase.from('prompts').delete().eq('user_id', session.user.id);
+				if (error) throw new Error(`Supabase error: ${error.message}`);
+			} else {
+				promptLocalStorageManager.deleteAllItems();
+			}
+
+			return { statusType: 'success' };
+		} catch (e) {
+			console.error('Failed to delete all prompts');
+			return { statusType: 'error' };
+		}
+	}
+
+	/**
+	 * Event handler for the deleteAllItems event on the ListControl component.
+	 * Sets the confirmation info for deleting all prompts and shows the confirmation modal.
+	 */
+	function handleDeleteAllPromptsEvent() {
+		confirmationModalInfoForPromptDeletion = {
+			heading: 'Delete All Prompts',
+			subheading: 'Are you sure you want to delete All your Prompts?',
+			toastMessage: 'All Prompts have been successfully deleted!',
+			callback: deleteAllPromptsCallBack
+		};
+
+		confirmationModalRef.showModal();
+	}
 </script>
 
 <svelte:head>
@@ -38,6 +96,12 @@
 	itemsListRef={promptListRef}
 	totalItems={$totalPromptCountStore}
 	displayedItems={displayedPromptsCount}
+	on:deleteAllItems={handleDeleteAllPromptsEvent}
 />
 
 <PromptsFiltersModal bind:promptsFiltersModalRef />
+
+<ConfirmationModal
+	bind:confirmationModalRef
+	confirmationInfo={confirmationModalInfoForPromptDeletion}
+/>

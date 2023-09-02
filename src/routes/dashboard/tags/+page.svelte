@@ -40,7 +40,7 @@
 	 * Callback function to delete all tags.
 	 * It either deletes all tags from the database or from the local storage depending on the user's authentication status.
 	 * @async
-	 * @returns {Promise<{statusType: StatusType}>}
+	 * @returns {Promise<{statusType: StatusType}>} - The status of the operation.
 	 */
 	async function deleteAllTagsCallBack(): Promise<{ statusType: StatusType }> {
 		try {

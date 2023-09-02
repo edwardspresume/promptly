@@ -4,6 +4,7 @@
 
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import type { TagSchema } from '$databaseDir/schema';
+	import type { StatusType } from '$globalTypes';
 
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 
@@ -20,12 +21,22 @@
 	/**
 	 * Callback function to delete the tag.
 	 * It either deletes the tag from the database or from the local storage depending on the user's is logged in.
+	 * @async
+	 * @returns {Promise<{statusType: StatusType}>} - The status of the operation.
 	 */
-	async function deleteTagCallBack() {
-		if ($page.data.session !== null) {
-			await $page.data.supabase.from('tags').delete().eq('id', tagId);
-		} else {
-			tagLocalStorageManager.deleteItem(tagId!);
+	async function deleteTagCallBack(): Promise<{ statusType: StatusType }> {
+		try {
+			if ($page.data.session !== null) {
+				const { error } = await $page.data.supabase.from('tags').delete().eq('id', tagId);
+				if (error) throw new Error(`Supabase error: ${error.message}`);
+			} else {
+				tagLocalStorageManager.deleteItem(tagId);
+			}
+
+			return { statusType: 'success' };
+		} catch (e) {
+			console.error('Failed to delete tag');
+			return { statusType: 'error' };
 		}
 	}
 

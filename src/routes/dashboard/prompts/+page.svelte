@@ -39,7 +39,7 @@
 	 * Callback function to delete all prompts.
 	 * It either deletes all prompts from the database or from the local storage depending on the user's authentication status.
 	 * @async
-	 * @returns {Promise<{statusType: StatusType}>}
+	 * @returns {Promise<{statusType: StatusType}>} - The status of the operation.
 	 */
 	async function deleteAllPromptsCallBack(): Promise<{ statusType: StatusType }> {
 		try {

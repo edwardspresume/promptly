@@ -18,7 +18,7 @@
 	export let data: PageData;
 	$: ({ session, supabase } = data);
 
-	let tagsListRef: HTMLElement;
+	let tagListRef: HTMLElement;
 	let tagEditModalRef: HTMLDialogElement;
 	let selectedTagForEdit: TagSchema;
 	let tagCreationModalRef: HTMLDialogElement;
@@ -84,11 +84,11 @@
 	<SortSelector itemType="tag" sortOptions={tagSortOptions} />
 </nav>
 
-<TagList bind:tagsListRef on:editTag={handleTagSelection} on:deleteTag={handleDeleteTagEvent} />
+<TagList bind:tagListRef on:editTag={handleTagSelection} on:deleteTag={handleDeleteTagEvent} />
 
 <ListControls
 	itemType="tag"
-	itemsListRef={tagsListRef}
+	itemsListRef={tagListRef}
 	totalItems={$totalTagsCountStore}
 	displayedItems={$filteredTagsStore.length}
 	on:addItem={() => tagCreationModalRef.showModal()}

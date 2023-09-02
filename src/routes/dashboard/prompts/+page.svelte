@@ -1,10 +1,15 @@
 <script lang="ts">
+	import { totalPromptCountStore } from '$dashboardStores/promptsStore';
+
 	import FilterDisplayButton from '$dashboardComponents/filters/FilterDisplayButton.svelte';
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
+	import ListControls from '$dashboardComponents/list/ListControls.svelte';
 	import PromptList from '$dashboardComponents/prompts/PromptList.svelte';
 	import TabGroup from '$dashboardComponents/prompts/TabGroup.svelte';
 
+	let promptListRef: HTMLElement;
 	let promptsFiltersModalRef: HTMLDialogElement;
+	let displayedPromptsCount: number;
 
 	let selectedTabIndex: number = 0;
 </script>
@@ -22,7 +27,14 @@
 </nav>
 
 {#if selectedTabIndex === 0}
-	<PromptList />
+	<PromptList bind:promptListRef bind:displayedPromptsCount />
 {:else if selectedTabIndex === 1}
-	<PromptList isShowingOnlyFavorites={true} />
+	<PromptList bind:promptListRef bind:displayedPromptsCount isShowingOnlyFavorites={true} />
 {/if}
+
+<ListControls
+	itemType="prompt"
+	itemsListRef={promptListRef}
+	totalItems={$totalPromptCountStore}
+	displayedItems={displayedPromptsCount}
+/>

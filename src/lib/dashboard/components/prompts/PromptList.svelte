@@ -6,17 +6,19 @@
 	import type { PromptSchema } from '$databaseDir/schema';
 	import PromptItem from './PromptItem.svelte';
 
+    export let promptListRef: HTMLElement;
+    export let displayedPromptsCount: number;
 	export let isShowingOnlyFavorites: boolean = false;
 
 	const NO_PROMPTS_AVAILABLE_MESSAGE = 'No prompts available. Please add one';
 	const NO_MATCH_MESSAGE = 'No prompts match your filter criteria';
 	const NO_FAVORITE_PROMPTS_MESSAGE = 'Your favorites list is currently empty';
 
-	let promptListRef: HTMLElement;
+
 
 	let stateMessage: string;
 	let displayedPrompts: PromptSchema[];
-	let displayedPromptsCount: number;
+
 
 	$: {
 		displayedPrompts = isShowingOnlyFavorites

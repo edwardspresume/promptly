@@ -26,7 +26,7 @@
 	 *  Toggles the favorite status of the prompt
 	 */
 	async function handleFavoriteStatusToggle() {
-		if ($page.data.session) {
+		if ($page.data.session !== null) {
 			try {
 				// Prepare form data
 				const formData = new FormData();

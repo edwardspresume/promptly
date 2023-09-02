@@ -1,11 +1,19 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+	import type { HTMLButtonAttributes } from 'svelte/elements';
+
+	import type { Variant } from '$globalComponents/ui/button';
+	import { cn } from '$globalUtils';
 
 	import Icon from '$globalComponents/Icon.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
 
+	let className: HTMLButtonAttributes['class'] = undefined;
+
 	export let iconSize: number;
+	export { className as class };
 	export let isFavorited: boolean = false;
+	export let buttonVariant: Variant = 'ghost';
 
 	const dispatch = createEventDispatcher();
 
@@ -24,12 +32,12 @@
 <Button
 	role="switch"
 	type="button"
-	variant="ghost"
 	title={buttonLabel}
+	variant={buttonVariant}
 	aria-label={buttonLabel}
 	aria-checked={isFavorited}
 	on:click={handleFavoriteToggleClick}
-	class="p-1 hover:text-red-400 h-fit w-fit"
+	class={cn('hover:text-red-400', className)}
 >
 	<label>
 		<span class="sr-only">{buttonLabel}</span>

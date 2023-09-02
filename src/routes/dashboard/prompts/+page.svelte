@@ -4,6 +4,7 @@
 	import FilterDisplayButton from '$dashboardComponents/filters/FilterDisplayButton.svelte';
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
 	import ListControls from '$dashboardComponents/list/ListControls.svelte';
+	import PromptsFiltersModal from '$dashboardComponents/modals/PromptsFiltersModal.svelte';
 	import PromptList from '$dashboardComponents/prompts/PromptList.svelte';
 	import TabGroup from '$dashboardComponents/prompts/TabGroup.svelte';
 
@@ -38,3 +39,5 @@
 	totalItems={$totalPromptCountStore}
 	displayedItems={displayedPromptsCount}
 />
+
+<PromptsFiltersModal bind:promptsFiltersModalRef />

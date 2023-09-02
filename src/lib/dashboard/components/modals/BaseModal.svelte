@@ -20,7 +20,7 @@
 	bind:this={dialogElement}
 	on:close={() => dispatch('close')}
 	on:click={(event) => closeDialogOnOutsideClick(event, dialogElement)}
-	class="max-h-[100dvh] overflow-y-auto"
+	class="max-h-[100dvh] overflow-y-auto scaleInWithFadeKeyFrame"
 >
 	<header class="mb-12">
 		<div class="flex items-center justify-between gap-6">

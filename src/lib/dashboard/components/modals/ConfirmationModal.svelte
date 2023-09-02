@@ -39,6 +39,7 @@
 <dialog
 	on:click={(event) => closeDialogOnOutsideClick(event, confirmationModalRef)}
 	bind:this={confirmationModalRef}
+    class='scaleInWithFadeKeyFrame'
 >
 	<header>
 		<h3 class="text-xl">{heading}</h3>

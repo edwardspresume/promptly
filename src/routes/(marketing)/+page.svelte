@@ -25,5 +25,5 @@
 		Central app to save, manage, and test your prompts.
 	</p>
 
-	<DashboardLink text="Try it out" extraStyles="text-xl" />
+	<DashboardLink text="Try it out" class="text-xl" />
 </section>

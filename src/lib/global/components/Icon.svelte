@@ -1,11 +1,17 @@
 <script lang="ts">
+	import type { SVGAttributes } from 'svelte/elements';
+
+	import { cn } from '$globalUtils';
+
+	let className: SVGAttributes<SVGElement>['class'] = undefined;
+
 	// The ID of the icon to display from the SVG sprite
 	export let name: string;
 
 	// The size of the icon in pixels
 	export let size: number = 20;
 
-	export let extraStyles: string = '';
+	export { className as class };
 
 	// The fill color of the icon
 	export let fill: string = 'currentColor';
@@ -24,7 +30,7 @@
 	aria-hidden="true"
 	width={`${sizeInRem}rem`}
 	height={`${sizeInRem}rem`}
-	class={extraStyles}
+	class={cn(className)}
 >
 	<use xlink:href={`/icons-sprite.svg#${name}`} />
 </svg>

@@ -63,7 +63,7 @@
 	onItemClickOrKeyPress={() => dispatch('editPrompt', prompt)}
 >
 	<h2 class="flex gap-2 font-normal leading-none select-none">
-		<Icon name="lightbulb" size={15} extraStyles="self-start" />
+		<Icon name="lightbulb" size={15} class="self-start" />
 
 		<span>
 			{title}
@@ -75,6 +75,7 @@
 			iconSize={20}
 			{isFavorited}
 			on:favoriteToggled={handleFavoriteStatusToggle}
+			class="p-1 h-fit"
 		/>
 
 		<CopyPromptTextBtn promptTextToCopy={text} toastNotificationTarget="dashboardLayout" />

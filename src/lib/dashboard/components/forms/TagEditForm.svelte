@@ -77,7 +77,7 @@
 </script>
 
 <BaseModal modalTitle="Edit tag" bind:dialogElement={tagEditModalRef}>
-	<form use:enhance method="POST" aria-label="Tag Edit Form" class="grid gap-4">
+	<form use:enhance method="POST" aria-label="Tag Edit Form" class="grid gap-5">
 		<input type="hidden" name="id" bind:value={$form.id} />
 
 		<InputField

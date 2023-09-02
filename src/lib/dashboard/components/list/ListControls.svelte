@@ -7,12 +7,12 @@
 
 	export let itemType: ItemType;
 	export let totalItems: number;
-    export let displayedItems: number;
+	export let displayedItems: number;
 	export let itemsListRef: HTMLElement;
 </script>
 
 <footer class="flex items-center justify-between gap-2 py-1 mt-4">
-	{#if totalItems !== 0 && displayedItems !== 0}
+	{#if totalItems !== 0 && displayedItems > 1}
 		<DeleteAllItemsBtn {itemType} on:deleteAllItems />
 	{/if}
 

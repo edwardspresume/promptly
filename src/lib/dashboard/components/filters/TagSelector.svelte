@@ -85,7 +85,7 @@
 	$: if (filterPromptBasedOnTags) tagsFilter.set($selectedTagIds);
 </script>
 
-<form
+<section
 	use:onOutsideClick={() => (isTagSelectionMenuOpen = false)}
 	class="relative grid gap-3 p-2 border rounded-md bg-background"
 	aria-label="Tag selection form"
@@ -138,4 +138,4 @@
 			{/each}
 		</fieldset>
 	{/if}
-</form>
+</section>

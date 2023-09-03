@@ -26,4 +26,5 @@
 >
 	<span>{tag.name}</span>
 	<span>&#x2715;</span>
+	<input type="checkbox" name="tagIds" checked={true} value={tag.id} class="hidden" />
 </Button>

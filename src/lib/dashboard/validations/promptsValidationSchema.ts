@@ -6,7 +6,7 @@ export const MAX_PROMPT_TITLE_LENGTH = 200;
 export const MIN_PROMPT_TEXT_LENGTH = 3;
 export const MAX_PROMPT_TEXT_LENGTH = 4500;
 
-export const promptsValidationSchema = createInsertSchema(promptsTable, {
+export const PromptsValidationSchema = createInsertSchema(promptsTable, {
 	userId: (schema) => schema.userId.optional(),
 
 	title: (schema) =>

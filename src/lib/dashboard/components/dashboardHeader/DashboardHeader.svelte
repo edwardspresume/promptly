@@ -8,7 +8,7 @@
 </script>
 
 <header class="z-50 py-2 border-b">
-	<div class="container flex items-center justify-between max-w-5xl">
+	<div class="container flex items-center justify-between max-w-6xl">
 		<nav class="flex items-center gap-2">
 			<Logo href={RoutePaths.DASHBOARD_PROMPTS} linkTitle="Go to prompts page" />
 

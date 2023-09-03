@@ -67,6 +67,8 @@
 			Cancel
 		</Button>
 
-		<Button type="button" on:click={executeCallbackAndCloseModal}>Confirm</Button>
+		<Button type="button" variant="destructive" on:click={executeCallbackAndCloseModal}>
+			Delete
+		</Button>
 	</footer>
 </dialog>

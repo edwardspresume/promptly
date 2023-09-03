@@ -8,6 +8,7 @@
 
 	import FilterDisplayButton from '$dashboardComponents/filters/FilterDisplayButton.svelte';
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
+	import PromptCreationForm from '$dashboardComponents/forms/PromptCreationForm.svelte';
 	import ListControls from '$dashboardComponents/list/ListControls.svelte';
 	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
 	import PromptsFiltersModal from '$dashboardComponents/modals/PromptsFiltersModal.svelte';
@@ -18,22 +19,14 @@
 	$: ({ session, supabase } = data);
 
 	let promptListRef: HTMLElement;
+	let promptCreationModalRef: HTMLDialogElement;
 	let confirmationModalRef: HTMLDialogElement;
 	let promptsFiltersModalRef: HTMLDialogElement;
+	let promptEditModalRef: HTMLDialogElement;
 
 	let selectedTabIndex: number = 0;
 	let displayedPromptsCount: number;
 	let confirmationModalInfoForPromptDeletion: ConfirmationInfo;
-
-	/**
-	 * Event handler for the deleteTag event on the TagItem component.
-	 * Extracts the confirmation info from the event and shows the confirmation modal.
-	 * @param {CustomEvent} event - Custom event object containing the confirmation info in its detail property.
-	 */
-	function handleDeleteTagEvent({ detail }: CustomEvent) {
-		confirmationModalInfoForTagDeletion = detail;
-		confirmationModalRef.showModal();
-	}
 
 	/**
 	 * Callback function to delete all prompts.
@@ -96,6 +89,7 @@
 	itemsListRef={promptListRef}
 	totalItems={$totalPromptCountStore}
 	displayedItems={displayedPromptsCount}
+	on:addItem={() => promptCreationModalRef.showModal()}
 	on:deleteAllItems={handleDeleteAllPromptsEvent}
 />
 
@@ -105,3 +99,5 @@
 	bind:confirmationModalRef
 	confirmationInfo={confirmationModalInfoForPromptDeletion}
 />
+
+<PromptCreationForm bind:promptCreationModalRef />

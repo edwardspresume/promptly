@@ -2,7 +2,6 @@
 	import { isFeedbackModalOpen } from '$dashboardStores/feedbackModalStore';
 
 	import Icon from '$globalComponents/Icon.svelte';
-	import ThemeToggleBtn from '$globalComponents/mainHeader/ThemeToggleBtn.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
 	import ExportDataBtn from './ExportDataBtn.svelte';
 	import LoginLogoutBtn from './LoginLogoutBtn.svelte';
@@ -36,10 +35,6 @@
 
 <li>
 	<ExportDataBtn />
-</li>
-
-<li>
-	<ThemeToggleBtn hideText={false} />
 </li>
 
 <li>

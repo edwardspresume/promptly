@@ -3,6 +3,7 @@
 
 	import AuthForm from '$authComponents/AuthForm.svelte';
 	import Icon from '$globalComponents/Icon.svelte';
+	import Logo from '$globalComponents/mainHeader/Logo.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
 	import * as Tabs from '$globalComponents/ui/tabs';
 
@@ -19,8 +20,10 @@
 </svelte:head>
 
 <main class="grid grid-cols-1 lg:grid-cols-[minmax(0,44rem),1fr] min-h-[100dvh] items-center">
-	<section class="w-full max-w-xl p-4 mx-auto lg:p-4">
-		<Tabs.Root value={initialTabValue}>
+	<section class="grid w-full max-w-xl gap-12 mx-auto justify-items-center lg:p-4">
+		<Logo href="/" linkTitle="Return to homepage" class="text-3xl" />
+
+		<Tabs.Root value={initialTabValue} class="w-full">
 			<Tabs.List class="grid w-full grid-cols-2 mb-4">
 				<Tabs.Trigger value="signIn">Sign in</Tabs.Trigger>
 				<Tabs.Trigger value="signUp">Sign up</Tabs.Trigger>
@@ -35,7 +38,7 @@
 			</Tabs.Content>
 		</Tabs.Root>
 
-		<Button href="/" variant="link" class="flex items-center gap-2 mx-auto mt-10 text-lg w-fit">
+		<Button href="/" variant="link" class="flex items-center gap-2 text-lg">
 			<Icon name="home" />
 
 			<span>Return to homepage</span>

@@ -70,7 +70,7 @@
 	<form
 		use:enhance
 		method="POST"
-		action="?/savePrompt"
+		action="?/createOrUpdatePrompt"
 		aria-label="Prompt Creation form"
 		class="grid gap-5"
 	>

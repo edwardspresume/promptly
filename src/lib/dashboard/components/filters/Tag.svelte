@@ -25,13 +25,13 @@
 
 <button
 	type="button"
-	bind:this={tagButton}
 	id={`tag-${index}`}
+	bind:this={tagButton}
 	class:active={isActive}
-	on:click|stopPropagation={() => dispatch('addTag')}
 	on:focus={() => dispatch('focus')}
 	on:mouseover={() => dispatch('hover')}
-	class="block w-full p-1 text-sm font-medium text-left transition-colors duration-300 rounded-md select-none ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+	on:click|stopPropagation={() => dispatch('addTag')}
+	class="block w-full p-1 text-sm text-left transition-colors duration-300 rounded-md select-none ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
 >
 	{tag.name}
 </button>

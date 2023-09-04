@@ -46,10 +46,7 @@
 
 				invalidateAll();
 			} catch (error) {
-				const errorMessage =
-					error instanceof Error ? error.message : 'Failed to toggle favorite. Please try again.';
-
-				notifyError(errorMessage, {
+				notifyError('Failed to toggle favorite. Please try again', {
 					target: 'dashboardLayout'
 				});
 			}

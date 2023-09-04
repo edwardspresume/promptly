@@ -1,11 +1,20 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
+	import type { Variant } from '$globalComponents/ui/button';
+	import type { HTMLButtonAttributes } from 'svelte/elements';
+
+	import { cn } from '$globalUtils';
+
 	import Icon from '$globalComponents/Icon.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
 
+	let className: HTMLButtonAttributes['class'] = undefined;
+
+	export { className as class };
 	export let iconSize: number = 22;
 	export let buttonTitle: string = '';
+	export let buttonVariant: Variant = 'ghost';
 
 	const dispatch = createEventDispatcher();
 
@@ -18,11 +27,11 @@
 <Button
 	size="icon"
 	type="button"
-	variant="ghost"
 	title={buttonTitle}
+	variant={buttonVariant}
 	aria-label={buttonTitle}
 	on:click={handleClick}
-	class="p-1 hover:text-red-500 h-fit w-fit"
+	class={cn('hover:text-red-500 w-fit', className)}
 >
 	<Icon name="delete" size={iconSize} />
 </Button>

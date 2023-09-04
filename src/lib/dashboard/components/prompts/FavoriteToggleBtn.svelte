@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import type { HTMLButtonAttributes } from 'svelte/elements';
 
 	import type { Variant } from '$globalComponents/ui/button';
+	import type { HTMLButtonAttributes } from 'svelte/elements';
+
 	import { cn } from '$globalUtils';
 
 	import Icon from '$globalComponents/Icon.svelte';

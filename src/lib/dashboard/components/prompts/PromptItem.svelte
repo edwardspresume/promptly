@@ -3,9 +3,10 @@
 	import { page } from '$app/stores';
 	import { createEventDispatcher } from 'svelte';
 
+	import type { PromptSchema } from '$databaseDir/schema';
+
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { notifyError } from '$dashboardUtils/toastUtils';
-	import type { PromptSchema } from '$databaseDir/schema';
 
 	import ListItem from '$dashboardComponents/list/ListItem.svelte';
 	import Icon from '$globalComponents/Icon.svelte';
@@ -78,6 +79,10 @@
 			class="p-1 h-fit"
 		/>
 
-		<CopyPromptTextBtn promptTextToCopy={text} toastNotificationTarget="dashboardLayout" />
+		<CopyPromptTextBtn
+			promptTextToCopy={text}
+			toastNotificationTarget="dashboardLayout"
+			class="p-1 h-fit"
+		/>
 	</div>
 </ListItem>

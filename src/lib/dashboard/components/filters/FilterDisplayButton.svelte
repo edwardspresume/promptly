@@ -1,6 +1,7 @@
 <script>
-	import Button from '$globalComponents/ui/button/button.svelte';
 	import { createEventDispatcher } from 'svelte';
+    
+	import Button from '$globalComponents/ui/button/button.svelte';
 
 	const dispatch = createEventDispatcher();
 </script>

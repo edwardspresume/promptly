@@ -1,7 +1,9 @@
 <script>
 	import { page } from '$app/stores';
-	import { userProfileStore } from '$dashboardStores/userProfileStore';
+
 	import { RoutePaths } from '$globalTypes';
+    
+	import { userProfileStore } from '$dashboardStores/userProfileStore';
 
 	import Icon from '$globalComponents/Icon.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';

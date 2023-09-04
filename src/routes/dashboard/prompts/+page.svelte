@@ -1,14 +1,16 @@
 <script lang="ts">
+	import type { ConfirmationInfo } from '$dashboardTypes';
+	import type { PromptSchema } from '$databaseDir/schema';
+	import type { StatusType } from '$globalTypes';
 	import type { PageData } from './$types';
 
 	import { totalPromptCountStore } from '$dashboardStores/promptsStore';
-	import type { ConfirmationInfo } from '$dashboardTypes';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
-	import type { StatusType } from '$globalTypes';
 
 	import FilterDisplayButton from '$dashboardComponents/filters/FilterDisplayButton.svelte';
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
 	import PromptCreationForm from '$dashboardComponents/forms/PromptCreationForm.svelte';
+	import PromptEditForm from '$dashboardComponents/forms/PromptEditForm.svelte';
 	import ListControls from '$dashboardComponents/list/ListControls.svelte';
 	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
 	import PromptsFiltersModal from '$dashboardComponents/modals/PromptsFiltersModal.svelte';
@@ -26,7 +28,19 @@
 
 	let selectedTabIndex: number = 0;
 	let displayedPromptsCount: number;
+	let selectedPromptForEdit: PromptSchema;
 	let confirmationModalInfoForPromptDeletion: ConfirmationInfo;
+
+	/**
+	 * Handles selection of a prompt, preparing it for editing.
+	 * @param {CustomEvent} event - The event carrying details of the selected prompt.
+	 */
+	const handlePromptSelection = (event: CustomEvent) => {
+		if (!event.detail) throw new Error('No prompt selected');
+
+		selectedPromptForEdit = event.detail;
+		promptEditModalRef.showModal();
+	};
 
 	/**
 	 * Callback function to delete all prompts.
@@ -79,9 +93,14 @@
 </nav>
 
 {#if selectedTabIndex === 0}
-	<PromptList bind:promptListRef bind:displayedPromptsCount />
+	<PromptList bind:promptListRef bind:displayedPromptsCount on:editPrompt={handlePromptSelection} />
 {:else if selectedTabIndex === 1}
-	<PromptList bind:promptListRef bind:displayedPromptsCount isShowingOnlyFavorites={true} />
+	<PromptList
+		bind:promptListRef
+		bind:displayedPromptsCount
+		isShowingOnlyFavorites={true}
+		on:editPrompt={handlePromptSelection}
+	/>
 {/if}
 
 <ListControls
@@ -101,3 +120,5 @@
 />
 
 <PromptCreationForm bind:promptCreationModalRef />
+
+<PromptEditForm bind:promptEditModalRef {selectedPromptForEdit} />

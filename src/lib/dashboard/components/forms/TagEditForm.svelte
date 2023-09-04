@@ -3,8 +3,9 @@
 
 	import { page } from '$app/stores';
 
-	import { TagValidationSchema } from '$dashboardValidationSchemas/tagValidationSchema';
 	import type { TagSchema } from '$databaseDir/schema';
+
+	import { TagValidationSchema } from '$dashboardValidationSchemas/tagValidationSchema';
 
 	import { allTagsStore, doesTagExist } from '$dashboardStores/tagsStore';
 

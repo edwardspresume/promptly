@@ -1,24 +1,23 @@
 <script lang="ts">
+	import type { PromptSchema } from '$databaseDir/schema';
+
+	import { filteredPromptsStore, totalPromptCountStore } from '$dashboardStores/promptsStore';
+
 	import ListContainer from '$dashboardComponents/list/ListContainer.svelte';
 	import ListCounter from '$dashboardComponents/list/ListCounter.svelte';
 	import ListStateNotifier from '$dashboardComponents/list/ListStateNotifier.svelte';
-	import { filteredPromptsStore, totalPromptCountStore } from '$dashboardStores/promptsStore';
-	import type { PromptSchema } from '$databaseDir/schema';
 	import PromptItem from './PromptItem.svelte';
 
-    export let promptListRef: HTMLElement;
-    export let displayedPromptsCount: number;
+	export let promptListRef: HTMLElement;
+	export let displayedPromptsCount: number;
 	export let isShowingOnlyFavorites: boolean = false;
 
 	const NO_PROMPTS_AVAILABLE_MESSAGE = 'No prompts available. Please add one';
 	const NO_MATCH_MESSAGE = 'No prompts match your filter criteria';
 	const NO_FAVORITE_PROMPTS_MESSAGE = 'Your favorites list is currently empty';
 
-
-
 	let stateMessage: string;
 	let displayedPrompts: PromptSchema[];
-
 
 	$: {
 		displayedPrompts = isShowingOnlyFavorites
@@ -48,7 +47,7 @@
 
 	<ListContainer itemType="prompt" bind:itemsListRef={promptListRef}>
 		{#each displayedPrompts as prompt (prompt.id)}
-			<PromptItem {prompt} />
+			<PromptItem {prompt} on:editPrompt />
 		{/each}
 	</ListContainer>
 {/if}

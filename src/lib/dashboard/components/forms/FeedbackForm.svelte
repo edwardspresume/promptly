@@ -2,10 +2,10 @@
 	import { superForm } from 'sveltekit-superforms/client';
 
 	import { isFeedbackModalOpen } from '$dashboardStores/feedbackModalStore';
+	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
 	import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
 
 	import BaseModal from '$dashboardComponents/modals/BaseModal.svelte';
-	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
 	import TextArea from '$globalComponents/form/TextArea.svelte';
 
@@ -24,9 +24,7 @@
 				notifyError($message.text, {
 					target: 'baseModal'
 				});
-			}
-
-			if ($message.statusType === 'success') {
+			} else if ($message.statusType === 'success') {
 				notifySuccess($message.text, {
 					target: 'baseModal'
 				});
@@ -34,7 +32,7 @@
 		}
 	});
 
-	$: if ($isFeedbackModalOpen) feedbackModalRef?.showModal();
+	$: if ($isFeedbackModalOpen) feedbackModalRef.showModal();
 </script>
 
 <BaseModal

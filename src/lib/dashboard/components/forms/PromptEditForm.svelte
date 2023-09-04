@@ -25,6 +25,7 @@
 	import InputField from '$globalComponents/form/InputField.svelte';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
 	import TextArea from '$globalComponents/form/TextArea.svelte';
+	import Button from '$globalComponents/ui/button/button.svelte';
 
 	export let promptEditModalRef: HTMLDialogElement;
 	export let selectedPromptForEdit: PromptSchema | undefined = undefined;
@@ -142,7 +143,11 @@
 		validators: PromptsValidationSchema,
 
 		onUpdated: ({ form }) => {
-			if ($message.statusType === 'success') {
+			if ($message.statusType === 'error') {
+				notifyError($message.text, {
+					target: 'baseModal'
+				});
+			} else if ($message.statusType === 'success') {
 				const { id, title, text, isFavorited } = form.data;
 
 				if (!userSession) {
@@ -159,10 +164,6 @@
 					$allPromptsStore.find((prompt) => prompt.id === id) ?? selectedPromptForEdit;
 
 				notifySuccess($message.text, {
-					target: 'baseModal'
-				});
-			} else if ($message.statusType === 'error') {
-				notifyError($message.text, {
 					target: 'baseModal'
 				});
 			}
@@ -219,21 +220,24 @@
 		{#if isRefinedPromptVisible}
 			<fieldset transition:fade={{ delay: 250, duration: 300 }}>
 				<div class="flex justify-end gap-2 mb-2">
-					<button
+					<Button
 						type="button"
 						on:click={() => {
 							$form.text = refinedPrompt;
 							isRefinedPromptVisible = false;
 						}}
-						class="p-1 text-xs text-white transition-colors duration-200 bg-green-500 rounded hover:bg-green-600"
-						>Accept</button
+						class="p-1 text-xs bg-green-500 w-fit h-fit hover:bg-green-600"
 					>
-					<button
+						Accept
+					</Button>
+
+					<Button
 						type="button"
 						on:click={() => (isRefinedPromptVisible = false)}
-						class="p-1 text-xs text-white transition-colors duration-200 bg-red-500 rounded hover:bg-red-600"
-						>Discard</button
+						class="p-1 text-xs bg-red-500 rounded w-fit h-fit hover:bg-red-600"
 					>
+						Discard
+					</Button>
 				</div>
 
 				<TextArea
@@ -248,18 +252,18 @@
 		{/if}
 
 		<fieldset>
-			<button
+			<Button
 				type="button"
 				on:click={getRefinedPrompt}
 				disabled={isRefiningPrompt}
-				class="block p-1 mb-2 ml-auto text-xs text-white transition-colors duration-200 bg-blue-500 rounded hover:bg-blue-600"
+				class="block p-1 mb-2 ml-auto text-xs bg-blue-500 w-fit h-fit hover:bg-blue-600"
 			>
 				{#if isRefiningPrompt}
 					<span class="animate-pulse">Refining...</span>
 				{:else}
 					<span>Refine prompt</span>
 				{/if}
-			</button>
+			</Button>
 
 			<TextArea
 				rows="6"

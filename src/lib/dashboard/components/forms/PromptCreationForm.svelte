@@ -57,7 +57,7 @@
 				});
 
 				resetFormFields();
-			} else {
+			} else if ($message.statusType === 'error') {
 				notifyError($message.text, {
 					target: 'baseModal'
 				});

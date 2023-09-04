@@ -56,7 +56,9 @@
 		},
 
 		onUpdated: ({ form }) => {
-			if ($message.statusType === 'success') {
+			if ($message.statusType === 'error') {
+				notifyError($message.text, { target: 'baseModal' });
+			} else if ($message.statusType === 'success') {
 				const { id, name } = form.data;
 
 				// Update the tag name in the store
@@ -70,8 +72,6 @@
 				notifySuccess($message.text, {
 					target: 'baseModal'
 				});
-			} else if ($message.statusType === 'error') {
-				notifyError($message.text, { target: 'baseModal' });
 			}
 		}
 	});

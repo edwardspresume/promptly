@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import type { PromptSchema } from '$databaseDir/schema';
-	import type { StatusType } from '$globalTypes';
 	import type { PageData } from './$types';
 
 	import { totalPromptCountStore } from '$dashboardStores/promptsStore';
@@ -43,24 +42,31 @@
 	};
 
 	/**
-	 * Callback function to delete all prompts.
-	 * It either deletes all prompts from the database or from the local storage depending on the user's authentication status.
+	 * Deletes all prompts either from the database or from the local storage,
+	 * depending on whether the user is logged in.
 	 * @async
-	 * @returns {Promise<{statusType: StatusType}>} - The status of the operation.
+	 * @returns {ReturnType<ConfirmationInfo['callback']>} - The status and message of the delete operation.
 	 */
-	async function deleteAllPromptsCallBack(): Promise<{ statusType: StatusType }> {
+	async function deleteAllPromptsCallBack(): ReturnType<ConfirmationInfo['callback']> {
 		try {
 			if (session !== null) {
 				const { error } = await supabase.from('prompts').delete().eq('user_id', session.user.id);
+
 				if (error) throw new Error(`Supabase error: ${error.message}`);
 			} else {
 				promptLocalStorageManager.deleteAllItems();
 			}
 
-			return { statusType: 'success' };
+			return {
+				statusType: 'success',
+				statusMessage: 'All Prompts have been successfully deleted!'
+			};
 		} catch (e) {
 			console.error('Failed to delete all prompts');
-			return { statusType: 'error' };
+			return {
+				statusType: 'error',
+				statusMessage: 'Failed to delete all prompts. Please try again later'
+			};
 		}
 	}
 
@@ -72,7 +78,6 @@
 		confirmationModalInfoForPromptDeletion = {
 			heading: 'Delete All Prompts',
 			subheading: 'Are you sure you want to delete All your Prompts?',
-			toastMessage: 'All Prompts have been successfully deleted!',
 			callback: deleteAllPromptsCallBack
 		};
 

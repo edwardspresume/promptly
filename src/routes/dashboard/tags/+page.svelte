@@ -6,7 +6,6 @@
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import type { TagSchema } from '$databaseDir/schema';
-	import type { StatusType } from '$globalTypes';
 
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
 	import SortSelector from '$dashboardComponents/filters/SortSelector.svelte';
@@ -37,24 +36,28 @@
 	}
 
 	/**
-	 * Callback function to delete all tags.
-	 * It either deletes all tags from the database or from the local storage depending on the user's authentication status.
+	 * Deletes all tags either from the database or from the local storage,
+	 * depending on whether the user is logged in.
 	 * @async
-	 * @returns {Promise<{statusType: StatusType}>} - The status of the operation.
+	 * @returns {ReturnType<ConfirmationInfo['callback']>} - The status and message of the delete operation.
 	 */
-	async function deleteAllTagsCallBack(): Promise<{ statusType: StatusType }> {
+	async function deleteAllTagsCallBack(): ReturnType<ConfirmationInfo['callback']> {
 		try {
 			if (session !== null) {
 				const { error } = await supabase.from('tags').delete().eq('user_id', session.user.id);
+
 				if (error) throw new Error(`Supabase error: ${error.message}`);
 			} else {
 				tagLocalStorageManager.deleteAllItems();
 			}
 
-			return { statusType: 'success' };
+			return { statusType: 'success', statusMessage: 'All Tags have been successfully deleted!' };
 		} catch (e) {
 			console.error('Failed to delete all tags');
-			return { statusType: 'error' };
+			return {
+				statusType: 'error',
+				statusMessage: 'Failed to delete all tags. Please try again later'
+			};
 		}
 	}
 
@@ -66,7 +69,6 @@
 		confirmationModalInfoForTagDeletion = {
 			heading: 'Delete All Tags',
 			subheading: 'Are you sure you want to delete All your Tags?',
-			toastMessage: 'All Tags have been successfully deleted!',
 			callback: deleteAllTagsCallBack
 		};
 

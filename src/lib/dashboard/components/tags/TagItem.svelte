@@ -4,7 +4,6 @@
 
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import type { TagSchema } from '$databaseDir/schema';
-	import type { StatusType } from '$globalTypes';
 
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 
@@ -19,24 +18,25 @@
 	const dispatch = createEventDispatcher();
 
 	/**
-	 * Callback function to delete the tag.
-	 * It either deletes the tag from the database or from the local storage depending on the user's is logged in.
+	 * Deletes the tag either from the database or from the local storage,
+	 * depending on whether the user is logged in.
 	 * @async
-	 * @returns {Promise<{statusType: StatusType}>} - The status of the operation.
+	 * @returns {ReturnType<ConfirmationInfo['callback']>} - The status and message of the delete operation.
 	 */
-	async function deleteTagCallBack(): Promise<{ statusType: StatusType }> {
+	async function deleteTagCallBack(): ReturnType<ConfirmationInfo['callback']> {
 		try {
 			if ($page.data.session !== null) {
 				const { error } = await $page.data.supabase.from('tags').delete().eq('id', tagId);
+
 				if (error) throw new Error(`Supabase error: ${error.message}`);
 			} else {
 				tagLocalStorageManager.deleteItem(tagId);
 			}
 
-			return { statusType: 'success' };
+			return { statusType: 'success', statusMessage: 'Tag deleted successfully!' };
 		} catch (e) {
 			console.error('Failed to delete tag');
-			return { statusType: 'error' };
+			return { statusType: 'error', statusMessage: 'Failed to delete tag. Please try again later' };
 		}
 	}
 
@@ -47,7 +47,6 @@
 		const confirmationInfo: ConfirmationInfo = {
 			heading: `Delete Tag`,
 			subheading: `Are you sure you want to delete tag: <em style="color: red;">${tagName}</em> ?`,
-			toastMessage: 'Tag deleted successfully!',
 			callback: deleteTagCallBack
 		};
 

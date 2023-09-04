@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
+
 	import type { ConfirmationInfo } from '$dashboardTypes';
+
 	import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
 	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
+
 	import Button from '$globalComponents/ui/button/button.svelte';
 
 	export let confirmationModalRef: HTMLDialogElement;
@@ -10,18 +13,17 @@
 
 	let heading: ConfirmationInfo['heading'];
 	let subheading: ConfirmationInfo['subheading'];
-	let toastMessage: ConfirmationInfo['toastMessage'];
 	let callback: ConfirmationInfo['callback'];
 
 	/**
-	 * Updates heading, callback, and toastMessage when confirmationInfo changes
+	 * Updates heading, callback when confirmationInfo changes
 	 */
 	$: if (confirmationInfo) {
-		({ heading, subheading, toastMessage, callback } = confirmationInfo);
+		({ heading, subheading, callback } = confirmationInfo);
 	}
 
 	/**
-	 * Executes the callback, closes the modal dialog, and displays a success notification
+	 * Executes the callback function, closes the modal, and handles notifications.
 	 * @async
 	 */
 	async function executeCallbackAndCloseModal() {
@@ -32,16 +34,13 @@
 
 			// Handle error case
 			if (result.statusType === 'error') {
-				notifyError('Something went wrong. Please try again later.', { target: 'dashboardLayout' });
+				notifyError(result.statusMessage, { target: 'dashboardLayout' });
 				return;
 			}
 
 			await invalidateAll();
 
-			// Show success message if any
-			if (toastMessage) {
-				notifySuccess(toastMessage, { target: 'dashboardLayout' });
-			}
+			notifySuccess(result.statusMessage, { target: 'dashboardLayout' });
 		} catch (e) {
 			console.error('Failed to execute callback and close modal');
 			notifyError('An unexpected error occurred. Please try again.', { target: 'dashboardLayout' });

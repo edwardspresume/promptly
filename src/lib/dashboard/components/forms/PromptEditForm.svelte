@@ -7,7 +7,6 @@
 
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import type { PromptSchema } from '$databaseDir/schema';
-	import type { StatusType } from '$globalTypes';
 
 	import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
 
@@ -39,9 +38,9 @@
 	let previousPrompt: PromptSchema | undefined = undefined;
 	let isPromptModified = false;
 
-	let isRefinedPromptVisible: boolean = false;
 	let refinedPrompt: string = '';
 	let isRefiningPrompt: boolean = false;
+	let isRefinedPromptVisible: boolean = false;
 
 	/**
 	 * Function to check if two arrays are different
@@ -57,26 +56,30 @@
 	}
 
 	/**
-	 * Callback function to delete the prompt.
-	 * It either deletes the prompt from the database or from the local storage depending on the user's is logged in.
+	 * Deletes the prompt either from the database or from the local storage,
+	 * depending on whether the user is logged in.
 	 * @async
-	 * @returns {Promise<{statusType: StatusType}>} - The status of the operation.
+	 * @returns {ReturnType<ConfirmationInfo['callback']>} - The status and message of the delete operation.
 	 */
-	async function deletePromptCallBack(): Promise<{ statusType: StatusType }> {
+	async function deletePromptCallBack(): ReturnType<ConfirmationInfo['callback']> {
 		promptEditModalRef.close();
 
 		try {
-			if (userSession !== null) {
+			if (userSession) {
 				const { error } = await $page.data.supabase.from('prompts').delete().eq('id', $form.id);
+
 				if (error) throw new Error(`Supabase error: ${error.message}`);
 			} else {
 				promptLocalStorageManager.deleteItem($form.id);
 			}
 
-			return { statusType: 'success' };
+			return { statusType: 'success', statusMessage: 'Prompt deleted successfully!' };
 		} catch (e) {
 			console.error('Failed to delete prompt');
-			return { statusType: 'error' };
+			return {
+				statusType: 'error',
+				statusMessage: 'Failed to delete prompt. Please try again later'
+			};
 		}
 	}
 
@@ -89,7 +92,6 @@
 		promptDeleteConfirmationInfo = {
 			heading: `Delete Prompt`,
 			subheading: `Are you sure you want to delete prompt: <em style="color: red;">${selectedPromptForEdit?.title}</em> ?`,
-			toastMessage: 'Prompt deleted successfully!',
 			callback: deletePromptCallBack
 		};
 

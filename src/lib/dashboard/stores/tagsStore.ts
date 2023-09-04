@@ -22,10 +22,7 @@ export const allTagsStore = writable<TagSchema[]>([]);
 /**
  * Derived store to calculate the total count of tags.
  */
-export const totalTagsCountStore = derived(
-    allTagsStore,
-    ($allTagsStore) => $allTagsStore.length
-);
+export const totalTagsCountStore = derived(allTagsStore, ($allTagsStore) => $allTagsStore.length);
 
 /**
  * Derived store to manage filtered and sorted tags based on user preferences.
@@ -36,18 +33,18 @@ export const totalTagsCountStore = derived(
  * @returns {Array<TagSchema>} Filtered and sorted tags.
  */
 export const filteredTagsStore = derived(
-    [allTagsStore, tagTextFilter, tagSortingPreference],
-    ([tags, textFilter, sortOption]) => {
-        const normalizedFilterText = textFilter.toLowerCase();
+	[allTagsStore, tagTextFilter, tagSortingPreference],
+	([tags, textFilter, sortOption]) => {
+		const normalizedFilterText = textFilter.toLowerCase();
 
-        // Apply the text filter to the tags
-        const filteredTags = tags.filter((tag) =>
-            tag.name.toLowerCase().includes(normalizedFilterText)
-        );
+		// Apply the text filter to the tags
+		const filteredTags = tags.filter((tag) =>
+			tag.name.toLowerCase().includes(normalizedFilterText)
+		);
 
-        // Apply the sorting option to the filtered tags
-        return sortItems(filteredTags, sortOption);
-    }
+		// Apply the sorting option to the filtered tags
+		return sortItems(filteredTags, sortOption);
+	}
 );
 
 /**
@@ -56,9 +53,9 @@ export const filteredTagsStore = derived(
  * @returns {boolean} true if tag exists, false otherwise
  */
 export const doesTagExist = (tagName: string) => {
-    const normalizedName = tagName.trim().toLowerCase();
+	const normalizedName = tagName.trim().toLowerCase();
 
-    const currentTags = get(allTagsStore);
+	const currentTags = get(allTagsStore);
 
-    return currentTags.some((tag) => tag.name.toLowerCase() === normalizedName);
+	return currentTags.some((tag) => tag.name.toLowerCase() === normalizedName);
 };

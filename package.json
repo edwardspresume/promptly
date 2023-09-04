@@ -21,7 +21,7 @@
 	"devDependencies": {
 		"@playwright/test": "^1.37.1",
 		"@sveltejs/adapter-auto": "^2.1.0",
-		"@sveltejs/kit": "^1.24.0",
+		"@sveltejs/kit": "^1.24.1",
 		"@total-typescript/ts-reset": "^0.5.1",
 		"@types/jsdom": "^21.1.2",
 		"@types/nodemailer": "^6.4.9",

@@ -6,17 +6,14 @@ import type { SortableItemProperties } from '$dashboardTypes';
  * @param {string | undefined} b - The second string to compare.
  * @returns {number} - A negative, zero, or positive number based on the comparison.
  */
-export function compareStrings(
-    a: string | undefined,
-    b: string | undefined
-): number {
-    if (typeof a === 'undefined' || typeof b === 'undefined') {
-        if (a === b) return 0;
-        else if (typeof a === 'undefined') return -1;
-        else return 1;
-    }
+export function compareStrings(a: string | undefined, b: string | undefined): number {
+	if (typeof a === 'undefined' || typeof b === 'undefined') {
+		if (a === b) return 0;
+		else if (typeof a === 'undefined') return -1;
+		else return 1;
+	}
 
-    return a.localeCompare(b);
+	return a.localeCompare(b);
 }
 
 /**
@@ -26,13 +23,13 @@ export function compareStrings(
  * @returns {number} - A negative, zero, or positive number based on the comparison.
  */
 export function compareDate(a: string | undefined, b: string | undefined) {
-    if (typeof a === 'undefined' || typeof b === 'undefined') {
-        if (a === b) return 0;
-        else if (typeof a === 'undefined') return -1;
-        else return 1;
-    }
+	if (typeof a === 'undefined' || typeof b === 'undefined') {
+		if (a === b) return 0;
+		else if (typeof a === 'undefined') return -1;
+		else return 1;
+	}
 
-    return Date.parse(a) - Date.parse(b);
+	return Date.parse(a) - Date.parse(b);
 }
 
 /**
@@ -41,17 +38,14 @@ export function compareDate(a: string | undefined, b: string | undefined) {
  * @param {boolean | undefined} b - The second boolean value to compare.
  * @returns {number} - A negative, zero, or positive number based on the comparison.
  */
-export const booleanComparator = (
-    a: boolean | undefined,
-    b: boolean | undefined
-): number => {
-    if (typeof a === 'undefined' || typeof b === 'undefined') {
-        if (a === b) return 0;
-        else if (typeof a === 'undefined') return 1;
-        else return -1;
-    }
+export const booleanComparator = (a: boolean | undefined, b: boolean | undefined): number => {
+	if (typeof a === 'undefined' || typeof b === 'undefined') {
+		if (a === b) return 0;
+		else if (typeof a === 'undefined') return 1;
+		else return -1;
+	}
 
-    return (b ? 1 : 0) - (a ? 1 : 0);
+	return (b ? 1 : 0) - (a ? 1 : 0);
 };
 
 /**
@@ -62,37 +56,34 @@ export const booleanComparator = (
  * @returns {T[]} - The sorted array of items.
  */
 export const sortItems = <T extends SortableItemProperties>(
-    items: T[],
-    selectedSortOption: string
+	items: T[],
+	selectedSortOption: string
 ): T[] => {
-    const sortFunctions: Record<string, (a: T, b: T) => number> = {
-        '': () => 0,
-        'default:default': () => 0,
+	const sortFunctions: Record<string, (a: T, b: T) => number> = {
+		'': () => 0,
+		'default:default': () => 0,
 
-        'title:ascending': (a, b) => compareStrings(a.title, b.title),
-        'title:descending': (a, b) => compareStrings(b.title, a.title),
+		'title:ascending': (a, b) => compareStrings(a.title, b.title),
+		'title:descending': (a, b) => compareStrings(b.title, a.title),
 
-        'name:ascending': (a, b) => compareStrings(a.name, b.name),
-        'name:descending': (a, b) => compareStrings(b.name, a.name),
+		'name:ascending': (a, b) => compareStrings(a.name, b.name),
+		'name:descending': (a, b) => compareStrings(b.name, a.name),
 
-        'createdAt:ascending': (a, b) => compareDate(a.createdAt, b.createdAt),
-        'createdAt:descending': (a, b) => compareDate(b.createdAt, a.createdAt),
+		'createdAt:ascending': (a, b) => compareDate(a.createdAt, b.createdAt),
+		'createdAt:descending': (a, b) => compareDate(b.createdAt, a.createdAt),
 
-        'updatedAt:ascending': (a, b) => compareDate(a.updatedAt, b.updatedAt),
-        'updatedAt:descending': (a, b) => compareDate(b.updatedAt, a.updatedAt),
+		'updatedAt:ascending': (a, b) => compareDate(a.updatedAt, b.updatedAt),
+		'updatedAt:descending': (a, b) => compareDate(b.updatedAt, a.updatedAt),
 
-        'favoriteStatus:ascending': (a, b) =>
-            booleanComparator(a.isFavorited, b.isFavorited),
-    };
+		'favoriteStatus:ascending': (a, b) => booleanComparator(a.isFavorited, b.isFavorited)
+	};
 
-    const sortFunction = sortFunctions[selectedSortOption];
+	const sortFunction = sortFunctions[selectedSortOption];
 
-    if (!sortFunction) {
-        console.warn(
-            `Invalid sort option: ${selectedSortOption}. Items are not sorted.`
-        );
-        return items;
-    }
+	if (!sortFunction) {
+		console.warn(`Invalid sort option: ${selectedSortOption}. Items are not sorted.`);
+		return items;
+	}
 
-    return [...items].sort(sortFunction);
+	return [...items].sort(sortFunction);
 };

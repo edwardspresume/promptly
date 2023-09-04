@@ -5,16 +5,19 @@ const presetEnv = require('postcss-preset-env');
 
 const config = {
 	plugins: [
+		//Some plugins, like tailwindcss/nesting, need to run before Tailwind,
+
 		tailwindNesting,
 
-		//Some plugins, like tailwindcss/nesting, need to run before Tailwind,
 		tailwindcss(),
+
+		//But others, like autoprefixer, need to run after,
 
 		presetEnv({
 			stage: 1,
 			features: { 'nesting-rules': false }
 		}),
-		//But others, like autoprefixer, need to run after,
+
 		autoprefixer
 	]
 };

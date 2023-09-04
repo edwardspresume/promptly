@@ -40,7 +40,11 @@
 		validators: PromptsValidationSchema,
 
 		onUpdated: ({ form }) => {
-			if ($message.statusType === 'success') {
+			if ($message.statusType === 'error') {
+				notifyError($message.text, {
+					target: 'baseModal'
+				});
+			} else if ($message.statusType === 'success') {
 				if (!$page.data.session?.user) {
 					const { title, text, isFavorited } = form.data;
 
@@ -57,10 +61,6 @@
 				});
 
 				resetFormFields();
-			} else if ($message.statusType === 'error') {
-				notifyError($message.text, {
-					target: 'baseModal'
-				});
 			}
 		}
 	});

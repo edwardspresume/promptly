@@ -57,7 +57,7 @@
 	/**
 	 * Function to handle the full process of exporting prompts and tags data.
 	 */
-	export function exportPromptsAndTagsData() {
+	export function exportData() {
 		try {
 			const url = prepareDataForExport();
 			downloadData(url);
@@ -70,7 +70,7 @@
 <Button
 	type="button"
 	variant="ghost"
-	on:click={exportPromptsAndTagsData}
+	on:click={exportData}
 	title="Export prompts and tags data"
 	aria-label="Export prompts and tags data"
 >

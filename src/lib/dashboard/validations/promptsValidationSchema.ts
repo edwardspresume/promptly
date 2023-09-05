@@ -1,8 +1,13 @@
-import { promptsTable } from '$databaseDir/schema';
 import { createInsertSchema } from 'drizzle-zod';
 
+import { promptsTable } from '$databaseDir/schema';
+
+import { createNonEmptyTextSchema } from './utils';
+
 // Define Max and Min Lengths for Prompt Title and Text
+export const MIN_PROMPT_TITLE_LENGTH = 1;
 export const MAX_PROMPT_TITLE_LENGTH = 200;
+
 export const MIN_PROMPT_TEXT_LENGTH = 3;
 export const MAX_PROMPT_TEXT_LENGTH = 4500;
 
@@ -10,17 +15,13 @@ export const PromptsValidationSchema = createInsertSchema(promptsTable, {
 	userId: (schema) => schema.userId.optional(),
 
 	title: (schema) =>
-		schema.title
-			.nonempty('Title is required')
-			.max(MAX_PROMPT_TITLE_LENGTH, `Title should not exceed ${MAX_PROMPT_TITLE_LENGTH} characters`)
-			.transform((str) => str.trim()),
+		createNonEmptyTextSchema(
+			schema.title,
+			'Title',
+			MIN_PROMPT_TITLE_LENGTH,
+			MAX_PROMPT_TITLE_LENGTH
+		),
 
 	text: (schema) =>
-		schema.text
-			.min(
-				MIN_PROMPT_TEXT_LENGTH,
-				` Text should have at least ${MIN_PROMPT_TEXT_LENGTH} characters`
-			)
-			.max(MAX_PROMPT_TEXT_LENGTH, `Text should not exceed ${MAX_PROMPT_TEXT_LENGTH} characters`)
-			.transform((str) => str.trim())
+		createNonEmptyTextSchema(schema.text, 'Text', MIN_PROMPT_TEXT_LENGTH, MAX_PROMPT_TEXT_LENGTH)
 });

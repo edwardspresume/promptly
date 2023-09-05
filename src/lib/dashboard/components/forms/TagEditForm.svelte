@@ -94,7 +94,7 @@
 		<SubmitButton
 			showSpinner={$delayed}
 			disabled={!isTagModified || $delayed}
-			title={$delayed ? 'Updating...' : 'Update Tag'}
+			title={$delayed ? 'Saving...' : 'Save'}
 		/>
 	</form>
 </BaseModal>

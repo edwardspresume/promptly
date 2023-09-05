@@ -306,7 +306,7 @@
 			/>
 
 			<SubmitButton
-				title={$delayed ? 'Updating...' : 'Update Prompt'}
+				title={$delayed ? 'Saving...' : 'Save'}
 				showSpinner={$delayed}
 				disabled={!isPromptModified || $delayed}
 			/>

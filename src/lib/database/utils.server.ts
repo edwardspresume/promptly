@@ -29,12 +29,12 @@ export async function checkEmailExists(email: string) {
 }
 
 /**
- * Fetch the user profile based on the userId.
- * @param {string} userId - The ID of the user.
+ * Fetch the user profile based on the profileId.
+ * @param {string} profileId - The ID of the profile.
  * @returns Returns the user profile or null if not found.
  * @throws Will throw an error if the query fails.
  */
-export async function getUserProfile(userId: string) {
+export async function getUserProfile(profileId: string) {
 	try {
 		const userProfile = await drizzleClient
 			.select({
@@ -44,7 +44,7 @@ export async function getUserProfile(userId: string) {
 				avatarUrl: profilesTable.avatarUrl
 			})
 			.from(profilesTable)
-			.where(eq(profilesTable.id, userId));
+			.where(eq(profilesTable.id, profileId));
 
 		return userProfile[0] ?? null;
 	} catch (error) {
@@ -54,17 +54,17 @@ export async function getUserProfile(userId: string) {
 }
 
 /**
- * Fetch the user prompts based on the userId.
- * @param {string} userId - The ID of the user.
+ * Fetch the user prompts based on the profileId.
+ * @param {string} profileId - The ID of the profile.
  * @returns Returns the user prompts or null if not found.
  * @throws Will throw an error if the query fails.
  */
-export async function getUserPrompts(userId: string) {
+export async function getUserPrompts(profileId: string) {
 	try {
 		const userPrompts = await drizzleClient
 			.select()
 			.from(promptsTable)
-			.where(eq(promptsTable.userId, userId))
+			.where(eq(promptsTable.profileId, profileId))
 			.orderBy(desc(promptsTable.createdAt));
 
 		return userPrompts ?? null;
@@ -75,17 +75,17 @@ export async function getUserPrompts(userId: string) {
 }
 
 /**
- * Fetch the user tags based on the userId.
- * @param {string} userId - The ID of the user.
+ * Fetch the user tags based on the profileId.
+ * @param {string} profileId - The ID of the profile.
  * @returns Returns the user tags or null if not found.
  * @throws Will throw an error if the query fails.
  */
-export async function getUserTags(userId: string) {
+export async function getUserTags(profileId: string) {
 	try {
 		const userTags = await drizzleClient
 			.select()
 			.from(tagsTable)
-			.where(eq(tagsTable.userId, userId))
+			.where(eq(tagsTable.profileId, profileId))
 			.orderBy(desc(tagsTable.createdAt));
 
 		return userTags ?? null;

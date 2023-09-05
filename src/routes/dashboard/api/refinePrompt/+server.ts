@@ -7,11 +7,11 @@ import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsVali
 
 /**
  * Function to improve the prompt using OpenAI API
- * @param {string} promptText - the original prompt text
- * @returns {Promise<string>} - the refined prompt text
+ * @param {string} promptDescription - the original prompt description
+ * @returns {Promise<string>} - the refined prompt description
  * @throws Will throw an error if the API call fails or environment variable is missing
  */
-async function fetchRefinedPrompt(promptText: string) {
+async function fetchRefinedPrompt(promptDescription: string) {
 	const OPENAI_API_KEY = SECRET_OPENAI_API_KEY;
 
 	if (!OPENAI_API_KEY) {
@@ -20,12 +20,12 @@ async function fetchRefinedPrompt(promptText: string) {
 
 	// const systemPrompt =
 	//     'Please output only the rephrased prompt without any prefixes or additional text.';
-	// const content = `Please enhance the clarity and effectiveness of the following prompt: ${promptText}`;
+	// const content = `Please enhance the clarity and effectiveness of the following prompt: ${promptDescription}`;
 
 	const systemPrompt =
 		'Please output only the rephrased prompt without any prefixes or additional text.';
 
-	const content = `Please rephrase the following prompt to make it more clear, effective, and detailed, while preserving its original meaning and intent: ${promptText}`;
+	const content = `Please rephrase the following prompt to make it more clear, effective, and detailed, while preserving its original meaning and intent: ${promptDescription}`;
 
 	const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
 
@@ -79,13 +79,13 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 	}
 
-	const promptText = await request.text();
+	const promptDescription = await request.text();
 
-	const promptTextSchema = PromptsValidationSchema.pick({ text: true });
-	const parseResult = promptTextSchema.safeParse({ text: promptText });
+	const promptDescriptionSchema = PromptsValidationSchema.pick({ description: true });
+	const parseResult = promptDescriptionSchema.safeParse({ description: promptDescription });
 
 	if (!parseResult.success) {
-		const errorMessage = parseResult.error.flatten().fieldErrors.text?.join(', ');
+		const errorMessage = parseResult.error.flatten().fieldErrors.description?.join(', ');
 
 		return new Response(errorMessage, {
 			status: 400
@@ -93,9 +93,9 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 
 	try {
-		const sanitizedPromptText = sanitizeHtml(promptText);
+		const sanitizedPromptDescription = sanitizeHtml(promptDescription);
 
-		const refinedPrompt = await fetchRefinedPrompt(sanitizedPromptText);
+		const refinedPrompt = await fetchRefinedPrompt(sanitizedPromptDescription);
 
 		return new Response(refinedPrompt, {
 			status: 200,

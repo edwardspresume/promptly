@@ -9,26 +9,27 @@ import {
 	varchar
 } from 'drizzle-orm/pg-core';
 
-export const keyStatus = pgEnum('key_status', ['default', 'valid', 'invalid', 'expired']);
+export const requestStatus = pgEnum('request_status', ['ERROR', 'SUCCESS', 'PENDING']);
+export const keyStatus = pgEnum('key_status', ['expired', 'invalid', 'valid', 'default']);
 export const keyType = pgEnum('key_type', [
-	'aead-ietf',
-	'aead-det',
-	'hmacsha512',
-	'hmacsha256',
-	'auth',
-	'shorthash',
-	'generichash',
-	'kdf',
-	'secretbox',
+	'stream_xchacha20',
 	'secretstream',
-	'stream_xchacha20'
+	'secretbox',
+	'kdf',
+	'generichash',
+	'shorthash',
+	'auth',
+	'hmacsha256',
+	'hmacsha512',
+	'aead-det',
+	'aead-ietf'
 ]);
-export const factorType = pgEnum('factor_type', ['totp', 'webauthn']);
-export const factorStatus = pgEnum('factor_status', ['unverified', 'verified']);
-export const aalLevel = pgEnum('aal_level', ['aal1', 'aal2', 'aal3']);
-export const codeChallengeMethod = pgEnum('code_challenge_method', ['s256', 'plain']);
-export const promptVisibility = pgEnum('prompt_visibility', ['private', 'public']);
-export const subscriptionPlan = pgEnum('subscription_plan', ['free', 'pro', 'enterprise']);
+export const subscriptionPlan = pgEnum('subscription_plan', ['enterprise', 'pro', 'free']);
+export const promptVisibility = pgEnum('prompt_visibility', ['public', 'private']);
+export const factorType = pgEnum('factor_type', ['webauthn', 'totp']);
+export const factorStatus = pgEnum('factor_status', ['verified', 'unverified']);
+export const aalLevel = pgEnum('aal_level', ['aal3', 'aal2', 'aal1']);
+export const codeChallengeMethod = pgEnum('code_challenge_method', ['plain', 's256']);
 
 export const profilesTable = pgTable(
 	'profiles',
@@ -60,11 +61,11 @@ export const profilesTable = pgTable(
 
 export const promptsTable = pgTable('prompts', {
 	id: uuid('id').defaultRandom().primaryKey().notNull(),
-	userId: uuid('user_id')
+	profileId: uuid('profile_id')
 		.notNull()
 		.references(() => profilesTable.id, { onDelete: 'cascade' }),
 	title: text('title').notNull(),
-	text: text('text').notNull(),
+	description: text('description').notNull(),
 	isFavorited: boolean('is_favorited').default(false).notNull(),
 	tagIds: uuid('tag_ids').array().notNull(),
 	visibility: promptVisibility('visibility').default('private').notNull(),
@@ -76,7 +77,7 @@ export const tagsTable = pgTable(
 	'tags',
 	{
 		id: uuid('id').defaultRandom().primaryKey().notNull(),
-		userId: uuid('user_id')
+		profileId: uuid('profile_id')
 			.notNull()
 			.references(() => profilesTable.id, { onDelete: 'cascade' }),
 		name: text('name').notNull(),
@@ -89,7 +90,7 @@ export const tagsTable = pgTable(
 	},
 	(table) => {
 		return {
-			uniqueUserTagName: unique('unique_user_tag_name').on(table.userId, table.name)
+			uniqueUserTagName: unique('unique_user_tag_name').on(table.profileId, table.name)
 		};
 	}
 );

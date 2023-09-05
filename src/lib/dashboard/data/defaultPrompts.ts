@@ -3,18 +3,18 @@ import type { PromptSchema } from '$databaseDir/schema';
 /**
  * Creates a new prompt with the provided title and text. The function returns a prompt object
  * @param title - The title of the prompt
- * @param text - The text of the prompt
+ * @param description - The description of the prompt
  * @param tagIds - An array of tag IDs associated with the prompt
  * @returns {PromptSchema} The newly created prompt
  */
-function createPrompt(title: string, text: string): PromptSchema {
+function createPrompt(title: string, description: string): PromptSchema {
 	const currentDate = new Date().toISOString();
 
 	return {
 		id: crypto.randomUUID(),
-		userId: '0000000',
+		profileId: '0000000',
 		title,
-		text,
+		description,
 		isFavorited: false,
 		tagIds: [],
 		visibility: 'private',

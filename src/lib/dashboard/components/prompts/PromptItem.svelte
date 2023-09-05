@@ -10,17 +10,17 @@
 
 	import ListItem from '$dashboardComponents/list/ListItem.svelte';
 	import Icon from '$globalComponents/Icon.svelte';
-	import CopyPromptTextBtn from './CopyPromptTextBtn.svelte';
+	import CopyPromptDescriptionBtn from './CopyPromptDescriptionBtn.svelte';
 	import FavoriteToggleBtn from './FavoriteToggleBtn.svelte';
 
 	export let prompt: PromptSchema;
 
 	const dispatch = createEventDispatcher();
 
-	let { id: promptId, title, text, isFavorited } = prompt;
+	let { id: promptId, title, description, isFavorited } = prompt;
 
 	$: {
-		({ id: promptId, title, text, isFavorited } = prompt);
+		({ id: promptId, title, description, isFavorited } = prompt);
 	}
 
 	/**
@@ -76,8 +76,8 @@
 			class="p-1 h-fit"
 		/>
 
-		<CopyPromptTextBtn
-			promptTextToCopy={text}
+		<CopyPromptDescriptionBtn
+			promptDescriptionToCopy={description}
 			toastNotificationTarget="dashboardLayout"
 			class="p-1 h-fit"
 		/>

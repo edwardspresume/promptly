@@ -8,11 +8,11 @@ import { createNonEmptyTextSchema } from './utils';
 export const MIN_PROMPT_TITLE_LENGTH = 1;
 export const MAX_PROMPT_TITLE_LENGTH = 200;
 
-export const MIN_PROMPT_TEXT_LENGTH = 3;
-export const MAX_PROMPT_TEXT_LENGTH = 4500;
+export const MIN_PROMPT_DESCRIPTION_LENGTH = 3;
+export const MAX_PROMPT_DESCRIPTION_LENGTH = 4500;
 
 export const PromptsValidationSchema = createInsertSchema(promptsTable, {
-	userId: (schema) => schema.userId.optional(),
+	profileId: (schema) => schema.profileId.optional(),
 
 	title: (schema) =>
 		createNonEmptyTextSchema(
@@ -22,6 +22,11 @@ export const PromptsValidationSchema = createInsertSchema(promptsTable, {
 			MAX_PROMPT_TITLE_LENGTH
 		),
 
-	text: (schema) =>
-		createNonEmptyTextSchema(schema.text, 'Text', MIN_PROMPT_TEXT_LENGTH, MAX_PROMPT_TEXT_LENGTH)
+	description: (schema) =>
+		createNonEmptyTextSchema(
+			schema.description,
+			'Description',
+			MIN_PROMPT_DESCRIPTION_LENGTH,
+			MAX_PROMPT_DESCRIPTION_LENGTH
+		)
 });

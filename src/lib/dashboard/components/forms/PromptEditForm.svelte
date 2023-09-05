@@ -20,7 +20,7 @@
 	import DeleteItemBtn from '$dashboardComponents/list/DeleteItemBtn.svelte';
 	import BaseModal from '$dashboardComponents/modals/BaseModal.svelte';
 	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
-	import CopyPromptTextBtn from '$dashboardComponents/prompts/CopyPromptTextBtn.svelte';
+	import CopyPromptDescriptionBtn from '$dashboardComponents/prompts/CopyPromptDescriptionBtn.svelte';
 	import FavoriteToggleBtn from '$dashboardComponents/prompts/FavoriteToggleBtn.svelte';
 	import InputField from '$globalComponents/form/InputField.svelte';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
@@ -67,7 +67,10 @@
 
 		try {
 			if (userSession) {
-				const { error } = await $page.data.supabase.from('prompts').delete().eq('id', $form.id);
+				const { error } = await $page.data.supabase
+					.from('prompts')
+					.delete()
+					.eq('id', $form.id);
 
 				if (error) throw new Error(`Supabase error: ${error.message}`);
 			} else {
@@ -105,7 +108,7 @@
 	 * @throws Will throw an error if the network request fails
 	 */
 	async function getRefinedPrompt() {
-		const promptText = $form.text;
+		const promptDescription = $form.description;
 
 		try {
 			isRefiningPrompt = true;
@@ -113,7 +116,7 @@
 			const response = await fetch('/dashboard/api/refinePrompt', {
 				method: 'POST',
 				headers: { 'Content-Type': 'text/plain' },
-				body: promptText
+				body: promptDescription
 			});
 
 			if (!response.ok) {
@@ -148,12 +151,12 @@
 					target: 'baseModal'
 				});
 			} else if ($message.statusType === 'success') {
-				const { id, title, text, isFavorited } = form.data;
+				const { id, title, description, isFavorited } = form.data;
 
 				if (!userSession) {
 					promptLocalStorageManager.updateItem(id, {
 						title,
-						text,
+						description,
 						isFavorited,
 						tagIds: $selectedTagIds
 					});
@@ -174,11 +177,11 @@
 
 	// Watch if selectedPromptForEdit is changed, and populate the form if it has
 	$: if (selectedPromptForEdit && selectedPromptForEdit !== previousPrompt) {
-		const { id, title, text, isFavorited, tagIds } = selectedPromptForEdit;
+		const { id, title, description, isFavorited, tagIds } = selectedPromptForEdit;
 
 		$form.id = id;
 		$form.title = title;
-		$form.text = text;
+		$form.description = description;
 		$form.isFavorited = isFavorited;
 		selectedTagIds.set(tagIds ?? []);
 
@@ -193,7 +196,7 @@
 	$: if (selectedPromptForEdit) {
 		isPromptModified =
 			$form.title.trim() !== selectedPromptForEdit.title ||
-			$form.text.trim() !== selectedPromptForEdit.text ||
+			$form.description.trim() !== selectedPromptForEdit.description ||
 			$form.isFavorited !== selectedPromptForEdit.isFavorited ||
 			areArraysDifferent($selectedTagIds, selectedPromptForEdit.tagIds);
 	}
@@ -223,7 +226,7 @@
 					<Button
 						type="button"
 						on:click={() => {
-							$form.text = refinedPrompt;
+							$form.description = refinedPrompt;
 							isRefinedPromptVisible = false;
 						}}
 						class="p-1 text-xs bg-green-500 w-fit h-fit hover:bg-green-600"
@@ -267,11 +270,11 @@
 
 			<TextArea
 				rows="6"
-				name="text"
+				name="description"
 				label="Update prompt text"
 				placeholder="Update prompt text"
-				bind:value={$form.text}
-				errorMessage={$errors.text}
+				bind:value={$form.description}
+				errorMessage={$errors.description}
 				labelIsScreenReaderOnly={true}
 			/>
 		</fieldset>
@@ -289,10 +292,10 @@
 				class="h-full p-2"
 			/>
 
-			<CopyPromptTextBtn
+			<CopyPromptDescriptionBtn
 				iconSize={26}
 				buttonVariant="outline"
-				promptTextToCopy={$form.text}
+				promptDescriptionToCopy={$form.description}
 				toastNotificationTarget="baseModal"
 				class="h-full p-2"
 			/>

@@ -10,8 +10,8 @@
 
 	let className: HTMLButtonAttributes['class'] = undefined;
 	export { className as class };
-	export let promptTextToCopy: string;
 	export let iconSize: number = 22;
+	export let promptDescriptionToCopy: string;
 	export let toastNotificationTarget: string;
 	export let buttonVariant: Variant = 'ghost';
 
@@ -24,11 +24,11 @@
 		event.stopPropagation();
 
 		try {
-			if (!promptTextToCopy) {
+			if (!promptDescriptionToCopy) {
 				throw new Error('No prompt text provided');
 			}
 
-			await navigator.clipboard.writeText(promptTextToCopy);
+			await navigator.clipboard.writeText(promptDescriptionToCopy);
 
 			notifySuccess('Prompt text copied!', {
 				target: toastNotificationTarget

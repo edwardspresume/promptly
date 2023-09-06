@@ -9,7 +9,10 @@
 
 	export let data;
 
+	// Initialize the data
 	let { supabase, session } = data;
+
+	// Update the data if it changes
 	$: ({ supabase, session } = data);
 
 	onNavigate((navigation) => {

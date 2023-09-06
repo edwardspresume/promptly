@@ -16,6 +16,7 @@
 	import TagList from '$dashboardComponents/tags/TagList.svelte';
 
 	export let data: PageData;
+	let { session, supabase } = data;
 	$: ({ session, supabase } = data);
 
 	let tagListRef: HTMLElement;

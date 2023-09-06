@@ -17,6 +17,8 @@
 	import TabGroup from '$dashboardComponents/prompts/TabGroup.svelte';
 
 	export let data: PageData;
+
+    let { session, supabase } = data;
 	$: ({ session, supabase } = data);
 
 	let promptListRef: HTMLElement;
@@ -83,6 +85,9 @@
 
 		confirmationModalRef.showModal();
 	}
+
+    console.log(session);
+
 </script>
 
 <svelte:head>

@@ -10,14 +10,15 @@
 </script>
 
 <Popover.Root>
-	<Popover.Trigger
-		type="button"
-		class="w-10 h-10 rounded-full bg-gradient-to-b from-blue-500 to-purple-500"
-	>
+	<Popover.Trigger type="button" class="w-10 h-10 rounded-full">
 		{#if userAvatarUrl}
-			<img src={userAvatarUrl} alt="Profile avatar" class="w-full h-full rounded-full" />
+			<img src={userAvatarUrl} alt="Profile avatar" class="rounded-full" />
 		{:else}
-			{fullNameInitial || emailInitial}
+			<span
+				class="grid h-full text-xl rounded-full place-items-center bg-gradient-to-b from-blue-500 to-purple-500"
+			>
+				{fullNameInitial || emailInitial}
+			</span>
 		{/if}
 	</Popover.Trigger>
 

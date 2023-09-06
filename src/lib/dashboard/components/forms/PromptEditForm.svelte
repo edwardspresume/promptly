@@ -43,8 +43,8 @@
 	let previousPrompt: PromptSchema | undefined = undefined;
 	let isPromptModified = false;
 
+	let formAction: string = '';
 	let refinedPrompt: string = '';
-	let isRefiningPrompt: boolean = false;
 	let isRefinedPromptVisible: boolean = false;
 
 	/**
@@ -103,48 +103,12 @@
 		confirmationModalRef.showModal();
 	}
 
-	/**
-	 * Function to refine the input prompt using the refinePrompt API
-	 * @returns {Promise<string>} The refined prompt text
-	 * @throws Will throw an error if the network request fails
-	 */
-	async function getRefinedPrompt() {
-		const promptDescription = $form.description;
-
-		try {
-			isRefiningPrompt = true;
-
-			const response = await fetch('/dashboard/api/refinePrompt', {
-				method: 'POST',
-				headers: { 'Content-Type': 'text/plain' },
-				body: promptDescription
-			});
-
-			if (!response.ok) {
-				const error = await response.text();
-				throw new Error(error);
-			}
-
-			refinedPrompt = await response.text();
-
-			isRefinedPromptVisible = true;
-
-			return refinedPrompt;
-		} catch (error) {
-			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-
-			notifyError(errorMessage, {
-				target: 'baseModal'
-			});
-		} finally {
-			isRefiningPrompt = false;
-		}
-	}
-
 	const { enhance, form, errors, delayed, message } = superForm($page.data.promptForm, {
 		id: 'updatePrompt',
 		taintedMessage: null,
 		validators: PromptsValidationSchema,
+
+		onSubmit: ({ action }) => (formAction = action.search),
 
 		onUpdated: ({ form }) => {
 			if ($message.statusType === 'error') {
@@ -152,24 +116,29 @@
 					target: 'baseModal'
 				});
 			} else if ($message.statusType === 'success') {
-				const { id, title, description, isFavorited } = form.data;
+				if (formAction === '?/refinePrompt') {
+					refinedPrompt = $message.refinedPrompt;
+					isRefinedPromptVisible = true;
+				} else {
+					const { id, title, description, isFavorited } = form.data;
 
-				if (!userSession) {
-					promptLocalStorageManager.updateItem(id, {
-						title,
-						description,
-						isFavorited,
-						tagIds: $selectedTagIds
+					if (!userSession) {
+						promptLocalStorageManager.updateItem(id, {
+							title,
+							description,
+							isFavorited,
+							tagIds: $selectedTagIds
+						});
+					}
+
+					// Update 'selectedPromptForEdit' with the new prompt data after updating the prompt
+					selectedPromptForEdit =
+						$allPromptsStore.find((prompt) => prompt.id === id) ?? selectedPromptForEdit;
+
+					notifySuccess($message.text, {
+						target: 'baseModal'
 					});
 				}
-
-				// Update 'selectedPromptForEdit' with the new prompt data after updating the prompt
-				selectedPromptForEdit =
-					$allPromptsStore.find((prompt) => prompt.id === id) ?? selectedPromptForEdit;
-
-				notifySuccess($message.text, {
-					target: 'baseModal'
-				});
 			}
 		}
 	});
@@ -187,8 +156,13 @@
 		selectedTagIds.set(tagIds ?? []);
 
 		previousPrompt = selectedPromptForEdit;
+
 		isRefinedPromptVisible = false;
-		resetRefinedPromptDisplay = () => (isRefinedPromptVisible = false);
+
+		resetRefinedPromptDisplay = () => {
+			isRefinedPromptVisible = false;
+			refinedPrompt = '';
+		};
 	} else {
 		resetRefinedPromptDisplay = () => {};
 	}
@@ -201,6 +175,9 @@
 			$form.isFavorited !== selectedPromptForEdit.isFavorited ||
 			areArraysDifferent($selectedTagIds, selectedPromptForEdit.tagIds);
 	}
+
+	$: isRefiningPrompt = formAction === '?/refinePrompt' && $delayed;
+	$: isUpdatingPrompt = formAction === '?/createOrUpdatePrompt' && $delayed;
 </script>
 
 <BaseModal
@@ -258,8 +235,7 @@
 		<fieldset class="grid gap-1 textAreaGrid">
 			{#if selectedPromptForEdit && selectedPromptForEdit.description.length >= 10}
 				<Button
-					type="button"
-					on:click={getRefinedPrompt}
+					formaction="?/refinePrompt"
 					disabled={isRefiningPrompt}
 					class="p-1 text-xs bg-blue-500 buttonControl justify-self-end w-fit h-fit hover:bg-blue-600"
 				>
@@ -312,9 +288,9 @@
 			/>
 
 			<SubmitButton
-				title={$delayed ? 'Saving...' : 'Save'}
-				showSpinner={$delayed}
-				disabled={!isPromptModified || $delayed}
+				title={isUpdatingPrompt ? 'Saving...' : 'Save'}
+				showSpinner={isUpdatingPrompt}
+				disabled={!isPromptModified || isUpdatingPrompt}
 			/>
 		</footer>
 	</form>

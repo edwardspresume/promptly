@@ -58,12 +58,11 @@
 		<InputField
 			type="text"
 			name="name"
-			label="Enter tag name"
+			label="Name"
 			placeholder="Enter tag name"
 			bind:value={$form.name}
 			errorMessage={$errors.name}
 			maxlength={MAX_TAG_NAME_LENGTH}
-			labelIsScreenReaderOnly={true}
 		/>
 
 		<SubmitButton title={$delayed ? 'Creating...' : 'Create Tag'} disabled={$delayed} />

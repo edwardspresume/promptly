@@ -16,7 +16,7 @@ export function createNonEmptyTextSchema(
 	maxLength: number
 ) {
 	return schema
-		.min(minLength, `Text should have at least ${minLength} characters`)
+		.min(minLength, `${fieldName} should have at least ${minLength} characters`)
 		.max(maxLength, `${fieldName} should not exceed ${maxLength} characters`)
 		.refine((str: string) => str.trim().length > 0, {
 			message: `${fieldName} cannot be only empty spaces`

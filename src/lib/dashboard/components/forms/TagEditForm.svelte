@@ -87,11 +87,10 @@
 		<InputField
 			type="text"
 			name="name"
-			label="Edit tag name"
+			label="Name"
 			placeholder="Edit tag name"
 			bind:value={$form.name}
 			errorMessage={$errors.name}
-			labelIsScreenReaderOnly={true}
 			maxlength={MAX_TAG_NAME_LENGTH}
 		/>
 

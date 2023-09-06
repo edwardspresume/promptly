@@ -12,17 +12,15 @@
 	export let autocomplete: string = 'on';
 	export let errorMessage: object | undefined;
 	export let enterkeyhint: EnterKeyHint = 'enter';
-	export let maxlength: number | undefined = undefined;
 	export let labelIsScreenReaderOnly: boolean = false;
+	export let maxlength: number | undefined = undefined;
 
 	$: valueLength = value.length;
 </script>
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
-<label
-	class="grid gap-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
->
-	<div>
+<label class="grid gap-1 text-sm peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+	<div class="leading-none">
 		<span class={labelIsScreenReaderOnly ? 'sr-only' : ''}>{label}</span>
 
 		{#if maxlength}

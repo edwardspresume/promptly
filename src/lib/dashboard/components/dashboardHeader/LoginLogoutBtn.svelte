@@ -2,39 +2,24 @@
 	import { page } from '$app/stores';
 
 	import { RoutePaths } from '$globalTypes';
-    
+
 	import { userProfileStore } from '$dashboardStores/userProfileStore';
 
 	import Icon from '$globalComponents/Icon.svelte';
-	import Button from '$globalComponents/ui/button/button.svelte';
 
 	const handleSignOut = async () => await $page.data.supabase?.auth.signOut();
 
 	$: isLoggedIn = Boolean($userProfileStore);
-
-	$: buttonInfo = isLoggedIn
-		? {
-				label: 'Logout',
-				iconName: 'logout',
-				ariaLabel: 'Logout from your account',
-				onClick: handleSignOut,
-				href: undefined
-		  }
-		: {
-				label: 'Login',
-				iconName: 'login',
-				ariaLabel: 'Go to the sign in page',
-				onClick: undefined,
-				href: RoutePaths.AUTH
-		  };
 </script>
 
-<Button
-	variant="ghost"
-	href={buttonInfo.href}
-	on:click={buttonInfo.onClick}
-	aria-label={buttonInfo.ariaLabel}
->
-	<Icon name={buttonInfo.iconName} />
-	<span>{buttonInfo.label}</span>
-</Button>
+{#if isLoggedIn}
+	<button type="button" aria-label="Logout from your account" on:click={handleSignOut}>
+		<Icon name="logout" />
+		<span>Logout</span>
+	</button>
+{:else}
+	<a href={RoutePaths.AUTH} aria-label="Go to the sign in page">
+		<Icon name="login" />
+		<span>Login</span>
+	</a>
+{/if}

@@ -6,7 +6,6 @@
 	import { userProfileStore } from '$dashboardStores/userProfileStore';
 
 	import Icon from '$globalComponents/Icon.svelte';
-	import Button from '$globalComponents/ui/button/button.svelte';
 
 	/**
 	 * Function to prepare data for export, creating a downloadable JSON file
@@ -67,13 +66,12 @@
 	}
 </script>
 
-<Button
+<button
 	type="button"
-	variant="ghost"
 	on:click={exportData}
 	title="Export prompts and tags data"
 	aria-label="Export prompts and tags data"
 >
 	<Icon name="download" />
 	<span>Export Data</span>
-</Button>
+</button>

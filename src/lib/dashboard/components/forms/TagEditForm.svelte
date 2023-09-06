@@ -5,7 +5,10 @@
 
 	import type { TagSchema } from '$databaseDir/schema';
 
-	import { TagValidationSchema } from '$dashboardValidationSchemas/tagValidationSchema';
+	import {
+		MAX_TAG_NAME_LENGTH,
+		TagValidationSchema
+	} from '$dashboardValidationSchemas/tagValidationSchema';
 
 	import { allTagsStore, doesTagExist } from '$dashboardStores/tagsStore';
 
@@ -89,6 +92,7 @@
 			bind:value={$form.name}
 			errorMessage={$errors.name}
 			labelIsScreenReaderOnly={true}
+			maxlength={MAX_TAG_NAME_LENGTH}
 		/>
 
 		<SubmitButton

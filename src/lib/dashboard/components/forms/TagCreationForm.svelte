@@ -6,7 +6,10 @@
 	import { doesTagExist } from '$dashboardStores/tagsStore';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
-	import { TagValidationSchema } from '$dashboardValidationSchemas/tagValidationSchema';
+	import {
+		MAX_TAG_NAME_LENGTH,
+		TagValidationSchema
+	} from '$dashboardValidationSchemas/tagValidationSchema';
 
 	import BaseModal from '$dashboardComponents/modals/BaseModal.svelte';
 	import InputField from '$globalComponents/form/InputField.svelte';
@@ -59,6 +62,7 @@
 			placeholder="Enter tag name"
 			bind:value={$form.name}
 			errorMessage={$errors.name}
+			maxlength={MAX_TAG_NAME_LENGTH}
 			labelIsScreenReaderOnly={true}
 		/>
 

@@ -24,7 +24,7 @@
 	aria-label="Sort options"
 	bind:value={selectedSortOption}
 	on:change={setSortingPreference}
-	class="px-3 py-2 text-sm bg-transparent border rounded-md ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+	class="px-3 py-2 text-sm border rounded-md bg-background ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
 >
 	<option value="" disabled selected>Sort by</option>
 	{#each sortOptions as { value, label, announceMessage }}

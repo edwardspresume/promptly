@@ -9,27 +9,26 @@ import {
 	varchar
 } from 'drizzle-orm/pg-core';
 
-export const requestStatus = pgEnum('request_status', ['ERROR', 'SUCCESS', 'PENDING']);
-export const keyStatus = pgEnum('key_status', ['expired', 'invalid', 'valid', 'default']);
+export const keyStatus = pgEnum('key_status', ['default', 'valid', 'invalid', 'expired']);
 export const keyType = pgEnum('key_type', [
-	'stream_xchacha20',
-	'secretstream',
-	'secretbox',
-	'kdf',
-	'generichash',
-	'shorthash',
-	'auth',
-	'hmacsha256',
-	'hmacsha512',
+	'aead-ietf',
 	'aead-det',
-	'aead-ietf'
+	'hmacsha512',
+	'hmacsha256',
+	'auth',
+	'shorthash',
+	'generichash',
+	'kdf',
+	'secretbox',
+	'secretstream',
+	'stream_xchacha20'
 ]);
-export const subscriptionPlan = pgEnum('subscription_plan', ['enterprise', 'pro', 'free']);
-export const promptVisibility = pgEnum('prompt_visibility', ['public', 'private']);
-export const factorType = pgEnum('factor_type', ['webauthn', 'totp']);
-export const factorStatus = pgEnum('factor_status', ['verified', 'unverified']);
-export const aalLevel = pgEnum('aal_level', ['aal3', 'aal2', 'aal1']);
-export const codeChallengeMethod = pgEnum('code_challenge_method', ['plain', 's256']);
+export const factorType = pgEnum('factor_type', ['totp', 'webauthn']);
+export const factorStatus = pgEnum('factor_status', ['unverified', 'verified']);
+export const aalLevel = pgEnum('aal_level', ['aal1', 'aal2', 'aal3']);
+export const codeChallengeMethod = pgEnum('code_challenge_method', ['s256', 'plain']);
+export const subscriptionPlan = pgEnum('subscription_plan', ['free', 'pro', 'enterprise']);
+export const promptVisibility = pgEnum('prompt_visibility', ['private', 'public']);
 
 export const profilesTable = pgTable(
 	'profiles',

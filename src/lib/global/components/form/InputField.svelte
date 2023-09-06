@@ -19,7 +19,9 @@
 </script>
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
-<label class="grid gap-1 text-sm peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+<label
+	class="grid gap-1 text-sm font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+>
 	<div>
 		<span class={labelIsScreenReaderOnly ? 'sr-only' : ''}>{label}</span>
 

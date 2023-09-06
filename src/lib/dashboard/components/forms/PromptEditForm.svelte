@@ -67,10 +67,7 @@
 
 		try {
 			if (userSession) {
-				const { error } = await $page.data.supabase
-					.from('prompts')
-					.delete()
-					.eq('id', $form.id);
+				const { error } = await $page.data.supabase.from('prompts').delete().eq('id', $form.id);
 
 				if (error) throw new Error(`Supabase error: ${error.message}`);
 			} else {
@@ -255,18 +252,20 @@
 		{/if}
 
 		<fieldset>
-			<Button
-				type="button"
-				on:click={getRefinedPrompt}
-				disabled={isRefiningPrompt}
-				class="block p-1 mb-2 ml-auto text-xs bg-blue-500 w-fit h-fit hover:bg-blue-600"
-			>
-				{#if isRefiningPrompt}
-					<span class="animate-pulse">Refining...</span>
-				{:else}
-					<span>Refine prompt</span>
-				{/if}
-			</Button>
+			{#if selectedPromptForEdit && selectedPromptForEdit.description.length >= 10}
+				<Button
+					type="button"
+					on:click={getRefinedPrompt}
+					disabled={isRefiningPrompt}
+					class="block p-1 mb-2 ml-auto text-xs bg-blue-500 w-fit h-fit hover:bg-blue-600"
+				>
+					{#if isRefiningPrompt}
+						<span class="animate-pulse">Refining...</span>
+					{:else}
+						<span>Refine prompt</span>
+					{/if}
+				</Button>
+			{/if}
 
 			<TextArea
 				rows="6"

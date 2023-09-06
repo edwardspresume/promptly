@@ -50,7 +50,9 @@ export const actions: Actions = {
 						.set(formData)
 						.where(eq(promptsTable.id, promptId));
 				} else {
-					await drizzleClient.insert(promptsTable).values({ profileId: session.user.id, ...formData });
+					await drizzleClient
+						.insert(promptsTable)
+						.values({ profileId: session.user.id, ...formData });
 				}
 			} catch (error) {
 				console.error(error);
@@ -89,5 +91,56 @@ export const actions: Actions = {
 		}
 
 		return { success: true };
+	},
+
+	refinePrompt: async ({ request, fetch }) => {
+		type NewRefinedPrompt = FormStatusMessage & { refinedPrompt?: string };
+
+		const promptForm = await superValidate<typeof PromptsValidationSchema, NewRefinedPrompt>(
+			request,
+			PromptsValidationSchema
+		);
+
+		if (!promptForm.valid) {
+			return message(promptForm, {
+				statusType: 'error',
+				text: 'The prompt you entered is invalid. Please enter a valid prompt.'
+			});
+		}
+
+		const { title: promptTitle, description: promptDescription } = promptForm.data;
+
+		try {
+			const response = await fetch('./api/refinePrompt', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ promptTitle, promptDescription })
+			});
+
+			if (response.status !== 200) {
+				throw new Error(response.statusText);
+			}
+
+			const refinedPrompt = await response.text();
+
+			return message(promptForm, {
+				statusType: 'success',
+				text: response.statusText,
+				refinedPrompt
+			});
+		} catch (error) {
+			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
+			return message(
+				promptForm,
+				{
+					statusType: 'error',
+					text: errorMessage
+				},
+				{
+					status: 500
+				}
+			);
+		}
 	}
 };

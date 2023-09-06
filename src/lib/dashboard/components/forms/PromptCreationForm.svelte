@@ -88,7 +88,7 @@
 			maxlength={MAX_PROMPT_TITLE_LENGTH}
 		/>
 
-		<fieldset class="grid gap-2">
+		<fieldset class="grid gap-1">
 			<TextArea
 				rows="6"
 				name="description"

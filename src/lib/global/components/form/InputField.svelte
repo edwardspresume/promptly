@@ -20,7 +20,7 @@
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="grid gap-1 text-sm peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-	<div class="leading-none">
+	<div>
 		<span class={labelIsScreenReaderOnly ? 'sr-only' : ''}>{label}</span>
 
 		{#if maxlength}

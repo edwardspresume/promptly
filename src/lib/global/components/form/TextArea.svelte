@@ -20,7 +20,7 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label
 	for={textAreaId}
-	class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+	class="text-sm font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 >
 	<span class={labelIsScreenReaderOnly ? 'sr-only' : ''}>{label}</span>
 

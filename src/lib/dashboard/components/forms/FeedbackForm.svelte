@@ -48,15 +48,16 @@
 		aria-label="Send feedback"
 		class="grid gap-5"
 	>
-		<TextArea
-			rows="6"
-			name="message"
-			label="Message"
-			placeholder="Message"
-			labelIsScreenReaderOnly={true}
-			bind:value={$form.message}
-			errorMessage={$errors.message}
-		/>
+		<fieldset class="grid gap-1">
+			<TextArea
+				rows="6"
+				name="message"
+				label="Message"
+				placeholder="Message"
+				bind:value={$form.message}
+				errorMessage={$errors.message}
+			/>
+		</fieldset>
 
 		<SubmitButton title={$delayed ? 'Sending...' : 'Send'} disabled={$delayed} />
 	</form>

@@ -7,7 +7,11 @@
 	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
-	import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
+	import {
+		MAX_PROMPT_DESCRIPTION_LENGTH,
+		MAX_PROMPT_TITLE_LENGTH,
+		PromptsValidationSchema
+	} from '$dashboardValidationSchemas/promptsValidationSchema';
 
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
 	import BaseModal from '$dashboardComponents/modals/BaseModal.svelte';
@@ -77,22 +81,25 @@
 		<InputField
 			type="text"
 			name="title"
-			label="Enter prompt title"
+			label="Title"
 			placeholder="Enter prompt title"
 			bind:value={$form.title}
 			errorMessage={$errors.title}
-			labelIsScreenReaderOnly={true}
+			maxlength={MAX_PROMPT_TITLE_LENGTH}
 		/>
 
-		<TextArea
-			rows="6"
-			name="description"
-			label="Enter prompt description"
-			placeholder="Enter prompt description"
-			bind:value={$form.description}
-			errorMessage={$errors.description}
-			labelIsScreenReaderOnly={true}
-		/>
+		<fieldset class="grid gap-2">
+			<TextArea
+				rows="6"
+				name="description"
+				label="Description"
+				textAreaId="promptDescription"
+				placeholder="Enter prompt description"
+				bind:value={$form.description}
+				errorMessage={$errors.description}
+				maxlength={MAX_PROMPT_DESCRIPTION_LENGTH}
+			/>
+		</fieldset>
 
 		{#if $totalTagsCountStore}
 			<TagSelector {selectedTagIds} />

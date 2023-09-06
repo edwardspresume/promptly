@@ -8,7 +8,11 @@
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import type { PromptSchema } from '$databaseDir/schema';
 
-	import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
+	import {
+		MAX_PROMPT_DESCRIPTION_LENGTH,
+		MAX_PROMPT_TITLE_LENGTH,
+		PromptsValidationSchema
+	} from '$dashboardValidationSchemas/promptsValidationSchema';
 
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
@@ -210,16 +214,16 @@
 		<InputField
 			type="text"
 			name="title"
-			label="Update prompt title"
+			label="Title"
 			placeholder="Update prompt title"
 			bind:value={$form.title}
 			errorMessage={$errors.title}
-			labelIsScreenReaderOnly={true}
+			maxlength={MAX_PROMPT_TITLE_LENGTH}
 		/>
 
 		{#if isRefinedPromptVisible}
-			<fieldset transition:fade={{ delay: 250, duration: 300 }}>
-				<div class="flex justify-end gap-2 mb-2">
+			<fieldset transition:fade={{ delay: 250, duration: 300 }} class="grid gap-1 textAreaGrid">
+				<div class="flex justify-end gap-2 buttonControl">
 					<Button
 						type="button"
 						on:click={() => {
@@ -244,20 +248,20 @@
 					rows="6"
 					label="Improved Prompt"
 					placeholder="Improved Prompt"
-					bind:value={refinedPrompt}
 					errorMessage={undefined}
-					labelIsScreenReaderOnly={true}
+					bind:value={refinedPrompt}
+					maxlength={MAX_PROMPT_DESCRIPTION_LENGTH}
 				/>
 			</fieldset>
 		{/if}
 
-		<fieldset>
+		<fieldset class="grid gap-1 textAreaGrid">
 			{#if selectedPromptForEdit && selectedPromptForEdit.description.length >= 10}
 				<Button
 					type="button"
 					on:click={getRefinedPrompt}
 					disabled={isRefiningPrompt}
-					class="block p-1 mb-2 ml-auto text-xs bg-blue-500 w-fit h-fit hover:bg-blue-600"
+					class="p-1 text-xs bg-blue-500 buttonControl justify-self-end w-fit h-fit hover:bg-blue-600"
 				>
 					{#if isRefiningPrompt}
 						<span class="animate-pulse">Refining...</span>
@@ -270,11 +274,11 @@
 			<TextArea
 				rows="6"
 				name="description"
-				label="Update prompt text"
-				placeholder="Update prompt text"
+				label="Description"
+				placeholder="Update prompt description"
 				bind:value={$form.description}
 				errorMessage={$errors.description}
-				labelIsScreenReaderOnly={true}
+				maxlength={MAX_PROMPT_DESCRIPTION_LENGTH}
 			/>
 		</fieldset>
 
@@ -317,3 +321,29 @@
 </BaseModal>
 
 <ConfirmationModal bind:confirmationModalRef confirmationInfo={promptDeleteConfirmationInfo} />
+
+<style lang="postcss">
+	.textAreaGrid {
+		grid-template-areas:
+			'descriptionLabel buttonControl'
+			'errorMessage errorMessage'
+			'promptDescription promptDescription';
+	}
+
+	.textAreaGrid :global(label) {
+		@apply self-end;
+		grid-area: descriptionLabel;
+	}
+
+	.textAreaGrid :global(.buttonControl) {
+		grid-area: buttonControl;
+	}
+
+	.textAreaGrid :global(.error-message) {
+		grid-area: errorMessage;
+	}
+
+	.textAreaGrid :global(textarea) {
+		grid-area: promptDescription;
+	}
+</style>

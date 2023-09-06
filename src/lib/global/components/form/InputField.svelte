@@ -2,7 +2,6 @@
 	import type { EnterKeyHint } from '$globalTypes';
 
 	import Input from '$globalComponents/ui/input/input.svelte';
-	import Label from '$globalComponents/ui/label/label.svelte';
 
 	export let type: string;
 	export let value: string = '';
@@ -13,13 +12,25 @@
 	export let autocomplete: string = 'on';
 	export let errorMessage: object | undefined;
 	export let enterkeyhint: EnterKeyHint = 'enter';
+	export let maxlength: number | undefined = undefined;
 	export let labelIsScreenReaderOnly: boolean = false;
+
+	$: valueLength = value.length;
 </script>
 
-<Label class="grid gap-2">
-	<span class={labelIsScreenReaderOnly ? 'sr-only' : ''}>
-		{label}
-	</span>
+<!-- svelte-ignore a11y-label-has-associated-control -->
+<label
+	class="grid gap-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+>
+	<div>
+		<span class={labelIsScreenReaderOnly ? 'sr-only' : ''}>{label}</span>
+
+		{#if maxlength}
+			<span class="text-xs text-muted-foreground">
+				{valueLength}/{maxlength}
+			</span>
+		{/if}
+	</div>
 
 	{#if errorMessage}
 		<p class="text-red-500">{errorMessage}</p>
@@ -30,6 +41,7 @@
 		{type}
 		dir="auto"
 		bind:value
+		{maxlength}
 		{spellcheck}
 		{placeholder}
 		{autocomplete}
@@ -38,4 +50,4 @@
 		aria-invalid={errorMessage ? 'true' : undefined}
 		{...$$restProps}
 	/>
-</Label>
+</label>

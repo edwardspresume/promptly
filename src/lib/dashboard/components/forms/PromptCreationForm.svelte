@@ -46,11 +46,11 @@
 				});
 			} else if ($message.statusType === 'success') {
 				if (!$page.data.session?.user) {
-					const { title, text, isFavorited } = form.data;
+					const { title, description, isFavorited } = form.data;
 
 					promptLocalStorageManager.addItem({
 						title,
-						text,
+						description,
 						isFavorited,
 						tagIds: $selectedTagIds
 					});
@@ -86,11 +86,11 @@
 
 		<TextArea
 			rows="6"
-			name="text"
-			label="Enter prompt text"
-			placeholder="Enter prompt text"
-			bind:value={$form.text}
-			errorMessage={$errors.text}
+			name="description"
+			label="Enter prompt description"
+			placeholder="Enter prompt description"
+			bind:value={$form.description}
+			errorMessage={$errors.description}
 			labelIsScreenReaderOnly={true}
 		/>
 

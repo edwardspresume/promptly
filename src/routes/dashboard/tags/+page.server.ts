@@ -40,7 +40,7 @@ export const actions: Actions = {
 						.where(eq(tagsTable.id, tagId));
 				} else {
 					await drizzleClient.insert(tagsTable).values({
-						userId: session.user.id,
+						profileId: session.user.id,
 						name: tagForm.data.name
 					});
 				}

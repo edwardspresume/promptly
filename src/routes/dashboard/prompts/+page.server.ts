@@ -42,15 +42,15 @@ export const actions: Actions = {
 				) as FormData;
 
 				if (promptId) {
-					// Remove 'id' from formData
-					delete formData.id;
+					// Remove 'profileId' from formData
+					delete formData.profileId;
 
 					await drizzleClient
 						.update(promptsTable)
 						.set(formData)
 						.where(eq(promptsTable.id, promptId));
 				} else {
-					await drizzleClient.insert(promptsTable).values({ userId: session.user.id, ...formData });
+					await drizzleClient.insert(promptsTable).values({ profileId: session.user.id, ...formData });
 				}
 			} catch (error) {
 				console.error(error);

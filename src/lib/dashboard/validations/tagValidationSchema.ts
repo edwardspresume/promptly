@@ -9,7 +9,7 @@ export const MIN_TAG_NAME_LENGTH = 1;
 export const MAX_TAG_NAME_LENGTH = 200;
 
 export const TagValidationSchema = createInsertSchema(tagsTable, {
-	userId: (schema) => schema.userId.optional(),
+	profileId: (schema) => schema.profileId.optional(),
 
 	name: (schema) =>
 		createNonEmptyTextSchema(schema.name, 'Name', MIN_TAG_NAME_LENGTH, MAX_TAG_NAME_LENGTH)

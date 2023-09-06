@@ -50,7 +50,7 @@
 	async function deleteAllPromptsCallBack(): ReturnType<ConfirmationInfo['callback']> {
 		try {
 			if (session !== null) {
-				const { error } = await supabase.from('prompts').delete().eq('user_id', session.user.id);
+				const { error } = await supabase.from('prompts').delete().eq('profile_id', session.user.id);
 
 				if (error) throw new Error(`Supabase error: ${error.message}`);
 			} else {

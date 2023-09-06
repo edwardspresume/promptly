@@ -18,7 +18,7 @@
 
 	export let data: PageData;
 
-    let { session, supabase } = data;
+	let { session, supabase } = data;
 	$: ({ session, supabase } = data);
 
 	let promptListRef: HTMLElement;
@@ -85,9 +85,6 @@
 
 		confirmationModalRef.showModal();
 	}
-
-    console.log(session);
-
 </script>
 
 <svelte:head>

@@ -45,6 +45,7 @@
 
 	let formAction: string = '';
 	let refinedPrompt: string = '';
+	let resetRefinedPromptDisplay = () => {};
 	let isRefinedPromptVisible: boolean = false;
 
 	/**
@@ -142,8 +143,6 @@
 			}
 		}
 	});
-
-	let resetRefinedPromptDisplay = () => {};
 
 	// Watch if selectedPromptForEdit is changed, and populate the form if it has
 	$: if (selectedPromptForEdit && selectedPromptForEdit !== previousPrompt) {

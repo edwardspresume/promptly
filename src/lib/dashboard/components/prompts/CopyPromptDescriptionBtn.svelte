@@ -16,27 +16,27 @@
 	export let buttonVariant: Variant = 'ghost';
 
 	/**
-	 * Copies the prompt text to the clipboard and shows a notification.
+	 * Copies the prompt description to the clipboard and shows a notification.
 	 * @async
 	 * @returns {Promise<void>} No return value
 	 */
-	const copyPromptTextToClipboard = async (event: Event) => {
+	const copyPromptDescriptionToClipboard = async (event: Event) => {
 		event.stopPropagation();
 
 		try {
 			if (!promptDescriptionToCopy) {
-				throw new Error('No prompt text provided');
+				throw new Error('No prompt description provided');
 			}
 
 			await navigator.clipboard.writeText(promptDescriptionToCopy);
 
-			notifySuccess('Prompt text copied!', {
+			notifySuccess('Prompt description copied!', {
 				target: toastNotificationTarget
 			});
 		} catch (error) {
-			console.error('Failed to prompt text: ', error);
+			console.error('Failed to prompt description: ', error);
 
-			notifyError('Failed to copy prompt text', {
+			notifyError('Failed to copy prompt description', {
 				target: toastNotificationTarget
 			});
 		}
@@ -49,7 +49,7 @@
 	title="Copy Prompt"
 	variant={buttonVariant}
 	aria-label="Copy prompt to clipboard"
-	on:click={copyPromptTextToClipboard}
+	on:click={copyPromptDescriptionToClipboard}
 	class={cn('hover:text-blue-500 w-fit', className)}
 >
 	<Icon name="copy" size={iconSize} />

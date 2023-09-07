@@ -42,8 +42,8 @@ export const actions: Actions = {
 				) as FormData;
 
 				if (promptId) {
-					// Remove 'profileId' from formData
-					delete formData.profileId;
+					// Remove 'id' from formData
+					delete formData.id;
 
 					await drizzleClient
 						.update(promptsTable)

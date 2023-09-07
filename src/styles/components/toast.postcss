@@ -1,12 +1,9 @@
 /* Toast Container */
 
 ._toastContainer {
-	--toastContainerRight: 0%;
 	--toastContainerLeft: 50%;
-	--toastContainerTop: 2rem;
-	/* --toastContainerTranslateX: -50%; */
 
-	@apply grid gap-3 w-fit -translate-x-1/2;
+	@apply grid gap-3 w-[96%] -translate-x-1/2 place-items-center break-all;
 }
 
 /* Toast Item */
@@ -21,30 +18,22 @@
 	--toastBorder: 1px hsl(var(--border)) solid;
 	--toastBoxShadow: 0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.05);
 
-	@apply grid grid-cols-[auto,auto] gap-5;
-	grid-template-areas:
-		'toastMsg toastBtn'
-		'toastProgressBar toastProgressBar';
+	@apply max-w-lg gap-5;
 }
 
 ._toastMsg {
 	--toastMsgPadding: 0;
 
-	@apply grid grid-cols-[auto,auto] gap-2 items-center max-w-sm;
-	grid-area: toastMsg;
+	@apply grid grid-cols-[auto,auto] gap-3 items-center;
 }
 
 ._toastBtn {
 	--toastBtnWidth: 0;
 	--toastBtnFont: 1.2rem sans-serif;
-
-	grid-area: toastBtn;
 }
 
 ._toastBar {
 	--toastBarBackground: rgb(2, 154, 255);
-
-	grid-area: toastProgressBar;
 }
 
 .check_mark {

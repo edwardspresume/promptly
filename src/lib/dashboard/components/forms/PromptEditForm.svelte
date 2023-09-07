@@ -15,7 +15,7 @@
 	} from '$dashboardValidationSchemas/promptsValidationSchema';
 
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
-	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
+	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 
 	import { allPromptsStore } from '$dashboardStores/promptsStore';
 	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
@@ -112,35 +112,35 @@
 		onSubmit: ({ action }) => (formAction = action.search),
 
 		onUpdated: ({ form }) => {
-			if ($message.statusType === 'error') {
-				notifyError($message.text, {
-					target: 'baseModal'
-				});
-			} else if ($message.statusType === 'success') {
-				if (formAction === '?/refinePrompt') {
-					refinedPrompt = $message.refinedPrompt;
-					isRefinedPromptVisible = true;
-				} else {
-					const { id, title, description, isFavorited } = form.data;
+			if (!$message) return;
 
-					if (!userSession) {
-						promptLocalStorageManager.updateItem(id, {
-							title,
-							description,
-							isFavorited,
-							tagIds: $selectedTagIds
-						});
-					}
+			const { statusType, text, refinedPrompt: refinedPromptValue } = $message;
 
-					// Update 'selectedPromptForEdit' with the new prompt data after updating the prompt
-					selectedPromptForEdit =
-						$allPromptsStore.find((prompt) => prompt.id === id) ?? selectedPromptForEdit;
+			const notificationFunction = getNotificationFunction(statusType);
 
-					notifySuccess($message.text, {
-						target: 'baseModal'
+			if (formAction === '?/refinePrompt' && statusType === 'success') {
+				refinedPrompt = refinedPromptValue;
+				isRefinedPromptVisible = true;
+				return;
+			}
+
+			if (statusType === 'success') {
+				const { id, title, description, isFavorited } = form.data;
+
+				if (!userSession) {
+					promptLocalStorageManager.updateItem(id, {
+						title,
+						description,
+						isFavorited,
+						tagIds: $selectedTagIds
 					});
 				}
+
+				selectedPromptForEdit =
+					$allPromptsStore.find((prompt) => prompt.id === id) ?? selectedPromptForEdit;
 			}
+
+			notificationFunction(text, { target: 'baseModal' });
 		}
 	});
 

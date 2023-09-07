@@ -6,7 +6,7 @@
 
 	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
-	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
+	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 	import {
 		MAX_PROMPT_DESCRIPTION_LENGTH,
 		MAX_PROMPT_TITLE_LENGTH,
@@ -44,11 +44,13 @@
 		validators: PromptsValidationSchema,
 
 		onUpdated: ({ form }) => {
-			if ($message.statusType === 'error') {
-				notifyError($message.text, {
-					target: 'baseModal'
-				});
-			} else if ($message.statusType === 'success') {
+			if (!$message) return;
+
+			const { statusType, text } = $message;
+
+			const notificationFunction = getNotificationFunction(statusType);
+
+			if (statusType === 'success') {
 				if (!$page.data.session?.user) {
 					const { title, description, isFavorited } = form.data;
 
@@ -60,12 +62,10 @@
 					});
 				}
 
-				notifySuccess($message.text, {
-					target: 'baseModal'
-				});
-
 				resetFormFields();
 			}
+
+			notificationFunction(text, { target: 'baseModal' });
 		}
 	});
 </script>

@@ -5,7 +5,7 @@
 
 	import { doesTagExist } from '$dashboardStores/tagsStore';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
-	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
+	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 	import {
 		MAX_TAG_NAME_LENGTH,
 		TagValidationSchema
@@ -36,18 +36,16 @@
 		},
 
 		onUpdated: ({ form }) => {
-			if ($message) {
-				const { statusType, text } = $message;
+			if (!$message) return;
 
-				if (statusType === 'success' && $page.data.session === null) {
-					const { name } = form.data;
-					tagLocalStorageManager.addItem({ name });
-				}
+			const { statusType, text } = $message;
+			const notificationFunction = getNotificationFunction(statusType);
 
-				statusType === 'error'
-					? notifyError(text, { target: 'baseModal' })
-					: notifySuccess(text, { target: 'baseModal' });
+			if (statusType === 'success' && !$page.data.session) {
+				tagLocalStorageManager.addItem({ name: form.data.name });
 			}
+
+			notificationFunction(text, { target: 'baseModal' });
 		}
 	});
 </script>

@@ -2,7 +2,7 @@
 	import { superForm } from 'sveltekit-superforms/client';
 
 	import { isFeedbackModalOpen } from '$dashboardStores/feedbackModalStore';
-	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
+	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 	import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
 
 	import BaseModal from '$dashboardComponents/modals/BaseModal.svelte';
@@ -20,15 +20,13 @@
 		validators: FeedbackValidationSchema,
 
 		onUpdated: () => {
-			if ($message.statusType === 'error') {
-				notifyError($message.text, {
-					target: 'baseModal'
-				});
-			} else if ($message.statusType === 'success') {
-				notifySuccess($message.text, {
-					target: 'baseModal'
-				});
-			}
+			if (!$message) return;
+
+			const { statusType, text } = $message;
+
+			const notificationFunction = getNotificationFunction(statusType);
+
+			notificationFunction(text, { target: 'baseModal' });
 		}
 	});
 

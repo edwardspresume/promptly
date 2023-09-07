@@ -6,10 +6,10 @@
 
 import { toast } from '@zerodevx/svelte-toast';
 
+import type { StatusType } from '$globalTypes';
 
 // Get the type of the options parameter of the toast.push function.
 type ToastOptions = Parameters<typeof toast.push>[1];
-
 
 /**
  * Creates the HTML content for the toast notification.
@@ -40,6 +40,16 @@ export const notifyError = (message: string, options?: ToastOptions) => {
 	const content = createToastContent('error_mark', message);
 	toast.push(content, options);
 };
+
+/**
+ * Gets the appropriate notification function based on the status type.
+ *
+ * @param {StatusType} statusType - The status type of the notification.
+ * @return {Function} - The notification function to use.
+ */
+export function getNotificationFunction(statusType: StatusType) {
+	return statusType === 'error' ? notifyError : notifySuccess;
+}
 
 /**
  * Removes the last toast targeted to 'baseModal'.

@@ -13,7 +13,7 @@
 	import { allTagsStore, doesTagExist } from '$dashboardStores/tagsStore';
 
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
-	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
+	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 
 	import BaseModal from '$dashboardComponents/modals/BaseModal.svelte';
 	import InputField from '$globalComponents/form/InputField.svelte';
@@ -59,23 +59,24 @@
 		},
 
 		onUpdated: ({ form }) => {
-			if ($message.statusType === 'error') {
-				notifyError($message.text, { target: 'baseModal' });
-			} else if ($message.statusType === 'success') {
+			if (!$message) return;
+
+			const { statusType, text } = $message;
+
+			const notificationFunction = getNotificationFunction(statusType);
+
+			if (statusType === 'success') {
 				const { id, name } = form.data;
 
-				// Update the tag name in the store
-				if ($page.data.session === null) {
+				if (!$page.data.session) {
 					tagLocalStorageManager.updateItem(id, { name });
 				}
 
 				// Update 'selectedTagForEdit' with the new tag name after updating the tag
 				selectedTagForEdit = $allTagsStore.find((tag) => tag.id === id) ?? selectedTagForEdit;
-
-				notifySuccess($message.text, {
-					target: 'baseModal'
-				});
 			}
+
+			notificationFunction(text, { target: 'baseModal' });
 		}
 	});
 </script>

@@ -49,7 +49,7 @@
 			tabindex={selectedTabIndex === index ? 0 : -1}
 			class="flex w-full gap-2 border-b rounded-sm rounded-b-none text-lg {selectedTabIndex ===
 			index
-				? 'border-foreground border-b-2'
+				? 'border-primary border-b-2'
 				: 'text-muted-foreground'}"
 		>
 			<Icon name={iconName} size={18} />

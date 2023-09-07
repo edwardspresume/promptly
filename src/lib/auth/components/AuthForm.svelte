@@ -68,6 +68,7 @@
 			type="email"
 			name="email"
 			autocomplete="email"
+			enterkeyhint="send"
 			placeholder="you@example.com"
 			errorMessage={$errors.email}
 		/>

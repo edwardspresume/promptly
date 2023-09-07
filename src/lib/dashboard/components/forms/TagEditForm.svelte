@@ -88,6 +88,7 @@
 			type="text"
 			name="name"
 			label="Name"
+			enterkeyhint="send"
 			placeholder="Edit tag name"
 			bind:value={$form.name}
 			errorMessage={$errors.name}

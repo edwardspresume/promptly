@@ -59,6 +59,7 @@
 			type="text"
 			name="name"
 			label="Name"
+			enterkeyhint="send"
 			placeholder="Enter tag name"
 			bind:value={$form.name}
 			errorMessage={$errors.name}

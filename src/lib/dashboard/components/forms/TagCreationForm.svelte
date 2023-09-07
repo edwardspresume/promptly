@@ -36,18 +36,17 @@
 		},
 
 		onUpdated: ({ form }) => {
-			if ($message.statusType === 'error') {
-				notifyError($message.text, { target: 'baseModal' });
-			} else if ($message.statusType === 'success') {
-				// Create tag in local storage if user is not logged in
-				if ($page.data.session === null) {
+			if ($message) {
+				const { statusType, text } = $message;
+
+				if (statusType === 'success' && $page.data.session === null) {
 					const { name } = form.data;
 					tagLocalStorageManager.addItem({ name });
 				}
 
-				notifySuccess($message.text, {
-					target: 'baseModal'
-				});
+				statusType === 'error'
+					? notifyError(text, { target: 'baseModal' })
+					: notifySuccess(text, { target: 'baseModal' });
 			}
 		}
 	});

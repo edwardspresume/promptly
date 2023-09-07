@@ -19,20 +19,28 @@ export function handleKeyDown(event: KeyboardEvent, callback: () => void) {
 }
 
 /**
- * Closes the dialog if a click is detected outside the dialog area
- * @param {MouseEvent} event - Mouse event
- * @param {HTMLDialogElement} dialog - Dialog element
+ * Closes the dialog if a click is detected outside the dialog area, except when the click
+ * is on an element with the '_toastBtn' class.
+ *
+ * @param {MouseEvent} event - The mouse event triggered by the click
+ * @param {HTMLDialogElement} dialog - The dialog element to be closed
  */
 export function closeDialogOnOutsideClick(event: MouseEvent, dialog: HTMLDialogElement) {
+	// Get the bounding client rect of the dialog to determine the area of the dialog
 	const { left, right, top, bottom } = dialog.getBoundingClientRect();
 
+	// Determine whether the click was outside the dialog area
 	const isOutsideClick =
 		event.clientX <= left ||
 		event.clientX >= right ||
 		event.clientY <= top ||
 		event.clientY >= bottom;
 
-	if (isOutsideClick) {
+	// Determine whether the clicked element has the '_toastBtn' class
+	const isToastBtn = (event.target as HTMLElement).classList.contains('_toastBtn');
+
+	// If the click is outside the dialog and not on a '_toastBtn', close the dialog
+	if (isOutsideClick && !isToastBtn) {
 		dialog.close();
 		removeLastToast();
 	}

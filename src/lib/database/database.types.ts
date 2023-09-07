@@ -58,41 +58,41 @@ export interface Database {
       prompts: {
         Row: {
           created_at: string
+          description: string
           id: string
           is_favorited: boolean
+          profile_id: string
           tag_ids: string[]
-          text: string
           title: string
           updated_at: string
-          user_id: string
           visibility: Database["public"]["Enums"]["prompt_visibility"]
         }
         Insert: {
           created_at?: string
+          description: string
           id?: string
           is_favorited?: boolean
+          profile_id: string
           tag_ids: string[]
-          text: string
           title: string
           updated_at?: string
-          user_id: string
           visibility?: Database["public"]["Enums"]["prompt_visibility"]
         }
         Update: {
           created_at?: string
+          description?: string
           id?: string
           is_favorited?: boolean
+          profile_id?: string
           tag_ids?: string[]
-          text?: string
           title?: string
           updated_at?: string
-          user_id?: string
           visibility?: Database["public"]["Enums"]["prompt_visibility"]
         }
         Relationships: [
           {
-            foreignKeyName: "prompts_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "prompts_profile_id_fkey"
+            columns: ["profile_id"]
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           }
@@ -103,27 +103,27 @@ export interface Database {
           created_at: string
           id: string
           name: string
+          profile_id: string
           updated_at: string
-          user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
           name: string
+          profile_id: string
           updated_at?: string
-          user_id: string
         }
         Update: {
           created_at?: string
           id?: string
           name?: string
+          profile_id?: string
           updated_at?: string
-          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "tags_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "tags_profile_id_fkey"
+            columns: ["profile_id"]
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           }

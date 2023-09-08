@@ -79,13 +79,13 @@ export const actions: Actions = {
 		}
 
 		// Attempt to sign in or sign up with the given email.
-		const { error: authError } = await supabase.auth.signInWithOtp({
+		const { error: emailAuthError } = await supabase.auth.signInWithOtp({
 			email: sanitizedEmail,
 			options: { emailRedirectTo: `${url.origin}/auth/callback` }
 		});
 
-		if (authError) {
-			console.error(authError);
+		if (emailAuthError) {
+			console.error(emailAuthError);
 
 			return message(
 				authEmailForm,

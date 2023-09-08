@@ -9,7 +9,8 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
 
 import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
-import { sanitizeContent, type FormStatusMessage } from '$databaseDir/utils.server';
+import { sanitizeContent } from '$databaseDir/utils.server';
+import type { AlertMessage } from '$globalTypes';
 
 type FormData = z.infer<typeof PromptsValidationSchema>;
 
@@ -22,15 +23,15 @@ export const load = (async () => {
 
 export const actions: Actions = {
 	createOrUpdatePrompt: async ({ request, locals: { getSession } }) => {
-		const promptForm = await superValidate<typeof PromptsValidationSchema, FormStatusMessage>(
+		const promptForm = await superValidate<typeof PromptsValidationSchema, AlertMessage>(
 			request,
 			PromptsValidationSchema
 		);
 
 		if (!promptForm.valid) {
 			return message(promptForm, {
-				statusType: 'error',
-				text: ERROR_INVALID_PROMPT
+				alertType: 'error',
+				alertText: ERROR_INVALID_PROMPT
 			});
 		}
 
@@ -64,20 +65,22 @@ export const actions: Actions = {
 				console.error('Error in createOrUpdatePrompt:', error, { promptId, session });
 
 				return message(promptForm, {
-					statusType: 'error',
-					text: `Unexpected error during prompt ${promptId ? 'update' : 'creation'}. Please retry.`
+					alertType: 'error',
+					alertText: `Unexpected error during prompt ${
+						promptId ? 'update' : 'creation'
+					}. Please retry.`
 				});
 			}
 		}
 
 		return message(promptForm, {
-			statusType: 'success',
-			text: `Prompt ${promptId ? 'updated' : 'created'} successfully!`
+			alertType: 'success',
+			alertText: `Prompt ${promptId ? 'updated' : 'created'} successfully!`
 		});
 	},
 
 	refinePrompt: async ({ request, fetch }) => {
-		type NewRefinedPrompt = FormStatusMessage & { refinedPrompt?: string };
+		type NewRefinedPrompt = AlertMessage & { refinedPrompt?: string };
 
 		const promptForm = await superValidate<typeof PromptsValidationSchema, NewRefinedPrompt>(
 			request,
@@ -86,8 +89,8 @@ export const actions: Actions = {
 
 		if (!promptForm.valid) {
 			return message(promptForm, {
-				statusType: 'error',
-				text: ERROR_INVALID_PROMPT
+				alertType: 'error',
+				alertText: ERROR_INVALID_PROMPT
 			});
 		}
 
@@ -110,8 +113,8 @@ export const actions: Actions = {
 			const refinedPrompt = await response.text();
 
 			return message(promptForm, {
-				statusType: 'success',
-				text: response.statusText,
+				alertType: 'success',
+				alertText: response.statusText,
 				refinedPrompt
 			});
 		} catch (error) {
@@ -120,8 +123,8 @@ export const actions: Actions = {
 			return message(
 				promptForm,
 				{
-					statusType: 'error',
-					text: errorMessage
+					alertType: 'error',
+					alertText: errorMessage
 				},
 				{
 					status: 500

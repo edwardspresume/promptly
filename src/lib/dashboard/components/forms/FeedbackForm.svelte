@@ -22,11 +22,11 @@
 		onUpdated: () => {
 			if (!$message) return;
 
-			const { statusType, text } = $message;
+			const { alertType, alertText } = $message;
 
-			const notificationFunction = getNotificationFunction(statusType);
+			const notificationFunction = getNotificationFunction(alertType);
 
-			notificationFunction(text, { target: 'baseModal' });
+			notificationFunction(alertText, { target: 'baseModal' });
 		}
 	});
 

@@ -4,18 +4,14 @@ import { message, setError, superValidate } from 'sveltekit-superforms/server';
 import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-import { RoutePaths } from '$globalTypes';
+import { RoutePaths, type AlertMessage } from '$globalTypes';
 
 import {
 	EmailAuthValidationSchema,
 	OAuthProviderValidationSchema
 } from '$authValidationSchemas/authValidationSchemas';
 
-import {
-	checkEmailExists,
-	sanitizeContent,
-	type FormStatusMessage
-} from '$databaseDir/utils.server';
+import { checkEmailExists, sanitizeContent } from '$databaseDir/utils.server';
 
 const AUTH_MESSAGES = {
 	INVALID_EMAIL: 'The email you entered is invalid. Please enter a valid email address.',
@@ -45,15 +41,15 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 
 export const actions: Actions = {
 	emailAuth: async ({ request, url, locals: { supabase } }) => {
-		const authEmailForm = await superValidate<typeof EmailAuthValidationSchema, FormStatusMessage>(
+		const authEmailForm = await superValidate<typeof EmailAuthValidationSchema, AlertMessage>(
 			request,
 			EmailAuthValidationSchema
 		);
 
 		if (!authEmailForm.valid) {
 			return message(authEmailForm, {
-				statusType: 'error',
-				text: AUTH_MESSAGES.INVALID_EMAIL
+				alertType: 'error',
+				alertText: AUTH_MESSAGES.INVALID_EMAIL
 			});
 		}
 
@@ -71,8 +67,8 @@ export const actions: Actions = {
 			return message(
 				authEmailForm,
 				{
-					statusType: 'error',
-					text: 'An error occurred while verifying your email. Please try again.'
+					alertType: 'error',
+					alertText: 'An error occurred while verifying your email. Please try again.'
 				},
 				{ status: 500 }
 			);
@@ -89,27 +85,28 @@ export const actions: Actions = {
 
 			return message(
 				authEmailForm,
-				{ statusType: 'error', text: AUTH_MESSAGES.SERVER_ERROR },
+				{ alertType: 'error', alertText: AUTH_MESSAGES.SERVER_ERROR },
 				{ status: 500 }
 			);
 		}
 
 		return message(authEmailForm, {
-			statusType: 'success',
-			text: formType === 'signIn' ? AUTH_MESSAGES.SUCCESSFUL_LOGIN : AUTH_MESSAGES.SUCCESSFUL_SIGNUP
+			alertType: 'success',
+			alertText:
+				formType === 'signIn' ? AUTH_MESSAGES.SUCCESSFUL_LOGIN : AUTH_MESSAGES.SUCCESSFUL_SIGNUP
 		});
 	},
 
 	oauth: async ({ request, url, locals: { supabase } }) => {
-		const oauthForm = await superValidate<typeof OAuthProviderValidationSchema, FormStatusMessage>(
+		const oauthForm = await superValidate<typeof OAuthProviderValidationSchema, AlertMessage>(
 			request,
 			OAuthProviderValidationSchema
 		);
 
 		if (!oauthForm.valid) {
 			return message(oauthForm, {
-				statusType: 'error',
-				text: AUTH_MESSAGES.UNSUPPORTED_OAUTH_PROVIDER
+				alertType: 'error',
+				alertText: AUTH_MESSAGES.UNSUPPORTED_OAUTH_PROVIDER
 			});
 		}
 
@@ -124,7 +121,7 @@ export const actions: Actions = {
 			console.error(error);
 			return message(
 				oauthForm,
-				{ statusType: 'error', text: AUTH_MESSAGES.SERVER_ERROR },
+				{ alertType: 'error', alertText: AUTH_MESSAGES.SERVER_ERROR },
 				{ status: 500 }
 			);
 		}

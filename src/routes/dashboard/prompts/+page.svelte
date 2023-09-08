@@ -47,7 +47,7 @@
 	 * Deletes all prompts either from the database or from the local storage,
 	 * depending on whether the user is logged in.
 	 * @async
-	 * @returns {ReturnType<ConfirmationInfo['callback']>} - The status and message of the delete operation.
+	 * @returns {ReturnType<ConfirmationInfo['callback']>} - The alert type and text of the delete operation.
 	 */
 	async function deleteAllPromptsCallBack(): ReturnType<ConfirmationInfo['callback']> {
 		try {
@@ -60,14 +60,14 @@
 			}
 
 			return {
-				statusType: 'success',
-				statusMessage: 'All Prompts have been successfully deleted!'
+				alertType: 'success',
+				alertText: 'All Prompts have been successfully deleted!'
 			};
 		} catch (e) {
 			console.error('Failed to delete all prompts');
 			return {
-				statusType: 'error',
-				statusMessage: 'Failed to delete all prompts. Please try again later'
+				alertType: 'error',
+				alertText: 'Failed to delete all prompts. Please try again later'
 			};
 		}
 	}

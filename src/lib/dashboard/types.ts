@@ -1,4 +1,4 @@
-import type { StatusType } from '$globalTypes';
+import type { AlertMessage } from '$globalTypes';
 
 export type ItemType = 'prompt' | 'tag';
 
@@ -27,5 +27,5 @@ export interface SortOption {
 export interface ConfirmationInfo {
 	heading: string;
 	subheading: string;
-	callback: () => Promise<{ statusType: StatusType; statusMessage: string }>;
+	callback: () => Promise<AlertMessage>;
 }

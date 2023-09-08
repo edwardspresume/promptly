@@ -39,12 +39,12 @@
 		<p
 			role="alert"
 			aria-live="polite"
-			title={$message.statusType === 'error' ? 'Error message' : 'Success message'}
-			class="p-3 mb-8 font-bold text-center rounded-md {$message.statusType === 'error'
+			title={$message.alertType === 'error' ? 'Error message' : 'Success message'}
+			class="p-3 mb-8 font-bold text-center rounded-md {$message.alertType === 'error'
 				? 'bg-red-600'
 				: 'bg-green-600'}"
 		>
-			{$message.text}
+			{$message.alertText}
 		</p>
 	{/if}
 

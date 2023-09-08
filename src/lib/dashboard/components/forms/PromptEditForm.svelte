@@ -65,7 +65,7 @@
 	 * Deletes the prompt either from the database or from the local storage,
 	 * depending on whether the user is logged in.
 	 * @async
-	 * @returns {ReturnType<ConfirmationInfo['callback']>} - The status and message of the delete operation.
+	 * @returns {ReturnType<ConfirmationInfo['callback']>} - The alert type and text of the delete operation.
 	 */
 	async function deletePromptCallBack(): ReturnType<ConfirmationInfo['callback']> {
 		promptEditModalRef.close();
@@ -79,12 +79,12 @@
 				promptLocalStorageManager.deleteItem($form.id);
 			}
 
-			return { statusType: 'success', statusMessage: 'Prompt deleted successfully!' };
+			return { alertType: 'success', alertText: 'Prompt deleted successfully!' };
 		} catch (e) {
 			console.error('Failed to delete prompt');
 			return {
-				statusType: 'error',
-				statusMessage: 'Failed to delete prompt. Please try again later'
+				alertType: 'error',
+				alertText: 'Failed to delete prompt. Please try again later'
 			};
 		}
 	}
@@ -114,17 +114,17 @@
 		onUpdated: ({ form }) => {
 			if (!$message) return;
 
-			const { statusType, text, refinedPrompt: refinedPromptValue } = $message;
+			const { alertType, alertText, refinedPrompt: refinedPromptValue } = $message;
 
-			const notificationFunction = getNotificationFunction(statusType);
+			const notificationFunction = getNotificationFunction(alertType);
 
-			if (formAction === '?/refinePrompt' && statusType === 'success') {
+			if (formAction === '?/refinePrompt' && alertType === 'success') {
 				refinedPrompt = refinedPromptValue;
 				isRefinedPromptVisible = true;
 				return;
 			}
 
-			if (statusType === 'success') {
+			if (alertType === 'success') {
 				const { id, title, description, isFavorited } = form.data;
 
 				if (!userSession) {
@@ -140,7 +140,7 @@
 					$allPromptsStore.find((prompt) => prompt.id === id) ?? selectedPromptForEdit;
 			}
 
-			notificationFunction(text, { target: 'baseModal' });
+			notificationFunction(alertText, { target: 'baseModal' });
 		}
 	});
 

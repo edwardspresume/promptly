@@ -1,4 +1,9 @@
-export type StatusType = 'success' | 'error' | 'warning' | 'info';
+export type AlertType = 'success' | 'error' | 'warning' | 'info';
+
+export type AlertMessage = {
+	alertType: AlertType;
+	alertText: string;
+};
 
 export type NavLink = {
 	title: string;

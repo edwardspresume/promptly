@@ -61,11 +61,11 @@
 		onUpdated: ({ form }) => {
 			if (!$message) return;
 
-			const { statusType, text } = $message;
+			const { alertType, alertText } = $message;
 
-			const notificationFunction = getNotificationFunction(statusType);
+			const notificationFunction = getNotificationFunction(alertType);
 
-			if (statusType === 'success') {
+			if (alertType === 'success') {
 				const { id, name } = form.data;
 
 				if (!$page.data.session) {
@@ -76,7 +76,7 @@
 				selectedTagForEdit = $allTagsStore.find((tag) => tag.id === id) ?? selectedTagForEdit;
 			}
 
-			notificationFunction(text, { target: 'baseModal' });
+			notificationFunction(alertText, { target: 'baseModal' });
 		}
 	});
 </script>

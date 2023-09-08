@@ -3,19 +3,20 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 import type { Actions } from './$types';
 
 import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
-import { sanitizeContent, type FormStatusMessage } from '$databaseDir/utils.server';
+import { sanitizeContent } from '$databaseDir/utils.server';
+import type { AlertMessage } from '$globalTypes';
 
 export const actions: Actions = {
 	default: async ({ request, fetch }) => {
-		const feedbackForm = await superValidate<typeof FeedbackValidationSchema, FormStatusMessage>(
+		const feedbackForm = await superValidate<typeof FeedbackValidationSchema, AlertMessage>(
 			request,
 			FeedbackValidationSchema
 		);
 
 		if (!feedbackForm.valid) {
 			return message(feedbackForm, {
-				statusType: 'error',
-				text: 'The message you entered is invalid. Please enter a valid message'
+				alertType: 'error',
+				alertText: 'The message you entered is invalid. Please enter a valid message'
 			});
 		}
 
@@ -35,8 +36,8 @@ export const actions: Actions = {
 			}
 
 			return message(feedbackForm, {
-				statusType: 'success',
-				text: response.statusText
+				alertType: 'success',
+				alertText: response.statusText
 			});
 		} catch (error) {
 			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -44,8 +45,8 @@ export const actions: Actions = {
 			return message(
 				feedbackForm,
 				{
-					statusType: 'error',
-					text: errorMessage
+					alertType: 'error',
+					alertText: errorMessage
 				},
 				{
 					status: 500

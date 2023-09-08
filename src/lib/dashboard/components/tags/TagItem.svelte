@@ -21,7 +21,7 @@
 	 * Deletes the tag either from the database or from the local storage,
 	 * depending on whether the user is logged in.
 	 * @async
-	 * @returns {ReturnType<ConfirmationInfo['callback']>} - The status and message of the delete operation.
+	 * @returns {ReturnType<ConfirmationInfo['callback']>} - The alert type and text of the delete operation.
 	 */
 	async function deleteTagCallBack(): ReturnType<ConfirmationInfo['callback']> {
 		try {
@@ -33,10 +33,10 @@
 				tagLocalStorageManager.deleteItem(tagId);
 			}
 
-			return { statusType: 'success', statusMessage: 'Tag deleted successfully!' };
+			return { alertType: 'success', alertText: 'Tag deleted successfully!' };
 		} catch (e) {
 			console.error('Failed to delete tag');
-			return { statusType: 'error', statusMessage: 'Failed to delete tag. Please try again later' };
+			return { alertType: 'error', alertText: 'Failed to delete tag. Please try again later' };
 		}
 	}
 

@@ -33,14 +33,14 @@
 			confirmationModalRef.close();
 
 			// Handle error case
-			if (result.statusType === 'error') {
-				notifyError(result.statusMessage, { target: 'dashboardLayout' });
+			if (result.alertType === 'error') {
+				notifyError(result.alertText, { target: 'dashboardLayout' });
 				return;
 			}
 
 			await invalidateAll();
 
-			notifySuccess(result.statusMessage, { target: 'dashboardLayout' });
+			notifySuccess(result.alertText, { target: 'dashboardLayout' });
 		} catch (e) {
 			console.error('Failed to execute callback and close modal');
 			notifyError('An unexpected error occurred. Please try again.', { target: 'dashboardLayout' });

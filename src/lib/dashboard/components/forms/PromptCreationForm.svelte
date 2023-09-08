@@ -46,11 +46,11 @@
 		onUpdated: ({ form }) => {
 			if (!$message) return;
 
-			const { statusType, text } = $message;
+			const { alertType, alertText } = $message;
 
-			const notificationFunction = getNotificationFunction(statusType);
+			const notificationFunction = getNotificationFunction(alertType);
 
-			if (statusType === 'success') {
+			if (alertType === 'success') {
 				if (!$page.data.session?.user) {
 					const { title, description, isFavorited } = form.data;
 
@@ -65,7 +65,7 @@
 				resetFormFields();
 			}
 
-			notificationFunction(text, { target: 'baseModal' });
+			notificationFunction(alertText, { target: 'baseModal' });
 		}
 	});
 </script>

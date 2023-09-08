@@ -7,7 +7,8 @@ import type { Actions, PageServerLoad } from './$types';
 
 import { TagValidationSchema } from '$dashboardValidationSchemas/tagValidationSchema';
 import { tagsTable } from '$databaseDir/schema';
-import { sanitizeContent, type FormStatusMessage } from '$databaseDir/utils.server';
+import { sanitizeContent } from '$databaseDir/utils.server';
+import type { AlertMessage } from '$globalTypes';
 
 export const load = (async () => {
 	const tagForm = await superValidate(TagValidationSchema);
@@ -17,15 +18,15 @@ export const load = (async () => {
 
 export const actions: Actions = {
 	default: async ({ request, locals: { getSession } }) => {
-		const tagForm = await superValidate<typeof TagValidationSchema, FormStatusMessage>(
+		const tagForm = await superValidate<typeof TagValidationSchema, AlertMessage>(
 			request,
 			TagValidationSchema
 		);
 
 		if (!tagForm.valid) {
 			return message(tagForm, {
-				statusType: 'error',
-				text: 'The tag name you entered is invalid. Please enter a valid tag name.'
+				alertType: 'error',
+				alertText: 'The tag name you entered is invalid. Please enter a valid tag name.'
 			});
 		}
 
@@ -52,15 +53,15 @@ export const actions: Actions = {
 				console.error(error);
 
 				return message(tagForm, {
-					statusType: 'error',
-					text: `Unexpected error during tag ${tagId ? 'update' : 'creation'}. Please retry.`
+					alertType: 'error',
+					alertText: `Unexpected error during tag ${tagId ? 'update' : 'creation'}. Please retry.`
 				});
 			}
 		}
 
 		return message(tagForm, {
-			statusType: 'success',
-			text: `Tag ${tagId ? 'updated' : 'created'} successfully!`
+			alertType: 'success',
+			alertText: `Tag ${tagId ? 'updated' : 'created'} successfully!`
 		});
 	}
 };

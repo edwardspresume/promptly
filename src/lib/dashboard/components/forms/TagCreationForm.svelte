@@ -38,14 +38,15 @@
 		onUpdated: ({ form }) => {
 			if (!$message) return;
 
-			const { statusType, text } = $message;
-			const notificationFunction = getNotificationFunction(statusType);
+			const { alertType, alertText } = $message;
 
-			if (statusType === 'success' && !$page.data.session) {
+			const notificationFunction = getNotificationFunction(alertType);
+
+			if (alertType === 'success' && !$page.data.session) {
 				tagLocalStorageManager.addItem({ name: form.data.name });
 			}
 
-			notificationFunction(text, { target: 'baseModal' });
+			notificationFunction(alertText, { target: 'baseModal' });
 		}
 	});
 </script>

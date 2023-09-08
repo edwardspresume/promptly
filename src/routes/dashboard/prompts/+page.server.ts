@@ -64,12 +64,16 @@ export const actions: Actions = {
 			} catch (error) {
 				console.error('Error in createOrUpdatePrompt:', error, { promptId, session });
 
-				return message(promptForm, {
-					alertType: 'error',
-					alertText: `Unexpected error during prompt ${
-						promptId ? 'update' : 'creation'
-					}. Please retry.`
-				});
+				return message(
+					promptForm,
+					{
+						alertType: 'error',
+						alertText: `Unexpected error during prompt ${
+							promptId ? 'update' : 'creation'
+						}. Please retry.`
+					},
+					{ status: 500 }
+				);
 			}
 		}
 
@@ -106,7 +110,7 @@ export const actions: Actions = {
 				})
 			});
 
-			if (response.status !== 200) {
+			if (response.status >= 400) {
 				throw new Error(response.statusText);
 			}
 

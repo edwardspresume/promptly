@@ -48,21 +48,21 @@ async function fetchRefinedPrompt(promptData: PromptData) {
 }
 
 export const POST: RequestHandler = async ({ request }) => {
+	if (!SECRET_OPENAI_API_KEY) {
+		return new Response(null, {
+			status: 500,
+			statusText: 'OPENAI_API_KEY is missing in the environment variables.'
+		});
+	}
+
+	if (request.headers.get('content-type') !== 'application/json') {
+		return new Response(null, {
+			status: 400,
+			statusText: 'Unsupported content type. Expected application/json'
+		});
+	}
+
 	try {
-		if (!SECRET_OPENAI_API_KEY) {
-			return new Response(null, {
-				status: 500,
-				statusText: 'OPENAI_API_KEY is missing in the environment variables.'
-			});
-		}
-
-		if (request.headers.get('content-type') !== 'application/json') {
-			return new Response(null, {
-				status: 400,
-				statusText: 'Unsupported content type. Expected application/json'
-			});
-		}
-
 		const { promptTitle, promptDescription } = (await request.json()) as PromptData;
 
 		const refinedPrompt = await fetchRefinedPrompt({

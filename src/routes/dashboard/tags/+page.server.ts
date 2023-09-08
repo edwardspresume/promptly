@@ -52,10 +52,14 @@ export const actions: Actions = {
 			} catch (error) {
 				console.error(error);
 
-				return message(tagForm, {
-					alertType: 'error',
-					alertText: `Unexpected error during tag ${tagId ? 'update' : 'creation'}. Please retry.`
-				});
+				return message(
+					tagForm,
+					{
+						alertType: 'error',
+						alertText: `Unexpected error during tag ${tagId ? 'update' : 'creation'}. Please retry.`
+					},
+					{ status: 500 }
+				);
 			}
 		}
 

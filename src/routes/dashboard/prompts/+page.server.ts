@@ -9,9 +9,11 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
 
 import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
-import type { FormStatusMessage } from '$databaseDir/utils.server';
+import { sanitizeContent, type FormStatusMessage } from '$databaseDir/utils.server';
 
 type FormData = z.infer<typeof PromptsValidationSchema>;
+
+const ERROR_INVALID_PROMPT = 'The prompt you entered is invalid. Please enter a valid prompt.';
 
 export const load = (async () => {
 	const promptForm = await superValidate(PromptsValidationSchema);
@@ -28,7 +30,7 @@ export const actions: Actions = {
 		if (!promptForm.valid) {
 			return message(promptForm, {
 				statusType: 'error',
-				text: 'The prompt you entered is invalid. Please enter a valid prompt.'
+				text: ERROR_INVALID_PROMPT
 			});
 		}
 
@@ -37,25 +39,29 @@ export const actions: Actions = {
 
 		if (session) {
 			try {
-				const formData = Object.fromEntries(
-					Object.entries(promptForm.data).filter(([, value]) => value !== undefined)
+				const sanitizedData = Object.fromEntries(
+					Object.entries(promptForm.data)
+						.filter(([, value]) => value !== undefined)
+						.map(([key, value]) =>
+							typeof value === 'string' ? [key, sanitizeContent(value)] : [key, value]
+						)
 				) as FormData;
 
 				if (promptId) {
 					// Remove 'id' from formData
-					delete formData.id;
+					delete sanitizedData.id;
 
 					await drizzleClient
 						.update(promptsTable)
-						.set(formData)
+						.set(sanitizedData)
 						.where(eq(promptsTable.id, promptId));
 				} else {
 					await drizzleClient
 						.insert(promptsTable)
-						.values({ profileId: session.user.id, ...formData });
+						.values({ profileId: session.user.id, ...sanitizedData });
 				}
 			} catch (error) {
-				console.error(error);
+				console.error('Error in createOrUpdatePrompt:', error, { promptId, session });
 
 				return message(promptForm, {
 					statusType: 'error',
@@ -70,29 +76,6 @@ export const actions: Actions = {
 		});
 	},
 
-	toggleFavorite: async ({ request }) => {
-		const formData = await request.formData();
-
-		const isFavorited = formData.get('isFavorited') === 'true';
-		const promptId = formData.get('promptId')?.toString();
-
-		try {
-			if (promptId) {
-				await drizzleClient
-					.update(promptsTable)
-					.set({ isFavorited })
-					.where(eq(promptsTable.id, promptId));
-			} else {
-				throw new Error('Prompt ID is not defined.');
-			}
-		} catch (error) {
-			console.error(error);
-			throw new Error('Failed to toggle favorite. Please try again.');
-		}
-
-		return { success: true };
-	},
-
 	refinePrompt: async ({ request, fetch }) => {
 		type NewRefinedPrompt = FormStatusMessage & { refinedPrompt?: string };
 
@@ -104,7 +87,7 @@ export const actions: Actions = {
 		if (!promptForm.valid) {
 			return message(promptForm, {
 				statusType: 'error',
-				text: 'The prompt you entered is invalid. Please enter a valid prompt.'
+				text: ERROR_INVALID_PROMPT
 			});
 		}
 
@@ -114,7 +97,10 @@ export const actions: Actions = {
 			const response = await fetch('./api/refinePrompt', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ promptTitle, promptDescription })
+				body: JSON.stringify({
+					promptTitle: sanitizeContent(promptTitle),
+					promptDescription: sanitizeContent(promptDescription)
+				})
 			});
 
 			if (response.status !== 200) {
@@ -142,5 +128,28 @@ export const actions: Actions = {
 				}
 			);
 		}
+	},
+
+	toggleFavorite: async ({ request }) => {
+		const formData = await request.formData();
+
+		const isFavorited = formData.get('isFavorited') === 'true';
+		const promptId = formData.get('promptId')?.toString();
+
+		try {
+			if (promptId) {
+				await drizzleClient
+					.update(promptsTable)
+					.set({ isFavorited })
+					.where(eq(promptsTable.id, promptId));
+			} else {
+				throw new Error('Prompt ID is not defined.');
+			}
+		} catch (error) {
+			console.error(error);
+			throw new Error('Failed to toggle favorite. Please try again.');
+		}
+
+		return { success: true };
 	}
 };

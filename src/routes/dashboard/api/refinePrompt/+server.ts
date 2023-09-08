@@ -3,7 +3,6 @@ import type { RequestHandler } from './$types';
 import { SECRET_OPENAI_API_KEY } from '$env/static/private';
 
 import OpenAI from 'openai';
-import sanitizeHtml from 'sanitize-html';
 
 type PromptData = {
 	promptTitle: string;
@@ -66,12 +65,9 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const { promptTitle, promptDescription } = (await request.json()) as PromptData;
 
-		const sanitizedPromptTitle = sanitizeHtml(promptTitle);
-		const sanitizedPromptDescription = sanitizeHtml(promptDescription);
-
 		const refinedPrompt = await fetchRefinedPrompt({
-			promptTitle: sanitizedPromptTitle,
-			promptDescription: sanitizedPromptDescription
+			promptTitle,
+			promptDescription
 		});
 
 		return new Response(refinedPrompt, {

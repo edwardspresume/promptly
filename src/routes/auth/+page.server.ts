@@ -107,11 +107,10 @@ export const actions: Actions = {
 		);
 
 		if (!oauthForm.valid) {
-			return message(
-				oauthForm,
-				{ statusType: 'error', text: AUTH_MESSAGES.UNSUPPORTED_OAUTH_PROVIDER },
-				{ status: 400 }
-			);
+			return message(oauthForm, {
+				statusType: 'error',
+				text: AUTH_MESSAGES.UNSUPPORTED_OAUTH_PROVIDER
+			});
 		}
 
 		const provider = oauthForm.data.provider.toLowerCase() as Provider;

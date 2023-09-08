@@ -22,11 +22,12 @@ export const actions: Actions = {
 			TagValidationSchema
 		);
 
-		if (!tagForm.valid)
+		if (!tagForm.valid) {
 			return message(tagForm, {
 				statusType: 'error',
 				text: 'The tag name you entered is invalid. Please enter a valid tag name.'
 			});
+		}
 
 		const tagId = tagForm.data.id;
 

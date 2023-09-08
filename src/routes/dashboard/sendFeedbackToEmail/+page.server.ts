@@ -13,16 +13,10 @@ export const actions: Actions = {
 		);
 
 		if (!feedbackForm.valid) {
-			return message(
-				feedbackForm,
-				{
-					statusType: 'error',
-					text: 'The message you entered is invalid. Please enter a valid message'
-				},
-				{
-					status: 500
-				}
-			);
+			return message(feedbackForm, {
+				statusType: 'error',
+				text: 'The message you entered is invalid. Please enter a valid message'
+			});
 		}
 
 		const { message: feedbackMessage } = feedbackForm.data;

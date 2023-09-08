@@ -3,7 +3,7 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 import type { Actions } from './$types';
 
 import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
-import type { FormStatusMessage } from '$databaseDir/utils.server';
+import { sanitizeContent, type FormStatusMessage } from '$databaseDir/utils.server';
 
 export const actions: Actions = {
 	default: async ({ request, fetch }) => {
@@ -13,19 +13,27 @@ export const actions: Actions = {
 		);
 
 		if (!feedbackForm.valid) {
-			return message(feedbackForm, {
-				statusType: 'error',
-				text: 'The message you entered is invalid. Please enter a valid message'
-			});
+			return message(
+				feedbackForm,
+				{
+					statusType: 'error',
+					text: 'The message you entered is invalid. Please enter a valid message'
+				},
+				{
+					status: 500
+				}
+			);
 		}
 
 		const { message: feedbackMessage } = feedbackForm.data;
+
+		const sanitizedMessage = sanitizeContent(feedbackMessage);
 
 		try {
 			const response = await fetch('./api/sendFeedbackToEmail', {
 				method: 'POST',
 				headers: { 'Content-Type': 'text/plain' },
-				body: feedbackMessage
+				body: sanitizedMessage
 			});
 
 			if (!response.ok) {

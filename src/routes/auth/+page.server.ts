@@ -11,7 +11,11 @@ import {
 	OAuthProviderValidationSchema
 } from '$authValidationSchemas/authValidationSchemas';
 
-import { checkEmailExists, type FormStatusMessage } from '$databaseDir/utils.server';
+import {
+	checkEmailExists,
+	sanitizeContent,
+	type FormStatusMessage
+} from '$databaseDir/utils.server';
 
 const AUTH_MESSAGES = {
 	INVALID_EMAIL: 'The email you entered is invalid. Please enter a valid email address.',
@@ -54,10 +58,11 @@ export const actions: Actions = {
 		}
 
 		const formType = authEmailForm.data.formType;
+		const sanitizedEmail = sanitizeContent(authEmailForm.data.email);
 
 		try {
 			// Check if the email already exists when signing up.
-			const isEmailExists = await checkEmailExists(authEmailForm.data.email);
+			const isEmailExists = await checkEmailExists(sanitizedEmail);
 
 			if (formType === 'signUp' && isEmailExists) {
 				return setError(authEmailForm, 'email', 'E-mail already exists');
@@ -75,7 +80,7 @@ export const actions: Actions = {
 
 		// Attempt to sign in or sign up with the given email.
 		const { error: authError } = await supabase.auth.signInWithOtp({
-			email: authEmailForm.data.email,
+			email: sanitizedEmail,
 			options: { emailRedirectTo: `${url.origin}/auth/callback` }
 		});
 

@@ -1,5 +1,4 @@
 import nodemailer from 'nodemailer';
-import sanitizeHtml from 'sanitize-html';
 
 import { SECRET_GMAIL_PASS, SECRET_GMAIL_USERNAME } from '$env/static/private';
 import type { RequestHandler } from './$types';
@@ -34,15 +33,13 @@ export const POST: RequestHandler = async ({ request }) => {
 	const feedbackMessage = await request.text();
 
 	try {
-		const sanitizedFeedbackMessage = sanitizeHtml(feedbackMessage);
-
 		await sendEmail({
 			from: SECRET_GMAIL_USERNAME,
 			to: SECRET_GMAIL_USERNAME,
 			subject: `Promptly Feedback`,
 			html: `
                 <h2>New Feedback</h2>
-                <p>${sanitizedFeedbackMessage}</p>
+                <p>${feedbackMessage}</p>
             `
 		});
 

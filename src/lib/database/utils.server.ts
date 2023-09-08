@@ -1,10 +1,16 @@
 import { desc, eq } from 'drizzle-orm';
 import { drizzleClient } from './drizzleClient.server';
 
+import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
+
 import type { StatusType } from '$globalTypes';
 import { profilesTable, promptsTable, tagsTable } from './schema';
 
 export type FormStatusMessage = { statusType: StatusType; text: string };
+
+const window = new JSDOM('').window;
+export const sanitizeContent = DOMPurify(window).sanitize;
 
 /**
  * Checks whether the given email exists in the profiles table.

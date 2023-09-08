@@ -7,7 +7,7 @@ import type { Actions, PageServerLoad } from './$types';
 
 import { TagValidationSchema } from '$dashboardValidationSchemas/tagValidationSchema';
 import { tagsTable } from '$databaseDir/schema';
-import type { FormStatusMessage } from '$databaseDir/utils.server';
+import { sanitizeContent, type FormStatusMessage } from '$databaseDir/utils.server';
 
 export const load = (async () => {
 	const tagForm = await superValidate(TagValidationSchema);
@@ -29,19 +29,22 @@ export const actions: Actions = {
 			});
 
 		const tagId = tagForm.data.id;
+
 		const session = await getSession();
 
 		if (session) {
+			const sanitizedTagName = sanitizeContent(tagForm.data.name);
+
 			try {
 				if (tagId) {
 					await drizzleClient
 						.update(tagsTable)
-						.set({ name: tagForm.data.name })
+						.set({ name: sanitizedTagName })
 						.where(eq(tagsTable.id, tagId));
 				} else {
 					await drizzleClient.insert(tagsTable).values({
 						profileId: session.user.id,
-						name: tagForm.data.name
+						name: sanitizedTagName
 					});
 				}
 			} catch (error) {

@@ -27,15 +27,15 @@ const AUTH_MESSAGES = {
 	SUCCESSFUL_SIGNUP: `You have successfully signed up! Please check your email for a confirmation link. If you don't receive it within a few minutes, check your spam folder.`
 };
 
-export const load: PageServerLoad = async ({ request, parent }) => {
+export const load: PageServerLoad = async ({ parent }) => {
 	const { session } = await parent();
 
 	if (session) {
 		throw redirect(303, RoutePaths.DASHBOARD_PROMPTS);
 	}
 
-	const authEmailForm = superValidate(request, EmailAuthValidationSchema);
-	const oAuthForm = superValidate(request, OAuthProviderValidationSchema);
+	const authEmailForm = superValidate(EmailAuthValidationSchema);
+	const oAuthForm = superValidate(OAuthProviderValidationSchema);
 
 	return { authEmailForm, oAuthForm };
 };

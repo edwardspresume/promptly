@@ -5,8 +5,8 @@ import type { LayoutServerLoad } from './$types';
 import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
 import { getUserProfile, getUserPrompts, getUserTags } from '$databaseDir/utils.server';
 
-export const load = (async ({ request, locals: { getSession } }) => {
-	const feedbackForm = superValidate(request, FeedbackValidationSchema);
+export const load = (async ({ locals: { getSession } }) => {
+	const feedbackForm = superValidate(FeedbackValidationSchema);
 
 	const userId = (await getSession())?.user.id;
 

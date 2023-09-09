@@ -20,6 +20,7 @@ const ERROR_INVALID_PROMPT = 'The prompt you entered is invalid. Please enter a 
 
 export const load = (async () => {
 	const promptForm = await superValidate(PromptsValidationSchema);
+
 	return { promptForm };
 }) satisfies PageServerLoad;
 

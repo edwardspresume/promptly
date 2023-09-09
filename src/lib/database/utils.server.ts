@@ -4,6 +4,14 @@ import { drizzleClient } from './drizzleClient.server';
 import { logError } from '$globalUtils';
 import { profilesTable, promptsTable, tagsTable } from './schema';
 
+import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
+
+const window = new JSDOM('').window;
+const DOMPurifyInstance = DOMPurify(window);
+
+export const sanitizeContentOnServer = DOMPurifyInstance.sanitize;
+
 /**
  * Checks whether the given email exists in the profiles table.
  * @param {string} email - The email address to check.

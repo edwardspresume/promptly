@@ -11,7 +11,8 @@ import type { Actions, PageServerLoad } from './$types';
 import type { AlertMessage } from '$globalTypes';
 
 import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
-import { logError, sanitizeContentOnServer } from '$globalUtils';
+import { sanitizeContentOnServer } from '$databaseDir/utils.server';
+import { logError } from '$globalUtils';
 
 type FormData = z.infer<typeof PromptsValidationSchema>;
 

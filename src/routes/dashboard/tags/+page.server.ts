@@ -10,7 +10,8 @@ import type { AlertMessage } from '$globalTypes';
 import { TagValidationSchema } from '$dashboardValidationSchemas/tagValidationSchema';
 import { tagsTable } from '$databaseDir/schema';
 
-import { logError, sanitizeContentOnServer } from '$globalUtils';
+import { sanitizeContentOnServer } from '$databaseDir/utils.server';
+import { logError } from '$globalUtils';
 
 export const load = (async () => {
 	const tagForm = await superValidate(TagValidationSchema);

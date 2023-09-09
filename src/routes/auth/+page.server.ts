@@ -11,8 +11,8 @@ import {
 	OAuthProviderValidationSchema
 } from '$authValidationSchemas/authValidationSchemas';
 
-import { checkEmailExists } from '$databaseDir/utils.server';
-import { logError, sanitizeContentOnServer } from '$globalUtils';
+import { checkEmailExists, sanitizeContentOnServer } from '$databaseDir/utils.server';
+import { logError } from '$globalUtils';
 
 const AUTH_MESSAGES = {
 	INVALID_EMAIL: 'The email you entered is invalid. Please enter a valid email address.',

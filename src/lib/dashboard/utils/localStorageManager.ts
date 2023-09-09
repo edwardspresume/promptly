@@ -7,7 +7,7 @@ import defaultTags from '$dashboardData/defaultTags';
 import { allPromptsStore } from '$dashboardStores/promptsStore';
 import { allTagsStore } from '$dashboardStores/tagsStore';
 
-import { logError } from '$globalUtils';
+import { logError, sanitizeContentOnClient } from '$globalUtils';
 import { createDate } from './functions';
 
 /**
@@ -65,6 +65,21 @@ function updateStoreAndSaveToStorage<T>(
 }
 
 /**
+ * Sanitizes all string properties of an object
+ *
+ * @param {Record<string, unknown>} obj - The object to sanitize
+ * @returns {Record<string, unknown>} - A new object with sanitized string properties
+ */
+function sanitizeObjectStringProps(obj: Record<string, unknown>) {
+	return Object.fromEntries(
+		Object.entries(obj).map(([key, value]) => [
+			key,
+			typeof value === 'string' ? sanitizeContentOnClient(value) : value
+		])
+	);
+}
+
+/**
  * Creates a storage manager to handle operations on local storage.
  * @param {Writable<T[]>} store - Svelte store
  * @param {T[]} defaultItems - Default items
@@ -83,15 +98,20 @@ export function createStorageManager<T extends Identifiable>(
 			const currentItems = get(store);
 			let newUUID: string;
 
+			// Generate a set of existing UUIDs to optimize the unique ID generation process
+			const existingUUIDs = new Set(currentItems.map((item) => item.id));
+
 			// Ensure unique ID
 			do {
 				newUUID = crypto.randomUUID();
-			} while (currentItems.some((existingItem) => existingItem.id === newUUID));
+			} while (existingUUIDs.has(newUUID));
+
+			const sanitizedItem = sanitizeObjectStringProps(item) as Partial<T>;
 
 			const newItem: Partial<T> = {
 				id: newUUID,
-				userId: '0000000',
-				...item,
+				profileId: '0000000',
+				...sanitizedItem,
 				createdAt: createDate(),
 				updatedAt: createDate()
 			};
@@ -100,6 +120,8 @@ export function createStorageManager<T extends Identifiable>(
 		},
 
 		updateItem: (id: string, updatedItem: Partial<T>) => {
+			const sanitizedItem = sanitizeObjectStringProps(updatedItem);
+
 			updateStoreAndSaveToStorage(
 				store,
 				(items) =>
@@ -108,7 +130,7 @@ export function createStorageManager<T extends Identifiable>(
 							? item
 							: {
 									...item,
-									...updatedItem,
+									...sanitizedItem,
 									updatedAt: createDate()
 							  }
 					),

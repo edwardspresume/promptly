@@ -3,6 +3,7 @@ import { derived, get, writable } from 'svelte/store';
 import type { TagSchema } from '$databaseDir/schema';
 
 import { sortItems } from '$dashboardUtils/sortItems';
+import { sanitizeContentOnClient } from '$globalUtils';
 
 /**
  * Store for managing the text filter for displaying tags.
@@ -53,7 +54,9 @@ export const filteredTagsStore = derived(
  * @returns {boolean} true if tag exists, false otherwise
  */
 export const doesTagExist = (tagName: string) => {
-	const normalizedName = tagName.trim().toLowerCase();
+	const sanitizedTagName = sanitizeContentOnClient(tagName);
+
+	const normalizedName = sanitizedTagName.trim().toLowerCase();
 
 	const currentTags = get(allTagsStore);
 

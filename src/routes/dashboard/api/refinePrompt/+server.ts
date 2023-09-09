@@ -4,6 +4,8 @@ import { SECRET_OPENAI_API_KEY } from '$env/static/private';
 
 import OpenAI from 'openai';
 
+import { logError } from '$globalUtils';
+
 type PromptData = {
 	promptTitle: string;
 	promptDescription: string;
@@ -42,7 +44,11 @@ async function fetchRefinedPrompt(promptData: PromptData) {
 
 		return refinedPrompt;
 	} catch (error) {
-		console.error('Failed to fetch refined prompt:', error);
+		logError(error, 'Error generating refined prompt', {
+			promptData,
+			params
+		});
+
 		throw new Error('Failed to generate refined prompt. Please try again.');
 	}
 }
@@ -75,7 +81,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			statusText: 'Refined prompt successfully generated!'
 		});
 	} catch (error) {
-		console.error('Error in refining prompt:', error);
+		logError(error, 'Error refining prompt');
 
 		return new Response(null, {
 			status: 500,

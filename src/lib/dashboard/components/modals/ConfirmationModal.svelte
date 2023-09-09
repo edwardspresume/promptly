@@ -5,6 +5,7 @@
 
 	import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
 	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
+	import { logError } from '$globalUtils';
 
 	import Button from '$globalComponents/ui/button/button.svelte';
 
@@ -41,8 +42,9 @@
 			await invalidateAll();
 
 			notifySuccess(result.alertText, { target: 'dashboardLayout' });
-		} catch (e) {
-			console.error('Failed to execute callback and close modal');
+		} catch (error) {
+			logError(error, 'Failed to execute callback and close modal');
+
 			notifyError('An unexpected error occurred. Please try again.', { target: 'dashboardLayout' });
 		}
 	}

@@ -5,10 +5,12 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 
 import type { Actions, PageServerLoad } from './$types';
 
+import type { AlertMessage } from '$globalTypes';
+
 import { TagValidationSchema } from '$dashboardValidationSchemas/tagValidationSchema';
 import { tagsTable } from '$databaseDir/schema';
 import { sanitizeContent } from '$databaseDir/utils.server';
-import type { AlertMessage } from '$globalTypes';
+import { logError } from '$globalUtils';
 
 export const load = (async () => {
 	const tagForm = await superValidate(TagValidationSchema);
@@ -50,7 +52,11 @@ export const actions: Actions = {
 					});
 				}
 			} catch (error) {
-				console.error(error);
+				logError(error, `Unexpected error during tag ${tagId ? 'update' : 'creation'}`, {
+					tagId,
+					sanitizedTagName,
+					session
+				});
 
 				return message(
 					tagForm,

@@ -1,6 +1,8 @@
 <script context="module" lang="ts">
 	import { get } from 'svelte/store';
 
+	import { logError } from '$globalUtils';
+
 	import { allPromptsStore } from '$dashboardStores/promptsStore';
 	import { allTagsStore } from '$dashboardStores/tagsStore';
 	import { userProfileStore } from '$dashboardStores/userProfileStore';
@@ -61,7 +63,7 @@
 			const url = prepareDataForExport();
 			downloadData(url);
 		} catch (error) {
-			console.error('Something went wrong while exporting data:', error);
+			logError(error, 'Data export');
 		}
 	}
 </script>

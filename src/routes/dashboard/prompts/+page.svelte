@@ -54,7 +54,7 @@
 			if (session !== null) {
 				const { error } = await supabase.from('prompts').delete().eq('profile_id', session.user.id);
 
-				if (error) throw new Error(`Supabase error: ${error.message}`);
+				if (error) throw new Error(`Supabase error`);
 			} else {
 				promptLocalStorageManager.deleteAllItems();
 			}
@@ -65,6 +65,7 @@
 			};
 		} catch (e) {
 			console.error('Failed to delete all prompts');
+
 			return {
 				alertType: 'error',
 				alertText: 'Failed to delete all prompts. Please try again later'

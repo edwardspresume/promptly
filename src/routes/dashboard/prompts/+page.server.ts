@@ -8,9 +8,11 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 
 import type { Actions, PageServerLoad } from './$types';
 
+import type { AlertMessage } from '$globalTypes';
+
 import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
 import { sanitizeContent } from '$databaseDir/utils.server';
-import type { AlertMessage } from '$globalTypes';
+import { logError } from '$globalUtils';
 
 type FormData = z.infer<typeof PromptsValidationSchema>;
 
@@ -62,7 +64,7 @@ export const actions: Actions = {
 						.values({ profileId: session.user.id, ...sanitizedData });
 				}
 			} catch (error) {
-				console.error('Error in createOrUpdatePrompt:', error, { promptId, session });
+				logError(error, 'Error in createOrUpdatePrompt', { promptId, session });
 
 				return message(
 					promptForm,
@@ -153,7 +155,8 @@ export const actions: Actions = {
 				throw new Error('Prompt ID is not defined.');
 			}
 		} catch (error) {
-			console.error(error);
+			logError(error, 'Error in toggleFavorite', { promptId, isFavorited });
+
 			throw new Error('Failed to toggle favorite. Please try again.');
 		}
 

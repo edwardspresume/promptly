@@ -3,7 +3,7 @@
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 
 	import { notifyError, notifySuccess } from '$dashboardUtils/toastUtils';
-	import { cn } from '$globalUtils';
+	import { cn, logError } from '$globalUtils';
 
 	import Icon from '$globalComponents/Icon.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
@@ -34,7 +34,7 @@
 				target: toastNotificationTarget
 			});
 		} catch (error) {
-			console.error('Failed to prompt description: ', error);
+			logError(error, 'Failed to copy prompt description');
 
 			notifyError('Failed to copy prompt description', {
 				target: toastNotificationTarget

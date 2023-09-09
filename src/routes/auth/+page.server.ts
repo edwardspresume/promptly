@@ -12,6 +12,7 @@ import {
 } from '$authValidationSchemas/authValidationSchemas';
 
 import { checkEmailExists, sanitizeContent } from '$databaseDir/utils.server';
+import { logError } from '$globalUtils';
 
 const AUTH_MESSAGES = {
 	INVALID_EMAIL: 'The email you entered is invalid. Please enter a valid email address.',
@@ -81,7 +82,10 @@ export const actions: Actions = {
 		});
 
 		if (emailAuthError) {
-			console.error(emailAuthError);
+			logError(emailAuthError, 'Error signing in with email', {
+				formType,
+				email: sanitizedEmail
+			});
 
 			return message(
 				authEmailForm,
@@ -118,7 +122,10 @@ export const actions: Actions = {
 		});
 
 		if (error) {
-			console.error(error);
+			logError(error, 'Error signing in with OAuth', {
+				provider
+			});
+
 			return message(
 				oauthForm,
 				{ alertType: 'error', alertText: AUTH_MESSAGES.SERVER_ERROR },

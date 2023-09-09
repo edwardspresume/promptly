@@ -4,6 +4,7 @@ import { drizzleClient } from './drizzleClient.server';
 import DOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 
+import { logError } from '$globalUtils';
 import { profilesTable, promptsTable, tagsTable } from './schema';
 
 const window = new JSDOM('').window;
@@ -26,7 +27,10 @@ export async function checkEmailExists(email: string) {
 		// If data.length is greater than 0, that means the email exists
 		return queryResult.length > 0;
 	} catch (error) {
-		console.error(error);
+		logError(error, 'Error checking email existence', {
+			email
+		});
+
 		throw new Error('Error checking email existence');
 	}
 }
@@ -51,7 +55,10 @@ export async function getUserProfile(profileId: string) {
 
 		return userProfile[0] ?? null;
 	} catch (error) {
-		console.error(error);
+		logError(error, 'Error fetching user profile', {
+			profileId
+		});
+
 		throw new Error('Error fetching user profile');
 	}
 }
@@ -72,7 +79,10 @@ export async function getUserPrompts(profileId: string) {
 
 		return userPrompts ?? null;
 	} catch (error) {
-		console.error(error);
+		logError(error, 'Error fetching user prompts', {
+			profileId
+		});
+
 		throw new Error('Error fetching user prompts');
 	}
 }
@@ -93,7 +103,10 @@ export async function getUserTags(profileId: string) {
 
 		return userTags ?? null;
 	} catch (error) {
-		console.error(error);
+		logError(error, 'Error fetching user tags', {
+			profileId
+		});
+
 		throw new Error('Error fetching user tags');
 	}
 }

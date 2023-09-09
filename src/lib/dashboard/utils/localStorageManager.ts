@@ -7,6 +7,7 @@ import defaultTags from '$dashboardData/defaultTags';
 import { allPromptsStore } from '$dashboardStores/promptsStore';
 import { allTagsStore } from '$dashboardStores/tagsStore';
 
+import { logError } from '$globalUtils';
 import { createDate } from './functions';
 
 /**
@@ -36,7 +37,8 @@ function getItemsFromLocalStorage<T>(storageKey: string, defaultValue: T[]): T[]
 		const storedValue = localStorage.getItem(storageKey);
 		return storedValue ? (JSON.parse(storedValue) as T[]) : defaultValue;
 	} catch (error) {
-		console.error('Failed to retrieve item from localStorage:', error);
+		logError(error, 'Failed to retrieve item from localStorage', { storageKey, defaultValue });
+
 		return defaultValue;
 	}
 }
@@ -58,7 +60,7 @@ function updateStoreAndSaveToStorage<T>(
 		store.set(updatedItems);
 		localStorage.setItem(storageKey, JSON.stringify(updatedItems));
 	} catch (error) {
-		console.error('Failed to update store:', error);
+		logError(error, 'Failed to update store', { storageKey, store, updateFunction });
 	}
 }
 

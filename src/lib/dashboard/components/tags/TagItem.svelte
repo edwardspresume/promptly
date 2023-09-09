@@ -28,7 +28,7 @@
 			if ($page.data.session !== null) {
 				const { error } = await $page.data.supabase.from('tags').delete().eq('id', tagId);
 
-				if (error) throw new Error(`Supabase error: ${error.message}`);
+				if (error) throw new Error(`Supabase error`);
 			} else {
 				tagLocalStorageManager.deleteItem(tagId);
 			}
@@ -36,6 +36,7 @@
 			return { alertType: 'success', alertText: 'Tag deleted successfully!' };
 		} catch (e) {
 			console.error('Failed to delete tag');
+            
 			return { alertType: 'error', alertText: 'Failed to delete tag. Please try again later' };
 		}
 	}

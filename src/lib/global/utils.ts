@@ -1,7 +1,33 @@
 import { clsx, type ClassValue } from 'clsx';
-import type { TransitionConfig } from 'svelte/transition';
 import { cubicOut } from 'svelte/easing';
+import type { TransitionConfig } from 'svelte/transition';
 import { twMerge } from 'tailwind-merge';
+
+/**
+ * Logs detailed information about an error.
+ *
+ * @param {unknown} error - The error object, which might not be an instance of Error
+ * @param {string} [context='General context'] - The context in which the error occurred (optional)
+ * @param {Record<string, unknown>} extraInfo - Any extra information to log
+ */
+export function logError(
+	error: unknown,
+	context = 'General context',
+	extraInfo: Record<string, unknown> = {}
+) {
+	const errorObject = error instanceof Error ? error : new Error(String(error));
+
+	console.error({
+		timestamp: new Date().toISOString(),
+		context,
+		error: {
+			name: errorObject.name ?? 'No name available',
+			message: errorObject.message ?? 'No message available',
+			stack: errorObject.stack ?? 'No stack trace available'
+		},
+		extraInfo
+	});
+}
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));

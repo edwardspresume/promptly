@@ -74,7 +74,7 @@
 			if (userSession) {
 				const { error } = await $page.data.supabase.from('prompts').delete().eq('id', $form.id);
 
-				if (error) throw new Error(`Supabase error: ${error.message}`);
+				if (error) throw new Error(`Supabase error`);
 			} else {
 				promptLocalStorageManager.deleteItem($form.id);
 			}
@@ -82,6 +82,7 @@
 			return { alertType: 'success', alertText: 'Prompt deleted successfully!' };
 		} catch (e) {
 			console.error('Failed to delete prompt');
+            
 			return {
 				alertType: 'error',
 				alertText: 'Failed to delete prompt. Please try again later'

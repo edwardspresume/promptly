@@ -3,6 +3,8 @@ import nodemailer from 'nodemailer';
 import { SECRET_GMAIL_PASS, SECRET_GMAIL_USERNAME } from '$env/static/private';
 import type { RequestHandler } from './$types';
 
+import { logError } from '$globalUtils';
+
 /**
  * Creates a nodemailer Transporter instance
  * @returns {nodemailer.Transporter} nodemailer Transporter instance
@@ -48,7 +50,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			statusText: 'Message sent!'
 		});
 	} catch (error) {
-		console.error('Error sending feedback email:', error);
+		logError(error, 'Error sending feedback email');
 
 		return new Response(null, {
 			status: 500,

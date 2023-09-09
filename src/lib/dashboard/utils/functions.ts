@@ -96,6 +96,6 @@ export async function deleteItemFromDatabaseRequest(urlPath: string, itemId?: st
 
 		return response.json();
 	} catch (error) {
-		console.error(`Error deleting item: ${error}`);
+		console.error(`Error deleting item`);
 	}
 }

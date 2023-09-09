@@ -9,8 +9,8 @@ import type { AlertMessage } from '$globalTypes';
 
 import { TagValidationSchema } from '$dashboardValidationSchemas/tagValidationSchema';
 import { tagsTable } from '$databaseDir/schema';
-import { sanitizeContent } from '$databaseDir/utils.server';
-import { logError } from '$globalUtils';
+
+import { logError, sanitizeContentOnServer } from '$globalUtils';
 
 export const load = (async () => {
 	const tagForm = await superValidate(TagValidationSchema);
@@ -25,6 +25,8 @@ export const actions: Actions = {
 			TagValidationSchema
 		);
 
+		console.log('tagForm', tagForm.data.name);
+
 		if (!tagForm.valid) {
 			return message(tagForm, {
 				alertType: 'error',
@@ -37,7 +39,7 @@ export const actions: Actions = {
 		const session = await getSession();
 
 		if (session) {
-			const sanitizedTagName = sanitizeContent(tagForm.data.name);
+			const sanitizedTagName = sanitizeContentOnServer(tagForm.data.name);
 
 			try {
 				if (tagId) {

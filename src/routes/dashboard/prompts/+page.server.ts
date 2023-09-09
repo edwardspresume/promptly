@@ -11,8 +11,7 @@ import type { Actions, PageServerLoad } from './$types';
 import type { AlertMessage } from '$globalTypes';
 
 import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
-import { sanitizeContent } from '$databaseDir/utils.server';
-import { logError } from '$globalUtils';
+import { logError, sanitizeContentOnServer } from '$globalUtils';
 
 type FormData = z.infer<typeof PromptsValidationSchema>;
 
@@ -47,7 +46,7 @@ export const actions: Actions = {
 					Object.entries(promptForm.data)
 						.filter(([, value]) => value !== undefined)
 						.map(([key, value]) =>
-							typeof value === 'string' ? [key, sanitizeContent(value)] : [key, value]
+							typeof value === 'string' ? [key, sanitizeContentOnServer(value)] : [key, value]
 						)
 				) as FormData;
 
@@ -108,8 +107,8 @@ export const actions: Actions = {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					promptTitle: sanitizeContent(promptTitle),
-					promptDescription: sanitizeContent(promptDescription)
+					promptTitle: sanitizeContentOnServer(promptTitle),
+					promptDescription: sanitizeContentOnServer(promptDescription)
 				})
 			});
 

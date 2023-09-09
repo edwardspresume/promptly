@@ -1,14 +1,8 @@
 import { desc, eq } from 'drizzle-orm';
 import { drizzleClient } from './drizzleClient.server';
 
-import DOMPurify from 'dompurify';
-import { JSDOM } from 'jsdom';
-
 import { logError } from '$globalUtils';
 import { profilesTable, promptsTable, tagsTable } from './schema';
-
-const window = new JSDOM('').window;
-export const sanitizeContent = DOMPurify(window).sanitize;
 
 /**
  * Checks whether the given email exists in the profiles table.

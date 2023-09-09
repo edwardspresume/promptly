@@ -3,6 +3,15 @@ import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 import { twMerge } from 'tailwind-merge';
 
+import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
+
+const window = new JSDOM('').window;
+const DOMPurifyInstance = DOMPurify(window);
+
+export const sanitizeContentOnServer = DOMPurifyInstance.sanitize;
+export const sanitizeContentOnClient = DOMPurify.sanitize;
+
 /**
  * Logs detailed information about an error.
  *

@@ -11,8 +11,8 @@ import {
 	OAuthProviderValidationSchema
 } from '$authValidationSchemas/authValidationSchemas';
 
-import { checkEmailExists, sanitizeContent } from '$databaseDir/utils.server';
-import { logError } from '$globalUtils';
+import { checkEmailExists } from '$databaseDir/utils.server';
+import { logError, sanitizeContentOnServer } from '$globalUtils';
 
 const AUTH_MESSAGES = {
 	INVALID_EMAIL: 'The email you entered is invalid. Please enter a valid email address.',
@@ -55,7 +55,7 @@ export const actions: Actions = {
 		}
 
 		const formType = authEmailForm.data.formType;
-		const sanitizedEmail = sanitizeContent(authEmailForm.data.email);
+		const sanitizedEmail = sanitizeContentOnServer(authEmailForm.data.email);
 
 		try {
 			// Check if the email already exists when signing up.

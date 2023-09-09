@@ -2,9 +2,10 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 
 import type { Actions } from './$types';
 
-import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
-import { sanitizeContent } from '$databaseDir/utils.server';
 import type { AlertMessage } from '$globalTypes';
+
+import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
+import { sanitizeContentOnServer } from '$globalUtils';
 
 export const actions: Actions = {
 	default: async ({ request, fetch }) => {
@@ -22,7 +23,7 @@ export const actions: Actions = {
 
 		const { message: feedbackMessage } = feedbackForm.data;
 
-		const sanitizedMessage = sanitizeContent(feedbackMessage);
+		const sanitizedMessage = sanitizeContentOnServer(feedbackMessage);
 
 		try {
 			const response = await fetch('./api/sendFeedbackToEmail', {

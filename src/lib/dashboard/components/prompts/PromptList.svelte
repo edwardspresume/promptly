@@ -4,12 +4,11 @@
 	import { filteredPromptsStore, totalPromptCountStore } from '$dashboardStores/promptsStore';
 
 	import ListContainer from '$dashboardComponents/list/ListContainer.svelte';
+	import ListControls from '$dashboardComponents/list/ListControls.svelte';
 	import ListCounter from '$dashboardComponents/list/ListCounter.svelte';
 	import ListStateNotifier from '$dashboardComponents/list/ListStateNotifier.svelte';
 	import PromptItem from './PromptItem.svelte';
 
-	export let promptListRef: HTMLElement;
-	export let displayedPromptsCount: number;
 	export let isShowingOnlyFavorites: boolean = false;
 
 	const NO_PROMPTS_AVAILABLE_MESSAGE = 'No prompts available. Please add one';
@@ -17,6 +16,8 @@
 	const NO_FAVORITE_PROMPTS_MESSAGE = 'Your favorites list is currently empty';
 
 	let stateMessage: string;
+	let promptListRef: HTMLElement;
+	let displayedPromptsCount: number;
 	let displayedPrompts: PromptSchema[];
 
 	$: {
@@ -51,3 +52,12 @@
 		{/each}
 	</ListContainer>
 {/if}
+
+<ListControls
+	itemType="prompt"
+	itemsListRef={promptListRef}
+	totalItems={$totalPromptCountStore}
+	displayedItems={displayedPromptsCount}
+	on:addItem
+	on:deleteAllItems
+/>

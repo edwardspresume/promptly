@@ -1,16 +1,16 @@
 <script lang="ts">
+	import { fly } from 'svelte/transition';
+
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import type { PromptSchema } from '$databaseDir/schema';
 	import type { PageData } from './$types';
 
-	import { totalPromptCountStore } from '$dashboardStores/promptsStore';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 
 	import FilterDisplayButton from '$dashboardComponents/filters/FilterDisplayButton.svelte';
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
 	import PromptCreationForm from '$dashboardComponents/forms/PromptCreationForm.svelte';
 	import PromptEditForm from '$dashboardComponents/forms/PromptEditForm.svelte';
-	import ListControls from '$dashboardComponents/list/ListControls.svelte';
 	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
 	import PromptsFiltersModal from '$dashboardComponents/modals/PromptsFiltersModal.svelte';
 	import PromptList from '$dashboardComponents/prompts/PromptList.svelte';
@@ -21,14 +21,12 @@
 	let { session, supabase } = data;
 	$: ({ session, supabase } = data);
 
-	let promptListRef: HTMLElement;
 	let promptCreationModalRef: HTMLDialogElement;
 	let confirmationModalRef: HTMLDialogElement;
 	let promptsFiltersModalRef: HTMLDialogElement;
 	let promptEditModalRef: HTMLDialogElement;
 
 	let selectedTabIndex: number = 0;
-	let displayedPromptsCount: number;
 	let selectedPromptForEdit: PromptSchema;
 	let confirmationModalInfoForPromptDeletion: ConfirmationInfo;
 
@@ -101,24 +99,23 @@
 </nav>
 
 {#if selectedTabIndex === 0}
-	<PromptList bind:promptListRef bind:displayedPromptsCount on:editPrompt={handlePromptSelection} />
+	<div in:fly={{ x: 100, delay: 50 }} class="grid overflow-hidden">
+		<PromptList
+			on:addItem={() => promptCreationModalRef.showModal()}
+			on:editPrompt={handlePromptSelection}
+			on:deleteAllItems={handleDeleteAllPromptsEvent}
+		/>
+	</div>
 {:else if selectedTabIndex === 1}
-	<PromptList
-		bind:promptListRef
-		bind:displayedPromptsCount
-		isShowingOnlyFavorites={true}
-		on:editPrompt={handlePromptSelection}
-	/>
+	<div in:fly={{ x: -100, delay: 50 }} class="grid overflow-hidden">
+		<PromptList
+			isShowingOnlyFavorites={true}
+			on:addItem={() => promptCreationModalRef.showModal()}
+			on:editPrompt={handlePromptSelection}
+			on:deleteAllItems={handleDeleteAllPromptsEvent}
+		/>
+	</div>
 {/if}
-
-<ListControls
-	itemType="prompt"
-	itemsListRef={promptListRef}
-	totalItems={$totalPromptCountStore}
-	displayedItems={displayedPromptsCount}
-	on:addItem={() => promptCreationModalRef.showModal()}
-	on:deleteAllItems={handleDeleteAllPromptsEvent}
-/>
 
 <PromptsFiltersModal bind:promptsFiltersModalRef />
 

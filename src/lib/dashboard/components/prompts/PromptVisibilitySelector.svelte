@@ -49,7 +49,7 @@
 			on:click={handleCopy}
 			class="hover:text-blue-500"
 		>
-			<Icon name="share" />
+			<Icon name="link" />
 		</Button>
 	</div>
 </fieldset>

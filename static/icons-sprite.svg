@@ -161,6 +161,13 @@
 
 
 
+    <symbol viewBox="0 0 24 24" id="share">
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m15 5l-3-3m0 0L9 5m3-3v12M6 9H4v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9h-2"></path>
+    </symbol>
+
+
+
     <!--! Delete prompt and tag btn -->
     <symbol viewBox="0 0 24 24" id="delete">
         <path

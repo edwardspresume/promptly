@@ -26,6 +26,7 @@
 	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
 	import CopyPromptDescriptionBtn from '$dashboardComponents/prompts/CopyPromptDescriptionBtn.svelte';
 	import FavoriteToggleBtn from '$dashboardComponents/prompts/FavoriteToggleBtn.svelte';
+	import PromptVisibilitySelector from '$dashboardComponents/prompts/PromptVisibilitySelector.svelte';
 	import InputField from '$globalComponents/form/InputField.svelte';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
 	import TextArea from '$globalComponents/form/TextArea.svelte';
@@ -82,7 +83,7 @@
 			return { alertType: 'success', alertText: 'Prompt deleted successfully!' };
 		} catch (e) {
 			console.error('Failed to delete prompt');
-            
+
 			return {
 				alertType: 'error',
 				alertText: 'Failed to delete prompt. Please try again later'
@@ -147,13 +148,14 @@
 
 	// Watch if selectedPromptForEdit is changed, and populate the form if it has
 	$: if (selectedPromptForEdit && selectedPromptForEdit !== previousPrompt) {
-		const { id, title, description, isFavorited, tagIds } = selectedPromptForEdit;
+		const { id, title, description, isFavorited, tagIds, visibility } = selectedPromptForEdit;
 
 		$form.id = id;
 		$form.title = title;
 		$form.description = description;
 		$form.isFavorited = isFavorited;
 		selectedTagIds.set(tagIds ?? []);
+		$form.visibility = visibility;
 
 		previousPrompt = selectedPromptForEdit;
 
@@ -257,6 +259,10 @@
 				maxlength={MAX_PROMPT_DESCRIPTION_LENGTH}
 			/>
 		</fieldset>
+
+		{#if userSession}
+			<PromptVisibilitySelector promptId={$form.id} promptVisibility={$form.visibility} />
+		{/if}
 
 		{#if $totalTagsCountStore}
 			<TagSelector {selectedTagIds} />

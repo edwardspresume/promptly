@@ -26,8 +26,6 @@ export const actions: Actions = {
 			TagValidationSchema
 		);
 
-		console.log('tagForm', tagForm.data.name);
-
 		if (!tagForm.valid) {
 			return message(tagForm, {
 				alertType: 'error',

@@ -1,4 +1,5 @@
-import { removeLastToast } from './toastUtils';
+import { logError } from '$globalUtils';
+import { notifyError, notifySuccess, removeLastToast } from './toastUtils';
 
 /**
  * Generates a new date string in ISO format.
@@ -70,6 +71,37 @@ export function onOutsideClick(targetNode: Node, callback: () => void) {
 			document.removeEventListener('click', handleClick);
 		}
 	};
+}
+
+/**
+ * Asynchronously copies a specified text to the user's clipboard and handles notifications for success and error outcomes.
+ *
+ * @param {string} textToCopy - The text that should be copied to the clipboard.
+ * @param {string} successMessage - The message to be displayed on successful copy operation.
+ * @param {string} errorMessage - The message to be displayed if the copy operation fails.
+ * @param {string} notificationTarget - The target element where the notification should be displayed.
+ *
+ * @throws Will throw an error if `textToCopy` is not provided.
+ */
+export async function copyToClipboard(
+	textToCopy: string,
+	successMessage: string,
+	errorMessage: string,
+	notificationTarget: string
+) {
+	try {
+		if (!textToCopy) {
+			throw new Error('No text provided to copy');
+		}
+
+		await navigator.clipboard.writeText(textToCopy);
+
+		notifySuccess(successMessage, { target: notificationTarget });
+	} catch (error) {
+		logError(error, 'Failed to copy text to clipboard');
+
+		notifyError(errorMessage, { target: notificationTarget });
+	}
 }
 
 /**

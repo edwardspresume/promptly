@@ -11,6 +11,7 @@ import {
 	OAuthProviderValidationSchema
 } from '$authValidationSchemas/authValidationSchemas';
 
+import { dashboardNavLinks } from '$dashboardNavLinks';
 import { checkEmailExists, sanitizeContentOnServer } from '$databaseDir/utils.server';
 import { logError } from '$globalUtils';
 
@@ -26,6 +27,27 @@ const AUTH_MESSAGES = {
 
 	SUCCESSFUL_SIGNUP: `You have successfully signed up! Please check your email for a confirmation link. If you don't receive it within a few minutes, check your spam folder.`
 };
+
+/**
+ * Gets the URL to redirect to after authentication.
+ *
+ * @param {URL} url - The URL object containing the current URL.
+ * @param {string | null} previousRoute - The previous route as a string or null.
+ * @returns {string} - The URL to redirect to.
+ */
+function getRedirectUrl(url: URL, previousRoute: string | null) {
+	let redirectTo;
+
+	const matchingLink = dashboardNavLinks.some((navLink) => navLink.href === previousRoute);
+
+	if (previousRoute && matchingLink) {
+		redirectTo = `${url.origin}/auth/callback?previousRoute=${previousRoute}`;
+	} else {
+		redirectTo = `${url.origin}/auth/callback`;
+	}
+
+	return redirectTo;
+}
 
 export const load: PageServerLoad = async ({ parent }) => {
 	const { session } = await parent();
@@ -75,10 +97,13 @@ export const actions: Actions = {
 			);
 		}
 
+		const previousRoute = url.searchParams.get('previousRoute');
+		const emailRedirectTo = getRedirectUrl(url, previousRoute);
+
 		// Attempt to sign in or sign up with the given email.
 		const { error: emailAuthError } = await supabase.auth.signInWithOtp({
 			email: sanitizedEmail,
-			options: { emailRedirectTo: `${url.origin}/auth/callback` }
+			options: { emailRedirectTo }
 		});
 
 		if (emailAuthError) {
@@ -114,11 +139,14 @@ export const actions: Actions = {
 			});
 		}
 
+		const previousRoute = url.searchParams.get('previousRoute');
+		const redirectTo = getRedirectUrl(url, previousRoute);
+
 		const provider = oauthForm.data.provider.toLowerCase() as Provider;
 
 		const { data, error } = await supabase.auth.signInWithOAuth({
 			provider,
-			options: { redirectTo: `${url.origin}/auth/callback` }
+			options: { redirectTo }
 		});
 
 		if (error) {

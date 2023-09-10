@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms/client';
 
-	import { page } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 
-    import { OAuthProviderValidationSchema } from '$authValidationSchemas/authValidationSchemas';
+	import { OAuthProviderValidationSchema } from '$authValidationSchemas/authValidationSchemas';
 
 	import Icon from '$globalComponents/Icon.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
 
 	export let formType: 'signIn' | 'signUp';
 
+	const previousRoute = $navigating?.from?.url.pathname;
 	const authText = formType === 'signIn' ? 'Sign in' : 'Sign up';
 	const providers = OAuthProviderValidationSchema.shape.provider.options;
 
@@ -33,7 +34,9 @@
 	{#each providers as provider}
 		<Button
 			type="submit"
-			formaction="?/oauth&provider={provider}"
+			formaction="?/oauth&provider={provider}{previousRoute
+				? '&previousRoute=' + previousRoute
+				: ''}"
 			title="{authText} using {provider}"
 			aria-label="{authText} using {provider}"
 			class="flex items-center justify-center flex-grow gap-2 font-bold"

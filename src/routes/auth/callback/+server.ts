@@ -5,10 +5,11 @@ import { RoutePaths } from '$globalTypes';
 
 export const GET: RequestHandler = async ({ url, locals: { supabase } }) => {
 	const code = url.searchParams.get('code');
+	const previousRoute = url.searchParams.get('previousRoute');
 
-	if (code) {
-		await supabase.auth.exchangeCodeForSession(code);
-	}
+	const redirectTo = previousRoute ?? RoutePaths.DASHBOARD_PROMPTS;
 
-	throw redirect(303, RoutePaths.DASHBOARD_PROMPTS);
+	if (code) await supabase.auth.exchangeCodeForSession(code);
+
+	throw redirect(303, redirectTo);
 };

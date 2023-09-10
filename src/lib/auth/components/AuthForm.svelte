@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms/client';
 
-	import { page } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 
 	import { EmailAuthValidationSchema } from '$authValidationSchemas/authValidationSchemas';
 
@@ -10,6 +10,8 @@
 	import OAuthForm from './OAuthForm.svelte';
 
 	export let formType: 'signIn' | 'signUp';
+
+	const previousRoute = $navigating?.from?.url.pathname;
 
 	const formText = {
 		signIn: {
@@ -55,7 +57,7 @@
 
 	<form
 		use:enhance
-		action="?/emailAuth"
+		action="?/emailAuth{previousRoute ? '&previousRoute=' + previousRoute : ''}"
 		method="Post"
 		aria-label="{buttonTitle} using email"
 		class="grid gap-5"

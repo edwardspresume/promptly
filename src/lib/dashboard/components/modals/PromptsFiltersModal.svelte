@@ -5,6 +5,7 @@
 
 	import { promptSortOptions } from '$dashboardData/SortOptions';
 
+	import { isPromptFilterActive } from '$dashboardStores/promptModalFilterStore';
 	import { promptSortingPreference } from '$dashboardStores/promptsStore';
 	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
 
@@ -16,7 +17,7 @@
 	export let promptsFiltersModalRef: HTMLDialogElement;
 
 	let selectedTagIds = writable<string[]>([]);
-	let selectedSortOption: string;
+	let selectedSortOption: string = '';
 
 	/**
 	 * Clears all the selected filters
@@ -27,6 +28,13 @@
 
 		selectedSortOption = '';
 		promptSortingPreference.set('');
+	}
+
+	$: {
+		isPromptFilterActive.set(
+			$selectedTagIds.length > 0 ||
+				(selectedSortOption.length > 0 && selectedSortOption !== 'default:default')
+		);
 	}
 </script>
 

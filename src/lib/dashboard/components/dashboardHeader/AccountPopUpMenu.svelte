@@ -20,7 +20,7 @@
 			<img src={userAvatarUrl} alt="Profile avatar" class="rounded-full" />
 		{:else}
 			<span
-				class="grid h-full text-xl rounded-full place-items-center bg-gradient-to-b from-blue-500 to-purple-500"
+				class="grid h-full text-xl text-white rounded-full place-items-center bg-gradient-to-b from-blue-500 to-purple-500"
 			>
 				{fullNameInitial || emailInitial}
 			</span>

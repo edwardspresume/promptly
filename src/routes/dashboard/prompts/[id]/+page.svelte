@@ -5,6 +5,8 @@
 
 	import { RoutePaths } from '$globalTypes';
 
+	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
+
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 	import {
 		MAX_PROMPT_DESCRIPTION_LENGTH,
@@ -12,6 +14,7 @@
 		PromptsValidationSchema
 	} from '$dashboardValidationSchemas/promptsValidationSchema';
 
+	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
 	import FavoriteToggleBtn from '$dashboardComponents/prompts/FavoriteToggleBtn.svelte';
 	import InputField from '$globalComponents/form/InputField.svelte';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
@@ -71,6 +74,10 @@
 				maxlength={MAX_PROMPT_DESCRIPTION_LENGTH}
 			/>
 		</fieldset>
+
+		{#if totalTagsCountStore}
+			<TagSelector />
+		{/if}
 
 		<footer class="flex items-center gap-2">
 			<FavoriteToggleBtn

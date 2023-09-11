@@ -90,6 +90,35 @@ export async function getUserPrompts(profileId: string) {
 }
 
 /**
+ * Fetch the prompt based on the promptId.
+ * @param {string} promptId - The ID of the prompt
+ * @returns Returns the prompt or null if not found.
+ * @throws Will throw an error if the query fails.
+ */
+export async function getPromptById(promptId: string) {
+	try {
+		const promptData = await drizzleClient
+			.select({
+				title: promptsTable.title,
+				description: promptsTable.description,
+				username: profilesTable.username,
+				fullName: profilesTable.fullName
+			})
+			.from(promptsTable)
+			.where(eq(promptsTable.id, promptId))
+			.leftJoin(profilesTable, eq(profilesTable.id, promptsTable.profileId));
+
+		return promptData[0] ?? null;
+	} catch (error) {
+		logError(error, 'Error fetching prompt', {
+			promptId
+		});
+
+		throw new Error('Error fetching prompt');
+	}
+}
+
+/**
  * Fetch the user tags based on the profileId.
  * @param {string} profileId - The ID of the profile.
  * @returns Returns the user tags or null if not found.

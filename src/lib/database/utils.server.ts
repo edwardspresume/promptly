@@ -12,6 +12,7 @@ const DOMPurifyInstance = DOMPurify(window);
 
 export const sanitizeContentOnServer = DOMPurifyInstance.sanitize;
 
+
 /**
  * Checks whether the given email exists in the profiles table.
  * @param {string} email - The email address to check.
@@ -99,14 +100,19 @@ export async function getPromptById(promptId: string) {
 	try {
 		const promptData = await drizzleClient
 			.select({
-				title: promptsTable.title,
-				description: promptsTable.description,
-				username: profilesTable.username,
-				fullName: profilesTable.fullName
+				prompt: {
+					title: promptsTable.title,
+					description: promptsTable.description
+				},
+
+				creator: {
+					username: profilesTable.username,
+					fullName: profilesTable.fullName
+				}
 			})
 			.from(promptsTable)
 			.where(eq(promptsTable.id, promptId))
-			.leftJoin(profilesTable, eq(profilesTable.id, promptsTable.profileId));
+			.innerJoin(profilesTable, eq(profilesTable.id, promptsTable.profileId));
 
 		return promptData[0] ?? null;
 	} catch (error) {

@@ -1,11 +1,18 @@
-import { error, fail, redirect, type Actions } from '@sveltejs/kit';
+import { error, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+
+import { message, superValidate } from 'sveltekit-superforms/server';
 
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
 import { promptsTable } from '$databaseDir/schema';
-import { getPromptById } from '$databaseDir/utils.server';
+import { getPromptById, sanitizeContentOnServer } from '$databaseDir/utils.server';
 
+import {
+	PromptsValidationSchema,
+	type PromptFormData
+} from '$dashboardValidationSchemas/promptsValidationSchema';
 import { RoutePaths, type AlertMessage } from '$globalTypes';
+
 import { logError } from '$globalUtils';
 
 export const load = (async ({ params }) => {
@@ -14,12 +21,11 @@ export const load = (async ({ params }) => {
 	try {
 		const promptData = await getPromptById(promptId);
 
+		const sharedPromptForm = await superValidate(promptData?.prompt, PromptsValidationSchema);
+
 		return {
-			sharedPrompt: {
-				title: promptData?.title,
-				description: promptData?.description,
-				fromUser: promptData?.username ?? promptData?.fullName ?? 'Anonymous'
-			}
+			sharedPromptForm,
+			promptCreator: promptData?.creator?.username ?? promptData?.creator?.fullName ?? 'Anonymous'
 		};
 	} catch (err) {
 		throw error(404, 'Prompt not found');
@@ -27,7 +33,7 @@ export const load = (async ({ params }) => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-	default: async ({ params, locals: { getSession } }) => {
+	default: async ({ request, params, locals: { getSession } }) => {
 		const userSession = (await getSession())?.user;
 
 		if (!userSession) return;
@@ -36,35 +42,42 @@ export const actions: Actions = {
 
 		if (!promptId) throw error(404, 'Prompt id not provided');
 
-		const promptData = await getPromptById(promptId);
+		const sharedPromptForm = await superValidate<typeof PromptsValidationSchema, AlertMessage>(
+			request,
+			PromptsValidationSchema
+		);
 
-		let alertMessage: AlertMessage;
-
-		if (!promptData) {
-			alertMessage = {
+		if (!sharedPromptForm.valid) {
+			return message(sharedPromptForm, {
 				alertType: 'error',
-				alertText: 'Prompt not found'
-			};
-
-			return fail(400, alertMessage);
+				alertText: 'The prompt you entered is invalid. Please enter a valid prompt.'
+			});
 		}
 
 		try {
+			const sanitizedData = Object.fromEntries(
+				Object.entries(sharedPromptForm.data)
+					.filter(([, value]) => value !== undefined)
+					.map(([key, value]) =>
+						typeof value === 'string' ? [key, sanitizeContentOnServer(value)] : [key, value]
+					)
+			) as PromptFormData;
+
 			await drizzleClient.insert(promptsTable).values({
 				profileId: userSession.id,
-				title: promptData.title,
-				description: promptData.description,
-				tagIds: []
+				...sanitizedData
 			});
 		} catch (error) {
-			logError(error, 'Error in saving shared prompt', { userSession });
+			logError(error, 'Error in createOrUpdatePrompt', { userSession });
 
-			alertMessage = {
-				alertType: 'error',
-				alertText: 'Error in saving shared prompt. Please try again.'
-			};
-
-			return fail(400, alertMessage);
+			return message(
+				sharedPromptForm,
+				{
+					alertType: 'error',
+					alertText: 'Unexpected error during prompt creation. Please try again.'
+				},
+				{ status: 500 }
+			);
 		}
 
 		throw redirect(303, RoutePaths.DASHBOARD_PROMPTS);

@@ -1,61 +1,97 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 
-	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
+	import { superForm } from 'sveltekit-superforms/client';
 
+	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
+	import {
+		MAX_PROMPT_DESCRIPTION_LENGTH,
+		MAX_PROMPT_TITLE_LENGTH,
+		PromptsValidationSchema
+	} from '$dashboardValidationSchemas/promptsValidationSchema';
+	import { RoutePaths } from '$globalTypes';
+
+	import FavoriteToggleBtn from '$dashboardComponents/prompts/FavoriteToggleBtn.svelte';
 	import InputField from '$globalComponents/form/InputField.svelte';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
 	import TextArea from '$globalComponents/form/TextArea.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
-	import * as Card from '$globalComponents/ui/card';
-	import { RoutePaths } from '$globalTypes';
 
 	export let data: PageData;
 
-	const { sharedPrompt } = data;
-
-	let isSaving = false;
+	const { promptCreator } = data;
 
 	$: isLoggedIn = data.session?.user;
+
+	const { enhance, form, errors, delayed, message } = superForm($page.data.sharedPromptForm, {
+		resetForm: true,
+		validators: PromptsValidationSchema,
+
+		onUpdated: () => {
+			if (!$message) return;
+
+			const { alertType, alertText } = $message;
+
+			const notificationFunction = getNotificationFunction(alertType);
+
+			notificationFunction(alertText, { target: 'baseModal' });
+		}
+	});
 </script>
 
-<Card.Root role="article" aria-label="Shared Prompt Details" class="w-[96%] max-w-lg bg-background">
-	<Card.Header>
-		<Card.Title>Shared Prompt</Card.Title>
-		<Card.Description>Created by {sharedPrompt.fromUser}</Card.Description>
-	</Card.Header>
+<article
+	aria-label="Shared Prompt Details"
+	class="w-[96%] max-w-lg bg-background border p-6 rounded-lg shadow-sm"
+>
+	<header>
+		<h3 class="text-lg font-semibold leading-none">Shared Prompt</h3>
+		<p class="mt-2 text-sm text-muted-foreground">Created by {promptCreator}</p>
+	</header>
 
-	<Card.Content class="grid gap-5">
-		<InputField type="text" label="Title" value={sharedPrompt.title} readonly />
+	<form method="post" class="grid gap-5 mt-6">
+		<form use:enhance method="POST" aria-label="Save shared prompt" class="grid gap-5">
+			<InputField
+				type="text"
+				name="title"
+				label="Title"
+				placeholder="Enter prompt title"
+				bind:value={$form.title}
+				errorMessage={$errors.title}
+				maxlength={MAX_PROMPT_TITLE_LENGTH}
+			/>
 
-		<fieldset class="grid gap-1">
-			<TextArea rows="9" label="Description" value={sharedPrompt.description} readonly />
-		</fieldset>
-	</Card.Content>
+			<fieldset class="grid gap-1">
+				<TextArea
+					rows="8"
+					name="description"
+					label="Description"
+					textAreaId="promptDescription"
+					placeholder="Enter prompt description"
+					bind:value={$form.description}
+					errorMessage={$errors.description}
+					maxlength={MAX_PROMPT_DESCRIPTION_LENGTH}
+				/>
+			</fieldset>
 
-	<Card.Footer>
-		<form
-			method="post"
-			use:enhance={() => {
-				isSaving = true;
+			<footer class="flex items-center gap-2">
+				<FavoriteToggleBtn
+					isFavorited={$form.isFavorited}
+					iconSize={26}
+					buttonVariant="outline"
+					on:favoriteToggled={() => ($form.isFavorited = !$form.isFavorited)}
+					class="h-full p-2"
+				/>
 
-				return async ({ update, result }) => {
-					await update();
-					isSaving = false;
-
-					const { alertText, alertType } = result.data;
-
-					const notificationFunction = getNotificationFunction(alertType);
-
-					notificationFunction(alertText, { target: 'dashboardLayout' });
-				};
-			}}
-		>
-			<SubmitButton title="Save Prompt" showSpinner={isSaving} disabled={isSaving || !isLoggedIn} />
+				<SubmitButton
+					showSpinner={$delayed}
+					disabled={$delayed || !isLoggedIn}
+					title={$delayed ? 'Saving...' : 'Save Prompt'}
+				/>
+			</footer>
 		</form>
-	</Card.Footer>
-</Card.Root>
+	</form>
+</article>
 
 {#if !isLoggedIn}
 	<p class="mt-5 italic font-medium text-accent-foreground">

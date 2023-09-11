@@ -1,4 +1,5 @@
 import { createInsertSchema } from 'drizzle-zod';
+import type { z } from 'zod';
 
 import { promptsTable } from '$databaseDir/schema';
 
@@ -30,3 +31,5 @@ export const PromptsValidationSchema = createInsertSchema(promptsTable, {
 			MAX_PROMPT_DESCRIPTION_LENGTH
 		)
 });
+
+export type PromptFormData = z.infer<typeof PromptsValidationSchema>;

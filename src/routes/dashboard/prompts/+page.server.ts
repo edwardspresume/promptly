@@ -10,11 +10,10 @@ import type { Actions, PageServerLoad } from './$types';
 
 import type { AlertMessage } from '$globalTypes';
 
-import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
+import { PromptsValidationSchema, type PromptFormData } from '$dashboardValidationSchemas/promptsValidationSchema';
 import { sanitizeContentOnServer } from '$databaseDir/utils.server';
 import { logError } from '$globalUtils';
 
-type FormData = z.infer<typeof PromptsValidationSchema>;
 
 const ERROR_INVALID_PROMPT = 'The prompt you entered is invalid. Please enter a valid prompt.';
 
@@ -49,7 +48,7 @@ export const actions: Actions = {
 						.map(([key, value]) =>
 							typeof value === 'string' ? [key, sanitizeContentOnServer(value)] : [key, value]
 						)
-				) as FormData;
+				) as PromptFormData;
 
 				if (promptId) {
 					// Remove 'id' from formData

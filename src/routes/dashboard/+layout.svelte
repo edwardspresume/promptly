@@ -39,7 +39,7 @@
 <div class="h-[100dvh] flex flex-col">
 	<DashboardHeader />
 
-	<main data-current-page={$page.url.pathname} class="relative grid w-full">
+	<main data-current-page={$page.url.pathname} class="w-full">
 		<slot />
 	</main>
 </div>
@@ -51,10 +51,10 @@
 <style>
 	main[data-current-page='/dashboard/prompts'],
 	main[data-current-page='/dashboard/tags'] {
-		@apply mt-8 pb-6 max-w-xl mx-auto overflow-hidden pe-4 ps-4;
+		@apply relative grid max-w-xl pb-6 mx-auto mt-8 overflow-hidden pe-4 ps-4;
 	}
 
 	main[data-current-page^='/dashboard/prompts/'] {
-		@apply place-items-center h-full bg-accent;
+		@apply flex flex-col items-center justify-center bg-accent;
 	}
 </style>

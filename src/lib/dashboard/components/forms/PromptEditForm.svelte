@@ -260,12 +260,12 @@
 			/>
 		</fieldset>
 
-		{#if userSession}
-			<PromptVisibilitySelector promptId={$form.id} promptVisibility={$form.visibility} />
-		{/if}
-
 		{#if $totalTagsCountStore}
 			<TagSelector {selectedTagIds} />
+		{/if}
+
+		{#if userSession}
+			<PromptVisibilitySelector promptId={$form.id} promptVisibility={$form.visibility} />
 		{/if}
 
 		<footer class="flex items-center gap-2">

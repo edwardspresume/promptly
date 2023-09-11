@@ -15,20 +15,13 @@
 
 	/**
 	 * Copies the prompt link to the clipboard and shows a notification.
-	 * @async
-	 * @returns {Promise<void>} No return value
 	 */
-	async function handleCopy(event: Event) {
+	function handleCopy(event: Event) {
 		event.stopPropagation();
 
 		const promptToShare = `${$page.url.origin}${RoutePaths.DASHBOARD_PROMPTS}/${promptId}`;
 
-		copyToClipboard(
-			promptToShare,
-			'Prompt link copied!',
-			'Failed to copy prompt link',
-			'baseModal'
-		);
+		copyToClipboard(promptToShare, 'Prompt link copied!', 'baseModal');
 	}
 </script>
 

@@ -23,7 +23,9 @@
 
 	export let data: PageData;
 
-	const { session, promptCreator, sharedPromptForm } = data;
+	let { session, promptCreator, sharedPromptForm } = data;
+
+	$: ({ session, promptCreator, sharedPromptForm } = data);
 
 	$: isLoggedIn = session?.user;
 

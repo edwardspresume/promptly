@@ -5,12 +5,9 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
 import { promptsTable } from '$databaseDir/schema';
-import { getPromptById, sanitizeContentOnServer } from '$databaseDir/utils.server';
+import { getPromptById, sanitizePromptData } from '$databaseDir/utils.server';
 
-import {
-	PromptsValidationSchema,
-	type PromptFormData
-} from '$dashboardValidationSchemas/promptsValidationSchema';
+import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
 import { RoutePaths, type AlertMessage } from '$globalTypes';
 
 import { logError } from '$globalUtils';
@@ -55,13 +52,7 @@ export const actions: Actions = {
 		}
 
 		try {
-			const sanitizedData = Object.fromEntries(
-				Object.entries(sharedPromptForm.data)
-					.filter(([, value]) => value !== undefined)
-					.map(([key, value]) =>
-						typeof value === 'string' ? [key, sanitizeContentOnServer(value)] : [key, value]
-					)
-			) as PromptFormData;
+			const sanitizedData = sanitizePromptData(sharedPromptForm.data);
 
 			await drizzleClient.insert(promptsTable).values({
 				profileId: userSession.id,

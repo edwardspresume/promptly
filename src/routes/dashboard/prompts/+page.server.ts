@@ -1,5 +1,3 @@
-import type { z } from 'zod';
-
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
 import { promptsTable } from '$databaseDir/schema';
 import { eq } from 'drizzle-orm';
@@ -10,10 +8,9 @@ import type { Actions, PageServerLoad } from './$types';
 
 import type { AlertMessage } from '$globalTypes';
 
-import { PromptsValidationSchema, type PromptFormData } from '$dashboardValidationSchemas/promptsValidationSchema';
-import { sanitizeContentOnServer } from '$databaseDir/utils.server';
+import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
+import { sanitizeContentOnServer, sanitizePromptData } from '$databaseDir/utils.server';
 import { logError } from '$globalUtils';
-
 
 const ERROR_INVALID_PROMPT = 'The prompt you entered is invalid. Please enter a valid prompt.';
 
@@ -42,13 +39,7 @@ export const actions: Actions = {
 
 		if (session) {
 			try {
-				const sanitizedData = Object.fromEntries(
-					Object.entries(promptForm.data)
-						.filter(([, value]) => value !== undefined)
-						.map(([key, value]) =>
-							typeof value === 'string' ? [key, sanitizeContentOnServer(value)] : [key, value]
-						)
-				) as PromptFormData;
+				const sanitizedData = sanitizePromptData(promptForm.data);
 
 				if (promptId) {
 					// Remove 'id' from formData

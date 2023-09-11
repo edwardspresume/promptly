@@ -1,17 +1,35 @@
 import { desc, eq } from 'drizzle-orm';
 import { drizzleClient } from './drizzleClient.server';
 
+import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
+
 import { logError } from '$globalUtils';
 import { profilesTable, promptsTable, tagsTable } from './schema';
 
-import DOMPurify from 'dompurify';
-import { JSDOM } from 'jsdom';
+import type { PromptFormData } from '$dashboardValidationSchemas/promptsValidationSchema';
 
 const window = new JSDOM('').window;
 const DOMPurifyInstance = DOMPurify(window);
 
 export const sanitizeContentOnServer = DOMPurifyInstance.sanitize;
 
+/**
+ * This function sanitizes the prompt data by removing entries with undefined values
+ * and sanitizing string values using the sanitizeContentOnServer function.
+ *
+ * @param promptData - The object to be sanitized.
+ * @returns - A new object with sanitized data.
+ */
+export function sanitizePromptData(promptData: PromptFormData) {
+	return Object.fromEntries(
+		Object.entries(promptData)
+			.filter(([, value]) => value !== undefined)
+			.map(([key, value]) =>
+				typeof value === 'string' ? [key, sanitizeContentOnServer(value)] : [key, value]
+			)
+	);
+}
 
 /**
  * Checks whether the given email exists in the profiles table.

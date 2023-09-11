@@ -55,10 +55,10 @@
 	 * @param {string[]} existingTagIds - The array of existing tag IDs.
 	 * @returns {boolean} - Returns true if arrays are different, otherwise false
 	 */
-	function areArraysDifferent(newTagIds: string[], existingTagIds: string[]) {
+	function areArraysDifferent(newTagIds: string[] | null, existingTagIds: string[] | null) {
 		return (
-			newTagIds.length !== existingTagIds.length ||
-			!newTagIds.every((id) => existingTagIds.includes(id))
+			newTagIds?.length !== existingTagIds?.length ||
+			!newTagIds?.every((id) => existingTagIds?.includes(id))
 		);
 	}
 

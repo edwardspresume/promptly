@@ -55,6 +55,6 @@
 	}
 
 	main[data-current-page^='/dashboard/prompts/'] {
-		@apply flex flex-col items-center justify-center bg-accent h-full;
+		@apply flex flex-col items-center justify-center h-full;
 	}
 </style>

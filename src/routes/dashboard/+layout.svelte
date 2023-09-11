@@ -39,7 +39,7 @@
 <div class="h-[100dvh] flex flex-col">
 	<DashboardHeader />
 
-	<main data-current-page={$page.url.pathname} class="w-full">
+	<main data-current-page={$page.url.pathname} class="w-full h-full">
 		<slot />
 	</main>
 </div>

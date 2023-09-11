@@ -10,10 +10,10 @@
 	export let placeholder: string = '';
 	export let spellcheck: boolean = true;
 	export let autocomplete: string = 'on';
-	export let errorMessage: object | undefined;
 	export let enterkeyhint: EnterKeyHint = 'next';
 	export let labelIsScreenReaderOnly: boolean = false;
 	export let maxlength: number | undefined = undefined;
+	export let errorMessage: object | undefined = undefined;
 
 	$: valueLength = value.length;
 </script>

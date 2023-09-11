@@ -9,10 +9,10 @@
 	export let placeholder: string = '';
 	export let spellcheck: boolean = true;
 	export let textAreaId: string = 'textarea';
-	export let errorMessage: object | undefined;
 	export let enterkeyhint: EnterKeyHint = 'enter';
 	export let labelIsScreenReaderOnly: boolean = false;
 	export let maxlength: number | undefined = undefined;
+	export let errorMessage: object | undefined = undefined;
 
 	$: valueLength = value.length;
 </script>

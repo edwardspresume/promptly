@@ -6,9 +6,10 @@ export type AlertMessage = {
 };
 
 export type NavLink = {
-	title: string;
 	href: string;
+	title: string;
 	ariaLabel: string;
+	isExternal?: boolean;
 };
 
 export enum RoutePaths {

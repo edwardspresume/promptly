@@ -50,7 +50,16 @@
 >
 	<header>
 		<h3 class="text-lg font-semibold leading-none">Shared Prompt</h3>
-		<p class="mt-2 text-sm text-muted-foreground">Created by {promptCreator}</p>
+		<p class="flex items-center gap-1 mt-2 text-sm text-muted-foreground">
+			<span>Creator: {promptCreator.username}</span>
+			{#if promptCreator.avatarUrl}
+				<img
+					src={promptCreator.avatarUrl}
+					alt="Prompt creator avatar"
+					class="rounded-full w-7 h-7"
+				/>
+			{/if}
+		</p>
 	</header>
 
 	<form use:enhance method="POST" aria-label="Save shared prompt" class="grid gap-5 mt-6">

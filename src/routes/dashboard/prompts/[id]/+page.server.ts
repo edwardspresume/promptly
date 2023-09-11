@@ -20,9 +20,14 @@ export const load = (async ({ params }) => {
 
 		const sharedPromptForm = await superValidate(promptData?.prompt, PromptsValidationSchema);
 
+		const promptCreator = {
+			avatarUrl: promptData?.creator?.avatarUrl ?? null,
+			username: promptData?.creator?.username ?? promptData?.creator?.fullName ?? 'Anonymous'
+		};
+
 		return {
 			sharedPromptForm,
-			promptCreator: promptData?.creator?.username ?? promptData?.creator?.fullName ?? 'Anonymous'
+			promptCreator
 		};
 	} catch (err) {
 		throw error(404, 'Prompt not found');

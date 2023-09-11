@@ -125,7 +125,8 @@ export async function getPromptById(promptId: string) {
 
 				creator: {
 					username: profilesTable.username,
-					fullName: profilesTable.fullName
+					fullName: profilesTable.fullName,
+                    avatarUrl: profilesTable.avatarUrl
 				}
 			})
 			.from(promptsTable)

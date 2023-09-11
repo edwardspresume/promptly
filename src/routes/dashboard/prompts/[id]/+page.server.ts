@@ -4,23 +4,26 @@ import type { PageServerLoad } from './$types';
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
 import { promptsTable } from '$databaseDir/schema';
 import { getPromptById } from '$databaseDir/utils.server';
+
 import { RoutePaths, type AlertMessage } from '$globalTypes';
 import { logError } from '$globalUtils';
 
 export const load = (async ({ params }) => {
 	const { id: promptId } = params;
 
-	const promptData = await getPromptById(promptId);
+	try {
+		const promptData = await getPromptById(promptId);
 
-	if (!promptData) throw error(404, 'Prompt not found');
-
-	return {
-		sharedPrompt: {
-			title: promptData.title,
-			description: promptData.description,
-			fromUser: promptData.username ?? promptData.fullName ?? 'Anonymous'
-		}
-	};
+		return {
+			sharedPrompt: {
+				title: promptData?.title,
+				description: promptData?.description,
+				fromUser: promptData?.username ?? promptData?.fullName ?? 'Anonymous'
+			}
+		};
+	} catch (err) {
+		throw error(404, 'Prompt not found');
+	}
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

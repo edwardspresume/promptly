@@ -66,7 +66,7 @@ export const promptsTable = pgTable('prompts', {
 	title: text('title').notNull(),
 	description: text('description').notNull(),
 	isFavorited: boolean('is_favorited').default(false).notNull(),
-	tagIds: uuid('tag_ids').array().notNull(),
+	tagIds: uuid('tag_ids').array(),
 	visibility: promptVisibility('visibility').default('private').notNull(),
 	createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull()

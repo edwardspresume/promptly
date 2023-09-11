@@ -75,7 +75,7 @@
 			/>
 		</fieldset>
 
-		{#if totalTagsCountStore}
+		{#if $totalTagsCountStore}
 			<TagSelector />
 		{/if}
 

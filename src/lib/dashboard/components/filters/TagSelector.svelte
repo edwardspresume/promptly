@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Writable } from 'svelte/store';
+	import { writable, type Writable } from 'svelte/store';
 
 	import type { TagSchema } from '$databaseDir/schema';
 
@@ -15,7 +15,7 @@
 	export let filterPromptBasedOnTags: boolean = false;
 
 	// A writable store that keeps track of the IDs of selected tags
-	export let selectedTagIds: Writable<string[]>;
+	export let selectedTagIds: Writable<string[]> = writable([]); ;
 	export let labelIsScreenReaderOnly: boolean = false;
 
 	let tagSearchInput: HTMLInputElement;

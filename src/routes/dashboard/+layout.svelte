@@ -39,7 +39,7 @@
 <div class="h-[100dvh] flex flex-col">
 	<DashboardHeader />
 
-	<main data-current-page={$page.url.pathname} class="w-full h-full">
+	<main data-current-page={$page.url.pathname} class="w-full">
 		<slot />
 	</main>
 </div>
@@ -55,6 +55,6 @@
 	}
 
 	main[data-current-page^='/dashboard/prompts/'] {
-		@apply flex flex-col items-center justify-center bg-accent;
+		@apply flex flex-col items-center justify-center bg-accent h-full;
 	}
 </style>

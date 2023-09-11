@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 
 	import { superForm } from 'sveltekit-superforms/client';
+
+	import { RoutePaths } from '$globalTypes';
 
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 	import {
@@ -10,7 +11,6 @@
 		MAX_PROMPT_TITLE_LENGTH,
 		PromptsValidationSchema
 	} from '$dashboardValidationSchemas/promptsValidationSchema';
-	import { RoutePaths } from '$globalTypes';
 
 	import FavoriteToggleBtn from '$dashboardComponents/prompts/FavoriteToggleBtn.svelte';
 	import InputField from '$globalComponents/form/InputField.svelte';
@@ -20,12 +20,11 @@
 
 	export let data: PageData;
 
-	const { promptCreator } = data;
+	const { session, promptCreator, sharedPromptForm } = data;
 
-	$: isLoggedIn = data.session?.user;
+	$: isLoggedIn = session?.user;
 
-	const { enhance, form, errors, delayed, message } = superForm($page.data.sharedPromptForm, {
-		resetForm: true,
+	const { enhance, form, errors, delayed, message } = superForm(sharedPromptForm, {
 		validators: PromptsValidationSchema,
 
 		onUpdated: () => {
@@ -49,47 +48,45 @@
 		<p class="mt-2 text-sm text-muted-foreground">Created by {promptCreator}</p>
 	</header>
 
-	<form method="post" class="grid gap-5 mt-6">
-		<form use:enhance method="POST" aria-label="Save shared prompt" class="grid gap-5">
-			<InputField
-				type="text"
-				name="title"
-				label="Title"
-				placeholder="Enter prompt title"
-				bind:value={$form.title}
-				errorMessage={$errors.title}
-				maxlength={MAX_PROMPT_TITLE_LENGTH}
+	<form use:enhance method="POST" aria-label="Save shared prompt" class="grid gap-5 mt-6">
+		<InputField
+			type="text"
+			name="title"
+			label="Title"
+			placeholder="Enter prompt title"
+			bind:value={$form.title}
+			errorMessage={$errors.title}
+			maxlength={MAX_PROMPT_TITLE_LENGTH}
+		/>
+
+		<fieldset class="grid gap-1">
+			<TextArea
+				rows="8"
+				name="description"
+				label="Description"
+				textAreaId="promptDescription"
+				placeholder="Enter prompt description"
+				bind:value={$form.description}
+				errorMessage={$errors.description}
+				maxlength={MAX_PROMPT_DESCRIPTION_LENGTH}
+			/>
+		</fieldset>
+
+		<footer class="flex items-center gap-2">
+			<FavoriteToggleBtn
+				isFavorited={$form.isFavorited}
+				iconSize={26}
+				buttonVariant="outline"
+				on:favoriteToggled={() => ($form.isFavorited = !$form.isFavorited)}
+				class="h-full p-2"
 			/>
 
-			<fieldset class="grid gap-1">
-				<TextArea
-					rows="8"
-					name="description"
-					label="Description"
-					textAreaId="promptDescription"
-					placeholder="Enter prompt description"
-					bind:value={$form.description}
-					errorMessage={$errors.description}
-					maxlength={MAX_PROMPT_DESCRIPTION_LENGTH}
-				/>
-			</fieldset>
-
-			<footer class="flex items-center gap-2">
-				<FavoriteToggleBtn
-					isFavorited={$form.isFavorited}
-					iconSize={26}
-					buttonVariant="outline"
-					on:favoriteToggled={() => ($form.isFavorited = !$form.isFavorited)}
-					class="h-full p-2"
-				/>
-
-				<SubmitButton
-					showSpinner={$delayed}
-					disabled={$delayed || !isLoggedIn}
-					title={$delayed ? 'Saving...' : 'Save Prompt'}
-				/>
-			</footer>
-		</form>
+			<SubmitButton
+				showSpinner={$delayed}
+				disabled={$delayed || !isLoggedIn}
+				title={$delayed ? 'Saving...' : 'Save Prompt'}
+			/>
+		</footer>
 	</form>
 </article>
 

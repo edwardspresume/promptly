@@ -17,18 +17,11 @@
 
 	/**
 	 * Copies the prompt description to the clipboard and shows a notification.
-	 * @async
-	 * @returns {Promise<void>} No return value
 	 */
-	const handleCopy = async (event: Event) => {
+	const handleCopy = (event: Event) => {
 		event.stopPropagation();
 
-		await copyToClipboard(
-			promptDescriptionToCopy,
-			'Prompt description copied!',
-			'Failed to copy prompt description',
-			toastNotificationTarget
-		);
+		copyToClipboard(promptDescriptionToCopy, 'Prompt description copied!', toastNotificationTarget);
 	};
 </script>
 

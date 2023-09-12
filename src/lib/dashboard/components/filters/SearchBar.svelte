@@ -4,7 +4,6 @@
 	import { promptTextFilter } from '$dashboardStores/promptsStore';
 	import { tagTextFilter } from '$dashboardStores/tagsStore';
 
-	import Input from '$globalComponents/ui/input/input.svelte';
 	import Label from '$globalComponents/ui/label/label.svelte';
 
 	export let searchTargetType: ItemType;
@@ -34,7 +33,7 @@
 <Label class="flex-grow">
 	<span class="sr-only">{labelText}</span>
 
-	<Input
+	<input
 		type="search"
 		title={labelText}
 		enterkeyhint="search"

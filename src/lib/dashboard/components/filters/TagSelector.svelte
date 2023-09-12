@@ -88,11 +88,15 @@
 	$: if (filterPromptBasedOnTags) tagsFilter.set($selectedTagIds);
 
 	let tagLabel = `${label}${$allTagsStore.length > 1 ? 's' : ''}`;
+
+	$: tagCountLabel = `${selectedTags.length}/${$allTagsStore.length}`;
 </script>
 
 <fieldset use:onOutsideClick={() => (isTagSelectionMenuOpen = false)} class="grid gap-1">
 	<Label for="tagInput" class={labelIsScreenReaderOnly ? 'sr-only' : ''}>
-		{tagLabel}
+		<span>{tagLabel}</span>
+
+		<span class="text-xs text-muted-foreground"> {tagCountLabel} </span>
 	</Label>
 
 	<div class="grid gap-3">

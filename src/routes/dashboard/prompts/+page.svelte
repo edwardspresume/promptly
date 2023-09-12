@@ -8,6 +8,7 @@
 	import type { PromptSchema } from '$databaseDir/schema';
 	import type { PageData } from './$types';
 
+	import { totalPromptCountStore } from '$dashboardStores/promptsStore';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 
@@ -92,7 +93,7 @@
 	function handleDeleteAllPromptsEvent() {
 		confirmationModalInfoForPromptDeletion = {
 			heading: 'Delete All Prompts',
-			subheading: 'Are you sure you want to delete All your Prompts?',
+			subheading: `Are you sure you want to <span style="color: red;">permanently</span> delete all ${$totalPromptCountStore} of your prompts? This action cannot be undone.`,
 			callback: deleteAllPromptsCallBack
 		};
 

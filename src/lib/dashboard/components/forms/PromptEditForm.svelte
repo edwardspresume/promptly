@@ -99,7 +99,7 @@
 	function deletePrompt() {
 		promptDeleteConfirmationInfo = {
 			heading: `Delete Prompt`,
-			subheading: `Are you sure you want to delete prompt: <em style="color: red;">${selectedPromptForEdit?.title}</em> ?`,
+			subheading: `Are you sure you want to permanently delete prompt: <em style="color: red;">${selectedPromptForEdit?.title}</em>? This action cannot be undone.`,
 			callback: deletePromptCallBack
 		};
 

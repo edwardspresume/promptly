@@ -47,7 +47,7 @@
 	function dispatchDeleteTagEvent() {
 		const confirmationInfo: ConfirmationInfo = {
 			heading: `Delete Tag`,
-			subheading: `Are you sure you want to delete tag: <em style="color: red;">${tagName}</em> ?`,
+			subheading: `Are you sure you want to permanently delete tag: <em style="color: red;">${tagName}</em>? This action cannot be undone.`,
 			callback: deleteTagCallBack
 		};
 

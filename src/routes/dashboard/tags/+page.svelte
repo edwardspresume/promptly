@@ -69,7 +69,7 @@
 	function handleDeleteAllTagsEvent() {
 		confirmationModalInfoForTagDeletion = {
 			heading: 'Delete All Tags',
-			subheading: 'Are you sure you want to delete All your Tags?',
+			subheading: `Are you sure you want to <span style="color: red;">permanently</span> delete all ${$totalTagsCountStore} of your tags? This action cannot be undone.`,
 			callback: deleteAllTagsCallBack
 		};
 

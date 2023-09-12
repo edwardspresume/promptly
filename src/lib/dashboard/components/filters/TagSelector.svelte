@@ -9,6 +9,7 @@
 	import { allTagsStore } from '$dashboardStores/tagsStore';
 
 	import Label from '$globalComponents/ui/label/label.svelte';
+	import { fade } from 'svelte/transition';
 	import SelectedTag from './SelectedTag.svelte';
 	import Tag from './Tag.svelte';
 
@@ -96,7 +97,7 @@
 
 	<div class="grid gap-3">
 		{#if selectedTags.length > 0}
-			<div class="flex flex-wrap gap-2 p-2 border rounded-md bg-background">
+			<div transition:fade class="flex flex-wrap gap-2 p-2 border rounded-md bg-background">
 				{#each selectedTags as tag (tag.id)}
 					<SelectedTag {tag} on:removeTag={() => removeTag(tag)} />
 				{/each}
@@ -124,6 +125,7 @@
 
 		{#if isTagSelectionMenuOpen && filteredTags.length > 0}
 			<fieldset
+				transition:fade
 				id="tags-list"
 				aria-label="Tags list"
 				class="gap-3 p-2 overflow-y-auto border rounded-md max-h-32 sm:max-h-52"

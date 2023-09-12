@@ -15,7 +15,7 @@ import { logError } from '$globalUtils';
 const ERROR_INVALID_PROMPT = 'The prompt you entered is invalid. Please enter a valid prompt.';
 
 export const load = (async () => {
-	const promptForm = await superValidate(PromptsValidationSchema);
+	const promptForm = superValidate(PromptsValidationSchema);
 
 	return { promptForm };
 }) satisfies PageServerLoad;

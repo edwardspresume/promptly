@@ -14,7 +14,7 @@ import { sanitizeContentOnServer } from '$databaseDir/utils.server';
 import { logError } from '$globalUtils';
 
 export const load = (async () => {
-	const tagForm = await superValidate(TagValidationSchema);
+	const tagForm = superValidate(TagValidationSchema);
 
 	return { tagForm };
 }) satisfies PageServerLoad;

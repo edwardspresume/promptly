@@ -4,6 +4,7 @@
 import { Session, SupabaseClient } from '@supabase/supabase-js';
 
 import type { Database } from '$databaseDir/database.types';
+import type { AlertMessage } from '$globalTypes';
 
 declare global {
 	namespace App {
@@ -14,10 +15,7 @@ declare global {
 
 		interface PageData {
 			session: Session | null;
-			flashMessage?: {
-				alertType: 'success' | 'error';
-				alertText: string;
-			};
+			flashMessage?: AlertMessage;
 		}
 
 		// interface Error {}

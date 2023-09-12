@@ -14,6 +14,10 @@ declare global {
 
 		interface PageData {
 			session: Session | null;
+			flashMessage?: {
+				alertType: 'success' | 'error';
+				alertText: string;
+			};
 		}
 
 		// interface Error {}

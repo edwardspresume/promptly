@@ -1,6 +1,7 @@
-import { error, redirect, type Actions } from '@sveltejs/kit';
+import { error, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
+import { redirect } from 'sveltekit-flash-message/server';
 import { message, superValidate } from 'sveltekit-superforms/server';
 
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
@@ -35,7 +36,13 @@ export const load = (async ({ params }) => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-	default: async ({ request, params, locals: { getSession } }) => {
+	default: async (event) => {
+		const {
+			request,
+			params,
+			locals: { getSession }
+		} = event;
+
 		const userSession = (await getSession())?.user;
 
 		if (!userSession) return;
@@ -81,6 +88,13 @@ export const actions: Actions = {
 			);
 		}
 
-		throw redirect(303, RoutePaths.DASHBOARD_PROMPTS);
+		throw redirect(
+			RoutePaths.DASHBOARD_PROMPTS,
+			{
+				alertType: 'success',
+				alertText: 'Prompt successfully saved!'
+			},
+			event
+		);
 	}
 };

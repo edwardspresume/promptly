@@ -1,11 +1,15 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { fly } from 'svelte/transition';
+
+	import { getFlash } from 'sveltekit-flash-message';
 
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import type { PromptSchema } from '$databaseDir/schema';
 	import type { PageData } from './$types';
 
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
+	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 
 	import FilterDisplayButton from '$dashboardComponents/filters/FilterDisplayButton.svelte';
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
@@ -20,6 +24,16 @@
 
 	let { session, supabase } = data;
 	$: ({ session, supabase } = data);
+
+	const flash = getFlash(page);
+
+	$: if ($flash) {
+		const { alertType, alertText } = $flash;
+
+		const notificationFunction = getNotificationFunction(alertType);
+
+		notificationFunction(alertText, { target: 'dashboardLayout' });
+	}
 
 	let promptCreationModalRef: HTMLDialogElement;
 	let confirmationModalRef: HTMLDialogElement;

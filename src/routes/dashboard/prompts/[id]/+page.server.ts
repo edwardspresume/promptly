@@ -40,14 +40,19 @@ export const actions: Actions = {
 
 		if (!userSession) return;
 
-		const { id: promptId } = params;
-
-		if (!promptId) throw error(404, 'Prompt id not provided');
-
 		const sharedPromptForm = await superValidate<typeof PromptsValidationSchema, AlertMessage>(
 			request,
 			PromptsValidationSchema
 		);
+
+		const { id: promptId } = params;
+
+		if (!promptId) {
+			return message(sharedPromptForm, {
+				alertType: 'error',
+				alertText: 'Prompt ID is missing'
+			});
+		}
 
 		if (!sharedPromptForm.valid) {
 			return message(sharedPromptForm, {

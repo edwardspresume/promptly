@@ -26,7 +26,7 @@
 </script>
 
 <fieldset class="grid gap-1">
-	<Label class="leading-1" for="promptVisibilitySelector">Visibility</Label>
+	<Label for="promptVisibilitySelector">Visibility</Label>
 
 	<div class="flex gap-2">
 		<select name="visibility" id="promptVisibilitySelector" disabled class="flex-grow capitalize">

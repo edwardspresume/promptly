@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { EnterKeyHint } from '$globalTypes';
 
+	import Label from '$globalComponents/ui/label/label.svelte';
 	import Textarea from '$globalComponents/ui/textarea/textarea.svelte';
 
 	export let value: string = '';
@@ -17,11 +18,7 @@
 	$: valueLength = value.length;
 </script>
 
-<!-- svelte-ignore a11y-label-has-associated-control -->
-<label
-	for={textAreaId}
-	class="text-sm font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
->
+<Label for={textAreaId} class="leading-none">
 	<span class={labelIsScreenReaderOnly ? 'sr-only' : ''}>{label}</span>
 
 	{#if maxlength}
@@ -29,7 +26,7 @@
 			{valueLength}/{maxlength}
 		</span>
 	{/if}
-</label>
+</Label>
 
 {#if errorMessage}
 	<p class="text-sm text-red-500 error-message">{errorMessage}</p>

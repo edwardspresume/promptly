@@ -2,6 +2,7 @@
 	import type { EnterKeyHint } from '$globalTypes';
 
 	import Input from '$globalComponents/ui/input/input.svelte';
+	import Label from '$globalComponents/ui/label/label.svelte';
 
 	export let type: string;
 	export let value: string = '';
@@ -18,10 +19,7 @@
 	$: valueLength = value.length;
 </script>
 
-<!-- svelte-ignore a11y-label-has-associated-control -->
-<label
-	class="grid gap-1 text-sm font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
->
+<Label class="grid gap-1">
 	<div>
 		<span class={labelIsScreenReaderOnly ? 'sr-only' : ''}>{label}</span>
 
@@ -50,4 +48,4 @@
 		aria-invalid={errorMessage ? 'true' : undefined}
 		{...$$restProps}
 	/>
-</label>
+</Label>

@@ -8,6 +8,7 @@
 	import { tagsFilter } from '$dashboardStores/promptsStore';
 	import { allTagsStore } from '$dashboardStores/tagsStore';
 
+	import Label from '$globalComponents/ui/label/label.svelte';
 	import SelectedTag from './SelectedTag.svelte';
 	import Tag from './Tag.svelte';
 
@@ -15,21 +16,21 @@
 	export let filterPromptBasedOnTags: boolean = false;
 
 	// A writable store that keeps track of the IDs of selected tags
-	export let selectedTagIds: Writable<string[]> = writable([]); ;
+	export let label: string = 'Tag';
+	export let selectedTagIds: Writable<string[]> = writable([]);
 	export let labelIsScreenReaderOnly: boolean = false;
 
 	let tagSearchInput: HTMLInputElement;
 
-	let tagSearchQuery: string = '';
+	let tagSearchTerm: string = '';
 	let activeTagIndex: number = 0;
 	let isTagSelectionMenuOpen: boolean = false;
 
-	// Filter tags based on the tagSearchQuery value and exclude already selected tags
-	$: filteredTags = $allTagsStore.filter(
-		(tag) =>
-			!$selectedTagIds.includes(tag.id) &&
-			tag.name.toLowerCase().includes(tagSearchQuery.toLowerCase())
-	);
+	// Filter tags based on the tagSearchTerm value and exclude already selected tags
+	$: filteredTags = $allTagsStore.filter((tag) => {
+		const lowerCaseQuery = tagSearchTerm.toLowerCase();
+		return !$selectedTagIds.includes(tag.id) && tag.name.toLowerCase().includes(lowerCaseQuery);
+	});
 
 	// Update selectedTags when selectedTagIds change
 	$: selectedTags = $allTagsStore.filter((tag) => $selectedTagIds.includes(tag.id));
@@ -42,7 +43,7 @@
 	function addTag(tag: TagSchema) {
 		selectedTagIds.update((ids) => [...ids, tag.id]);
 
-		tagSearchQuery = '';
+		tagSearchTerm = '';
 		activeTagIndex = 0;
 
 		tagSearchInput.focus();
@@ -85,19 +86,15 @@
 	// Sets tag filter in prompts store when filterPromptBasedOnTags is true
 	$: if (filterPromptBasedOnTags) tagsFilter.set($selectedTagIds);
 
-	let tagLabel = `Tag${$allTagsStore.length > 1 ? 's' : ''}`;
+	let tagLabel = `${label}${$allTagsStore.length > 1 ? 's' : ''}`;
 </script>
 
-<label for="tagInput" class="grid gap-1">
-	<span
-		class="text-sm font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 {labelIsScreenReaderOnly
-			? 'sr-only'
-			: ''}"
-	>
+<fieldset use:onOutsideClick={() => (isTagSelectionMenuOpen = false)} class="grid gap-1">
+	<Label for="tagInput" class={labelIsScreenReaderOnly ? 'sr-only' : ''}>
 		{tagLabel}
-	</span>
+	</Label>
 
-	<div use:onOutsideClick={() => (isTagSelectionMenuOpen = false)} class="relative grid gap-3">
+	<div class="grid gap-3">
 		{#if selectedTags.length > 0}
 			<div class="flex flex-wrap gap-2 p-2 border rounded-md bg-background">
 				{#each selectedTags as tag (tag.id)}
@@ -106,27 +103,24 @@
 			</div>
 		{/if}
 
-		<label>
-			<span class="sr-only">Select tags</span>
-			<input
-				bind:value={tagSearchQuery}
-				bind:this={tagSearchInput}
-				on:keydown={handleKeyDown}
-				on:focus={() => (isTagSelectionMenuOpen = true)}
-				on:input={() => (activeTagIndex = 0)}
-				type="search"
-				role="combobox"
-				autocorrect="off"
-				autocomplete="off"
-				spellcheck="false"
-				aria-expanded={isTagSelectionMenuOpen}
-				aria-autocomplete="list"
-				aria-controls="tags-list"
-				placeholder="Select {tagLabel.toLowerCase()}"
-				aria-activedescendant={`tag-${activeTagIndex}`}
-				class="w-full px-3 py-2 text-sm bg-transparent border rounded-md border-input ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-			/>
-		</label>
+		<input
+			id="tagInput"
+			bind:value={tagSearchTerm}
+			bind:this={tagSearchInput}
+			on:keydown={handleKeyDown}
+			on:focus={() => (isTagSelectionMenuOpen = true)}
+			on:input={() => (activeTagIndex = 0)}
+			type="search"
+			role="combobox"
+			autocorrect="off"
+			autocomplete="off"
+			spellcheck="false"
+			aria-expanded={isTagSelectionMenuOpen}
+			aria-autocomplete="list"
+			aria-controls="tags-list"
+			placeholder="Select tag"
+			aria-activedescendant={`tag-${activeTagIndex}`}
+		/>
 
 		{#if isTagSelectionMenuOpen && filteredTags.length > 0}
 			<fieldset
@@ -147,4 +141,4 @@
 			</fieldset>
 		{/if}
 	</div>
-</label>
+</fieldset>

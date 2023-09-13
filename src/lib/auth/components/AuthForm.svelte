@@ -31,7 +31,6 @@
 	const { enhance, form, errors, delayed, message } = superForm($page.data.authEmailForm, {
 		id: formType,
 		resetForm: true,
-		taintedMessage: false,
 		validators: EmailAuthValidationSchema
 	});
 </script>

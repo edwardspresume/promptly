@@ -13,6 +13,7 @@
 		"format": "prettier --plugin-search-dir . --write .",
 		"test:e2e": "playwright test",
 		"test:unit": "vitest -u",
+        "migration:generate": "drizzle-kit generate:pg",
 		"migration:push": "drizzle-kit push:pg",
 		"migration:pull": "drizzle-kit introspect:pg",
 		"migration:drop": "drizzle-kit drop",

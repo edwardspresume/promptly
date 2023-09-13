@@ -1,8 +1,11 @@
 import { SECRET_DATABASE_URL } from '$env/static/private';
-import { drizzle, type PostgresJsDatabase } from 'drizzle-orm/postgres-js';
+
+import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
+
+import * as schema from './schema';
 
 const connectionString = SECRET_DATABASE_URL;
 
 const client = postgres(connectionString);
-export const drizzleClient: PostgresJsDatabase = drizzle(client);
+export const drizzleClient = drizzle(client, { schema });

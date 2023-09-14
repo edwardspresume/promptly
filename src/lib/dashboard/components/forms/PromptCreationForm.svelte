@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { writable } from 'svelte/store';
 
 	import { superForm } from 'sveltekit-superforms/client';
 
@@ -22,8 +21,8 @@
 
 	export let promptCreationModalRef: HTMLDialogElement;
 
-	// Writable store to keep track of the selected tags by their IDs
-	const selectedTagIds = writable<string[]>([]);
+	// An array to keep track of the selected tags by their IDs
+	let selectedTagIds: string[] = [];
 
 	const { enhance, form, errors, delayed, message } = superForm($page.data.promptForm, {
 		id: 'createPrompt',
@@ -51,7 +50,7 @@
 				}
 
 				// reset selected tags
-				if ($selectedTagIds.length > 0) selectedTagIds.set([]);
+				selectedTagIds = [];
 			}
 
 			notificationFunction(alertText, { target: 'baseModal' });
@@ -91,7 +90,7 @@
 		</fieldset>
 
 		{#if $totalTagsCountStore}
-			<TagSelector {selectedTagIds} />
+			<TagSelector bind:selectedTagIds />
 		{/if}
 
 		<footer class="flex items-center gap-2">

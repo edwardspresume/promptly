@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { writable } from 'svelte/store';
-
 	import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
 
 	import { promptSortOptions } from '$dashboardData/SortOptions';
@@ -16,7 +14,8 @@
 
 	export let promptsFiltersModalRef: HTMLDialogElement;
 
-	let selectedTagIds = writable<string[]>([]);
+	let selectedTagIds: string[] = [];
+
 	let selectedSortOption: string = '';
 
 	/**
@@ -24,7 +23,7 @@
 	 * Resets the selected tag ids to empty array and sort option to empty string.
 	 */
 	function clearFilters() {
-		if ($selectedTagIds.length > 0) selectedTagIds.set([]);
+		selectedTagIds = [];
 
 		selectedSortOption = '';
 		promptSortingPreference.set('');
@@ -32,7 +31,7 @@
 
 	$: {
 		isPromptFilterActive.set(
-			$selectedTagIds.length > 0 ||
+			selectedTagIds.length > 0 ||
 				(selectedSortOption.length > 0 && selectedSortOption !== 'default:default')
 		);
 	}
@@ -54,7 +53,7 @@
 		<SortSelector itemType="prompt" sortOptions={promptSortOptions} bind:selectedSortOption />
 
 		{#if $totalTagsCountStore}
-			<TagSelector {selectedTagIds} filterPromptBasedOnTags={true} />
+			<TagSelector bind:selectedTagIds filterPromptBasedOnTags={true} />
 		{/if}
 
 		<Button type="button" on:click={clearFilters}>Clear Filters</Button>

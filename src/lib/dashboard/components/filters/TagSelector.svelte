@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { writable, type Writable } from 'svelte/store';
-
 	import type { TagSchema } from '$databaseDir/schema';
 
 	import { onOutsideClick } from '$dashboardUtils/functions';
@@ -9,32 +7,41 @@
 	import { allTagsStore } from '$dashboardStores/tagsStore';
 
 	import Label from '$globalComponents/ui/label/label.svelte';
-	import { fade } from 'svelte/transition';
 	import SelectedTag from './SelectedTag.svelte';
 	import Tag from './Tag.svelte';
 
 	// Determines whether prompts should be filtered based on selected tags
 	export let filterPromptBasedOnTags: boolean = false;
 
-	// A writable store that keeps track of the IDs of selected tags
+	// Label for the tag selector
 	export let label: string = 'Tag';
-	export let selectedTagIds: Writable<string[]> = writable([]);
-	export let labelIsScreenReaderOnly: boolean = false;
 
-	let tagSearchInput: HTMLInputElement;
+	// An array that contains the tags shared by another user's prompt
+	export let sharedTags: TagSchema[] = [];
 
+	// An array that contains the IDs of the selected tags
+	export let selectedTagIds: string[] | null = [];
+
+	let allTags: TagSchema[] = [];
 	let tagSearchTerm: string = '';
 	let activeTagIndex: number = 0;
+	let tagSearchInput: HTMLInputElement;
 	let isTagSelectionMenuOpen: boolean = false;
 
+	// Determines whether to use shared tags or all tags based on the sharedTags length
+	let isSharedTag: boolean = sharedTags.length > 0;
+
+	// Selects the appropriate tags source based on the sharedTags length
+	$: allTags = sharedTags.length > 0 ? sharedTags : $allTagsStore;
+
 	// Filter tags based on the tagSearchTerm value and exclude already selected tags
-	$: filteredTags = $allTagsStore.filter((tag) => {
+	$: filteredTags = allTags.filter((tag) => {
 		const lowerCaseQuery = tagSearchTerm.toLowerCase();
-		return !$selectedTagIds.includes(tag.id) && tag.name.toLowerCase().includes(lowerCaseQuery);
+		return !selectedTagIds?.includes(tag.id) && tag.name.toLowerCase().includes(lowerCaseQuery);
 	});
 
-	// Update selectedTags when selectedTagIds change
-	$: selectedTags = $allTagsStore.filter((tag) => $selectedTagIds.includes(tag.id));
+	// Updates the selected tags based on the selected tag IDs
+	$: selectedTags = allTags.filter((tag) => selectedTagIds?.includes(tag.id));
 
 	/**
 	 * Adds a tag to the selected tags
@@ -42,7 +49,9 @@
 	 * @param {TagSchema} tag - The tag to add
 	 */
 	function addTag(tag: TagSchema) {
-		selectedTagIds.update((ids) => [...ids, tag.id]);
+		if (selectedTagIds) {
+			selectedTagIds = [...selectedTagIds, tag.id];
+		}
 
 		tagSearchTerm = '';
 		activeTagIndex = 0;
@@ -56,7 +65,9 @@
 	 * @param {TagSchema} tag - The tag to remove
 	 */
 	function removeTag(tag: TagSchema) {
-		selectedTagIds.update((ids) => ids.filter((id) => id !== tag.id));
+		if (selectedTagIds) {
+			selectedTagIds = selectedTagIds.filter((id) => id !== tag.id);
+		}
 	}
 
 	/**
@@ -84,16 +95,17 @@
 		}
 	}
 
-	// Sets tag filter in prompts store when filterPromptBasedOnTags is true
-	$: if (filterPromptBasedOnTags) tagsFilter.set($selectedTagIds);
+	let tagLabel = `${label}${allTags.length > 1 ? 's' : ''}`;
 
-	let tagLabel = `${label}${$allTagsStore.length > 1 ? 's' : ''}`;
+	// Creates a label indicating the number of selected tags and the total number of available tags
+	$: tagCountLabel = `${selectedTags.length}/${allTags.length}`;
 
-	$: tagCountLabel = `${selectedTags.length}/${$allTagsStore.length}`;
+	// Sets the tag filter in the prompts store when filterPromptBasedOnTags is true
+	$: if (filterPromptBasedOnTags && selectedTagIds) tagsFilter.set(selectedTagIds);
 </script>
 
 <fieldset use:onOutsideClick={() => (isTagSelectionMenuOpen = false)} class="grid gap-1">
-	<Label for="tagInput" class={labelIsScreenReaderOnly ? 'sr-only' : ''}>
+	<Label for="tagInput">
 		<span>{tagLabel}</span>
 
 		<span class="text-xs text-muted-foreground"> {tagCountLabel} </span>
@@ -101,9 +113,9 @@
 
 	<div class="grid gap-3">
 		{#if selectedTags.length > 0}
-			<div transition:fade class="flex flex-wrap gap-2 p-2 border rounded-md bg-background">
+			<div class="flex flex-wrap gap-2 p-2 border rounded-md bg-background">
 				{#each selectedTags as tag (tag.id)}
-					<SelectedTag {tag} on:removeTag={() => removeTag(tag)} />
+					<SelectedTag {tag} {isSharedTag} on:removeTag={() => removeTag(tag)} />
 				{/each}
 			</div>
 		{/if}
@@ -129,7 +141,6 @@
 
 		{#if isTagSelectionMenuOpen && filteredTags.length > 0}
 			<fieldset
-				transition:fade
 				id="tags-list"
 				aria-label="Tags list"
 				class="gap-3 p-2 overflow-y-auto border rounded-md max-h-32 sm:max-h-52"

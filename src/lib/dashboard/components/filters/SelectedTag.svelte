@@ -6,6 +6,7 @@
 	import Button from '$globalComponents/ui/button/button.svelte';
 
 	export let tag: TagSchema;
+	export let isSharedTag: boolean = false;
 
 	const dispatch = createEventDispatcher();
 
@@ -25,5 +26,10 @@
 >
 	<span>{tag.name}</span>
 	<span>&#x2715;</span>
-	<input type="checkbox" name="tagIds" checked={true} value={tag.id} class="hidden" />
+
+	{#if isSharedTag}
+		<input type="checkbox" name="tagNames" checked={true} value={tag.name} class="hidden" />
+	{:else}
+		<input type="checkbox" name="tagIds" checked={true} value={tag.id} class="hidden" />
+	{/if}
 </Button>

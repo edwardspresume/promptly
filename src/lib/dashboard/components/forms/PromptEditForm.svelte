@@ -2,7 +2,6 @@
 	import { superForm } from 'sveltekit-superforms/client';
 
 	import { page } from '$app/stores';
-	import { writable } from 'svelte/store';
 	import { fade } from 'svelte/transition';
 
 	import type { ConfirmationInfo } from '$dashboardTypes';
@@ -40,7 +39,8 @@
 	let confirmationModalRef: HTMLDialogElement;
 	let promptDeleteConfirmationInfo: ConfirmationInfo;
 
-	let selectedTagIds = writable<string[]>([]);
+	let selectedTagIds: string[] | null = [];
+
 	let previousPrompt: PromptSchema | undefined = undefined;
 	let isPromptModified = false;
 
@@ -127,14 +127,14 @@
 			}
 
 			if (alertType === 'success') {
-				const { id, title, description, isFavorited } = form.data;
+				const { id, title, description, isFavorited, tagIds } = form.data;
 
 				if (!userSession) {
 					promptLocalStorageManager.updateItem(id, {
 						title,
 						description,
 						isFavorited,
-						tagIds: $selectedTagIds
+						tagIds
 					});
 				}
 
@@ -154,7 +154,7 @@
 		$form.title = title;
 		$form.description = description;
 		$form.isFavorited = isFavorited;
-		selectedTagIds.set(tagIds ?? []);
+		selectedTagIds = tagIds;
 		$form.visibility = visibility;
 
 		previousPrompt = selectedPromptForEdit;
@@ -175,7 +175,7 @@
 			$form.title.trim() !== selectedPromptForEdit.title ||
 			$form.description.trim() !== selectedPromptForEdit.description ||
 			$form.isFavorited !== selectedPromptForEdit.isFavorited ||
-			areArraysDifferent($selectedTagIds, selectedPromptForEdit.tagIds);
+			areArraysDifferent(selectedTagIds, selectedPromptForEdit.tagIds);
 	}
 
 	$: isRefiningPrompt = formAction === '?/refinePrompt' && $delayed;
@@ -261,7 +261,7 @@
 		</fieldset>
 
 		{#if $totalTagsCountStore}
-			<TagSelector {selectedTagIds} />
+			<TagSelector bind:selectedTagIds />
 		{/if}
 
 		{#if userSession}

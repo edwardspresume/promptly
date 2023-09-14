@@ -73,7 +73,7 @@
 
 		try {
 			if (userSession) {
-				const { error } = await $page.data.supabase.from('prompts').delete().eq('id', $form.id);
+				const { error } = await $page.data.supabase.from('prompts_table').delete().eq('id', $form.id);
 
 				if (error) throw new Error(`Supabase error`);
 			} else {

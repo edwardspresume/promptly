@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { superForm } from 'sveltekit-superforms/client';
-
 	import { page } from '$app/stores';
 	import { writable } from 'svelte/store';
+
+	import { superForm } from 'sveltekit-superforms/client';
 
 	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
@@ -22,20 +22,8 @@
 
 	export let promptCreationModalRef: HTMLDialogElement;
 
-	// Boolean to track if the prompt is marked as favorite
-	let isFavorited = false;
-
 	// Writable store to keep track of the selected tags by their IDs
-	let selectedTagIds = writable<string[]>([]);
-
-	/**
-	 * Reset the form fields after a successful submission
-	 */
-	const resetFormFields = () => {
-		isFavorited = false;
-
-		if ($selectedTagIds.length > 0) selectedTagIds.set([]);
-	};
+	const selectedTagIds = writable<string[]>([]);
 
 	const { enhance, form, errors, delayed, message } = superForm($page.data.promptForm, {
 		id: 'createPrompt',
@@ -52,17 +40,18 @@
 
 			if (alertType === 'success') {
 				if (!$page.data.session?.user) {
-					const { title, description, isFavorited } = form.data;
+					const { title, description, isFavorited, tagIds } = form.data;
 
 					promptLocalStorageManager.addItem({
 						title,
 						description,
 						isFavorited,
-						tagIds: $selectedTagIds
+						tagIds
 					});
 				}
 
-				resetFormFields();
+				// reset selected tags
+				if ($selectedTagIds.length > 0) selectedTagIds.set([]);
 			}
 
 			notificationFunction(alertText, { target: 'baseModal' });
@@ -107,10 +96,10 @@
 
 		<footer class="flex items-center gap-2">
 			<FavoriteToggleBtn
-				{isFavorited}
 				iconSize={26}
 				buttonVariant="outline"
-				on:favoriteToggled={() => (isFavorited = !isFavorited)}
+				isFavorited={$form.isFavorited}
+				on:favoriteToggled={() => ($form.isFavorited = !$form.isFavorited)}
 				class="h-full p-2"
 			/>
 

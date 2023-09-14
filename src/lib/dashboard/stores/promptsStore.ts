@@ -48,7 +48,7 @@ export const filteredPromptsStore = derived(
 
 		// Apply the text filter to the prompts
 		const filteredPrompts = prompts.filter((prompt) => {
-			const matchesTags = tagsFilter.every((tag) => prompt.tagIds.includes(tag));
+			const matchesTags = tagsFilter.every((tag) => prompt.tagIds?.includes(tag));
 
 			const matchesText = prompt.title.toLowerCase().includes(normalizedFilterText);
 

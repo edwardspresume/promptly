@@ -28,7 +28,7 @@
 	<span>&#x2715;</span>
 
 	{#if isSharedTag}
-		<input type="checkbox" name="tagNames" checked={true} value={tag.name} class="hidden" />
+		<input type="checkbox" name="sharedTagNames" checked={true} value={tag.name} class="hidden" />
 	{:else}
 		<input type="checkbox" name="tagIds" checked={true} value={tag.id} class="hidden" />
 	{/if}

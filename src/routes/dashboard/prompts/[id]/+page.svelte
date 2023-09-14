@@ -6,8 +6,8 @@
 	import { RoutePaths } from '$globalTypes';
 
 	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
+	import { notifyError } from '$dashboardUtils/toastUtils';
 
-	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 	import {
 		MAX_PROMPT_DESCRIPTION_LENGTH,
 		MAX_PROMPT_TITLE_LENGTH,
@@ -23,9 +23,9 @@
 
 	export let data: PageData;
 
-	let { session, promptCreator, sharedPromptForm } = data;
+	let { session, promptCreator, sharedTags, sharedPromptForm } = data;
 
-	$: ({ session, promptCreator, sharedPromptForm } = data);
+	$: ({ session, promptCreator, sharedTags, sharedPromptForm } = data);
 
 	$: isLoggedIn = session?.user;
 
@@ -35,11 +35,7 @@
 		onUpdated: () => {
 			if (!$message) return;
 
-			const { alertType, alertText } = $message;
-
-			const notificationFunction = getNotificationFunction(alertType);
-
-			notificationFunction(alertText, { target: 'baseModal' });
+			notifyError($message.alertText, { target: 'baseModal' });
 		}
 	});
 </script>
@@ -86,8 +82,14 @@
 			/>
 		</fieldset>
 
+		<TagSelector
+			label="Shared tag"
+			bind:sharedTags
+			selectedTagIds={sharedTags.map((tag) => tag.id)}
+		/>
+
 		{#if $totalTagsCountStore}
-			<TagSelector />
+			<TagSelector label="My tag" />
 		{/if}
 
 		<footer class="flex items-center gap-2">

@@ -180,7 +180,7 @@ export async function getUserTags(profileId: string) {
 export async function insertPromptTagRelations(
 	trx: PostgresJsDatabase<typeof schema>,
 	newPromptId: string | undefined,
-	tagIds: string[] | null
+	tagIds: string[] | null | undefined
 ) {
 	if (newPromptId && tagIds?.length) {
 		for (const tagId of tagIds) {

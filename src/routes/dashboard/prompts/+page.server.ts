@@ -32,7 +32,7 @@ async function createPrompt(profileId: string, promptData: PromptFormData) {
 		const newPromptId = result[0]?.id;
 
 		// Insert new tag relations for this prompt
-		insertPromptTagRelations(trx, newPromptId, promptData.tagIds);
+		await insertPromptTagRelations(trx, newPromptId, promptData.tagIds);
 	});
 }
 
@@ -49,7 +49,7 @@ async function updatePrompt(promptId: string, promptData: PromptFormData) {
 		await trx.delete(promptTagRelationsTable).where(eq(promptTagRelationsTable.promptId, promptId));
 
 		// Insert new tag relations for this prompt
-		insertPromptTagRelations(trx, promptId, promptData.tagIds);
+		await insertPromptTagRelations(trx, promptId, promptData.tagIds);
 	});
 }
 

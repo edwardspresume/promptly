@@ -18,24 +18,22 @@ import { RoutePaths, type AlertMessage } from '$globalTypes';
 
 import { allTagsStore } from '$dashboardStores/tagsStore';
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
-import { promptsTable, tagsTable } from '$databaseDir/schema';
+import { promptsTable, tagsTable, type TagSchema } from '$databaseDir/schema';
 import { logError } from '$globalUtils';
 
 /**
- * Checks if a tag with a specific name exists in the list.
- * @param {string} tagName - Name of the tag to check.
- * @returns {boolean} - true if tag exists, false otherwise.
+ * Finds a tag in the store by its name.
+ * @param {string} tagName - The name of the tag to find.
+ * @returns {TagSchema | undefined} - The tag if found, undefined if not.
  */
-const doesTagExistServerSideCheck = (tagName: string): boolean => {
-	// Sanitize and normalize the tag name
-	const sanitizedTagName = sanitizeContentOnServer(tagName);
-	const normalizedName = sanitizedTagName.trim().toLowerCase();
+const findTagByName = (tagName: string) => {
+	const normalizedName = tagName.trim().toLowerCase();
 
 	// Get the current tags from the store
-	const currentTags = get(allTagsStore);
+	const currentTags: TagSchema[] = get(allTagsStore);
 
 	// Check if the tag exists in the store
-	return currentTags.some((tag) => tag.name.toLowerCase() === normalizedName);
+	return currentTags.find((tag) => tag.name.toLowerCase() === normalizedName);
 };
 
 export const load = (async ({ params }) => {
@@ -102,14 +100,23 @@ export const actions: Actions = {
 			// Get the shared tag names from the form data
 			const sharedTagNames = formData.getAll('sharedTagNames');
 
-			// Create an array of new tags after sanitizing the tag names and checking if they already exist
-			const newTags = sharedTagNames
-				.map((name) => sanitizeContentOnServer(name.toString()))
-				.filter((tagName) => !doesTagExistServerSideCheck(tagName))
-				.map((tagName) => ({ profileId: userSession.id, name: tagName }));
+			let existingTags: TagSchema[] = [];
+			const newTags: { profileId: string; name: string }[] = [];
+
+			// Separate existing and new tags
+			for (const name of sharedTagNames) {
+				const tagName = sanitizeContentOnServer(name.toString());
+				const existingTag = findTagByName(tagName);
+
+				if (existingTag) existingTags.push(existingTag);
+				else newTags.push({ profileId: userSession.id, name: tagName });
+			}
+
+			// Filter out existing tags that are already included in sanitizedData.tagIds
+			existingTags = existingTags.filter((tag) => !sanitizedData.tagIds.includes(tag.id));
 
 			await drizzleClient.transaction(async (trx) => {
-				const newTagIds = [];
+				const newTagIds = existingTags.map((tag) => tag.id);
 
 				// If there are new tags, insert them into the database and get their IDs
 				if (newTags.length > 0) {
@@ -136,7 +143,7 @@ export const actions: Actions = {
 				const newPromptId = insertedPrompt[0]?.id;
 
 				// Insert new tag relations for this prompt
-				insertPromptTagRelations(trx, newPromptId, sanitizedData.tagIds);
+				await insertPromptTagRelations(trx, newPromptId, sanitizedData.tagIds);
 			});
 		} catch (error) {
 			logError(error, 'Error when saving shared prompt', { userSession });

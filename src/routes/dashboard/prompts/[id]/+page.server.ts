@@ -53,7 +53,7 @@ export const load = (async ({ params }) => {
 		);
 
 		// Extract the shared tags and creator details from the prompt data
-		const sharedTags = sharedPrompt.promptTags.map((promptTags) => promptTags.tag);
+		const sharedTags = sharedPrompt.tagPromptLink.map((tagPromptLink) => tagPromptLink.tag);
 		const promptCreator = {
 			username: sharedPrompt.profile.username ?? sharedPrompt?.profile.fullName ?? 'Anonymous',
 			avatarUrl: sharedPrompt.profile.avatarUrl ?? null
@@ -143,7 +143,7 @@ export const actions: Actions = {
 				const newPromptId = insertedPrompt[0]?.id;
 
 				// Insert new tag relations for this prompt
-				await insertPromptTagRelations(trx, newPromptId, sanitizedData.tagIds);
+				await insertPromptTagRelations(trx, userSession.id, newPromptId, sanitizedData.tagIds);
 			});
 		} catch (error) {
 			logError(error, 'Error when saving shared prompt', { userSession });

@@ -1,5 +1,5 @@
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
-import { promptTagRelationsTable, promptsTable } from '$databaseDir/schema';
+import { tagPromptLinkTable, promptsTable } from '$databaseDir/schema';
 import { eq } from 'drizzle-orm';
 
 import { message, superValidate } from 'sveltekit-superforms/server';
@@ -32,11 +32,11 @@ async function createPrompt(profileId: string, promptData: PromptFormData) {
 		const newPromptId = result[0]?.id;
 
 		// Insert new tag relations for this prompt
-		await insertPromptTagRelations(trx, newPromptId, promptData.tagIds);
+		await insertPromptTagRelations(trx, profileId, newPromptId, promptData.tagIds);
 	});
 }
 
-async function updatePrompt(promptId: string, promptData: PromptFormData) {
+async function updatePrompt(profileId: string, promptId: string, promptData: PromptFormData) {
 	// Start transaction
 	await drizzleClient.transaction(async (trx) => {
 		// Remove 'id' from promptData
@@ -46,10 +46,10 @@ async function updatePrompt(promptId: string, promptData: PromptFormData) {
 		await trx.update(promptsTable).set(promptData).where(eq(promptsTable.id, promptId));
 
 		// Delete all existing tag relations for this prompt
-		await trx.delete(promptTagRelationsTable).where(eq(promptTagRelationsTable.promptId, promptId));
+		await trx.delete(tagPromptLinkTable).where(eq(tagPromptLinkTable.promptId, promptId));
 
 		// Insert new tag relations for this prompt
-		await insertPromptTagRelations(trx, promptId, promptData.tagIds);
+		await insertPromptTagRelations(trx, profileId, promptId, promptData.tagIds);
 	});
 }
 
@@ -81,7 +81,7 @@ export const actions: Actions = {
 				const sanitizedData = sanitizePromptData(promptForm.data);
 
 				if (promptId) {
-					await updatePrompt(promptId, sanitizedData);
+					await updatePrompt(userSession.id, promptId, sanitizedData);
 				} else {
 					await createPrompt(userSession.id, sanitizedData);
 				}

@@ -9,7 +9,7 @@ import DOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 
 import { logError } from '$globalUtils';
-import { profilesTable, promptTagRelationsTable, promptsTable, tagsTable } from './schema';
+import { profilesTable, promptsTable, tagPromptLinkTable, tagsTable } from './schema';
 
 import type { PromptFormData } from '$dashboardValidationSchemas/promptsValidationSchema';
 
@@ -179,12 +179,13 @@ export async function getUserTags(profileId: string) {
 
 export async function insertPromptTagRelations(
 	trx: PostgresJsDatabase<typeof schema>,
+	createdBy: string,
 	newPromptId: string | undefined,
 	tagIds: string[] | null | undefined
 ) {
 	if (newPromptId && tagIds?.length) {
 		for (const tagId of tagIds) {
-			await trx.insert(promptTagRelationsTable).values({ promptId: newPromptId, tagId });
+			await trx.insert(tagPromptLinkTable).values({ createdBy, promptId: newPromptId, tagId });
 		}
 	}
 }

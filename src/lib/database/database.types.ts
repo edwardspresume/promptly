@@ -9,7 +9,7 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      profiles: {
+      profiles_table: {
         Row: {
           avatar_url: string | null
           created_at: string
@@ -48,21 +48,21 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "profiles_id_fkey"
+            foreignKeyName: "profiles_table_id_fkey"
             columns: ["id"]
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
       }
-      prompts: {
+      prompts_table: {
         Row: {
           created_at: string
           description: string
           id: string
           is_favorited: boolean
           profile_id: string
-          tag_ids: string[]
+          tag_ids: string[] | null
           title: string
           updated_at: string
           visibility: Database["public"]["Enums"]["prompt_visibility"]
@@ -73,7 +73,7 @@ export interface Database {
           id?: string
           is_favorited?: boolean
           profile_id: string
-          tag_ids: string[]
+          tag_ids?: string[] | null
           title: string
           updated_at?: string
           visibility?: Database["public"]["Enums"]["prompt_visibility"]
@@ -84,21 +84,61 @@ export interface Database {
           id?: string
           is_favorited?: boolean
           profile_id?: string
-          tag_ids?: string[]
+          tag_ids?: string[] | null
           title?: string
           updated_at?: string
           visibility?: Database["public"]["Enums"]["prompt_visibility"]
         }
         Relationships: [
           {
-            foreignKeyName: "prompts_profile_id_fkey"
+            foreignKeyName: "prompts_table_profile_id_fkey"
             columns: ["profile_id"]
-            referencedRelation: "profiles"
+            referencedRelation: "profiles_table"
             referencedColumns: ["id"]
           }
         ]
       }
-      tags: {
+      tag_prompt_link_table: {
+        Row: {
+          created_at: string
+          created_by: string
+          prompt_id: string
+          tag_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          prompt_id: string
+          tag_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          prompt_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tag_prompt_link_table_created_by_fkey"
+            columns: ["created_by"]
+            referencedRelation: "profiles_table"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tag_prompt_link_table_prompt_id_fkey"
+            columns: ["prompt_id"]
+            referencedRelation: "prompts_table"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tag_prompt_link_table_tag_id_fkey"
+            columns: ["tag_id"]
+            referencedRelation: "tags_table"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      tags_table: {
         Row: {
           created_at: string
           id: string
@@ -122,9 +162,9 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "tags_profile_id_fkey"
+            foreignKeyName: "tags_table_profile_id_fkey"
             columns: ["profile_id"]
-            referencedRelation: "profiles"
+            referencedRelation: "profiles_table"
             referencedColumns: ["id"]
           }
         ]

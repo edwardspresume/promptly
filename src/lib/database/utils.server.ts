@@ -135,7 +135,7 @@ export async function getSharedPrompt(promptId: string) {
 						avatarUrl: true
 					}
 				},
-				promptTags: {
+				tagPromptLink: {
 					with: {
 						tag: true
 					}

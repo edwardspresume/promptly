@@ -107,14 +107,14 @@ export const tagPromptLinkTable = pgTable(
 			.references(() => tagsTable.id, { onDelete: 'cascade' }),
 		createdBy: uuid('created_by')
 			.notNull()
-			.references(() => profilesTable.id),
+			.references(() => profilesTable.id, { onDelete: 'cascade' }),
 		createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' })
 			.defaultNow()
 			.notNull()
 	},
 	(table) => {
 		return {
-			tagPromptLinkTablePkey: primaryKey(table.promptId, table.tagId)
+			tagPromptLinkTablePkey: primaryKey(table.promptId, table.tagId, table.createdBy)
 		};
 	}
 );

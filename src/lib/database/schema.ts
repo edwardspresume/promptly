@@ -2,6 +2,7 @@ import {
 	boolean,
 	pgEnum,
 	pgTable,
+	primaryKey,
 	text,
 	timestamp,
 	unique,
@@ -9,6 +10,7 @@ import {
 	varchar
 } from 'drizzle-orm/pg-core';
 
+import { relations } from 'drizzle-orm';
 export const keyStatus = pgEnum('key_status', ['default', 'valid', 'invalid', 'expired']);
 export const keyType = pgEnum('key_type', [
 	'aead-ietf',
@@ -31,7 +33,7 @@ export const subscriptionPlan = pgEnum('subscription_plan', ['free', 'pro', 'ent
 export const promptVisibility = pgEnum('prompt_visibility', ['private', 'public']);
 
 export const profilesTable = pgTable(
-	'profiles',
+	'profiles_table',
 	{
 		id: uuid('id').primaryKey().notNull(),
 		username: text('username'),
@@ -58,7 +60,7 @@ export const profilesTable = pgTable(
 	}
 );
 
-export const promptsTable = pgTable('prompts', {
+export const promptsTable = pgTable('prompts_table', {
 	id: uuid('id').defaultRandom().primaryKey().notNull(),
 	profileId: uuid('profile_id')
 		.notNull()
@@ -73,7 +75,7 @@ export const promptsTable = pgTable('prompts', {
 });
 
 export const tagsTable = pgTable(
-	'tags',
+	'tags_table',
 	{
 		id: uuid('id').defaultRandom().primaryKey().notNull(),
 		profileId: uuid('profile_id')
@@ -93,6 +95,68 @@ export const tagsTable = pgTable(
 		};
 	}
 );
+
+export const tagPromptLinkTable = pgTable(
+	'tag_prompt_link_table',
+	{
+		promptId: uuid('prompt_id')
+			.notNull()
+			.references(() => promptsTable.id, { onDelete: 'cascade' }),
+		tagId: uuid('tag_id')
+			.notNull()
+			.references(() => tagsTable.id, { onDelete: 'cascade' }),
+		createdBy: uuid('created_by')
+			.notNull()
+			.references(() => profilesTable.id),
+		createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' })
+			.defaultNow()
+			.notNull()
+	},
+	(table) => {
+		return {
+			tagPromptLinkTablePkey: primaryKey(table.promptId, table.tagId)
+		};
+	}
+);
+
+export const profilesRelations = relations(profilesTable, ({ many }) => ({
+	createdTagPromptLinks: many(tagPromptLinkTable)
+}));
+
+export const promptsRelations = relations(promptsTable, ({ one, many }) => ({
+	profile: one(profilesTable, {
+		fields: [promptsTable.profileId],
+		references: [profilesTable.id]
+	}),
+
+	tagPromptLink: many(tagPromptLinkTable)
+}));
+
+export const tagsRelations = relations(tagsTable, ({ one, many }) => ({
+	profile: one(profilesTable, {
+		fields: [tagsTable.profileId],
+		references: [profilesTable.id]
+	}),
+
+	tagPromptLink: many(tagPromptLinkTable)
+}));
+
+export const tagPromptLinkTableRelations = relations(tagPromptLinkTable, ({ one }) => ({
+	profile: one(profilesTable, {
+		fields: [tagPromptLinkTable.createdBy],
+		references: [profilesTable.id]
+	}),
+
+	prompt: one(promptsTable, {
+		fields: [tagPromptLinkTable.promptId],
+		references: [promptsTable.id]
+	}),
+
+	tag: one(tagsTable, {
+		fields: [tagPromptLinkTable.tagId],
+		references: [tagsTable.id]
+	})
+}));
 
 export type ProfileSchema = Pick<
 	typeof profilesTable.$inferSelect,

@@ -95,7 +95,7 @@
 		}
 	}
 
-	let tagLabel = `${label}${allTags.length > 1 ? 's' : ''}`;
+	$: tagLabel = `${label}${allTags.length > 1 ? 's' : ''}`;
 
 	// Creates a label indicating the number of selected tags and the total number of available tags
 	$: tagCountLabel = `${selectedTags.length}/${allTags.length}`;

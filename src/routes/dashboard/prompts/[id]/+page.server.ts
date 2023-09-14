@@ -1,34 +1,69 @@
-import { error, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+
+import { error, type Actions } from '@sveltejs/kit';
+import { get } from 'svelte/store';
 
 import { redirect } from 'sveltekit-flash-message/server';
 import { message, superValidate } from 'sveltekit-superforms/server';
 
-import { drizzleClient } from '$databaseDir/drizzleClient.server';
-import { promptsTable } from '$databaseDir/schema';
-import { getPromptById, sanitizePromptData } from '$databaseDir/utils.server';
+import {
+	getSharedPrompt,
+	sanitizeContentOnServer,
+	sanitizePromptData
+} from '$databaseDir/utils.server';
 
 import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
 import { RoutePaths, type AlertMessage } from '$globalTypes';
 
+import { allTagsStore } from '$dashboardStores/tagsStore';
+import { drizzleClient } from '$databaseDir/drizzleClient.server';
+import { promptTagRelationsTable, promptsTable, tagsTable } from '$databaseDir/schema';
 import { logError } from '$globalUtils';
+
+/**
+ * Checks if a tag with a specific name exists in the list.
+ * @param {string} tagName - Name of the tag to check.
+ * @returns {boolean} - true if tag exists, false otherwise.
+ */
+const doesTagExistServerSideCheck = (tagName: string): boolean => {
+	// Sanitize and normalize the tag name
+	const sanitizedTagName = sanitizeContentOnServer(tagName);
+	const normalizedName = sanitizedTagName.trim().toLowerCase();
+
+	// Get the current tags from the store
+	const currentTags = get(allTagsStore);
+
+	// Check if the tag exists in the store
+	return currentTags.some((tag) => tag.name.toLowerCase() === normalizedName);
+};
 
 export const load = (async ({ params }) => {
 	const { id: promptId } = params;
 
 	try {
-		const promptData = await getPromptById(promptId);
+		const sharedPrompt = await getSharedPrompt(promptId);
 
-		const sharedPromptForm = await superValidate(promptData?.prompt, PromptsValidationSchema);
+		if (!sharedPrompt) throw new Error('Prompt not found');
 
+		const sharedPromptForm = await superValidate(
+			{
+				title: sharedPrompt.title,
+				description: sharedPrompt.description
+			},
+			PromptsValidationSchema
+		);
+
+		// Extract the shared tags and creator details from the prompt data
+		const sharedTags = sharedPrompt.promptTags.map((promptTags) => promptTags.tag);
 		const promptCreator = {
-			avatarUrl: promptData?.creator?.avatarUrl ?? null,
-			username: promptData?.creator?.username ?? promptData?.creator?.fullName ?? 'Anonymous'
+			username: sharedPrompt.profile.username ?? sharedPrompt?.profile.fullName ?? 'Anonymous',
+			avatarUrl: sharedPrompt.profile.avatarUrl ?? null
 		};
 
 		return {
 			sharedPromptForm,
-			promptCreator
+			promptCreator,
+			sharedTags
 		};
 	} catch (err) {
 		throw error(404, 'Prompt not found');
@@ -39,7 +74,6 @@ export const actions: Actions = {
 	default: async (event) => {
 		const {
 			request,
-			params,
 			locals: { getSession }
 		} = event;
 
@@ -47,19 +81,11 @@ export const actions: Actions = {
 
 		if (!userSession) return;
 
+		const formData = await request.formData();
 		const sharedPromptForm = await superValidate<typeof PromptsValidationSchema, AlertMessage>(
-			request,
+			formData,
 			PromptsValidationSchema
 		);
-
-		const { id: promptId } = params;
-
-		if (!promptId) {
-			return message(sharedPromptForm, {
-				alertType: 'error',
-				alertText: 'Prompt ID is missing'
-			});
-		}
 
 		if (!sharedPromptForm.valid) {
 			return message(sharedPromptForm, {
@@ -69,14 +95,54 @@ export const actions: Actions = {
 		}
 
 		try {
+			// Sanitize the data received from the form that's base on the PromptValidationSchema
 			const sanitizedData = sanitizePromptData(sharedPromptForm.data);
 
-			await drizzleClient.insert(promptsTable).values({
-				profileId: userSession.id,
-				...sanitizedData
+			// Get the shared tag names from the form data
+			const sharedTagNames = formData.getAll('sharedTagNames');
+
+			// Create an array of new tags after sanitizing the tag names and checking if they already exist
+			const newTags = sharedTagNames
+				.map((name) => sanitizeContentOnServer(name.toString()))
+				.filter((tagName) => !doesTagExistServerSideCheck(tagName))
+				.map((tagName) => ({ profileId: userSession.id, name: tagName }));
+
+			await drizzleClient.transaction(async (trx) => {
+				const newTagIds = [];
+
+				// If there are new tags, insert them into the database and get their IDs
+				if (newTags.length > 0) {
+					const insertedTags = await trx
+						.insert(tagsTable)
+						.values(newTags)
+						.returning({ id: tagsTable.id });
+
+					newTagIds.push(...insertedTags.map((tag) => tag.id));
+				}
+
+				sanitizedData.tagIds = [...newTagIds, ...sanitizedData.tagIds];
+
+				// Create a new prompt with the sanitized data and tag IDs
+				const insertedPrompt = await trx
+					.insert(promptsTable)
+					.values({
+						profileId: userSession.id,
+						...sanitizedData
+					})
+					.returning({ id: promptsTable.id });
+
+				// Get the ID of the newly created prompt
+				const newPromptId = insertedPrompt[0]?.id;
+
+				// If there are tags associated with the prompt, create relations in the database
+				if (sanitizedData.tagIds?.length && newPromptId) {
+					for (const tagId of sanitizedData.tagIds) {
+						await trx.insert(promptTagRelationsTable).values({ promptId: newPromptId, tagId });
+					}
+				}
 			});
 		} catch (error) {
-			logError(error, 'Error in createOrUpdatePrompt', { userSession });
+			logError(error, 'Error when saving shared prompt', { userSession });
 
 			return message(
 				sharedPromptForm,
@@ -88,6 +154,7 @@ export const actions: Actions = {
 			);
 		}
 
+		// On successful creation of the prompt, redirect the user to the prompts dashboard with a success message
 		throw redirect(
 			RoutePaths.DASHBOARD_PROMPTS,
 			{

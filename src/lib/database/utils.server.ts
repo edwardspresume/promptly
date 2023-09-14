@@ -109,31 +109,37 @@ export async function getUserPrompts(profileId: string) {
 }
 
 /**
- * Fetch the prompt based on the promptId.
- * @param {string} promptId - The ID of the prompt
+ * Fetch the shared prompt based on the promptId.
+ * @param {string} promptId - The ID of the shared prompt
  * @returns Returns the prompt or null if not found.
  * @throws Will throw an error if the query fails.
  */
-export async function getPromptById(promptId: string) {
+export async function getSharedPrompt(promptId: string) {
 	try {
-		const promptData = await drizzleClient
-			.select({
-				prompt: {
-					title: promptsTable.title,
-					description: promptsTable.description
+		const promptData = await drizzleClient.query.promptsTable.findFirst({
+			where: eq(promptsTable.id, promptId),
+
+			columns: {
+				title: true,
+				description: true
+			},
+			with: {
+				profile: {
+					columns: {
+						username: true,
+						fullName: true,
+						avatarUrl: true
+					}
 				},
-
-				creator: {
-					username: profilesTable.username,
-					fullName: profilesTable.fullName,
-                    avatarUrl: profilesTable.avatarUrl
+				promptTags: {
+					with: {
+						tag: true
+					}
 				}
-			})
-			.from(promptsTable)
-			.where(eq(promptsTable.id, promptId))
-			.innerJoin(profilesTable, eq(profilesTable.id, promptsTable.profileId));
+			}
+		});
 
-		return promptData[0] ?? null;
+		return promptData ?? null;
 	} catch (error) {
 		logError(error, 'Error fetching prompt', {
 			promptId

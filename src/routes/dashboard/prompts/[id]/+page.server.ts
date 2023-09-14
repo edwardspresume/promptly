@@ -8,6 +8,7 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 
 import {
 	getSharedPrompt,
+	insertPromptTagRelations,
 	sanitizeContentOnServer,
 	sanitizePromptData
 } from '$databaseDir/utils.server';
@@ -17,7 +18,7 @@ import { RoutePaths, type AlertMessage } from '$globalTypes';
 
 import { allTagsStore } from '$dashboardStores/tagsStore';
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
-import { promptTagRelationsTable, promptsTable, tagsTable } from '$databaseDir/schema';
+import { promptsTable, tagsTable } from '$databaseDir/schema';
 import { logError } from '$globalUtils';
 
 /**
@@ -134,12 +135,8 @@ export const actions: Actions = {
 				// Get the ID of the newly created prompt
 				const newPromptId = insertedPrompt[0]?.id;
 
-				// If there are tags associated with the prompt, create relations in the database
-				if (sanitizedData.tagIds?.length && newPromptId) {
-					for (const tagId of sanitizedData.tagIds) {
-						await trx.insert(promptTagRelationsTable).values({ promptId: newPromptId, tagId });
-					}
-				}
+				// Insert new tag relations for this prompt
+				insertPromptTagRelations(trx, newPromptId, sanitizedData.tagIds);
 			});
 		} catch (error) {
 			logError(error, 'Error when saving shared prompt', { userSession });

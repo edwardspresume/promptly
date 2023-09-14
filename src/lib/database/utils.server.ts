@@ -1,3 +1,7 @@
+import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
+
+import type * as schema from './schema';
+
 import { desc, eq } from 'drizzle-orm';
 import { drizzleClient } from './drizzleClient.server';
 
@@ -5,7 +9,7 @@ import DOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 
 import { logError } from '$globalUtils';
-import { profilesTable, promptsTable, tagsTable } from './schema';
+import { profilesTable, promptTagRelationsTable, promptsTable, tagsTable } from './schema';
 
 import type { PromptFormData } from '$dashboardValidationSchemas/promptsValidationSchema';
 
@@ -170,5 +174,17 @@ export async function getUserTags(profileId: string) {
 		});
 
 		throw new Error('Error fetching user tags');
+	}
+}
+
+export async function insertPromptTagRelations(
+	trx: PostgresJsDatabase<typeof schema>,
+	newPromptId: string | undefined,
+	tagIds: string[] | null
+) {
+	if (newPromptId && tagIds?.length) {
+		for (const tagId of tagIds) {
+			await trx.insert(promptTagRelationsTable).values({ promptId: newPromptId, tagId });
+		}
 	}
 }

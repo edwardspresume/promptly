@@ -1,5 +1,5 @@
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
-import { promptsTable } from '$databaseDir/schema';
+import { promptTagRelationsTable, promptsTable } from '$databaseDir/schema';
 import { eq } from 'drizzle-orm';
 
 import { message, superValidate } from 'sveltekit-superforms/server';
@@ -8,11 +8,50 @@ import type { Actions, PageServerLoad } from './$types';
 
 import type { AlertMessage } from '$globalTypes';
 
-import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
-import { sanitizeContentOnServer, sanitizePromptData } from '$databaseDir/utils.server';
+import {
+	PromptsValidationSchema,
+	type PromptFormData
+} from '$dashboardValidationSchemas/promptsValidationSchema';
+import {
+	insertPromptTagRelations,
+	sanitizeContentOnServer,
+	sanitizePromptData
+} from '$databaseDir/utils.server';
 import { logError } from '$globalUtils';
 
 const ERROR_INVALID_PROMPT = 'The prompt you entered is invalid. Please enter a valid prompt.';
+
+async function createPrompt(profileId: string, promptData: PromptFormData) {
+	// Start transaction
+	await drizzleClient.transaction(async (trx) => {
+		const result = await trx
+			.insert(promptsTable)
+			.values({ profileId, ...promptData })
+			.returning({ id: promptsTable.id });
+
+		const newPromptId = result[0]?.id;
+
+		// Insert new tag relations for this prompt
+		insertPromptTagRelations(trx, newPromptId, promptData.tagIds);
+	});
+}
+
+async function updatePrompt(promptId: string, promptData: PromptFormData) {
+	// Start transaction
+	await drizzleClient.transaction(async (trx) => {
+		// Remove 'id' from promptData
+		delete promptData.id;
+
+		// Update the prompt
+		await trx.update(promptsTable).set(promptData).where(eq(promptsTable.id, promptId));
+
+		// Delete all existing tag relations for this prompt
+		await trx.delete(promptTagRelationsTable).where(eq(promptTagRelationsTable.promptId, promptId));
+
+		// Insert new tag relations for this prompt
+		insertPromptTagRelations(trx, promptId, promptData.tagIds);
+	});
+}
 
 export const load = (async () => {
 	const promptForm = superValidate(PromptsValidationSchema);
@@ -34,28 +73,20 @@ export const actions: Actions = {
 			});
 		}
 
-		const session = await getSession();
+		const userSession = (await getSession())?.user;
 		const promptId = promptForm.data.id;
 
-		if (session) {
+		if (userSession) {
 			try {
 				const sanitizedData = sanitizePromptData(promptForm.data);
 
 				if (promptId) {
-					// Remove 'id' from formData
-					delete sanitizedData.id;
-
-					await drizzleClient
-						.update(promptsTable)
-						.set(sanitizedData)
-						.where(eq(promptsTable.id, promptId));
+					await updatePrompt(promptId, sanitizedData);
 				} else {
-					await drizzleClient
-						.insert(promptsTable)
-						.values({ profileId: session.user.id, ...sanitizedData });
+					await createPrompt(userSession.id, sanitizedData);
 				}
 			} catch (error) {
-				logError(error, 'Error in createOrUpdatePrompt', { promptId, session });
+				logError(error, 'Error in createOrUpdatePrompt', { promptId, userSession });
 
 				return message(
 					promptForm,

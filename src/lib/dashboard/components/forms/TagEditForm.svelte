@@ -96,10 +96,8 @@
 			maxlength={MAX_TAG_NAME_LENGTH}
 		/>
 
-		<SubmitButton
-			showSpinner={$delayed}
-			disabled={!isTagModified || $delayed}
-			title={$delayed ? 'Saving...' : 'Save'}
-		/>
+		<SubmitButton showSpinner={$delayed} disabled={!isTagModified || $delayed}>
+			{$delayed ? 'Saving...' : 'Save'}
+		</SubmitButton>
 	</form>
 </BaseModal>

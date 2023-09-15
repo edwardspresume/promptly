@@ -16,6 +16,7 @@
 
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
 	import FavoriteToggleBtn from '$dashboardComponents/prompts/FavoriteToggleBtn.svelte';
+	import Icon from '$globalComponents/Icon.svelte';
 	import InputField from '$globalComponents/form/InputField.svelte';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
 	import TextArea from '$globalComponents/form/TextArea.svelte';
@@ -103,11 +104,13 @@
 					class="h-full p-2"
 				/>
 
-				<SubmitButton
-					showSpinner={$delayed}
-					disabled={$delayed || !isLoggedIn}
-					title={$delayed ? 'Saving...' : 'Save Prompt'}
-				/>
+				<SubmitButton showSpinner={$delayed} disabled={$delayed || !isLoggedIn}>
+					{#if !isLoggedIn}
+						<Icon name="lock" />
+					{/if}
+
+					{$delayed ? 'Saving...' : 'Save Prompt'}
+				</SubmitButton>
 			</footer>
 		</form>
 	</article>

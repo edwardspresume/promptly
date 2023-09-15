@@ -57,6 +57,8 @@
 			/>
 		</fieldset>
 
-		<SubmitButton title={$delayed ? 'Sending...' : 'Send'} disabled={$delayed} />
+		<SubmitButton disabled={$delayed}>
+			{$delayed ? 'Sending...' : 'Send'}
+		</SubmitButton>
 	</form>
 </BaseModal>

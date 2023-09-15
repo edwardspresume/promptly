@@ -64,6 +64,8 @@
 			maxlength={MAX_TAG_NAME_LENGTH}
 		/>
 
-		<SubmitButton title={$delayed ? 'Creating...' : 'Create Tag'} disabled={$delayed} />
+		<SubmitButton disabled={$delayed}>
+			{$delayed ? 'Creating...' : 'Create Tag'}
+		</SubmitButton>
 	</form>
 </BaseModal>

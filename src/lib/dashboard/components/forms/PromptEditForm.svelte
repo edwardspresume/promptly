@@ -73,7 +73,10 @@
 
 		try {
 			if (userSession) {
-				const { error } = await $page.data.supabase.from('prompts_table').delete().eq('id', $form.id);
+				const { error } = await $page.data.supabase
+					.from('prompts_table')
+					.delete()
+					.eq('id', $form.id);
 
 				if (error) throw new Error(`Supabase error`);
 			} else {
@@ -293,11 +296,9 @@
 				class="h-full p-2"
 			/>
 
-			<SubmitButton
-				title={isUpdatingPrompt ? 'Saving...' : 'Save'}
-				showSpinner={isUpdatingPrompt}
-				disabled={!isPromptModified || isUpdatingPrompt}
-			/>
+			<SubmitButton showSpinner={isUpdatingPrompt} disabled={!isPromptModified || isUpdatingPrompt}>
+				{isUpdatingPrompt ? 'Saving...' : 'Save'}
+			</SubmitButton>
 		</footer>
 	</form>
 </BaseModal>

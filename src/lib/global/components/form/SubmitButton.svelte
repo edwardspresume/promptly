@@ -11,7 +11,6 @@
 
 	export let size: Size = 'lg';
 	export { className as class };
-	export let title: string = 'Submit';
 	export let disabled: boolean = false;
 	export let showSpinner: boolean | null = null;
 </script>
@@ -20,7 +19,6 @@
 	{size}
 	{disabled}
 	type="submit"
-	aria-label={title}
 	aria-disabled={disabled}
 	class={cn('font-bold flex gap-2 items-center w-full', className)}
 >
@@ -28,7 +26,5 @@
 		<Icon name="loading-spinner" class="animate-spin" />
 	{/if}
 
-	<span>
-		{title}
-	</span>
+	<slot>Submit</slot>
 </Button>

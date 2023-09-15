@@ -102,7 +102,9 @@
 				class="h-full p-2"
 			/>
 
-			<SubmitButton title={$delayed ? 'Creating...' : 'Create Prompt'} disabled={$delayed} />
+			<SubmitButton disabled={$delayed}>
+				{$delayed ? 'Creating...' : 'Create Prompt'}
+			</SubmitButton>
 		</footer>
 	</form>
 </BaseModal>

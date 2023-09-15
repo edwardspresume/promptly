@@ -74,7 +74,9 @@
 			errorMessage={$errors.email}
 		/>
 
-		<SubmitButton title="{buttonTitle} with email" disabled={$delayed} />
+		<SubmitButton disabled={$delayed}>
+			{buttonTitle} with email
+		</SubmitButton>
 	</form>
 
 	<div class="flex items-center my-4">

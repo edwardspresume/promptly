@@ -2,7 +2,7 @@ import { createInsertSchema } from 'drizzle-zod';
 
 import { tagsTable } from '$databaseDir/schema';
 
-import { createNonEmptyTextSchema } from './utils';
+import { createNonEmptyTextSchema } from './dashboardValidationUtils';
 
 // Define maximum lengths for tag names
 export const MIN_TAG_NAME_LENGTH = 1;

@@ -3,7 +3,7 @@ import type { z } from 'zod';
 
 import { promptsTable } from '$databaseDir/schema';
 
-import { createNonEmptyTextSchema } from './utils';
+import { createNonEmptyTextSchema } from './dashboardValidationUtils';
 
 // Define Max and Min Lengths for Prompt Title and Text
 export const MIN_PROMPT_TITLE_LENGTH = 1;

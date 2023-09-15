@@ -83,8 +83,9 @@
 		</fieldset>
 
 		<TagSelector
-			label="Shared tag"
 			bind:sharedTags
+			label="Shared tag"
+			placeholder="Select a shared tag"
 			selectedTagIds={sharedTags.map((tag) => tag.id)}
 		/>
 

@@ -16,6 +16,8 @@
 	// Label for the tag selector
 	export let label: string = 'Tag';
 
+	export let placeholder: string = 'Select tag';
+
 	// An array that contains the tags shared by another user's prompt
 	export let sharedTags: TagSchema[] = [];
 
@@ -120,24 +122,26 @@
 			</div>
 		{/if}
 
-		<input
-			id="tagInput"
-			bind:value={tagSearchTerm}
-			bind:this={tagSearchInput}
-			on:keydown={handleKeyDown}
-			on:focus={() => (isTagSelectionMenuOpen = true)}
-			on:input={() => (activeTagIndex = 0)}
-			type="search"
-			role="combobox"
-			autocorrect="off"
-			autocomplete="off"
-			spellcheck="false"
-			aria-expanded={isTagSelectionMenuOpen}
-			aria-autocomplete="list"
-			aria-controls="tags-list"
-			placeholder="Select tag"
-			aria-activedescendant={`tag-${activeTagIndex}`}
-		/>
+		{#if selectedTags.length !== allTags.length}
+			<input
+				id="tagInput"
+				bind:value={tagSearchTerm}
+				bind:this={tagSearchInput}
+				on:keydown={handleKeyDown}
+				on:focus={() => (isTagSelectionMenuOpen = true)}
+				on:input={() => (activeTagIndex = 0)}
+				type="search"
+				{placeholder}
+				role="combobox"
+				autocorrect="off"
+				autocomplete="off"
+				spellcheck="false"
+				aria-expanded={isTagSelectionMenuOpen}
+				aria-autocomplete="list"
+				aria-controls="tags-list"
+				aria-activedescendant={`tag-${activeTagIndex}`}
+			/>
+		{/if}
 
 		{#if isTagSelectionMenuOpen && filteredTags.length > 0}
 			<fieldset

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 
-	import { page } from '$app/stores';
 	import type { LayoutData } from './$types';
 
 	import { allPromptsStore } from '$dashboardStores/promptsStore';
@@ -39,22 +38,9 @@
 <div class="h-[100dvh] flex flex-col">
 	<DashboardHeader />
 
-	<main data-current-page={$page.url.pathname} class="w-full">
-		<slot />
-	</main>
+	<slot />
 </div>
 
 <FeedbackForm feedbackFormData={feedbackForm} />
 
 <SvelteToast target="dashboardLayout" options={{ intro: { y: -100 } }} />
-
-<style>
-	main[data-current-page='/dashboard/prompts'],
-	main[data-current-page='/dashboard/tags'] {
-		@apply relative grid max-w-xl pb-6 mx-auto mt-8 overflow-hidden pe-4 ps-4;
-	}
-
-	main[data-current-page^='/dashboard/prompts/'] {
-		@apply grid place-items-center h-full py-4;
-	}
-</style>

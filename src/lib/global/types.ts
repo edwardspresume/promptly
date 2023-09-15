@@ -13,8 +13,9 @@ export type NavLink = {
 };
 
 export enum RoutePaths {
+	AUTH = '/auth',
 	DASHBOARD_PROMPTS = '/dashboard/prompts',
-	AUTH = '/auth'
+	SHARED_PROMPT = '/dashboard/shared-prompt'
 }
 
 export type EnterKeyHint =

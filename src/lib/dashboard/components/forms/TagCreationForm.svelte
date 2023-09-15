@@ -51,7 +51,7 @@
 	});
 </script>
 
-<BaseModal modalTitle="Create Tag" bind:dialogElement={tagCreationModalRef}>
+<BaseModal modalTitle="Create Tag" bind:dialogElement={tagCreationModalRef} class="max-w-md">
 	<form use:enhance method="POST" aria-label="Tag Creation Form" class="grid gap-5">
 		<InputField
 			type="text"

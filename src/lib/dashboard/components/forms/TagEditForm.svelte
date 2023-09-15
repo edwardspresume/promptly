@@ -81,7 +81,7 @@
 	});
 </script>
 
-<BaseModal modalTitle="Edit tag" bind:dialogElement={tagEditModalRef}>
+<BaseModal modalTitle="Edit tag" bind:dialogElement={tagEditModalRef} class="max-w-md">
 	<form use:enhance method="POST" aria-label="Tag Edit Form" class="grid gap-5">
 		<input type="hidden" name="id" bind:value={$form.id} />
 

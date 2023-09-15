@@ -42,7 +42,7 @@
 
 <article
 	aria-label="Shared Prompt Details"
-	class="w-[96%] max-w-lg bg-background border p-6 rounded-lg shadow-sm"
+	class="w-[96%] max-w-xl bg-background border p-6 rounded-lg shadow-sm self-end"
 >
 	<header>
 		<h3 class="text-lg font-semibold leading-none">Shared Prompt</h3>
@@ -112,7 +112,7 @@
 </article>
 
 {#if !isLoggedIn}
-	<p class="mt-5 italic font-medium text-accent-foreground">
+	<p class="self-start mt-5 italic font-medium text-accent-foreground">
 		<Button variant="link" href={RoutePaths.AUTH} class="p-0">Sign in</Button> to save this prompt to
 		your account
 	</p>

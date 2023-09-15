@@ -55,6 +55,6 @@
 	}
 
 	main[data-current-page^='/dashboard/prompts/'] {
-		@apply flex flex-col items-center justify-center h-full;
+		@apply grid place-items-center h-full py-4;
 	}
 </style>

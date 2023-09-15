@@ -8,8 +8,10 @@ import { toast } from '@zerodevx/svelte-toast';
 
 import type { AlertType } from '$globalTypes';
 
+type ToastTarget = 'dashboardLayout' | 'baseModal';
+
 // Get the type of the options parameter of the toast.push function.
-type ToastOptions = Parameters<typeof toast.push>[1];
+type ToastOptions = Parameters<typeof toast.push>[1] & { target?: ToastTarget };
 
 /**
  * Creates the HTML content for the toast notification.

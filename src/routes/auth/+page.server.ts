@@ -1,8 +1,9 @@
-import type { Provider } from '@supabase/supabase-js';
-import { message, setError, superValidate } from 'sveltekit-superforms/server';
-
-import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+
+import type { Provider } from '@supabase/supabase-js';
+
+import { redirect } from 'sveltekit-flash-message/server';
+import { message, setError, superValidate } from 'sveltekit-superforms/server';
 
 import { RoutePaths, type AlertMessage } from '$globalTypes';
 
@@ -49,11 +50,18 @@ function getRedirectUrl(url: URL, previousRoute: string | null) {
 	return redirectTo;
 }
 
-export const load: PageServerLoad = async ({ parent }) => {
-	const { session } = await parent();
+export const load: PageServerLoad = async (event) => {
+	const { session } = await event.parent();
 
 	if (session) {
-		throw redirect(303, RoutePaths.DASHBOARD_PROMPTS);
+		throw redirect(
+			RoutePaths.DASHBOARD_PROMPTS,
+			{
+				alertType: 'success',
+				alertText: 'You are already logged in.'
+			},
+			event
+		);
 	}
 
 	const authEmailForm = superValidate(EmailAuthValidationSchema);

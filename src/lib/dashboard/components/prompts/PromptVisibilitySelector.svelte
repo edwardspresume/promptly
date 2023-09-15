@@ -19,7 +19,7 @@
 	function handleCopy(event: Event) {
 		event.stopPropagation();
 
-		const promptToShare = `${$page.url.origin}${RoutePaths.DASHBOARD_PROMPTS}/${promptId}`;
+		const promptToShare = `${$page.url.origin}${RoutePaths.SHARED_PROMPT}/${promptId}`;
 
 		copyToClipboard(promptToShare, 'Prompt link copied!', 'baseModal');
 	}

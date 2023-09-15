@@ -10,7 +10,7 @@ import type { AlertMessage } from '$globalTypes';
 import { TagValidationSchema } from '$dashboardValidationSchemas/tagValidationSchema';
 import { tagsTable } from '$databaseDir/schema';
 
-import { sanitizeContentOnServer } from '$databaseDir/utils.server';
+import { sanitizeContentOnServer } from '$databaseDir/databaseUtils.server';
 import { logError } from '$globalUtils';
 
 export const load = (async () => {

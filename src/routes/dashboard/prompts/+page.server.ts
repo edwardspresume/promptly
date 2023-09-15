@@ -1,5 +1,5 @@
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
-import { tagPromptLinkTable, promptsTable } from '$databaseDir/schema';
+import { promptsTable, tagPromptLinkTable } from '$databaseDir/schema';
 import { eq } from 'drizzle-orm';
 
 import { message, superValidate } from 'sveltekit-superforms/server';
@@ -16,7 +16,7 @@ import {
 	insertPromptTagRelations,
 	sanitizeContentOnServer,
 	sanitizePromptData
-} from '$databaseDir/utils.server';
+} from '$databaseDir/databaseUtils.server';
 import { logError } from '$globalUtils';
 
 const ERROR_INVALID_PROMPT = 'The prompt you entered is invalid. Please enter a valid prompt.';

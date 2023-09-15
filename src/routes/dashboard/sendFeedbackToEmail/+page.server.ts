@@ -5,7 +5,7 @@ import type { Actions } from './$types';
 import type { AlertMessage } from '$globalTypes';
 
 import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
-import { sanitizeContentOnServer } from '$databaseDir/utils.server';
+import { sanitizeContentOnServer } from '$databaseDir/databaseUtils.server';
 
 export const actions: Actions = {
 	default: async ({ request, fetch }) => {

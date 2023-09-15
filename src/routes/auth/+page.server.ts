@@ -12,7 +12,7 @@ import {
 } from '$authValidationSchemas/authValidationSchemas';
 
 import { dashboardNavLinks } from '$dashboardNavLinks';
-import { checkEmailExists, sanitizeContentOnServer } from '$databaseDir/utils.server';
+import { checkEmailExists, sanitizeContentOnServer } from '$databaseDir/databaseUtils.server';
 import { logError } from '$globalUtils';
 
 const AUTH_MESSAGES = {

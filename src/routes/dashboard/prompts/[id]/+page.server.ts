@@ -11,7 +11,7 @@ import {
 	insertPromptTagRelations,
 	sanitizeContentOnServer,
 	sanitizePromptData
-} from '$databaseDir/utils.server';
+} from '$databaseDir/databaseUtils.server';
 
 import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
 import { RoutePaths, type AlertMessage } from '$globalTypes';

@@ -4,7 +4,7 @@ import { superValidate } from 'sveltekit-superforms/server';
 import type { LayoutServerLoad } from './$types';
 
 import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
-import { getUserProfile, getUserPrompts, getUserTags } from '$databaseDir/utils.server';
+import { getUserProfile, getUserPrompts, getUserTags } from '$databaseDir/databaseUtils.server';
 
 export const load = loadFlash(async ({ locals: { getSession } }) => {
 	const feedbackForm = superValidate(FeedbackValidationSchema);

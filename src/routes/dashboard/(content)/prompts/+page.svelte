@@ -8,7 +8,7 @@
 	import type { PromptSchema } from '$databaseDir/schema';
 	import type { PageData } from './$types';
 
-	import { totalPromptCountStore } from '$dashboardStores/promptsStore';
+	import { allPromptsStore, totalPromptCountStore } from '$dashboardStores/promptsStore';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 
@@ -23,8 +23,13 @@
 
 	export let data: PageData;
 
-	let { session, supabase } = data;
-	$: ({ session, supabase } = data);
+	let { session, supabase, userPrompts } = data;
+	$: ({ session, supabase, userPrompts } = data);
+
+	$: {
+		if (session?.user) allPromptsStore.set(userPrompts ?? []);
+		else allPromptsStore.set(promptLocalStorageManager.getItems());
+	}
 
 	const flash = getFlash(page);
 

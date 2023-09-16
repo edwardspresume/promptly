@@ -13,6 +13,7 @@ import {
 	type PromptFormData
 } from '$dashboardValidationSchemas/promptsValidationSchema';
 import {
+	getUserPrompts,
 	insertPromptTagRelations,
 	sanitizeContentOnServer,
 	sanitizePromptData
@@ -53,8 +54,16 @@ async function updatePrompt(profileId: string, promptId: string, promptData: Pro
 	});
 }
 
-export const load = (async () => {
+export const load = (async ({ locals: { getSession } }) => {
+	const userId = (await getSession())?.user.id;
+
 	const promptForm = superValidate(PromptsValidationSchema);
+
+	if (userId) {
+		const userPrompts = getUserPrompts(userId);
+
+		return { userPrompts, promptForm };
+	}
 
 	return { promptForm };
 }) satisfies PageServerLoad;

@@ -14,6 +14,9 @@ dependencies:
   '@supabase/supabase-js':
     specifier: ^2.33.2
     version: 2.33.2
+  '@tabler/icons-svelte':
+    specifier: ^2.34.0
+    version: 2.34.0(svelte@4.2.0)
   '@vercel/analytics':
     specifier: ^1.0.2
     version: 1.0.2
@@ -1048,6 +1051,19 @@ packages:
       vitefu: 0.2.4(vite@4.4.9)
     transitivePeerDependencies:
       - supports-color
+
+  /@tabler/icons-svelte@2.34.0(svelte@4.2.0):
+    resolution: {integrity: sha512-/qLJWUo8jcn6wzYrcqtlwfjpvRDbBoDP53qQPU6ig/SzaaB5aFe7dJEl4YJ1m/c+UNgTXVbbDbZw7NqJLh1cxw==}
+    peerDependencies:
+      svelte: '>=3 <5'
+    dependencies:
+      '@tabler/icons': 2.34.0
+      svelte: 4.2.0
+    dev: false
+
+  /@tabler/icons@2.34.0:
+    resolution: {integrity: sha512-65GsJsT4ZBETWcdrNxbsjsbRoZvbVk3CcU2SafaElrzP1wpOeuAn9aELVEbxhdyZyP9dg2SCfgH6iAArJgp7lw==}
+    dev: false
 
   /@tootallnate/once@2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}

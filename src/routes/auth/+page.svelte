@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
+	import { RoutePaths } from '$globalTypes';
+
 	import AuthForm from '$authComponents/AuthForm.svelte';
 	import Icon from '$globalComponents/Icon.svelte';
 	import Logo from '$globalComponents/mainHeader/Logo.svelte';
@@ -21,7 +23,7 @@
 
 <main class="grid grid-cols-1 lg:grid-cols-[minmax(0,44rem),1fr] min-h-[100dvh] items-center">
 	<section class="grid w-full max-w-xl gap-12 p-2 mx-auto justify-items-center lg:p-4">
-		<Logo href="/" linkTitle="Return to homepage" class="text-3xl" />
+		<Logo href={RoutePaths.MARKETING_LANDING} linkTitle="Return to homepage" class="text-3xl" />
 
 		<Tabs.Root value={initialTabValue} class="w-full">
 			<Tabs.List class="grid w-full grid-cols-2 mb-4">
@@ -38,7 +40,11 @@
 			</Tabs.Content>
 		</Tabs.Root>
 
-		<Button href="/" variant="link" class="flex items-center gap-2 text-lg">
+		<Button
+			href={RoutePaths.MARKETING_LANDING}
+			variant="link"
+			class="flex items-center gap-2 text-lg"
+		>
 			<Icon name="home" />
 
 			<span>Return to homepage</span>

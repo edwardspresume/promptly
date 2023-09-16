@@ -1,9 +1,12 @@
 <script>
+	import { RoutePaths } from '$globalTypes';
+
 	import { isFeedbackModalOpen } from '$dashboardStores/feedbackModalStore';
 	import { userProfileStore } from '$dashboardStores/userProfileStore';
 
 	import Icon from '$globalComponents/Icon.svelte';
 	import * as DropdownMenu from '$globalComponents/ui/dropdown-menu';
+	import { IconUser } from '@tabler/icons-svelte';
 	import ExportDataBtn from './ExportDataBtn.svelte';
 	import LoginLogoutBtn from './LoginLogoutBtn.svelte';
 
@@ -52,6 +55,12 @@
 				</a>
 			</DropdownMenu.Item>
 			<DropdownMenu.Item>
+				<a href={RoutePaths.DASHBOARD_PROFILE}>
+					<IconUser size={20} />
+					<span>Profile</span>
+				</a>
+			</DropdownMenu.Item>
+			<DropdownMenu.Item>
 				<button
 					title="Feedback"
 					aria-label="Feedback"
@@ -76,6 +85,6 @@
 <style lang="postcss">
 	:global(.account-dropdown-menu a),
 	:global(.account-dropdown-menu button) {
-		@apply flex items-center gap-2 py-1;
+		@apply flex items-center gap-2 py-1 text-foreground;
 	}
 </style>

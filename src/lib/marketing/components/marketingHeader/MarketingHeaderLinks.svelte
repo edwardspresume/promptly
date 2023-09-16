@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 
-	import { marketingNavLinks } from '$marketingNavLinks';
+	import { marketingLinks } from '$marketingNavLinks';
 
 	import ThemeToggleBtn from '$globalComponents/mainHeader/ThemeToggleBtn.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
@@ -10,7 +10,7 @@
 </script>
 
 <ul class="flex items-center gap-3 sm:gap-2">
-	{#each marketingNavLinks as { title, href, ariaLabel } (title)}
+	{#each marketingLinks as { title, href, ariaLabel } (title)}
 		{#if !isLoggedIn || !href.includes('auth')}
 			<li>
 				<Button

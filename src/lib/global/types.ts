@@ -5,19 +5,6 @@ export type AlertMessage = {
 	alertText: string;
 };
 
-export type NavLink = {
-	href: string;
-	title: string;
-	ariaLabel: string;
-	isExternal?: boolean;
-};
-
-export enum RoutePaths {
-	AUTH = '/auth',
-	DASHBOARD_PROMPTS = '/dashboard/prompts',
-	SHARED_PROMPT = '/dashboard/shared-prompt'
-}
-
 export type EnterKeyHint =
 	| 'search'
 	| 'enter'
@@ -28,3 +15,35 @@ export type EnterKeyHint =
 	| 'send'
 	| null
 	| undefined;
+
+export enum RoutePaths {
+	AUTH = '/auth',
+	SIGNUP = '/auth?signup=true',
+
+	DASHBOARD_PROMPTS = '/dashboard/prompts',
+	DASHBOARD_TAGS = '/dashboard/tags',
+	DASHBOARD_PROFILE = '/dashboard/profile',
+	DASHBOARD_SHARED_PROMPT = '/dashboard/shared-prompt',
+
+	MARKETING_LANDING = '/',
+	MARKETING_PRICING = '/pricing'
+}
+
+export type NavLink = {
+	href: string;
+	title: string;
+	ariaLabel: string;
+	isExternal?: boolean;
+};
+
+export const createNavLink = (
+	title: string,
+	href: string,
+	ariaLabel: string,
+	isExternal?: boolean
+): NavLink => ({
+	title,
+	href,
+	ariaLabel,
+	isExternal
+});

@@ -1,14 +1,20 @@
-import { RoutePaths, type NavLink } from '$globalTypes';
+import { RoutePaths, createNavLink, type NavLink } from '$globalTypes';
 
-export const dashboardNavLinks: NavLink[] = [
-	{
-		title: 'Prompts',
-		href: RoutePaths.DASHBOARD_PROMPTS,
-		ariaLabel: 'Go to the prompts page'
-	},
-	{
-		title: 'Tags',
-		href: '/dashboard/tags',
-		ariaLabel: 'Go to the tags page'
-	}
+type DashboardLinks = {
+	mainNav: NavLink[];
+	accountNav: NavLink[];
+};
+
+const mainNav: NavLink[] = [
+	createNavLink('Prompts', RoutePaths.DASHBOARD_PROMPTS, 'Go to the prompts page'),
+	createNavLink('Tags', RoutePaths.DASHBOARD_TAGS, 'Go to the tags page')
 ];
+
+const accountNav: NavLink[] = [
+	createNavLink('Profile', RoutePaths.DASHBOARD_PROFILE, 'Go to the profile page')
+];
+
+export const dashboardLinks: DashboardLinks = {
+	mainNav,
+	accountNav
+};

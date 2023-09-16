@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-	import { dashboardNavLinks } from '$dashboardNavLinks';
+	import { dashboardLinks } from '$dashboardNavLinks';
 
 	import Button from '$globalComponents/ui/button/button.svelte';
 </script>
 
 <ul class="flex">
-	{#each dashboardNavLinks as { href, title, ariaLabel } (title)}
+	{#each dashboardLinks.mainNav as { href, title, ariaLabel } (title)}
 		{@const isCurrentPage = $page.url.pathname === href ? 'page' : undefined}
 
 		<li>

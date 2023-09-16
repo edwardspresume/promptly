@@ -12,7 +12,7 @@ import {
 	OAuthProviderValidationSchema
 } from '$authValidationSchemas/authValidationSchemas';
 
-import { dashboardNavLinks } from '$dashboardNavLinks';
+import { dashboardLinks } from '$dashboardNavLinks';
 import { checkEmailExists, sanitizeContentOnServer } from '$databaseDir/databaseUtils.server';
 import { logError } from '$globalUtils';
 
@@ -39,7 +39,9 @@ const AUTH_MESSAGES = {
 function getRedirectUrl(url: URL, previousRoute: string | null) {
 	let redirectTo;
 
-	const matchingLink = dashboardNavLinks.some((navLink) => previousRoute?.startsWith(navLink.href));
+	const matchingLink = dashboardLinks.mainNav.some((navLink) =>
+		previousRoute?.startsWith(navLink.href)
+	);
 
 	if (previousRoute && matchingLink) {
 		redirectTo = `${url.origin}/auth/callback?previousRoute=${previousRoute}`;

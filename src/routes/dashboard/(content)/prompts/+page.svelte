@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { PageData } from './$types';
+    
 	import { page } from '$app/stores';
 	import { fly } from 'svelte/transition';
 
@@ -6,7 +8,6 @@
 
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import type { PromptSchema } from '$databaseDir/schema';
-	import type { PageData } from './$types';
 
 	import { allPromptsStore, totalPromptCountStore } from '$dashboardStores/promptsStore';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';

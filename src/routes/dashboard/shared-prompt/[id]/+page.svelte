@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData } from '../../(content)/prompts/[id]/$types';
+	import type { PageData } from './$types';
 
 	import { superForm } from 'sveltekit-superforms/client';
 

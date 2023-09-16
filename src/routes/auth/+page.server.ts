@@ -39,9 +39,9 @@ const AUTH_MESSAGES = {
 function getRedirectUrl(url: URL, previousRoute: string | null) {
 	let redirectTo;
 
-	const matchingLink = dashboardLinks.mainNav.some((navLink) =>
-		previousRoute?.startsWith(navLink.href)
-	);
+	const matchingLink =
+		dashboardLinks.mainNav.some((navLink) => previousRoute?.startsWith(navLink.href)) ||
+		dashboardLinks.accountNav.some((navLink) => previousRoute?.startsWith(navLink.href));
 
 	if (previousRoute && matchingLink) {
 		redirectTo = `${url.origin}/auth/callback?previousRoute=${previousRoute}`;

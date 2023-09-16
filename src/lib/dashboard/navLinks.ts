@@ -11,7 +11,8 @@ const mainNav: NavLink[] = [
 ];
 
 const accountNav: NavLink[] = [
-	createNavLink('Profile', RoutePaths.DASHBOARD_PROFILE, 'Go to the profile page')
+	createNavLink('Profile', RoutePaths.DASHBOARD_PROFILE, 'Go to the profile page'),
+	createNavLink('Billing', RoutePaths.DASHBOARD_BILLING, 'Go to the billing page')
 ];
 
 export const dashboardLinks: DashboardLinks = {

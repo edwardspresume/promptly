@@ -6,7 +6,6 @@
 
 	import Icon from '$globalComponents/Icon.svelte';
 	import * as DropdownMenu from '$globalComponents/ui/dropdown-menu';
-	import { IconUser } from '@tabler/icons-svelte';
 	import ExportDataBtn from './ExportDataBtn.svelte';
 	import LoginLogoutBtn from './LoginLogoutBtn.svelte';
 
@@ -54,12 +53,15 @@
 					</span>
 				</a>
 			</DropdownMenu.Item>
-			<DropdownMenu.Item>
-				<a href={RoutePaths.DASHBOARD_PROFILE}>
-					<IconUser size={20} />
-					<span>Profile</span>
-				</a>
-			</DropdownMenu.Item>
+
+			{#if $userProfileStore}
+				<DropdownMenu.Item>
+					<a href={RoutePaths.DASHBOARD_PROFILE}>
+						<Icon name="person" />
+						<span>Profile</span>
+					</a>
+				</DropdownMenu.Item>
+			{/if}
 			<DropdownMenu.Item>
 				<button
 					title="Feedback"
@@ -85,6 +87,6 @@
 <style lang="postcss">
 	:global(.account-dropdown-menu a),
 	:global(.account-dropdown-menu button) {
-		@apply flex items-center gap-2 py-1 text-foreground;
+		@apply flex items-center gap-2 py-1 text-foreground w-full;
 	}
 </style>

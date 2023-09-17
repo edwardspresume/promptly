@@ -23,7 +23,7 @@ export enum RoutePaths {
 	DASHBOARD_PROMPTS = '/dashboard/prompts',
 	DASHBOARD_TAGS = '/dashboard/tags',
 	DASHBOARD_PROFILE = '/dashboard/profile',
-    DASHBOARD_BILLING = '/dashboard/billing',
+	DASHBOARD_BILLING = '/dashboard/billing',
 	DASHBOARD_SHARED_PROMPT = '/dashboard/shared-prompt',
 
 	MARKETING_LANDING = '/',
@@ -48,3 +48,7 @@ export const createNavLink = (
 	ariaLabel,
 	isExternal
 });
+
+export type Prettify<T> = {
+	[K in keyof T]: T[K];
+} & Record<string, never>;

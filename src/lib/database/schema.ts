@@ -160,7 +160,7 @@ export const tagPromptLinkTableRelations = relations(tagPromptLinkTable, ({ one 
 
 export type ProfileSchema = Pick<
 	typeof profilesTable.$inferSelect,
-	'username' | 'email' | 'fullName' | 'avatarUrl'
+	'id' | 'username' | 'email' | 'fullName' | 'avatarUrl'
 >;
 
 export type PromptSchema = typeof promptsTable.$inferSelect;

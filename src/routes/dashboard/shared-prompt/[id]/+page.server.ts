@@ -10,7 +10,7 @@ import {
 	getSharedPrompt,
 	insertPromptTagRelations,
 	sanitizeContentOnServer,
-	sanitizePromptData
+	sanitizeFormData
 } from '$databaseDir/databaseUtils.server';
 
 import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
@@ -95,7 +95,7 @@ export const actions: Actions = {
 
 		try {
 			// Sanitize the data received from the form that's base on the PromptValidationSchema
-			const sanitizedData = sanitizePromptData(sharedPromptForm.data);
+			const sanitizedData = sanitizeFormData(sharedPromptForm.data);
 
 			// Get the shared tag names from the form data
 			const sharedTagNames = formData.getAll('sharedTagNames');

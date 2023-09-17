@@ -16,7 +16,7 @@ import {
 	getUserPrompts,
 	insertPromptTagRelations,
 	sanitizeContentOnServer,
-	sanitizePromptData
+	sanitizeFormData
 } from '$databaseDir/databaseUtils.server';
 import { logError } from '$globalUtils';
 
@@ -87,7 +87,7 @@ export const actions: Actions = {
 
 		if (userSession) {
 			try {
-				const sanitizedData = sanitizePromptData(promptForm.data);
+				const sanitizedData = sanitizeFormData(promptForm.data);
 
 				if (promptId) {
 					await updatePrompt(userSession.id, promptId, sanitizedData);

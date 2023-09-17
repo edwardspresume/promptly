@@ -11,23 +11,23 @@ import { JSDOM } from 'jsdom';
 import { logError } from '$globalUtils';
 import { profilesTable, promptsTable, tagPromptLinkTable, tagsTable } from './schema';
 
-import type { PromptFormData } from '$dashboardValidationSchemas/promptsValidationSchema';
-
 const window = new JSDOM('').window;
 const DOMPurifyInstance = DOMPurify(window);
 
 export const sanitizeContentOnServer = DOMPurifyInstance.sanitize;
 
+type FormDataValues = string | number | boolean | null | File | Blob | string[] | undefined;
+
 /**
- * This function sanitizes the prompt data by removing entries with undefined values
+ * This function sanitizes the form data by removing entries with undefined values
  * and sanitizing string values using the sanitizeContentOnServer function.
  *
- * @param promptData - The object to be sanitized.
+ * @param formData - The object to be sanitized.
  * @returns - A new object with sanitized data.
  */
-export function sanitizePromptData(promptData: PromptFormData) {
+export function sanitizeFormData(formData: Record<string, FormDataValues>) {
 	return Object.fromEntries(
-		Object.entries(promptData)
+		Object.entries(formData)
 			.filter(([, value]) => value !== undefined)
 			.map(([key, value]) =>
 				typeof value === 'string' ? [key, sanitizeContentOnServer(value)] : [key, value]
@@ -66,10 +66,13 @@ export async function checkEmailExists(email: string) {
  * @returns Returns the user profile or null if not found.
  * @throws Will throw an error if the query fails.
  */
-export async function getUserProfile(profileId: string) {
+export async function getUserProfile(profileId: string | undefined) {
+	if (!profileId) return null;
+
 	try {
 		const userProfile = await drizzleClient
 			.select({
+				id: profilesTable.id,
 				email: profilesTable.email,
 				username: profilesTable.username,
 				fullName: profilesTable.fullName,

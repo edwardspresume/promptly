@@ -1,6 +1,6 @@
 import type { Actions, PageServerLoad } from './$types';
 
-import { message, superValidate } from 'sveltekit-superforms/server';
+import { message, setError, superValidate } from 'sveltekit-superforms/server';
 
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
 import { profilesTable } from '$databaseDir/schema';
@@ -43,6 +43,14 @@ export const actions: Actions = {
 			delete sanitizedData.id;
 			delete sanitizedData.email;
 			delete sanitizedData.avatarUrl;
+
+			const isUsernameTaken = await drizzleClient.query.profilesTable.findFirst({
+				where: eq(profilesTable.username, sanitizedData.username)
+			});
+
+			if (isUsernameTaken) {
+				return setError(profileForm, 'username', 'Username already taken');
+			}
 
 			if (profileId) {
 				await drizzleClient

@@ -4,7 +4,7 @@ import { message, setError, superValidate } from 'sveltekit-superforms/server';
 
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
 import { profilesTable } from '$databaseDir/schema';
-import { eq } from 'drizzle-orm';
+import { and, eq, ne } from 'drizzle-orm';
 
 import type { AlertMessage } from '$globalTypes';
 
@@ -17,7 +17,14 @@ export const load = (async ({ parent }) => {
 
 	const userProfile = await getUserProfile(session?.user.id);
 
-	const profileForm = await superValidate(userProfile, ProfileValidationSchema);
+	const profileForm = await superValidate(
+		{
+			...userProfile,
+			username: userProfile?.username ?? '',
+			fullName: userProfile?.fullName ?? ''
+		},
+		ProfileValidationSchema
+	);
 
 	return { profileForm };
 }) satisfies PageServerLoad;
@@ -44,15 +51,18 @@ export const actions: Actions = {
 			delete sanitizedData.email;
 			delete sanitizedData.avatarUrl;
 
-			const isUsernameTaken = await drizzleClient.query.profilesTable.findFirst({
-				where: eq(profilesTable.username, sanitizedData.username)
-			});
-
-			if (isUsernameTaken) {
-				return setError(profileForm, 'username', 'Username already taken');
-			}
-
 			if (profileId) {
+				const isUsernameTaken = await drizzleClient.query.profilesTable.findFirst({
+					where: and(
+						ne(profilesTable.id, profileId),
+						eq(profilesTable.username, sanitizedData.username)
+					)
+				});
+
+				if (isUsernameTaken) {
+					return setError(profileForm, 'username', 'Username already taken');
+				}
+
 				await drizzleClient
 					.update(profilesTable)
 					.set(sanitizedData)

@@ -21,6 +21,9 @@
 	$: {
 		const { username, fullName } = data.profileForm?.data;
 
+		$form.username = $form.username ?? '';
+		$form.fullName = $form.fullName ?? '';
+
 		isProfileModified = $form.username?.trim() !== username || $form.fullName?.trim() !== fullName;
 	}
 

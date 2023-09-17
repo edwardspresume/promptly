@@ -5,7 +5,7 @@
 	import Label from '$globalComponents/ui/label/label.svelte';
 
 	export let type: string;
-	export let value: string = '';
+	export let value: string | null | undefined = '';
 	export let name: string = '';
 	export let label: string = '';
 	export let placeholder: string = '';
@@ -16,7 +16,7 @@
 	export let maxlength: number | undefined = undefined;
 	export let errorMessage: object | undefined = undefined;
 
-	$: valueLength = value.length;
+	$: valueLength = value?.length;
 </script>
 
 <Label class="grid gap-1">

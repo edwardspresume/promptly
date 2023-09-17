@@ -4,7 +4,7 @@ import { superValidate } from 'sveltekit-superforms/server';
 import type { LayoutServerLoad } from './$types';
 
 import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
-import { getUserProfile } from '$databaseDir/databaseUtils.server';
+import { getUserProfile, getUserTags } from '$databaseDir/databaseUtils.server';
 
 export const load = loadFlash(async ({ locals: { getSession } }) => {
 	const userId = (await getSession())?.user.id;
@@ -14,7 +14,9 @@ export const load = loadFlash(async ({ locals: { getSession } }) => {
 	if (userId) {
 		const userProfile = getUserProfile(userId);
 
-		return { userProfile, feedbackForm };
+		const userTags = getUserTags(userId);
+
+		return { userProfile, userTags, feedbackForm };
 	}
 
 	return { feedbackForm };

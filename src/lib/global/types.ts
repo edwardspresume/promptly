@@ -25,6 +25,7 @@ export enum RoutePaths {
 	DASHBOARD_PROFILE = '/dashboard/profile',
 	DASHBOARD_BILLING = '/dashboard/billing',
 	DASHBOARD_SHARED_PROMPT = '/dashboard/shared-prompt',
+	DASHBOARD_COMMUNITY_PROMPTS = '/dashboard/community-prompts',
 
 	MARKETING_LANDING = '/',
 	MARKETING_PRICING = '/pricing'

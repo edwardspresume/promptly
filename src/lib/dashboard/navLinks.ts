@@ -6,8 +6,13 @@ type DashboardLinks = {
 };
 
 const mainNav: NavLink[] = [
-	createNavLink('Prompts', RoutePaths.DASHBOARD_PROMPTS, 'Go to the prompts page'),
-	createNavLink('Tags', RoutePaths.DASHBOARD_TAGS, 'Go to the tags page')
+	createNavLink('My Prompts', RoutePaths.DASHBOARD_PROMPTS, 'Go to the prompts page'),
+	createNavLink('My Tags', RoutePaths.DASHBOARD_TAGS, 'Go to the tags page'),
+	createNavLink(
+		'Community Prompts',
+		RoutePaths.DASHBOARD_COMMUNITY_PROMPTS,
+		'Go to the community prompts page'
+	)
 ];
 
 const accountNav: NavLink[] = [

@@ -44,7 +44,7 @@ CREATE OR REPLACE FUNCTION "public"."create_profile_on_signup"() RETURNS "trigge
     AS $$
 BEGIN
   -- Insert the new user's ID and raw meta data (full name and avatar URL) into the profiles table.
-  INSERT INTO public.profiles (id, email, full_name, avatar_url)
+  INSERT INTO public.profiles_table (id, email, full_name, avatar_url)
   VALUES (new.id, new.email, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url');
   
   -- Return the new record.
@@ -58,9 +58,11 @@ CREATE OR REPLACE FUNCTION "public"."remove_tag_id_from_prompts"() RETURNS "trig
     LANGUAGE "plpgsql"
     AS $$
 BEGIN
-  UPDATE prompts
-  SET tag_ids = array_remove(tag_ids, OLD.id)
-  WHERE OLD.id = ANY(tag_ids) AND tag_ids IS NOT NULL;
+  IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'prompts_table') THEN
+    UPDATE prompts_table
+    SET tag_ids = array_remove(tag_ids, OLD.id)
+    WHERE OLD.id = ANY(tag_ids) AND tag_ids IS NOT NULL;
+  END IF;
   RETURN OLD;
 END;
 $$;
@@ -82,7 +84,7 @@ SET default_tablespace = '';
 
 SET default_table_access_method = "heap";
 
-CREATE TABLE IF NOT EXISTS "public"."profiles" (
+CREATE TABLE IF NOT EXISTS "public"."profiles_table" (
     "id" "uuid" NOT NULL,
     "username" "text",
     "email" character varying NOT NULL,
@@ -93,27 +95,35 @@ CREATE TABLE IF NOT EXISTS "public"."profiles" (
     "last_login" timestamp with time zone DEFAULT "now"() NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
-    CONSTRAINT "email_format_check" CHECK ((("email")::"text" ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$'::"text")),
-    CONSTRAINT "username_length" CHECK (("char_length"("username") >= 1))
+    CONSTRAINT "email_format_check" CHECK ((("email")::"text" ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$'::"text"))
 );
 
-ALTER TABLE "public"."profiles" OWNER TO "postgres";
+ALTER TABLE "public"."profiles_table" OWNER TO "postgres";
 
-CREATE TABLE IF NOT EXISTS "public"."prompts" (
+CREATE TABLE IF NOT EXISTS "public"."prompts_table" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "profile_id" "uuid" NOT NULL,
     "title" "text" NOT NULL,
     "description" "text" NOT NULL,
     "is_favorited" boolean DEFAULT false NOT NULL,
-    "tag_ids" "uuid"[] NOT NULL,
+    "tag_ids" "uuid"[],
     "visibility" "public"."prompt_visibility" DEFAULT 'private'::"public"."prompt_visibility" NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL
 );
 
-ALTER TABLE "public"."prompts" OWNER TO "postgres";
+ALTER TABLE "public"."prompts_table" OWNER TO "postgres";
 
-CREATE TABLE IF NOT EXISTS "public"."tags" (
+CREATE TABLE IF NOT EXISTS "public"."tag_prompt_link_table" (
+    "prompt_id" "uuid" NOT NULL,
+    "tag_id" "uuid" NOT NULL,
+    "created_by" "uuid" NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL
+);
+
+ALTER TABLE "public"."tag_prompt_link_table" OWNER TO "postgres";
+
+CREATE TABLE IF NOT EXISTS "public"."tags_table" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "profile_id" "uuid" NOT NULL,
     "name" "text" NOT NULL,
@@ -121,54 +131,68 @@ CREATE TABLE IF NOT EXISTS "public"."tags" (
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL
 );
 
-ALTER TABLE "public"."tags" OWNER TO "postgres";
+ALTER TABLE "public"."tags_table" OWNER TO "postgres";
 
-ALTER TABLE ONLY "public"."profiles"
+ALTER TABLE ONLY "public"."profiles_table"
     ADD CONSTRAINT "profiles_email_key" UNIQUE ("email");
 
-ALTER TABLE ONLY "public"."profiles"
+ALTER TABLE ONLY "public"."profiles_table"
     ADD CONSTRAINT "profiles_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "public"."profiles"
+ALTER TABLE ONLY "public"."profiles_table"
     ADD CONSTRAINT "profiles_username_key" UNIQUE ("username");
 
-ALTER TABLE ONLY "public"."prompts"
+ALTER TABLE ONLY "public"."prompts_table"
     ADD CONSTRAINT "prompts_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "public"."tags"
+ALTER TABLE ONLY "public"."tag_prompt_link_table"
+    ADD CONSTRAINT "tag_prompt_link_table_pkey" PRIMARY KEY ("prompt_id", "tag_id", "created_by");
+
+ALTER TABLE ONLY "public"."tags_table"
     ADD CONSTRAINT "tags_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "public"."tags"
+ALTER TABLE ONLY "public"."tags_table"
     ADD CONSTRAINT "unique_user_tag_name" UNIQUE ("profile_id", "name");
 
-CREATE TRIGGER "remove_tag_id_from_prompts_trigger" AFTER DELETE ON "public"."tags" FOR EACH ROW EXECUTE FUNCTION "public"."remove_tag_id_from_prompts"();
+CREATE TRIGGER "remove_tag_id_from_prompts_trigger" AFTER DELETE ON "public"."tags_table" FOR EACH ROW EXECUTE FUNCTION "public"."remove_tag_id_from_prompts"();
 
-CREATE TRIGGER "update_profile_timestamp" BEFORE UPDATE ON "public"."profiles" FOR EACH ROW EXECUTE FUNCTION "public"."update_timestamp"();
+CREATE TRIGGER "update_profile_timestamp" BEFORE UPDATE ON "public"."profiles_table" FOR EACH ROW EXECUTE FUNCTION "public"."update_timestamp"();
 
-CREATE TRIGGER "update_prompts_timestamp" BEFORE UPDATE ON "public"."prompts" FOR EACH ROW EXECUTE FUNCTION "public"."update_timestamp"();
+CREATE TRIGGER "update_prompts_timestamp" BEFORE UPDATE ON "public"."prompts_table" FOR EACH ROW EXECUTE FUNCTION "public"."update_timestamp"();
 
-CREATE TRIGGER "update_tags_timestamp" BEFORE UPDATE ON "public"."tags" FOR EACH ROW EXECUTE FUNCTION "public"."update_timestamp"();
+CREATE TRIGGER "update_tags_timestamp" BEFORE UPDATE ON "public"."tags_table" FOR EACH ROW EXECUTE FUNCTION "public"."update_timestamp"();
 
-ALTER TABLE ONLY "public"."profiles"
-    ADD CONSTRAINT "profiles_id_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."profiles_table"
+    ADD CONSTRAINT "profiles_table_id_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "public"."prompts"
-    ADD CONSTRAINT "prompts_profile_id_fkey" FOREIGN KEY ("profile_id") REFERENCES "public"."profiles"("id") ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."prompts_table"
+    ADD CONSTRAINT "prompts_table_profile_id_fkey" FOREIGN KEY ("profile_id") REFERENCES "public"."profiles_table"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "public"."tags"
-    ADD CONSTRAINT "tags_profile_id_fkey" FOREIGN KEY ("profile_id") REFERENCES "public"."profiles"("id") ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."tag_prompt_link_table"
+    ADD CONSTRAINT "tag_prompt_link_table_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "public"."profiles_table"("id") ON DELETE CASCADE;
 
-CREATE POLICY "Enable all actions for users based on id" ON "public"."profiles" TO "authenticated" USING (("auth"."uid"() = "id")) WITH CHECK (("auth"."uid"() = "id"));
+ALTER TABLE ONLY "public"."tag_prompt_link_table"
+    ADD CONSTRAINT "tag_prompt_link_table_prompt_id_fkey" FOREIGN KEY ("prompt_id") REFERENCES "public"."prompts_table"("id") ON DELETE CASCADE;
 
-CREATE POLICY "Enable all actions for users based on profile_id" ON "public"."prompts" USING (("auth"."uid"() = "profile_id")) WITH CHECK (("auth"."uid"() = "profile_id"));
+ALTER TABLE ONLY "public"."tag_prompt_link_table"
+    ADD CONSTRAINT "tag_prompt_link_table_tag_id_fkey" FOREIGN KEY ("tag_id") REFERENCES "public"."tags_table"("id") ON DELETE CASCADE;
 
-CREATE POLICY "Enable all actions for users based on profile_id" ON "public"."tags" USING (("auth"."uid"() = "profile_id")) WITH CHECK (("auth"."uid"() = "profile_id"));
+ALTER TABLE ONLY "public"."tags_table"
+    ADD CONSTRAINT "tags_table_profile_id_fkey" FOREIGN KEY ("profile_id") REFERENCES "public"."profiles_table"("id") ON DELETE CASCADE;
 
-ALTER TABLE "public"."profiles" ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Enable all actions for users based on id" ON "public"."profiles_table" TO "authenticated" USING (("auth"."uid"() = "id")) WITH CHECK (("auth"."uid"() = "id"));
 
-ALTER TABLE "public"."prompts" ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Enable all actions for users based on profile_id" ON "public"."prompts_table" USING (("auth"."uid"() = "profile_id")) WITH CHECK (("auth"."uid"() = "profile_id"));
 
-ALTER TABLE "public"."tags" ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Enable all actions for users based on profile_id" ON "public"."tags_table" USING (("auth"."uid"() = "profile_id")) WITH CHECK (("auth"."uid"() = "profile_id"));
+
+ALTER TABLE "public"."profiles_table" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."prompts_table" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."tag_prompt_link_table" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."tags_table" ENABLE ROW LEVEL SECURITY;
 
 GRANT USAGE ON SCHEMA "public" TO "postgres";
 GRANT USAGE ON SCHEMA "public" TO "anon";
@@ -187,17 +211,21 @@ GRANT ALL ON FUNCTION "public"."update_timestamp"() TO "anon";
 GRANT ALL ON FUNCTION "public"."update_timestamp"() TO "authenticated";
 GRANT ALL ON FUNCTION "public"."update_timestamp"() TO "service_role";
 
-GRANT ALL ON TABLE "public"."profiles" TO "anon";
-GRANT ALL ON TABLE "public"."profiles" TO "authenticated";
-GRANT ALL ON TABLE "public"."profiles" TO "service_role";
+GRANT ALL ON TABLE "public"."profiles_table" TO "anon";
+GRANT ALL ON TABLE "public"."profiles_table" TO "authenticated";
+GRANT ALL ON TABLE "public"."profiles_table" TO "service_role";
 
-GRANT ALL ON TABLE "public"."prompts" TO "anon";
-GRANT ALL ON TABLE "public"."prompts" TO "authenticated";
-GRANT ALL ON TABLE "public"."prompts" TO "service_role";
+GRANT ALL ON TABLE "public"."prompts_table" TO "anon";
+GRANT ALL ON TABLE "public"."prompts_table" TO "authenticated";
+GRANT ALL ON TABLE "public"."prompts_table" TO "service_role";
 
-GRANT ALL ON TABLE "public"."tags" TO "anon";
-GRANT ALL ON TABLE "public"."tags" TO "authenticated";
-GRANT ALL ON TABLE "public"."tags" TO "service_role";
+GRANT ALL ON TABLE "public"."tag_prompt_link_table" TO "anon";
+GRANT ALL ON TABLE "public"."tag_prompt_link_table" TO "authenticated";
+GRANT ALL ON TABLE "public"."tag_prompt_link_table" TO "service_role";
+
+GRANT ALL ON TABLE "public"."tags_table" TO "anon";
+GRANT ALL ON TABLE "public"."tags_table" TO "authenticated";
+GRANT ALL ON TABLE "public"."tags_table" TO "service_role";
 
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "postgres";
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "anon";

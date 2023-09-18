@@ -13,6 +13,8 @@
 	export let promptId: PromptSchema['id'];
 	export let promptVisibility: PromptSchema['visibility'];
 
+	const visibilityOptions: PromptSchema['visibility'][] = ['Private', 'Public', 'Link-Only'];
+
 	/**
 	 * Copies the prompt link to the clipboard and shows a notification.
 	 */
@@ -29,20 +31,31 @@
 	<Label for="promptVisibilitySelector">Visibility</Label>
 
 	<div class="flex gap-2">
-		<select name="visibility" id="promptVisibilitySelector" disabled class="flex-grow capitalize">
-			<option value={promptVisibility}>{promptVisibility}</option>
+		<select
+			bind:value={promptVisibility}
+			name="visibility"
+			id="promptVisibilitySelector"
+			class="flex-grow capitalize"
+		>
+			{#each visibilityOptions as option}
+				<option value={option} selected={option === promptVisibility}>
+					{option}
+				</option>
+			{/each}
 		</select>
 
-		<Button
-			size="icon"
-			type="button"
-			variant="outline"
-			title="Copy prompt link to share with others"
-			aria-label="Copy prompt link to share with others"
-			on:click={handleCopy}
-			class="hover:text-blue-500"
-		>
-			<Icon name="link" />
-		</Button>
+		{#if promptVisibility !== 'Private'}
+			<Button
+				size="icon"
+				type="button"
+				variant="outline"
+				title="Copy prompt link to share with others"
+				aria-label="Copy prompt link to share with others"
+				on:click={handleCopy}
+				class="hover:text-blue-500"
+			>
+				<Icon name="link" />
+			</Button>
+		{/if}
 	</div>
 </fieldset>

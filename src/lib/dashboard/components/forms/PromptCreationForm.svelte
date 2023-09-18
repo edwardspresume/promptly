@@ -15,11 +15,14 @@
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
 	import BaseModal from '$dashboardComponents/modals/BaseModal.svelte';
 	import FavoriteToggleBtn from '$dashboardComponents/prompts/FavoriteToggleBtn.svelte';
+	import PromptVisibilitySelector from '$dashboardComponents/prompts/PromptVisibilitySelector.svelte';
 	import InputField from '$globalComponents/form/InputField.svelte';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
 	import TextArea from '$globalComponents/form/TextArea.svelte';
 
 	export let promptCreationModalRef: HTMLDialogElement;
+
+	const userSession = $page.data.session?.user;
 
 	// An array to keep track of the selected tags by their IDs
 	let selectedTagIds: string[] = [];
@@ -38,7 +41,7 @@
 			const notificationFunction = getNotificationFunction(alertType);
 
 			if (alertType === 'success') {
-				if (!$page.data.session?.user) {
+				if (!userSession) {
 					const { title, description, isFavorited, tagIds } = form.data;
 
 					promptLocalStorageManager.addItem({
@@ -51,6 +54,7 @@
 
 				// reset selected tags
 				selectedTagIds = [];
+				$form.visibility = 'Private';
 			}
 
 			notificationFunction(alertText, { target: 'baseModal' });
@@ -91,6 +95,10 @@
 
 		{#if $totalTagsCountStore}
 			<TagSelector bind:selectedTagIds />
+		{/if}
+
+		{#if userSession}
+			<PromptVisibilitySelector promptId={$form.id} bind:promptVisibility={$form.visibility} />
 		{/if}
 
 		<footer class="flex items-center gap-2">

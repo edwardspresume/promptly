@@ -178,6 +178,7 @@
 			$form.title.trim() !== selectedPromptForEdit.title ||
 			$form.description.trim() !== selectedPromptForEdit.description ||
 			$form.isFavorited !== selectedPromptForEdit.isFavorited ||
+			$form.visibility !== selectedPromptForEdit.visibility ||
 			areArraysDifferent(selectedTagIds, selectedPromptForEdit.tagIds);
 	}
 
@@ -268,7 +269,7 @@
 		{/if}
 
 		{#if userSession}
-			<PromptVisibilitySelector promptId={$form.id} promptVisibility={$form.visibility} />
+			<PromptVisibilitySelector promptId={$form.id} bind:promptVisibility={$form.visibility} />
 		{/if}
 
 		<footer class="flex items-center gap-2">

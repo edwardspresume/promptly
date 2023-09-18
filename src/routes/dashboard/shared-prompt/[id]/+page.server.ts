@@ -55,7 +55,7 @@ export const load = (async ({ params }) => {
 		// Extract the shared tags and creator details from the prompt data
 		const sharedTags = sharedPrompt.tagPromptLink.map((tagPromptLink) => tagPromptLink.tag);
 		const promptCreator = {
-			username: sharedPrompt.profile.username ?? sharedPrompt?.profile.fullName ?? 'Anonymous',
+			username: sharedPrompt.profile.username ?? 'Anonymous',
 			avatarUrl: sharedPrompt.profile.avatarUrl ?? null
 		};
 

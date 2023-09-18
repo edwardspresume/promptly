@@ -2,7 +2,7 @@ import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 
 import type * as schema from './schema';
 
-import { desc, eq } from 'drizzle-orm';
+import { and, desc, eq, ne } from 'drizzle-orm';
 import { drizzleClient } from './drizzleClient.server';
 
 import DOMPurify from 'dompurify';
@@ -124,7 +124,7 @@ export async function getUserPrompts(profileId: string) {
 export async function getSharedPrompt(promptId: string) {
 	try {
 		const promptData = await drizzleClient.query.promptsTable.findFirst({
-			where: eq(promptsTable.id, promptId),
+			where: and(eq(promptsTable.id, promptId), ne(promptsTable.visibility, 'Private')),
 
 			columns: {
 				title: true,

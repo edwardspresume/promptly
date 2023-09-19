@@ -3,7 +3,7 @@
 
 	import { logError } from '$globalUtils';
 
-	import { allPromptsStore } from '$dashboardStores/promptsStore';
+	import { userPromptsStore } from '$dashboardStores/promptsStore';
 	import { allTagsStore } from '$dashboardStores/tagsStore';
 	import { userProfileStore } from '$dashboardStores/userProfileStore';
 
@@ -17,7 +17,7 @@
 	export function prepareDataForExport() {
 		// Retrieve prompts and tags data from the store
 		const profile = get(userProfileStore);
-		const prompts = get(allPromptsStore);
+		const prompts = get(userPromptsStore);
 		const tags = get(allTagsStore);
 
 		// Combine the data into a single object

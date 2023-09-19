@@ -5,30 +5,30 @@ import type { PromptSchema } from '$databaseDir/schema';
 import { sortItems } from '$dashboardUtils/sortItems';
 
 /**
- * Store for managing the tags filter for displaying prompts.
+ * Store for managing the tags filter for displaying user's prompts.
  */
-export const tagsFilter = writable<string[]>([]);
+export const userPromptTagsFilter = writable<string[]>([]);
 
 /**
- * Store for managing the text filter for displaying prompts.
+ * Store for managing the text filter for displaying user's prompts.
  */
-export const promptTextFilter = writable<string>('');
+export const userPromptTextFilter = writable<string>('');
 
 /**
- * Store for managing the sorting preference for displaying prompts.
+ * Store for managing the sorting preference for displaying user's prompts.
  */
-export const promptSortingPreference = writable<string>('');
+export const userPromptSortOrder = writable<string>('');
 
 /**
- * Store to manage all prompts.
+ * Store to manage all user's prompts.
  */
-export const allPromptsStore = writable<PromptSchema[]>([]);
+export const userPromptsStore = writable<PromptSchema[]>([]);
 
 /**
- * Derived store to calculate the total count of prompts.
+ * Derived store to calculate the total count of user's prompts.
  */
-export const totalPromptCountStore = derived(
-	allPromptsStore,
+export const userPromptTotalCount = derived(
+	userPromptsStore,
 	($allPromptsStore) => $allPromptsStore.length
 );
 
@@ -41,8 +41,8 @@ export const totalPromptCountStore = derived(
  * @param {string} sortOption - Sorting option to apply on filtered prompts.
  * @returns {Array<PromptSchema>} Filtered and sorted prompts.
  */
-export const filteredPromptsStore = derived(
-	[allPromptsStore, tagsFilter, promptTextFilter, promptSortingPreference],
+export const filteredUserPromptsStore = derived(
+	[userPromptsStore, userPromptTagsFilter, userPromptTextFilter, userPromptSortOrder],
 	([prompts, tagsFilter, textFilter, sortOption]) => {
 		const normalizedFilterText = textFilter.toLowerCase();
 

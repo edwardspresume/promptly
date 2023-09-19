@@ -4,7 +4,7 @@
 	import { promptSortOptions } from '$dashboardData/SortOptions';
 
 	import { isPromptFilterActive } from '$dashboardStores/promptModalFilterStore';
-	import { promptSortingPreference } from '$dashboardStores/promptsStore';
+	import { userPromptSortOrder } from '$dashboardStores/promptsStore';
 	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
 
 	import SortSelector from '$dashboardComponents/filters/SortSelector.svelte';
@@ -26,7 +26,7 @@
 		selectedTagIds = [];
 
 		selectedSortOption = '';
-		promptSortingPreference.set('');
+		userPromptSortOrder.set('');
 	}
 
 	$: {

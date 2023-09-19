@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PromptSchema } from '$databaseDir/schema';
 
-	import { filteredPromptsStore, totalPromptCountStore } from '$dashboardStores/promptsStore';
+	import { filteredUserPromptsStore, userPromptTotalCount } from '$dashboardStores/promptsStore';
 
 	import ListContainer from '$dashboardComponents/list/ListContainer.svelte';
 	import ListControls from '$dashboardComponents/list/ListControls.svelte';
@@ -22,14 +22,14 @@
 
 	$: {
 		displayedPrompts = isShowingOnlyFavorites
-			? $filteredPromptsStore.filter((prompt) => prompt.isFavorited)
-			: $filteredPromptsStore;
+			? $filteredUserPromptsStore.filter((prompt) => prompt.isFavorited)
+			: $filteredUserPromptsStore;
 
 		displayedPromptsCount = displayedPrompts.length;
 	}
 
 	$: {
-		if ($totalPromptCountStore === 0) stateMessage = NO_PROMPTS_AVAILABLE_MESSAGE;
+		if ($userPromptTotalCount === 0) stateMessage = NO_PROMPTS_AVAILABLE_MESSAGE;
 		else if (isShowingOnlyFavorites && displayedPromptsCount === 0)
 			stateMessage = NO_FAVORITE_PROMPTS_MESSAGE;
 		else if (displayedPromptsCount === 0) stateMessage = NO_MATCH_MESSAGE;
@@ -42,7 +42,7 @@
 {:else}
 	<ListCounter
 		itemLabel="prompt"
-		totalItems={$totalPromptCountStore}
+		totalItems={$userPromptTotalCount}
 		displayedItems={displayedPromptsCount}
 	/>
 
@@ -56,7 +56,7 @@
 <ListControls
 	itemType="prompt"
 	itemsListRef={promptListRef}
-	totalItems={$totalPromptCountStore}
+	totalItems={$userPromptTotalCount}
 	displayedItems={displayedPromptsCount}
 	on:addItem
 	on:deleteAllItems

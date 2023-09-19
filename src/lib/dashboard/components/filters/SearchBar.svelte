@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ItemType } from '$dashboardTypes';
 
-	import { promptTextFilter } from '$dashboardStores/promptsStore';
+	import { userPromptTextFilter } from '$dashboardStores/promptsStore';
 	import { tagTextFilter } from '$dashboardStores/tagsStore';
 
 	import Label from '$globalComponents/ui/label/label.svelte';
@@ -25,7 +25,7 @@
 
 		if (searchTargetType === 'prompt') {
 			labelText = `Search prompts by title`;
-			promptTextFilter.set(searchQuery);
+			userPromptTextFilter.set(searchQuery);
 		}
 	}
 </script>

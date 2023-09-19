@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ItemType, SortOption } from '$dashboardTypes';
 
-	import { promptSortingPreference } from '$dashboardStores/promptsStore';
+	import { userPromptSortOrder } from '$dashboardStores/promptsStore';
 	import { tagSortingPreference } from '$dashboardStores/tagsStore';
 
 	export let itemType: ItemType;
@@ -12,10 +12,10 @@
 	// The currently selected sort option.
 	export let selectedSortOption: string = '';
 
-	function setSortingPreference() {
+	function setSortingOrder() {
 		if (itemType === 'tag') tagSortingPreference.set(selectedSortOption);
 
-		if (itemType === 'prompt') promptSortingPreference.set(selectedSortOption);
+		if (itemType === 'prompt') userPromptSortOrder.set(selectedSortOption);
 	}
 </script>
 
@@ -23,7 +23,7 @@
 	title="Sort options"
 	aria-label="Sort options"
 	bind:value={selectedSortOption}
-	on:change={setSortingPreference}
+	on:change={setSortingOrder}
 >
 	<option value="" disabled selected>Sort by</option>
 	{#each sortOptions as { value, label, announceMessage }}

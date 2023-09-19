@@ -4,7 +4,7 @@ import { get, type Writable } from 'svelte/store';
 import defaultPrompts from '$dashboardData/defaultPrompts';
 import defaultTags from '$dashboardData/defaultTags';
 
-import { allPromptsStore } from '$dashboardStores/promptsStore';
+import { userPromptsStore } from '$dashboardStores/promptsStore';
 import { allTagsStore } from '$dashboardStores/tagsStore';
 
 import { logError, sanitizeContentOnClient } from '$globalUtils';
@@ -153,7 +153,7 @@ export function createStorageManager<T extends Identifiable>(
 }
 
 export const promptLocalStorageManager = createStorageManager(
-	allPromptsStore,
+	userPromptsStore,
 	defaultPrompts,
 	LocalStorageKeys.PROMPTS
 );

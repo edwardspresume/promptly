@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-    
+
 	import { page } from '$app/stores';
 	import { fly } from 'svelte/transition';
 
@@ -9,7 +9,7 @@
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import type { PromptSchema } from '$databaseDir/schema';
 
-	import { allPromptsStore, totalPromptCountStore } from '$dashboardStores/promptsStore';
+	import { userPromptTotalCount, userPromptsStore } from '$dashboardStores/promptsStore';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 
@@ -28,8 +28,8 @@
 	$: ({ session, supabase, userPrompts } = data);
 
 	$: {
-		if (session?.user) allPromptsStore.set(userPrompts ?? []);
-		else allPromptsStore.set(promptLocalStorageManager.getItems());
+		if (session?.user) userPromptsStore.set(userPrompts ?? []);
+		else userPromptsStore.set(promptLocalStorageManager.getItems());
 	}
 
 	const flash = getFlash(page);
@@ -102,7 +102,7 @@
 	function handleDeleteAllPromptsEvent() {
 		confirmationModalInfoForPromptDeletion = {
 			heading: 'Delete All Prompts',
-			subheading: `Are you sure you want to <span style="color: red;">permanently</span> delete all ${$totalPromptCountStore} of your prompts? This action cannot be undone.`,
+			subheading: `Are you sure you want to <span style="color: red;">permanently</span> delete all ${$userPromptTotalCount} of your prompts? This action cannot be undone.`,
 			callback: deleteAllPromptsCallBack
 		};
 

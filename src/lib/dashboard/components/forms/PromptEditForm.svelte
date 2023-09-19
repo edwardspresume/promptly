@@ -16,7 +16,7 @@
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 
-	import { allPromptsStore } from '$dashboardStores/promptsStore';
+	import { userPromptsStore } from '$dashboardStores/promptsStore';
 	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
 
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
@@ -142,7 +142,7 @@
 				}
 
 				selectedPromptForEdit =
-					$allPromptsStore.find((prompt) => prompt.id === id) ?? selectedPromptForEdit;
+					$userPromptsStore.find((prompt) => prompt.id === id) ?? selectedPromptForEdit;
 			}
 
 			notificationFunction(alertText, { target: 'baseModal' });

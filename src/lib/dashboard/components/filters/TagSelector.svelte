@@ -3,7 +3,7 @@
 
 	import { onOutsideClick } from '$dashboardUtils/functions';
 
-	import { tagsFilter } from '$dashboardStores/promptsStore';
+	import { userPromptTagsFilter } from '$dashboardStores/promptsStore';
 	import { allTagsStore } from '$dashboardStores/tagsStore';
 
 	import Label from '$globalComponents/ui/label/label.svelte';
@@ -103,7 +103,7 @@
 	$: tagCountLabel = `${selectedTags.length}/${allTags.length}`;
 
 	// Sets the tag filter in the prompts store when filterPromptBasedOnTags is true
-	$: if (filterPromptBasedOnTags && selectedTagIds) tagsFilter.set(selectedTagIds);
+	$: if (filterPromptBasedOnTags && selectedTagIds) userPromptTagsFilter.set(selectedTagIds);
 </script>
 
 <fieldset use:onOutsideClick={() => (isTagSelectionMenuOpen = false)} class="grid gap-1">

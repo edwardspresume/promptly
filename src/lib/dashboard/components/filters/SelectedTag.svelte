@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
-	import type { TagSchema } from '$databaseDir/schema';
+	import type { SimplifiedTagSchema } from '$databaseDir/schema';
 
 	import Button from '$globalComponents/ui/button/button.svelte';
 
-	export let tag: TagSchema;
+	export let tag: SimplifiedTagSchema;
 	export let isSharedTag: boolean = false;
 
 	const dispatch = createEventDispatcher();

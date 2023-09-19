@@ -168,6 +168,8 @@ export type PromptSchema = typeof promptsTable.$inferSelect;
 
 export type TagSchema = typeof tagsTable.$inferSelect;
 
+export type SimplifiedTagSchema = Pick<TagSchema, 'id' | 'name'>;
+
 export type SharablePromptSchema = {
 	title: PromptSchema['title'];
 	description: PromptSchema['description'];

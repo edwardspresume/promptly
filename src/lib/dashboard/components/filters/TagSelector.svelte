@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TagSchema } from '$databaseDir/schema';
+	import type { SimplifiedTagSchema } from '$databaseDir/schema';
 
 	import { onOutsideClick } from '$dashboardUtils/functions';
 
@@ -19,12 +19,12 @@
 	export let placeholder: string = 'Select tag';
 
 	// An array that contains the tags shared by another user's prompt
-	export let sharedTags: TagSchema[] = [];
+	export let sharedTags: SimplifiedTagSchema[] = [];
 
 	// An array that contains the IDs of the selected tags
 	export let selectedTagIds: string[] | null = [];
 
-	let allTags: TagSchema[] = [];
+	let allTags: SimplifiedTagSchema[] = [];
 	let tagSearchTerm: string = '';
 	let activeTagIndex: number = 0;
 	let tagSearchInput: HTMLInputElement;
@@ -34,7 +34,8 @@
 	let isSharedTag: boolean = sharedTags.length > 0;
 
 	// Selects the appropriate tags source based on the sharedTags length
-	$: allTags = sharedTags.length > 0 ? sharedTags : $allTagsStore;
+	$: allTags =
+		sharedTags.length > 0 ? sharedTags : $allTagsStore.map(({ id, name }) => ({ id, name }));
 
 	// Filter tags based on the tagSearchTerm value and exclude already selected tags
 	$: filteredTags = allTags.filter((tag) => {
@@ -48,9 +49,9 @@
 	/**
 	 * Adds a tag to the selected tags
 	 *
-	 * @param {TagSchema} tag - The tag to add
+	 * @param {SimplifiedTagSchema} tag - The tag to add
 	 */
-	function addTag(tag: TagSchema) {
+	function addTag(tag: SimplifiedTagSchema) {
 		if (selectedTagIds) {
 			selectedTagIds = [...selectedTagIds, tag.id];
 		}
@@ -64,9 +65,9 @@
 	/**
 	 * Removes a tag from the selected tags
 	 *
-	 * @param {TagSchema} tag - The tag to remove
+	 * @param {SimplifiedTagSchema} tag - The tag to remove
 	 */
-	function removeTag(tag: TagSchema) {
+	function removeTag(tag: SimplifiedTagSchema) {
 		if (selectedTagIds) {
 			selectedTagIds = selectedTagIds.filter((id) => id !== tag.id);
 		}

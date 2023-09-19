@@ -138,8 +138,14 @@ export async function getSharedPrompt(promptId: string) {
 					}
 				},
 				tagPromptLink: {
+					columns: {},
 					with: {
-						tag: true
+						tag: {
+							columns: {
+								id: true,
+								name: true
+							}
+						}
 					}
 				}
 			}

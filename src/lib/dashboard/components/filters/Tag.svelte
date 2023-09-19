@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { afterUpdate, createEventDispatcher } from 'svelte';
 
-	import type { TagSchema } from '$databaseDir/schema';
+	import type { SimplifiedTagSchema } from '$databaseDir/schema';
 
-	export let tag: TagSchema;
+	export let tag: SimplifiedTagSchema;
 	// Represents the index of the tag in the list
 	export let index: number;
 	// Represents whether the tag is the currently active (highlighted) tag

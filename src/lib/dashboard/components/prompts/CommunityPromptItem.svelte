@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
-	import type { SharablePromptSchema } from '$databaseDir/schema';
+	import type { ShareablePromptSchema } from '$databaseDir/schema';
 
 	import ListItem from '$dashboardComponents/list/ListItem.svelte';
 	import Icon from '$globalComponents/Icon.svelte';
 	import CopyPromptDescriptionBtn from './CopyPromptDescriptionBtn.svelte';
 
-	export let prompt: SharablePromptSchema;
+	export let prompt: ShareablePromptSchema;
 
 	const dispatch = createEventDispatcher();
 

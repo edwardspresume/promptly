@@ -170,7 +170,7 @@ export type TagSchema = typeof tagsTable.$inferSelect;
 
 export type SimplifiedTagSchema = Pick<TagSchema, 'id' | 'name'>;
 
-export type SharablePromptSchema = {
+export type ShareablePromptSchema = {
 	title: PromptSchema['title'];
 	description: PromptSchema['description'];
 

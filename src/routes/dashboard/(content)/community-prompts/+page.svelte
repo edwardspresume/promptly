@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	import type { SharablePromptSchema } from '$databaseDir/schema';
+	import type { ShareablePromptSchema } from '$databaseDir/schema';
 
 	import { communityPromptsStore } from '$dashboardStores/communityPromptsStore';
 
@@ -18,7 +18,7 @@
 	communityPromptsStore.set(communityPrompts);
 
 	let communityPromptViewModalRef: HTMLDialogElement;
-	let selectedPrompt: SharablePromptSchema;
+	let selectedPrompt: ShareablePromptSchema;
 	let selectPromptCreatorInfo: string = '';
 
 	/**

@@ -1,6 +1,6 @@
 import { derived, writable } from 'svelte/store';
 
-import type { SharablePromptSchema } from '$databaseDir/schema';
+import type { ShareablePromptSchema } from '$databaseDir/schema';
 
 import { sortItems } from '$dashboardUtils/sortItems';
 
@@ -22,7 +22,7 @@ export const communityPromptSortOrder = writable<string>('');
 /**
  * Store to manage all community prompts.
  */
-export const communityPromptsStore = writable<SharablePromptSchema[]>([]);
+export const communityPromptsStore = writable<ShareablePromptSchema[]>([]);
 
 /**
  * Derived store to calculate the total count of community prompts.
@@ -39,7 +39,7 @@ export const communityPromptTotalCount = derived(
  * @param {Array<string>} tagsFilter - List of tags to filter prompts by.
  * @param {string} textFilter - Text to filter prompts by.
  * @param {string} sortOption - Sorting option to apply on filtered prompts.
- * @returns {SharablePromptSchema[]} Filtered and sorted prompts.
+ * @returns {ShareablePromptSchema[]} Filtered and sorted prompts.
  */
 export const filteredCommunityPromptsStore = derived(
 	[

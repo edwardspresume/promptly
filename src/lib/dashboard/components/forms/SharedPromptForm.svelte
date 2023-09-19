@@ -3,7 +3,7 @@
 
 	import { superForm } from 'sveltekit-superforms/client';
 
-	import type { SharablePromptSchema, SimplifiedTagSchema } from '$databaseDir/schema';
+	import type { ShareablePromptSchema, SimplifiedTagSchema } from '$databaseDir/schema';
 
 	import {
 		MAX_PROMPT_DESCRIPTION_LENGTH,
@@ -22,7 +22,7 @@
 	import Icon from '$globalComponents/Icon.svelte';
 
 	export let sharedPromptForm;
-	export let sharedPrompt: SharablePromptSchema;
+	export let sharedPrompt: ShareablePromptSchema;
 	export let toastNotificationTarget: ToastTarget;
 	export let taintedMessage: string | false | null | undefined = false;
 

@@ -56,7 +56,11 @@ export const actions: Actions = {
 					where: and(
 						ne(profilesTable.id, profileId),
 						eq(profilesTable.username, sanitizedData.username)
-					)
+					),
+
+					columns: {
+						username: true
+					}
 				});
 
 				if (isUsernameTaken) {

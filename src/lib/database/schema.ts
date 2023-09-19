@@ -167,3 +167,17 @@ export type ProfileSchema = Pick<
 export type PromptSchema = typeof promptsTable.$inferSelect;
 
 export type TagSchema = typeof tagsTable.$inferSelect;
+
+export type CommunityPromptSchema = {
+	title: PromptSchema['title'];
+	description: PromptSchema['description'];
+
+	profile: Pick<ProfileSchema, 'username' | 'avatarUrl'>;
+
+	tagPromptLink: {
+		tag: {
+			id: TagSchema['id'];
+			name: TagSchema['name'];
+		};
+	}[];
+};

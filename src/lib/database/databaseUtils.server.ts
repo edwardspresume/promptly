@@ -134,7 +134,6 @@ export async function getSharedPrompt(promptId: string) {
 				profile: {
 					columns: {
 						username: true,
-						fullName: true,
 						avatarUrl: true
 					}
 				},
@@ -153,6 +152,50 @@ export async function getSharedPrompt(promptId: string) {
 		});
 
 		throw new Error('Error fetching prompt');
+	}
+}
+
+/**
+ * Fetch the community prompts that are made public.
+ * @returns Returns the prompts or null if not found.
+ * @throws Will throw an error if the query fails.
+ */
+export async function getCommunityPrompts() {
+	try {
+		const promptsData = await drizzleClient.query.promptsTable.findMany({
+			where: eq(promptsTable.visibility, 'Public'),
+			orderBy: [desc(promptsTable.createdAt)],
+
+			columns: {
+				title: true,
+				description: true
+			},
+			with: {
+				profile: {
+					columns: {
+						username: true,
+						avatarUrl: true
+					}
+				},
+				tagPromptLink: {
+					columns: {},
+					with: {
+						tag: {
+							columns: {
+								id: true,
+								name: true
+							}
+						}
+					}
+				}
+			}
+		});
+
+		return promptsData ?? null;
+	} catch (error) {
+		logError(error, 'Error fetching community prompts');
+
+		throw new Error('Error fetching community prompts');
 	}
 }
 

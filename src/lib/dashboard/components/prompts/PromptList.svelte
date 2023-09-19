@@ -41,7 +41,7 @@
 	<ListStateNotifier {stateMessage} />
 {:else}
 	<ListCounter
-		itemLabel="userPrompt"
+		itemType="userPrompt"
 		totalItems={$userPromptTotalCount}
 		displayedItems={displayedPromptsCount}
 	/>

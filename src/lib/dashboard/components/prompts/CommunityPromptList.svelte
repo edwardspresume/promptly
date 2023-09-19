@@ -10,8 +10,8 @@
 	import CommunityPromptItem from './CommunityPromptItem.svelte';
 
 	const NO_PROMPTS_AVAILABLE_MESSAGE =
-		'No community prompts to display. <br> Check back later for new entries!';
-	const NO_MATCH_MESSAGE = "Couldn't find any matching prompts. <br> Try adjusting your filters.";
+		'No community prompts to display. Check back later for new entries!';
+	const NO_MATCH_MESSAGE = "Couldn't find any matching prompts. Try adjusting your filters.";
 
 	let stateMessage: string;
 	let promptListRef: HTMLElement;

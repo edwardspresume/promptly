@@ -1,44 +1,18 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	import { superForm } from 'sveltekit-superforms/client';
-
 	import { RoutePaths } from '$globalTypes';
 
-	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
-	import { notifyError } from '$dashboardUtils/toastUtils';
-
-	import {
-		MAX_PROMPT_DESCRIPTION_LENGTH,
-		MAX_PROMPT_TITLE_LENGTH,
-		PromptsValidationSchema
-	} from '$dashboardValidationSchemas/promptsValidationSchema';
-
-	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
-	import FavoriteToggleBtn from '$dashboardComponents/prompts/FavoriteToggleBtn.svelte';
-	import Icon from '$globalComponents/Icon.svelte';
-	import InputField from '$globalComponents/form/InputField.svelte';
-	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
-	import TextArea from '$globalComponents/form/TextArea.svelte';
+	import SharedPromptForm from '$dashboardComponents/forms/SharedPromptForm.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
 
 	export let data: PageData;
 
-	let { session, promptCreator, sharedTags, sharedPromptForm } = data;
+	let { session, sharedPrompt, sharedPromptForm } = data;
 
-	$: ({ session, promptCreator, sharedTags, sharedPromptForm } = data);
+	$: ({ session, sharedPrompt, sharedPromptForm } = data);
 
 	$: isLoggedIn = session?.user;
-
-	const { enhance, form, errors, delayed, message } = superForm(sharedPromptForm, {
-		validators: PromptsValidationSchema,
-
-		onUpdated: () => {
-			if (!$message) return;
-
-			notifyError($message.alertText, { target: 'baseModal' });
-		}
-	});
 </script>
 
 <main class="grid h-full py-4 place-items-center">
@@ -49,10 +23,10 @@
 		<header>
 			<h3 class="text-lg font-semibold leading-none">Shared Prompt</h3>
 			<p class="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
-				<span>Creator: {promptCreator.username}</span>
-				{#if promptCreator.avatarUrl}
+				<span>Creator: {sharedPrompt.profile.username ?? 'Anonymous'}</span>
+				{#if sharedPrompt.profile.avatarUrl}
 					<img
-						src={promptCreator.avatarUrl}
+						src={sharedPrompt.profile.avatarUrl}
 						alt="Prompt creator avatar"
 						class="rounded-full w-7 h-7"
 					/>
@@ -60,59 +34,12 @@
 			</p>
 		</header>
 
-		<form use:enhance method="POST" aria-label="Save shared prompt" class="grid gap-5 mt-6">
-			<InputField
-				type="text"
-				name="title"
-				label="Title"
-				placeholder="Enter prompt title"
-				bind:value={$form.title}
-				errorMessage={$errors.title}
-				maxlength={MAX_PROMPT_TITLE_LENGTH}
-			/>
-
-			<fieldset class="grid gap-1">
-				<TextArea
-					rows="8"
-					name="description"
-					label="Description"
-					textAreaId="promptDescription"
-					placeholder="Enter prompt description"
-					bind:value={$form.description}
-					errorMessage={$errors.description}
-					maxlength={MAX_PROMPT_DESCRIPTION_LENGTH}
-				/>
-			</fieldset>
-
-			<TagSelector
-				bind:sharedTags
-				label="Shared tag"
-				placeholder="Select a shared tag"
-				selectedTagIds={sharedTags.map((tag) => tag.id)}
-			/>
-
-			{#if $totalTagsCountStore}
-				<TagSelector label="My tag" />
-			{/if}
-
-			<footer class="flex items-center gap-2">
-				<FavoriteToggleBtn
-					isFavorited={$form.isFavorited}
-					iconSize={26}
-					buttonVariant="outline"
-					on:favoriteToggled={() => ($form.isFavorited = !$form.isFavorited)}
-					class="h-full p-2"
-				/>
-
-				<SubmitButton showSpinner={$delayed} disabled={$delayed || !isLoggedIn}>
-					{#if !isLoggedIn}
-						<Icon name="lock" />
-					{/if}
-
-					{$delayed ? 'Saving...' : 'Save Prompt'}
-				</SubmitButton>
-			</footer>
-		</form>
+		<SharedPromptForm
+			{sharedPrompt}
+			{sharedPromptForm}
+			toastNotificationTarget="dashboardLayout"
+			taintedMessage="Do you want to leave this page? Changes you made may not be saved"
+		/>
 	</article>
 
 	{#if !isLoggedIn}

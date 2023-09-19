@@ -52,17 +52,9 @@ export const load = (async ({ params }) => {
 			PromptsValidationSchema
 		);
 
-		// Extract the shared tags and creator details from the prompt data
-		const sharedTags = sharedPrompt.tagPromptLink.map((tagPromptLink) => tagPromptLink.tag);
-		const promptCreator = {
-			username: sharedPrompt.profile.username ?? 'Anonymous',
-			avatarUrl: sharedPrompt.profile.avatarUrl ?? null
-		};
-
 		return {
-			sharedPromptForm,
-			promptCreator,
-			sharedTags
+			sharedPrompt,
+			sharedPromptForm
 		};
 	} catch (err) {
 		throw error(404, 'Prompt not found');

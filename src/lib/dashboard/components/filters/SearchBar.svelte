@@ -18,12 +18,12 @@
 	 * based on the searchTargetType and searchQuery.
 	 */
 	$: {
-		if (searchTargetType === 'tag') {
+		if (searchTargetType === 'userTag') {
 			labelText = `Search tags by name`;
 			tagTextFilter.set(searchQuery);
 		}
 
-		if (searchTargetType === 'prompt') {
+		if (searchTargetType === 'userPrompt') {
 			labelText = `Search prompts by title`;
 			userPromptTextFilter.set(searchQuery);
 		}

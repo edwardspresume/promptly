@@ -41,12 +41,12 @@
 	<ListStateNotifier {stateMessage} />
 {:else}
 	<ListCounter
-		itemLabel="prompt"
+		itemLabel="userPrompt"
 		totalItems={$userPromptTotalCount}
 		displayedItems={displayedPromptsCount}
 	/>
 
-	<ListContainer itemType="prompt" bind:itemsListRef={promptListRef}>
+	<ListContainer itemType="userPrompt" bind:itemsListRef={promptListRef}>
 		{#each displayedPrompts as prompt (prompt.id)}
 			<PromptItem {prompt} on:editPrompt />
 		{/each}
@@ -54,7 +54,7 @@
 {/if}
 
 <ListControls
-	itemType="prompt"
+	itemType="userPrompt"
 	itemsListRef={promptListRef}
 	totalItems={$userPromptTotalCount}
 	displayedItems={displayedPromptsCount}

@@ -26,12 +26,12 @@
 	<ListStateNotifier {stateMessage} />
 {:else}
 	<ListCounter
-		itemLabel="tag"
+		itemType="userTag"
 		totalItems={$totalTagsCountStore}
 		displayedItems={displayedTagsCount}
 	/>
 
-	<ListContainer itemType="tag" bind:itemsListRef={tagListRef}>
+	<ListContainer itemType="userTag" bind:itemsListRef={tagListRef}>
 		{#each $filteredTagsStore as tag (tag.id)}
 			<TagItem {tag} on:editTag on:deleteTag />
 		{/each}

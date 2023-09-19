@@ -1,6 +1,6 @@
 import type { AlertMessage } from '$globalTypes';
 
-export type ItemType = 'prompt' | 'tag';
+export type ItemType = 'userTag' | 'userPrompt' | 'communityPrompt';
 
 /**
  * Interface for sortable item properties.

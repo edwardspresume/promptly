@@ -118,7 +118,7 @@
 <TabGroup on:tabItemClicked={({ detail }) => (selectedTabIndex = detail.selectedTabIndex)} />
 
 <nav aria-label="Filter prompts" class="flex flex-col gap-3 my-5 sm:flex-row">
-	<SearchBar searchTargetType="prompt" />
+	<SearchBar searchTargetType="userPrompt" />
 	<FilterDisplayButton on:showFilters={() => promptsFiltersModalRef.showModal()} />
 </nav>
 

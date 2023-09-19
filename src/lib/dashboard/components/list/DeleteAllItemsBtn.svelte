@@ -10,19 +10,20 @@
 
 	const dispatch = createEventDispatcher();
 
-	$: title = `Delete All ${itemType}s`;
+	let itemLabel = itemType === 'userPrompt' ? 'prompt' : 'tag';
+	let btnTitle = `Delete All ${itemLabel}s`;
 </script>
 
 <Button
 	size="sm"
 	type="button"
-	aria-label={title}
+	aria-label={btnTitle}
 	variant="destructive"
 	on:click={() => dispatch('deleteAllItems')}
 	class="flex gap-2 px-2 bg-destructive/10 text-muted-foreground hover:text-foreground"
 >
 	<Icon name="delete" size={20} />
 	<span>
-		{title}
+		{btnTitle}
 	</span>
 </Button>

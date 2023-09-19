@@ -50,7 +50,7 @@
 	</header>
 
 	<div class="grid gap-5">
-		<SortSelector itemType="prompt" sortOptions={promptSortOptions} bind:selectedSortOption />
+		<SortSelector itemType="userPrompt" sortOptions={promptSortOptions} bind:selectedSortOption />
 
 		{#if $totalTagsCountStore}
 			<TagSelector bind:selectedTagIds filterPromptBasedOnTags={true} />

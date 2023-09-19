@@ -97,8 +97,8 @@
 <h1 class="text-xl text-center mb-7">Tag Management</h1>
 
 <nav class="flex flex-col gap-3 mb-5 sm:flex-row">
-	<SearchBar searchTargetType="tag" />
-	<SortSelector itemType="tag" sortOptions={tagSortOptions} />
+	<SearchBar searchTargetType="userTag" />
+	<SortSelector itemType="userTag" sortOptions={tagSortOptions} />
 </nav>
 
 <TagList
@@ -108,7 +108,7 @@
 />
 
 <ListControls
-	itemType="tag"
+	itemType="userTag"
 	itemsListRef={tagListRef}
 	totalItems={$totalTagsCountStore}
 	displayedItems={$filteredTagsStore.length}

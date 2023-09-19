@@ -10,14 +10,15 @@
 
 	const dispatch = createEventDispatcher();
 
-	$: title = `Add ${itemType}`;
+	let itemLabel = itemType === 'userPrompt' ? 'prompt' : 'tag';
+	let btnTitle = `Add ${itemLabel}`;
 </script>
 
 <Button
-	{title}
 	size="icon"
 	type="button"
-	aria-label={title}
+	title={btnTitle}
+	aria-label={btnTitle}
 	on:click={() => dispatch('addItem')}
 	class="transition-all duration-500 ease-in-out rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 hover:scale-105"
 >

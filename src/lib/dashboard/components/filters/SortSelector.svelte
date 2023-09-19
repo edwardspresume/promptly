@@ -13,9 +13,9 @@
 	export let selectedSortOption: string = '';
 
 	function setSortingOrder() {
-		if (itemType === 'tag') tagSortingPreference.set(selectedSortOption);
+		if (itemType === 'userTag') tagSortingPreference.set(selectedSortOption);
 
-		if (itemType === 'prompt') userPromptSortOrder.set(selectedSortOption);
+		if (itemType === 'userPrompt') userPromptSortOrder.set(selectedSortOption);
 	}
 </script>
 

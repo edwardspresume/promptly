@@ -1,9 +1,15 @@
 <script lang="ts">
 	import type { ItemType } from '$dashboardTypes';
 
-	export let itemLabel: ItemType;
+	export let itemType: ItemType;
 	export let totalItems: number;
 	export let displayedItems: number;
+
+	let itemLabel: string = '';
+
+	if (itemType === 'userPrompt' || itemType === 'communityPrompt') itemLabel = 'prompt';
+
+	if (itemType === 'userTag') itemLabel = 'tag';
 
 	$: displayedItemName = totalItems === 1 ? itemLabel : `${itemLabel}s`;
 </script>

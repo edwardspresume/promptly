@@ -51,7 +51,7 @@ export const filteredCommunityPromptsStore = derived(
 	([prompts, tagsFilter, textFilter, sortOption]) => {
 		const normalizedFilterText = textFilter.toLowerCase();
 
-		// Apply the text filter to the prompts
+		// Filter the prompts based on the tags and text filters
 		const filteredPrompts = prompts.filter((prompt) => {
 			const matchesTags = tagsFilter.every(
 				(filterTag) => prompt.tagPromptLink?.some((promptTag) => promptTag.tag.name === filterTag)

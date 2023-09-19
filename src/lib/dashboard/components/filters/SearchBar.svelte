@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { ItemType } from '$dashboardTypes';
 
+	import { communityPromptTextFilter } from '$dashboardStores/communityPromptsStore';
 	import { userPromptTextFilter } from '$dashboardStores/promptsStore';
 	import { tagTextFilter } from '$dashboardStores/tagsStore';
 
@@ -26,6 +27,11 @@
 		if (searchTargetType === 'userPrompt') {
 			labelText = `Search prompts by title`;
 			userPromptTextFilter.set(searchQuery);
+		}
+
+		if (searchTargetType === 'communityPrompt') {
+			labelText = `Search community prompts by title`;
+			communityPromptTextFilter.set(searchQuery);
 		}
 	}
 </script>

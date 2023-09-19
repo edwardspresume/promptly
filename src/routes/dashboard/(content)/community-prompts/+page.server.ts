@@ -1,9 +1,9 @@
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 
 import { superValidate } from 'sveltekit-superforms/server';
 
 import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
-import { getCommunityPrompts } from '$databaseDir/databaseUtils.server';
+import { getCommunityPrompts, saveSharedPrompt } from '$databaseDir/databaseUtils.server';
 
 export const load = (async () => {
 	const communityPrompts = getCommunityPrompts();
@@ -12,3 +12,7 @@ export const load = (async () => {
 
 	return { communityPrompts, communityPromptForm };
 }) satisfies PageServerLoad;
+
+export const actions: Actions = {
+	default: async (event) => await saveSharedPrompt(event, false)
+};

@@ -35,8 +35,8 @@
 		</div>
 
 		{#if modalDescription}
-			<p class="mt-1 text-sm text-muted-foreground">
-				{modalDescription}
+			<p class="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
+				{@html modalDescription}
 			</p>
 		{/if}
 	</header>

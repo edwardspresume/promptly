@@ -14,7 +14,7 @@
 		<Icon name="info" />
 
 		<span>
-			{stateMessage}
+			{@html stateMessage}
 		</span>
 	</h3>
 </section>

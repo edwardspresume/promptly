@@ -1,4 +1,3 @@
-import { loadFlash } from 'sveltekit-flash-message/server';
 import { superValidate } from 'sveltekit-superforms/server';
 
 import type { LayoutServerLoad } from './$types';
@@ -6,7 +5,7 @@ import type { LayoutServerLoad } from './$types';
 import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
 import { getUserProfile, getUserTags } from '$databaseDir/databaseUtils.server';
 
-export const load = loadFlash(async ({ locals: { getSession } }) => {
+export const load = (async ({ locals: { getSession } }) => {
 	const userId = (await getSession())?.user.id;
 
 	const feedbackForm = superValidate(FeedbackValidationSchema);

@@ -12,7 +12,7 @@
 	export let isShowingOnlyFavorites: boolean = false;
 
 	const NO_PROMPTS_AVAILABLE_MESSAGE = 'No prompts available. Please add one';
-	const NO_MATCH_MESSAGE = 'No prompts match your filter criteria';
+	const NO_MATCH_MESSAGE = "Couldn't find any matching prompts. Try adjusting your filters.";
 	const NO_FAVORITE_PROMPTS_MESSAGE = 'Your favorites list is currently empty';
 
 	let stateMessage: string;

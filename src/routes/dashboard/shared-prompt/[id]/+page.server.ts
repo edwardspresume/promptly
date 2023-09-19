@@ -44,7 +44,7 @@ export const load = (async ({ params }) => {
 
 		if (!sharedPrompt) throw new Error('Prompt not found');
 
-		const sharedPromptForm = await superValidate(
+		const sharedPromptForm = superValidate(
 			{
 				title: sharedPrompt.title,
 				description: sharedPrompt.description

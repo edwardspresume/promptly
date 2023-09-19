@@ -168,7 +168,7 @@ export type PromptSchema = typeof promptsTable.$inferSelect;
 
 export type TagSchema = typeof tagsTable.$inferSelect;
 
-export type CommunityPromptSchema = {
+export type SharablePromptSchema = {
 	title: PromptSchema['title'];
 	description: PromptSchema['description'];
 

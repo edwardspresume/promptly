@@ -30,7 +30,7 @@
 		}
 
 		if (searchTargetType === 'communityPrompt') {
-			labelText = `Search community prompts by title`;
+			labelText = `Search prompts by title`;
 			communityPromptTextFilter.set(searchQuery);
 		}
 	}

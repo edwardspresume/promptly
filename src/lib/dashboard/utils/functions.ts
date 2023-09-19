@@ -1,4 +1,4 @@
-import { notifySuccess, removeLastToast } from './toastUtils';
+import { notifySuccess, removeLastToast, type ToastTarget } from './toastUtils';
 
 /**
  * Generates a new date string in ISO format.
@@ -77,13 +77,13 @@ export function onOutsideClick(targetNode: Node, callback: () => void) {
  *
  * @param {string} textToCopy - The text that should be copied to the clipboard.
  * @param {string} successMessage - The message to be displayed on successful copy operation.
- * @param {string} toastNotificationTarget - The target element where the notification should be displayed.
+ * @param {ToastTarget} toastNotificationTarget - The target element where the notification should be displayed.
  *
  */
 export function copyToClipboard(
 	textToCopy: string,
 	successMessage: string,
-	toastNotificationTarget: string
+	toastNotificationTarget: ToastTarget
 ) {
 	navigator.clipboard.writeText(textToCopy);
 	notifySuccess(successMessage, { target: toastNotificationTarget });

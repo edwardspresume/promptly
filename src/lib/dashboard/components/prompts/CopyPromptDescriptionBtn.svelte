@@ -2,6 +2,8 @@
 	import type { Variant } from '$globalComponents/ui/button';
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 
+	import type { ToastTarget } from '$dashboardUtils/toastUtils';
+
 	import { copyToClipboard } from '$dashboardUtils/functions';
 	import { cn } from '$globalUtils';
 
@@ -12,7 +14,7 @@
 	export { className as class };
 	export let iconSize: number = 22;
 	export let promptDescriptionToCopy: string;
-	export let toastNotificationTarget: string;
+	export let toastNotificationTarget: ToastTarget;
 	export let buttonVariant: Variant = 'ghost';
 
 	/**

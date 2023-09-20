@@ -36,8 +36,7 @@
 
 	$: {
 		isPromptFilterActive.set(
-			selectedTagIds.length > 0 ||
-				(selectedSortOption.length > 0 && selectedSortOption !== 'default:default')
+			selectedTagIds.length > 0 || (selectedSortOption.length > 0 && selectedSortOption !== '')
 		);
 	}
 

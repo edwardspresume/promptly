@@ -4,7 +4,7 @@
 	import { promptSortOptions } from '$dashboardData/SortOptions';
 
 	import { isPromptFilterActive } from '$dashboardStores/promptModalFilterStore';
-	import { userPromptSortOrder } from '$dashboardStores/promptsStore';
+	import { userPromptSortOrder } from '$dashboardStores/userPromptsStore';
 	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
 
 	import SortSelector from '$dashboardComponents/filters/SortSelector.svelte';

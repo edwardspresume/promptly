@@ -9,7 +9,7 @@
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import type { PromptSchema } from '$databaseDir/schema';
 
-	import { userPromptTotalCount, userPromptsStore } from '$dashboardStores/promptsStore';
+	import { userPromptTotalCount, userPromptsStore } from '$dashboardStores/userPromptsStore';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 

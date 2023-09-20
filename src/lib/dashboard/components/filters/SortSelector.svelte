@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ItemType, SortOption } from '$dashboardTypes';
 
-	import { userPromptSortOrder } from '$dashboardStores/promptsStore';
+	import { userPromptSortOrder } from '$dashboardStores/userPromptsStore';
 	import { tagSortingPreference } from '$dashboardStores/tagsStore';
 
 	export let itemType: ItemType;

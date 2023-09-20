@@ -16,7 +16,7 @@
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 
-	import { userPromptsStore } from '$dashboardStores/promptsStore';
+	import { userPromptsStore } from '$dashboardStores/userPromptsStore';
 	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
 
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';

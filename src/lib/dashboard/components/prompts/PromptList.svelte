@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PromptSchema } from '$databaseDir/schema';
 
-	import { filteredUserPromptsStore, userPromptTotalCount } from '$dashboardStores/promptsStore';
+	import { filteredUserPromptsStore, userPromptTotalCount } from '$dashboardStores/userPromptsStore';
 
 	import ListContainer from '$dashboardComponents/list/ListContainer.svelte';
 	import ListControls from '$dashboardComponents/list/ListControls.svelte';

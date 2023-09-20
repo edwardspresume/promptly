@@ -9,6 +9,7 @@
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
 	import SharedPromptForm from '$dashboardComponents/forms/SharedPromptForm.svelte';
 	import BaseModal from '$dashboardComponents/modals/BaseModal.svelte';
+	import PromptsFiltersModal from '$dashboardComponents/modals/PromptsFiltersModal.svelte';
 	import CommunityPromptList from '$dashboardComponents/prompts/CommunityPromptList.svelte';
 
 	export let data: PageData;
@@ -17,7 +18,11 @@
 
 	communityPromptsStore.set(communityPrompts);
 
+
+
+	let promptsFiltersModalRef: HTMLDialogElement;
 	let communityPromptViewModalRef: HTMLDialogElement;
+
 	let selectedPrompt: ShareablePromptSchema;
 	let selectPromptCreatorInfo: string = '';
 
@@ -55,10 +60,12 @@
 
 <nav class="flex flex-col gap-3 mb-5 sm:flex-row">
 	<SearchBar searchTargetType="communityPrompt" />
-	<FilterDisplayButton />
+	<FilterDisplayButton on:showFilters={() => promptsFiltersModalRef.showModal()} />
 </nav>
 
 <CommunityPromptList on:viewPrompt={handlePromptSelection} />
+
+<PromptsFiltersModal bind:promptsFiltersModalRef />
 
 <BaseModal
 	modalTitle="Shared Prompt"

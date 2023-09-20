@@ -35,6 +35,7 @@
 			bind:value={promptVisibility}
 			name="visibility"
 			id="promptVisibilitySelector"
+			disabled={!$page.data.session}
 			class="flex-grow capitalize"
 		>
 			{#each visibilityOptions as option}

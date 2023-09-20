@@ -32,9 +32,10 @@
 
 	<div class="flex gap-2">
 		<select
-			bind:value={promptVisibility}
 			name="visibility"
 			id="promptVisibilitySelector"
+			on:click|stopPropagation
+			bind:value={promptVisibility}
 			disabled={!$page.data.session}
 			class="flex-grow capitalize"
 		>

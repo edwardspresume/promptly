@@ -1,14 +1,16 @@
 <script lang="ts">
+	import type { ItemType } from '$dashboardTypes';
 	import type { SimplifiedTagSchema } from '$databaseDir/schema';
 
 	import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
 
-	import { userPromptSortOptions } from '$dashboardData/SortOptions';
+	import { communityPromptSortOptions, userPromptSortOptions } from '$dashboardData/SortOptions';
 
 	import { isPromptFilterActive } from '$dashboardStores/promptModalFilterStore';
 	import { userPromptSortOrder } from '$dashboardStores/userPromptsStore';
 	import { userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
 
+	import { page } from '$app/stores';
 	import SortSelector from '$dashboardComponents/filters/SortSelector.svelte';
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
@@ -18,8 +20,8 @@
 	export let sharedTags: SimplifiedTagSchema[] = [];
 
 	let selectedTagIds: string[] = [];
-
 	let selectedSortOption: string = '';
+	let itemType: ItemType = 'userPrompt';
 
 	/**
 	 * Clears all the selected filters
@@ -39,7 +41,13 @@
 		);
 	}
 
-	$: tagSelectorLabel = sharedTags.length > 0 ? 'Community tag' : 'Tag';
+	$: isCommunityPromptPage = $page.url.pathname === '/dashboard/community-prompts';
+
+	$: tagSelectorLabel = isCommunityPromptPage ? 'Community tag' : 'Tag';
+
+	$: sortOptions = isCommunityPromptPage ? communityPromptSortOptions : userPromptSortOptions;
+
+	$: itemType = isCommunityPromptPage ? 'communityPrompt' : 'userPrompt';
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -55,11 +63,7 @@
 	</header>
 
 	<div class="grid gap-5">
-		<SortSelector
-			itemType="userPrompt"
-			sortOptions={userPromptSortOptions}
-			bind:selectedSortOption
-		/>
+		<SortSelector {itemType} {sortOptions} bind:selectedSortOption />
 
 		{#if $userTagsTotalCountStore}
 			<TagSelector

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import type { ItemType, SortOption } from '$dashboardTypes';
 
-	import { userTagSortingPreference } from '$dashboardStores/userTagsStore';
+	import { communityPromptSortOrder } from '$dashboardStores/communityPromptsStore';
 	import { userPromptSortOrder } from '$dashboardStores/userPromptsStore';
+	import { userTagSortingPreference } from '$dashboardStores/userTagsStore';
 
 	export let itemType: ItemType;
 
@@ -16,6 +17,8 @@
 		if (itemType === 'userTag') userTagSortingPreference.set(selectedSortOption);
 
 		if (itemType === 'userPrompt') userPromptSortOrder.set(selectedSortOption);
+
+		if (itemType === 'communityPrompt') communityPromptSortOrder.set(selectedSortOption);
 	}
 </script>
 

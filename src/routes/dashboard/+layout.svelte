@@ -7,7 +7,7 @@
 
 	import DashboardHeader from '$dashboardComponents/dashboardHeader/DashboardHeader.svelte';
 	import FeedbackForm from '$dashboardComponents/forms/FeedbackForm.svelte';
-	import { allTagsStore } from '$dashboardStores/tagsStore';
+	import { userTagsStore } from '$dashboardStores/tagsStore';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 
 	export let data: LayoutData;
@@ -21,10 +21,10 @@
 	// Initialize or update user and store data based on the session.
 	$: if (session?.user) {
 		userProfileStore.set(userProfile ?? null);
-		allTagsStore.set(userTags ?? []);
+		userTagsStore.set(userTags ?? []);
 	} else {
 		userProfileStore.set(null);
-		allTagsStore.set(tagLocalStorageManager.getItems());
+		userTagsStore.set(tagLocalStorageManager.getItems());
 	}
 </script>
 

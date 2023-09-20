@@ -2,8 +2,8 @@
 	import type { ItemType } from '$dashboardTypes';
 
 	import { communityPromptTextFilter } from '$dashboardStores/communityPromptsStore';
+	import { userTagTextFilter } from '$dashboardStores/tagsStore';
 	import { userPromptTextFilter } from '$dashboardStores/userPromptsStore';
-	import { tagTextFilter } from '$dashboardStores/tagsStore';
 
 	import Label from '$globalComponents/ui/label/label.svelte';
 
@@ -21,7 +21,7 @@
 	$: {
 		if (searchTargetType === 'userTag') {
 			labelText = `Search tags by name`;
-			tagTextFilter.set(searchQuery);
+			userTagTextFilter.set(searchQuery);
 		}
 
 		if (searchTargetType === 'userPrompt') {

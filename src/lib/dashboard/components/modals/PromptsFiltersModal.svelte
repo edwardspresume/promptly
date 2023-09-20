@@ -4,8 +4,8 @@
 	import { promptSortOptions } from '$dashboardData/SortOptions';
 
 	import { isPromptFilterActive } from '$dashboardStores/promptModalFilterStore';
+	import { userTagsTotalCountStore } from '$dashboardStores/tagsStore';
 	import { userPromptSortOrder } from '$dashboardStores/userPromptsStore';
-	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
 
 	import SortSelector from '$dashboardComponents/filters/SortSelector.svelte';
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
@@ -52,7 +52,7 @@
 	<div class="grid gap-5">
 		<SortSelector itemType="userPrompt" sortOptions={promptSortOptions} bind:selectedSortOption />
 
-		{#if $totalTagsCountStore}
+		{#if $userTagsTotalCountStore}
 			<TagSelector bind:selectedTagIds filterPromptBasedOnTags={true} />
 		{/if}
 

@@ -8,22 +8,25 @@ import { sanitizeContentOnClient } from '$globalUtils';
 /**
  * Store for managing the text filter for displaying tags.
  */
-export const tagTextFilter = writable<string>('');
+export const userTagTextFilter = writable<string>('');
 
 /**
  * Store for managing the sorting preference for displaying tags.
  */
-export const tagSortingPreference = writable<string>('');
+export const userTagSortingPreference = writable<string>('');
 
 /**
  * Store to manage all tags.
  */
-export const allTagsStore = writable<TagSchema[]>([]);
+export const userTagsStore = writable<TagSchema[]>([]);
 
 /**
  * Derived store to calculate the total count of tags.
  */
-export const totalTagsCountStore = derived(allTagsStore, ($allTagsStore) => $allTagsStore.length);
+export const userTagsTotalCountStore = derived(
+	userTagsStore,
+	($allTagsStore) => $allTagsStore.length
+);
 
 /**
  * Derived store to manage filtered and sorted tags based on user preferences.
@@ -33,8 +36,8 @@ export const totalTagsCountStore = derived(allTagsStore, ($allTagsStore) => $all
  * @param {string} sortOption - Sorting option to apply on filtered tags.
  * @returns {Array<TagSchema>} Filtered and sorted tags.
  */
-export const filteredTagsStore = derived(
-	[allTagsStore, tagTextFilter, tagSortingPreference],
+export const filteredUserTagsStore = derived(
+	[userTagsStore, userTagTextFilter, userTagSortingPreference],
 	([tags, textFilter, sortOption]) => {
 		const normalizedFilterText = textFilter.toLowerCase();
 
@@ -58,7 +61,7 @@ export const doesTagExist = (tagName: string) => {
 
 	const normalizedName = sanitizedTagName.trim().toLowerCase();
 
-	const currentTags = get(allTagsStore);
+	const currentTags = get(userTagsStore);
 
 	return currentTags.some((tag) => tag.name.toLowerCase() === normalizedName);
 };

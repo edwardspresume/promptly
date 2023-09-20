@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 
 	import { tagSortOptions } from '$dashboardData/SortOptions';
-	import { filteredTagsStore, totalTagsCountStore } from '$dashboardStores/tagsStore';
+	import { filteredUserTagsStore, userTagsTotalCountStore } from '$dashboardStores/tagsStore';
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import type { TagSchema } from '$databaseDir/schema';
@@ -72,7 +72,7 @@
 	function handleDeleteAllTagsEvent() {
 		confirmationModalInfoForTagDeletion = {
 			heading: 'Delete All Tags',
-			subheading: `Are you sure you want to <span style="color: red;">permanently</span> delete all ${$totalTagsCountStore} of your tags? This action cannot be undone.`,
+			subheading: `Are you sure you want to <span style="color: red;">permanently</span> delete all ${$userTagsTotalCountStore} of your tags? This action cannot be undone.`,
 			callback: deleteAllTagsCallBack
 		};
 
@@ -110,8 +110,8 @@
 <ListControls
 	itemType="userTag"
 	itemsListRef={tagListRef}
-	totalItems={$totalTagsCountStore}
-	displayedItems={$filteredTagsStore.length}
+	totalItems={$userTagsTotalCountStore}
+	displayedItems={$filteredUserTagsStore.length}
 	on:addItem={() => tagCreationModalRef.showModal()}
 	on:deleteAllItems={handleDeleteAllTagsEvent}
 />

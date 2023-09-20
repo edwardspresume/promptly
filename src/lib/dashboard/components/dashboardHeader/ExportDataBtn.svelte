@@ -3,9 +3,9 @@
 
 	import { logError } from '$globalUtils';
 
-	import { userPromptsStore } from '$dashboardStores/userPromptsStore';
-	import { allTagsStore } from '$dashboardStores/tagsStore';
+	import { userTagsStore } from '$dashboardStores/tagsStore';
 	import { userProfileStore } from '$dashboardStores/userProfileStore';
+	import { userPromptsStore } from '$dashboardStores/userPromptsStore';
 
 	import Icon from '$globalComponents/Icon.svelte';
 
@@ -18,7 +18,7 @@
 		// Retrieve prompts and tags data from the store
 		const profile = get(userProfileStore);
 		const prompts = get(userPromptsStore);
-		const tags = get(allTagsStore);
+		const tags = get(userTagsStore);
 
 		// Combine the data into a single object
 		const exportData = {

@@ -17,7 +17,7 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 
 import { RoutePaths, type AlertMessage } from '$globalTypes';
 
-import { allTagsStore } from '$dashboardStores/tagsStore';
+import { userTagsStore } from '$dashboardStores/tagsStore';
 
 import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
 import { logError } from '$globalUtils';
@@ -262,7 +262,7 @@ const findTagByName = (tagName: string) => {
 	const normalizedName = tagName.trim().toLowerCase();
 
 	// Get the current tags from the store
-	const currentTags: schema.TagSchema[] = get(allTagsStore);
+	const currentTags: schema.TagSchema[] = get(userTagsStore);
 
 	// Check if the tag exists in the store
 	return currentTags.find((tag) => tag.name.toLowerCase() === normalizedName);

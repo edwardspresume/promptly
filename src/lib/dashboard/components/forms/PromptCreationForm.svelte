@@ -3,7 +3,7 @@
 
 	import { superForm } from 'sveltekit-superforms/client';
 
-	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
+	import { userTagsTotalCountStore } from '$dashboardStores/tagsStore';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 	import {
@@ -93,7 +93,7 @@
 			/>
 		</fieldset>
 
-		{#if $totalTagsCountStore}
+		{#if $userTagsTotalCountStore}
 			<TagSelector bind:selectedTagIds />
 		{/if}
 

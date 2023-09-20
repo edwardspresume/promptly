@@ -16,8 +16,8 @@
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 
+	import { userTagsTotalCountStore } from '$dashboardStores/tagsStore';
 	import { userPromptsStore } from '$dashboardStores/userPromptsStore';
-	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
 
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
 	import DeleteItemBtn from '$dashboardComponents/list/DeleteItemBtn.svelte';
@@ -264,7 +264,7 @@
 			/>
 		</fieldset>
 
-		{#if $totalTagsCountStore}
+		{#if $userTagsTotalCountStore}
 			<TagSelector bind:selectedTagIds />
 		{/if}
 

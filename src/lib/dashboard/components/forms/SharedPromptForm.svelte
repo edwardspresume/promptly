@@ -11,7 +11,7 @@
 		PromptsValidationSchema
 	} from '$dashboardValidationSchemas/promptsValidationSchema';
 
-	import { totalTagsCountStore } from '$dashboardStores/tagsStore';
+	import { userTagsTotalCountStore } from '$dashboardStores/tagsStore';
 	import { getNotificationFunction, type ToastTarget } from '$dashboardUtils/toastUtils';
 
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
@@ -86,7 +86,7 @@
 		/>
 	{/if}
 
-	{#if $totalTagsCountStore}
+	{#if $userTagsTotalCountStore}
 		<TagSelector label="My tag" />
 	{/if}
 

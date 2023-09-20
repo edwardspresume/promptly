@@ -3,8 +3,8 @@
 
 	import { onOutsideClick } from '$dashboardUtils/functions';
 
+	import { userTagsStore } from '$dashboardStores/tagsStore';
 	import { userPromptTagsFilter } from '$dashboardStores/userPromptsStore';
-	import { allTagsStore } from '$dashboardStores/tagsStore';
 
 	import Label from '$globalComponents/ui/label/label.svelte';
 	import SelectedTag from './SelectedTag.svelte';
@@ -35,7 +35,7 @@
 
 	// Selects the appropriate tags source based on the sharedTags length
 	$: allTags =
-		sharedTags.length > 0 ? sharedTags : $allTagsStore.map(({ id, name }) => ({ id, name }));
+		sharedTags.length > 0 ? sharedTags : $userTagsStore.map(({ id, name }) => ({ id, name }));
 
 	// Filter tags based on the tagSearchTerm value and exclude already selected tags
 	$: filteredTags = allTags.filter((tag) => {

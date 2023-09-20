@@ -10,7 +10,7 @@
 		TagValidationSchema
 	} from '$dashboardValidationSchemas/tagValidationSchema';
 
-	import { allTagsStore, doesTagExist } from '$dashboardStores/tagsStore';
+	import { doesTagExist, userTagsStore } from '$dashboardStores/tagsStore';
 
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
@@ -73,7 +73,7 @@
 				}
 
 				// Update 'selectedTagForEdit' with the new tag name after updating the tag
-				selectedTagForEdit = $allTagsStore.find((tag) => tag.id === id) ?? selectedTagForEdit;
+				selectedTagForEdit = $userTagsStore.find((tag) => tag.id === id) ?? selectedTagForEdit;
 			}
 
 			notificationFunction(alertText, { target: 'baseModal' });

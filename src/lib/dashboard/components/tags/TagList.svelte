@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { filteredTagsStore, totalTagsCountStore } from '$dashboardStores/tagsStore';
+	import { filteredUserTagsStore, userTagsTotalCountStore } from '$dashboardStores/tagsStore';
 
 	import ListContainer from '$dashboardComponents/list/ListContainer.svelte';
 	import ListCounter from '$dashboardComponents/list/ListCounter.svelte';
@@ -13,10 +13,10 @@
 
 	let stateMessage: string;
 
-	$: displayedTagsCount = $filteredTagsStore.length;
+	$: displayedTagsCount = $filteredUserTagsStore.length;
 
 	$: {
-		if ($totalTagsCountStore === 0) stateMessage = NO_TAGS_AVAILABLE_MESSAGE;
+		if ($userTagsTotalCountStore === 0) stateMessage = NO_TAGS_AVAILABLE_MESSAGE;
 		else if (displayedTagsCount === 0) stateMessage = NO_MATCH_MESSAGE;
 		else stateMessage = '';
 	}
@@ -27,12 +27,12 @@
 {:else}
 	<ListCounter
 		itemType="userTag"
-		totalItems={$totalTagsCountStore}
+		totalItems={$userTagsTotalCountStore}
 		displayedItems={displayedTagsCount}
 	/>
 
 	<ListContainer itemType="userTag" bind:itemsListRef={tagListRef}>
-		{#each $filteredTagsStore as tag (tag.id)}
+		{#each $filteredUserTagsStore as tag (tag.id)}
 			<TagItem {tag} on:editTag on:deleteTag />
 		{/each}
 	</ListContainer>

@@ -3,7 +3,7 @@
 
 	import { logError } from '$globalUtils';
 
-	import { userTagsStore } from '$dashboardStores/tagsStore';
+	import { userTagsStore } from '$dashboardStores/userTagsStore';
 	import { userProfileStore } from '$dashboardStores/userProfileStore';
 	import { userPromptsStore } from '$dashboardStores/userPromptsStore';
 

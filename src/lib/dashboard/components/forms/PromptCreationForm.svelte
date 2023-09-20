@@ -3,7 +3,7 @@
 
 	import { superForm } from 'sveltekit-superforms/client';
 
-	import { userTagsTotalCountStore } from '$dashboardStores/tagsStore';
+	import { userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 	import {

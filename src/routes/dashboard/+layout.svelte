@@ -7,7 +7,7 @@
 
 	import DashboardHeader from '$dashboardComponents/dashboardHeader/DashboardHeader.svelte';
 	import FeedbackForm from '$dashboardComponents/forms/FeedbackForm.svelte';
-	import { userTagsStore } from '$dashboardStores/tagsStore';
+	import { userTagsStore } from '$dashboardStores/userTagsStore';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 
 	export let data: LayoutData;

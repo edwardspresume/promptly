@@ -10,7 +10,7 @@
 		TagValidationSchema
 	} from '$dashboardValidationSchemas/tagValidationSchema';
 
-	import { doesTagExist, userTagsStore } from '$dashboardStores/tagsStore';
+	import { doesTagExist, userTagsStore } from '$dashboardStores/userTagsStore';
 
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';

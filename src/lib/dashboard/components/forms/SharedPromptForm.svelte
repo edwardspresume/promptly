@@ -11,7 +11,7 @@
 		PromptsValidationSchema
 	} from '$dashboardValidationSchemas/promptsValidationSchema';
 
-	import { userTagsTotalCountStore } from '$dashboardStores/tagsStore';
+	import { userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
 	import { getNotificationFunction, type ToastTarget } from '$dashboardUtils/toastUtils';
 
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';

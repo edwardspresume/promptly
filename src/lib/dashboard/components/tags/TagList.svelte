@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { filteredUserTagsStore, userTagsTotalCountStore } from '$dashboardStores/tagsStore';
+	import { filteredUserTagsStore, userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
 
 	import ListContainer from '$dashboardComponents/list/ListContainer.svelte';
 	import ListCounter from '$dashboardComponents/list/ListCounter.svelte';

@@ -17,7 +17,7 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 
 import { RoutePaths, type AlertMessage } from '$globalTypes';
 
-import { userTagsStore } from '$dashboardStores/tagsStore';
+import { userTagsStore } from '$dashboardStores/userTagsStore';
 
 import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
 import { logError } from '$globalUtils';

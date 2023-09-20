@@ -4,8 +4,8 @@ import { get, type Writable } from 'svelte/store';
 import defaultPrompts from '$dashboardData/defaultPrompts';
 import defaultTags from '$dashboardData/defaultTags';
 
-import { userTagsStore } from '$dashboardStores/tagsStore';
 import { userPromptsStore } from '$dashboardStores/userPromptsStore';
+import { userTagsStore } from '$dashboardStores/userTagsStore';
 
 import { logError, sanitizeContentOnClient } from '$globalUtils';
 import { createDate } from './functions';

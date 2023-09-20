@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 
 	import { tagSortOptions } from '$dashboardData/SortOptions';
-	import { filteredUserTagsStore, userTagsTotalCountStore } from '$dashboardStores/tagsStore';
+	import { filteredUserTagsStore, userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import type { TagSchema } from '$databaseDir/schema';

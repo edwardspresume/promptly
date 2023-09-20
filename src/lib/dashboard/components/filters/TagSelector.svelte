@@ -3,7 +3,7 @@
 
 	import { onOutsideClick } from '$dashboardUtils/functions';
 
-	import { userTagsStore } from '$dashboardStores/tagsStore';
+	import { userTagsStore } from '$dashboardStores/userTagsStore';
 	import { userPromptTagsFilter } from '$dashboardStores/userPromptsStore';
 
 	import Label from '$globalComponents/ui/label/label.svelte';

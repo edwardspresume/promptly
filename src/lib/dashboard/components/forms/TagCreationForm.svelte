@@ -3,7 +3,7 @@
 
 	import { page } from '$app/stores';
 
-	import { doesTagExist } from '$dashboardStores/tagsStore';
+	import { doesTagExist } from '$dashboardStores/userTagsStore';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 	import {

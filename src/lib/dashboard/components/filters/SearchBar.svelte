@@ -2,7 +2,7 @@
 	import type { ItemType } from '$dashboardTypes';
 
 	import { communityPromptTextFilter } from '$dashboardStores/communityPromptsStore';
-	import { userTagTextFilter } from '$dashboardStores/tagsStore';
+	import { userTagTextFilter } from '$dashboardStores/userTagsStore';
 	import { userPromptTextFilter } from '$dashboardStores/userPromptsStore';
 
 	import Label from '$globalComponents/ui/label/label.svelte';

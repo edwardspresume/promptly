@@ -185,7 +185,10 @@ export async function getPublicPrompts() {
 
 			columns: {
 				title: true,
-				description: true
+				description: true,
+                createdAt: true,
+                updatedAt: true,
+                
 			},
 			with: {
 				profile: {

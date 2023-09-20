@@ -172,6 +172,8 @@ export type SimplifiedTagSchema = Pick<TagSchema, 'id' | 'name'>;
 export type ShareablePromptSchema = {
 	title: PromptSchema['title'];
 	description: PromptSchema['description'];
+	createdAt: PromptSchema['createdAt'];
+	updatedAt: PromptSchema['updatedAt'];
 
 	profile: Pick<ProfileSchema, 'username' | 'avatarUrl'>;
 

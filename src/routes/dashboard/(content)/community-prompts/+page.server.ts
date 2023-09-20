@@ -6,11 +6,19 @@ import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsVali
 import { getPublicPrompts, saveSharedPrompt } from '$databaseDir/databaseUtils.server';
 
 export const load = (async () => {
-	const communityPrompts = getPublicPrompts();
+	const communityPrompts = await getPublicPrompts();
 
 	const communityPromptForm = superValidate(PromptsValidationSchema);
 
-	return { communityPrompts, communityPromptForm };
+	const tagMap = new Map();
+
+	communityPrompts.flatMap((prompt) =>
+		prompt.tagPromptLink.forEach((link) => tagMap.set(link.tag.name, link.tag))
+	);
+
+	const uniqueCommunityTags = [...tagMap.values()];
+
+	return { communityPrompts, uniqueCommunityTags, communityPromptForm };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

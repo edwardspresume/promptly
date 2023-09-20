@@ -1,11 +1,13 @@
 <script lang="ts">
+	import type { SimplifiedTagSchema } from '$databaseDir/schema';
+
 	import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
 
 	import { promptSortOptions } from '$dashboardData/SortOptions';
 
 	import { isPromptFilterActive } from '$dashboardStores/promptModalFilterStore';
-	import { userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
 	import { userPromptSortOrder } from '$dashboardStores/userPromptsStore';
+	import { userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
 
 	import SortSelector from '$dashboardComponents/filters/SortSelector.svelte';
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
@@ -13,6 +15,7 @@
 	import CloseModalBtn from './CloseModalBtn.svelte';
 
 	export let promptsFiltersModalRef: HTMLDialogElement;
+	export let sharedTags: SimplifiedTagSchema[] = [];
 
 	let selectedTagIds: string[] = [];
 
@@ -53,7 +56,12 @@
 		<SortSelector itemType="userPrompt" sortOptions={promptSortOptions} bind:selectedSortOption />
 
 		{#if $userTagsTotalCountStore}
-			<TagSelector bind:selectedTagIds filterPromptBasedOnTags={true} />
+			<TagSelector
+				{sharedTags}
+				bind:selectedTagIds
+				label="Community tag"
+				filterPromptBasedOnTags={true}
+			/>
 		{/if}
 
 		<Button type="button" on:click={clearFilters}>Clear Filters</Button>

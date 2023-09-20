@@ -3,8 +3,9 @@
 
 	import { onOutsideClick } from '$dashboardUtils/functions';
 
-	import { userTagsStore } from '$dashboardStores/userTagsStore';
+	import { communityPromptTagsFilter } from '$dashboardStores/communityPromptsStore';
 	import { userPromptTagsFilter } from '$dashboardStores/userPromptsStore';
+	import { userTagsStore } from '$dashboardStores/userTagsStore';
 
 	import Label from '$globalComponents/ui/label/label.svelte';
 	import SelectedTag from './SelectedTag.svelte';
@@ -104,7 +105,13 @@
 	$: tagCountLabel = `${selectedTags.length}/${allTags.length}`;
 
 	// Sets the tag filter in the prompts store when filterPromptBasedOnTags is true
-	$: if (filterPromptBasedOnTags && selectedTagIds) userPromptTagsFilter.set(selectedTagIds);
+	$: if (filterPromptBasedOnTags && selectedTagIds) {
+		(isSharedTag ? communityPromptTagsFilter : userPromptTagsFilter).set(
+			!isSharedTag
+				? selectedTagIds
+				: allTags.filter((tag) => selectedTagIds?.includes(tag.id)).map((tag) => tag.name)
+		);
+	}
 </script>
 
 <fieldset use:onOutsideClick={() => (isTagSelectionMenuOpen = false)} class="grid gap-1">

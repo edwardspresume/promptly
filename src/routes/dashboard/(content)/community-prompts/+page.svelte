@@ -14,11 +14,9 @@
 
 	export let data: PageData;
 
-	const { communityPrompts, communityPromptForm } = data;
+	const { communityPrompts, communityPromptForm, uniqueCommunityTags } = data;
 
 	communityPromptsStore.set(communityPrompts);
-
-
 
 	let promptsFiltersModalRef: HTMLDialogElement;
 	let communityPromptViewModalRef: HTMLDialogElement;
@@ -65,7 +63,7 @@
 
 <CommunityPromptList on:viewPrompt={handlePromptSelection} />
 
-<PromptsFiltersModal bind:promptsFiltersModalRef />
+<PromptsFiltersModal bind:promptsFiltersModalRef sharedTags={uniqueCommunityTags} />
 
 <BaseModal
 	modalTitle="Shared Prompt"

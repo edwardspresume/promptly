@@ -97,9 +97,7 @@
 			<TagSelector bind:selectedTagIds />
 		{/if}
 
-		{#if userSession}
-			<PromptVisibilitySelector promptId={$form.id} bind:promptVisibility={$form.visibility} />
-		{/if}
+		<PromptVisibilitySelector promptId={$form.id} bind:promptVisibility={$form.visibility} />
 
 		<footer class="flex items-center gap-2">
 			<FavoriteToggleBtn

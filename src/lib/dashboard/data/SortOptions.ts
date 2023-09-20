@@ -1,5 +1,10 @@
 import type { SortOption } from '$dashboardTypes';
 
+enum SortDirection {
+	ASCENDING = 'ascending',
+	DESCENDING = 'descending'
+}
+
 /**
  * Creates a sort option object.
  * @param {string} label - Label of the sort option
@@ -23,30 +28,36 @@ function createSortOption(
 
 // Array of sort options that are common to both tags and prompts
 const dateSortOptions = [
-	{ label: 'Created: Newest', field: 'createdAt', direction: 'descending' },
-	{ label: 'Created: Oldest', field: 'createdAt', direction: 'ascending' },
-	{ label: 'Updated: Newest', field: 'updatedAt', direction: 'descending' },
-	{ label: 'Updated: Oldest', field: 'updatedAt', direction: 'ascending' }
+	{ label: 'Created: Newest', field: 'createdAt', direction: SortDirection.DESCENDING },
+	{ label: 'Created: Oldest', field: 'createdAt', direction: SortDirection.ASCENDING },
+	{ label: 'Updated: Newest', field: 'updatedAt', direction: SortDirection.DESCENDING },
+	{ label: 'Updated: Oldest', field: 'updatedAt', direction: SortDirection.ASCENDING }
 ];
 
 // Generates and exports the list of tag sort options
 export const userTagSortOptions = [
-	{ label: 'Default', field: 'default', direction: 'default' },
-	{ label: 'Name: A-Z', field: 'name', direction: 'ascending' },
-	{ label: 'Name: Z-A', field: 'name', direction: 'descending' },
+	{ label: 'Name: A-Z', field: 'name', direction: SortDirection.ASCENDING },
+	{ label: 'Name: Z-A', field: 'name', direction: SortDirection.DESCENDING },
+
 	...dateSortOptions
 ].map(({ label, field, direction }) => createSortOption(label, 'Tag', field, direction));
 
 // Generates and exports the list of prompt sort options
 export const userPromptSortOptions = [
-	{ label: 'Default', field: 'default', direction: 'default' },
 	{
 		label: 'Favorites',
 		field: 'favoriteStatus',
-		direction: 'ascending'
+		direction: SortDirection.ASCENDING
 	},
-	{ label: 'Title: A-Z', field: 'title', direction: 'ascending' },
-	{ label: 'Title: Z-A', field: 'title', direction: 'descending' },
+	{ label: 'Title: A-Z', field: 'title', direction: SortDirection.ASCENDING },
+	{ label: 'Title: Z-A', field: 'title', direction: SortDirection.DESCENDING },
+
+	...dateSortOptions
+].map(({ label, field, direction }) => createSortOption(label, 'Prompt', field, direction));
+
+export const communityPromptSortOptions = [
+	{ label: 'Title: A-Z', field: 'title', direction: SortDirection.ASCENDING },
+	{ label: 'Title: Z-A', field: 'title', direction: SortDirection.DESCENDING },
 
 	...dateSortOptions
 ].map(({ label, field, direction }) => createSortOption(label, 'Prompt', field, direction));

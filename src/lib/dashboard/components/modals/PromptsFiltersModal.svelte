@@ -38,6 +38,8 @@
 				(selectedSortOption.length > 0 && selectedSortOption !== 'default:default')
 		);
 	}
+
+    $: tagSelectorLabel = sharedTags.length > 0 ? 'Community tag' : 'Tag';
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -59,7 +61,7 @@
 			<TagSelector
 				{sharedTags}
 				bind:selectedTagIds
-				label="Community tag"
+				label={tagSelectorLabel}
 				filterPromptBasedOnTags={true}
 			/>
 		{/if}

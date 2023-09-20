@@ -7,6 +7,7 @@
 	import ListContainer from '$dashboardComponents/list/ListContainer.svelte';
 	import ListCounter from '$dashboardComponents/list/ListCounter.svelte';
 	import ListStateNotifier from '$dashboardComponents/list/ListStateNotifier.svelte';
+	import ScrollToTopBtn from '$dashboardComponents/list/ScrollToTopBtn.svelte';
 	import CommunityPromptItem from './CommunityPromptItem.svelte';
 
 	const NO_PROMPTS_AVAILABLE_MESSAGE =
@@ -14,8 +15,8 @@
 	const NO_MATCH_MESSAGE = "Couldn't find any matching prompts. Try adjusting your filters.";
 
 	let stateMessage: string;
-	let promptListRef: HTMLElement;
 	let displayedPromptsCount: number;
+	let communityPromptsListRef: HTMLElement;
 
 	$: displayedPromptsCount = $filteredCommunityPromptsStore.length;
 
@@ -35,9 +36,13 @@
 		displayedItems={displayedPromptsCount}
 	/>
 
-	<ListContainer itemType="communityPrompt" bind:itemsListRef={promptListRef}>
+	<ListContainer itemType="communityPrompt" bind:itemsListRef={communityPromptsListRef}>
 		{#each $filteredCommunityPromptsStore as prompt (prompt)}
 			<CommunityPromptItem {prompt} on:viewPrompt />
 		{/each}
 	</ListContainer>
 {/if}
+
+<footer class="flex justify-end mt-4">
+	<ScrollToTopBtn itemType="communityPrompt" bind:itemsListRef={communityPromptsListRef} />
+</footer>

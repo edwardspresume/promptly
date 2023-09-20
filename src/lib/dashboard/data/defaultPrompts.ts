@@ -17,7 +17,7 @@ function createPrompt(title: string, description: string): PromptSchema {
 		description,
 		isFavorited: false,
 		tagIds: [],
-		visibility: 'private',
+		visibility: 'Private',
 		createdAt: currentDate,
 		updatedAt: currentDate
 	};

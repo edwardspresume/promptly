@@ -3,10 +3,10 @@ import type { Actions, PageServerLoad } from './$types';
 import { superValidate } from 'sveltekit-superforms/server';
 
 import { PromptsValidationSchema } from '$dashboardValidationSchemas/promptsValidationSchema';
-import { getCommunityPrompts, saveSharedPrompt } from '$databaseDir/databaseUtils.server';
+import { getPublicPrompts, saveSharedPrompt } from '$databaseDir/databaseUtils.server';
 
 export const load = (async () => {
-	const communityPrompts = getCommunityPrompts();
+	const communityPrompts = getPublicPrompts();
 
 	const communityPromptForm = superValidate(PromptsValidationSchema);
 

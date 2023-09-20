@@ -177,7 +177,7 @@ export async function getSharedPrompt(promptId: string) {
  * @returns Returns the prompts or null if not found.
  * @throws Will throw an error if the query fails.
  */
-export async function getCommunityPrompts() {
+export async function getPublicPrompts() {
 	try {
 		const promptsData = await drizzleClient.query.promptsTable.findMany({
 			where: eq(promptsTable.visibility, 'Public'),

@@ -177,7 +177,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      prompt_visibility: "Private" | "Public" | "Link-Only"
+      prompt_visibility: "Private" | "Public" | "Private-Link"
       subscription_plan: "free" | "pro" | "enterprise"
     }
     CompositeTypes: {

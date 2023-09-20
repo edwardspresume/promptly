@@ -13,7 +13,7 @@
 	export let promptId: PromptSchema['id'];
 	export let promptVisibility: PromptSchema['visibility'];
 
-	const visibilityOptions: PromptSchema['visibility'][] = ['Private', 'Public', 'Link-Only'];
+	const visibilityOptions: PromptSchema['visibility'][] = ['Private', 'Private-Link', 'Public'];
 
 	/**
 	 * Copies the prompt link to the clipboard and shows a notification.

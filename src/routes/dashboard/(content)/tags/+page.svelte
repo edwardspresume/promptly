@@ -98,7 +98,11 @@
 
 <nav class="flex flex-col gap-3 mb-5 sm:flex-row">
 	<SearchBar searchTargetType="userTag" />
-	<SortSelector itemType="userTag" sortOptions={userTagSortOptions} />
+	<SortSelector
+		itemType="userTag"
+		isLabelScreenReaderOnly={true}
+		sortOptions={userTagSortOptions}
+	/>
 </nav>
 
 <TagList

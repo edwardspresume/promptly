@@ -30,7 +30,7 @@ const dateSortOptions = [
 ];
 
 // Generates and exports the list of tag sort options
-export const tagSortOptions = [
+export const userTagSortOptions = [
 	{ label: 'Default', field: 'default', direction: 'default' },
 	{ label: 'Name: A-Z', field: 'name', direction: 'ascending' },
 	{ label: 'Name: Z-A', field: 'name', direction: 'descending' },
@@ -38,7 +38,7 @@ export const tagSortOptions = [
 ].map(({ label, field, direction }) => createSortOption(label, 'Tag', field, direction));
 
 // Generates and exports the list of prompt sort options
-export const promptSortOptions = [
+export const userPromptSortOptions = [
 	{ label: 'Default', field: 'default', direction: 'default' },
 	{
 		label: 'Favorites',

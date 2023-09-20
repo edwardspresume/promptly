@@ -3,7 +3,7 @@
 
 	import { closeDialogOnOutsideClick } from '$dashboardUtils/functions';
 
-	import { promptSortOptions } from '$dashboardData/SortOptions';
+	import { userPromptSortOptions } from '$dashboardData/SortOptions';
 
 	import { isPromptFilterActive } from '$dashboardStores/promptModalFilterStore';
 	import { userPromptSortOrder } from '$dashboardStores/userPromptsStore';
@@ -39,7 +39,7 @@
 		);
 	}
 
-    $: tagSelectorLabel = sharedTags.length > 0 ? 'Community tag' : 'Tag';
+	$: tagSelectorLabel = sharedTags.length > 0 ? 'Community tag' : 'Tag';
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -55,7 +55,11 @@
 	</header>
 
 	<div class="grid gap-5">
-		<SortSelector itemType="userPrompt" sortOptions={promptSortOptions} bind:selectedSortOption />
+		<SortSelector
+			itemType="userPrompt"
+			sortOptions={userPromptSortOptions}
+			bind:selectedSortOption
+		/>
 
 		{#if $userTagsTotalCountStore}
 			<TagSelector

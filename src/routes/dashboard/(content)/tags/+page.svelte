@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	import { tagSortOptions } from '$dashboardData/SortOptions';
+	import { userTagSortOptions } from '$dashboardData/SortOptions';
 	import { filteredUserTagsStore, userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
 	import type { ConfirmationInfo } from '$dashboardTypes';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
@@ -98,7 +98,7 @@
 
 <nav class="flex flex-col gap-3 mb-5 sm:flex-row">
 	<SearchBar searchTargetType="userTag" />
-	<SortSelector itemType="userTag" sortOptions={tagSortOptions} />
+	<SortSelector itemType="userTag" sortOptions={userTagSortOptions} />
 </nav>
 
 <TagList

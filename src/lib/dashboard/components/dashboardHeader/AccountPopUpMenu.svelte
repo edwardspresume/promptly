@@ -73,9 +73,12 @@
 				</button>
 			</DropdownMenu.Item>
 
-			<DropdownMenu.Item>
-				<ExportDataBtn />
-			</DropdownMenu.Item>
+			{#if !$userProfileStore}
+				<DropdownMenu.Item>
+					<ExportDataBtn />
+				</DropdownMenu.Item>
+			{/if}
+
 			<DropdownMenu.Separator />
 			<DropdownMenu.Item>
 				<LoginLogoutBtn />

@@ -4,11 +4,15 @@
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 
 	import { userProfileStore } from '$dashboardStores/userProfileStore';
+	import { userPromptsStore } from '$dashboardStores/userPromptsStore';
+	import { userTagsStore } from '$dashboardStores/userTagsStore';
+	import {
+		promptLocalStorageManager,
+		tagLocalStorageManager
+	} from '$dashboardUtils/localStorageManager';
 
 	import DashboardHeader from '$dashboardComponents/dashboardHeader/DashboardHeader.svelte';
 	import FeedbackForm from '$dashboardComponents/forms/FeedbackForm.svelte';
-	import { userTagsStore } from '$dashboardStores/userTagsStore';
-	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 
 	export let data: LayoutData;
 
@@ -19,12 +23,14 @@
 	$: ({ session, userProfile, userTags, feedbackForm } = data);
 
 	// Initialize or update user and store data based on the session.
-	$: if (session?.user) {
+
+	$: if (!session?.user) {
+		userProfileStore.set(null);
+		userPromptsStore.set(promptLocalStorageManager.getItems());
+		userTagsStore.set(tagLocalStorageManager.getItems());
+	} else {
 		userProfileStore.set(userProfile ?? null);
 		userTagsStore.set(userTags ?? []);
-	} else {
-		userProfileStore.set(null);
-		userTagsStore.set(tagLocalStorageManager.getItems());
 	}
 </script>
 

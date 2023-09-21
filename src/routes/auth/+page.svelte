@@ -17,7 +17,7 @@
 
 	<meta
 		name="description"
-		content="Join Promptly to save, manage, and test your AI prompts in one central location. Sign in or sign up now to get started."
+		content="Join Promptly to save, and manage your AI prompts in one central location. Sign in or sign up now to get started."
 	/>
 </svelte:head>
 

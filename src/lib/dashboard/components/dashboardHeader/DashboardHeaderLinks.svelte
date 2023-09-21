@@ -7,14 +7,13 @@
 </script>
 
 <ul class="flex">
-	{#each dashboardLinks.mainNav as { href, title, ariaLabel } (title)}
+	{#each dashboardLinks.mainNav as { href, title } (title)}
 		{@const isCurrentPage = $page.url.pathname === href ? 'page' : undefined}
 
 		<li>
 			<Button
 				{href}
 				variant="ghost"
-				aria-label={ariaLabel}
 				aria-current={isCurrentPage}
 				class="px-2 py-1 h-fit {isCurrentPage ? 'text-primary' : ''}"
 			>

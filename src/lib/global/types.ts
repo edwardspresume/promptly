@@ -26,6 +26,7 @@ export enum RoutePaths {
 	DASHBOARD_BILLING = '/dashboard/billing',
 	DASHBOARD_SHARED_PROMPT = '/dashboard/shared-prompt',
 	DASHBOARD_COMMUNITY_PROMPTS = '/dashboard/community-prompts',
+	DASHBOARD_PROMPT_TESTER = '/dashboard/prompt-tester',
 
 	MARKETING_LANDING = '/',
 	MARKETING_PRICING = '/pricing'
@@ -34,19 +35,12 @@ export enum RoutePaths {
 export type NavLink = {
 	href: string;
 	title: string;
-	ariaLabel: string;
 	isExternal?: boolean;
 };
 
-export const createNavLink = (
-	title: string,
-	href: string,
-	ariaLabel: string,
-	isExternal?: boolean
-): NavLink => ({
+export const createNavLink = (title: string, href: string, isExternal?: boolean): NavLink => ({
 	title,
 	href,
-	ariaLabel,
 	isExternal
 });
 

@@ -15,14 +15,13 @@
 
 	<nav class="pb-6 border-b md:border-0">
 		<ul class="flex gap-1 md:flex-col md:gap-2">
-			{#each dashboardLinks.accountNav as { title, href, ariaLabel } (title)}
+			{#each dashboardLinks.accountNav as { title, href } (title)}
 				{@const isCurrentPage = $page.url.pathname === href ? 'page' : undefined}
 
 				<li>
 					<Button
 						{href}
 						variant="link"
-						aria-label={ariaLabel}
 						aria-current={isCurrentPage}
 						class="w-full py-1 text-forground h-fit hover:bg-accent"
 					>

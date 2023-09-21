@@ -3,23 +3,15 @@
 
 	import { cn } from '$globalUtils';
 
-	import Button from '$globalComponents/ui/button/button.svelte';
-
 	let className: HTMLButtonAttributes['class'] = undefined;
 	export let href: string;
 	export let linkTitle: string;
 	export { className as class };
 </script>
 
-<Button
-	variant="link"
-	{href}
-	title={linkTitle}
-	aria-label={linkTitle}
-	class={cn('gap-1 px-2 text-3xl font-bold text-secondary-foreground logo ', className)}
->
+<a {href} title={linkTitle} aria-label={linkTitle} class={cn('text-3xl font-bold logo', className)}>
 	Promptly
-</Button>
+</a>
 
 <style>
 	@font-face {

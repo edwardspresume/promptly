@@ -15,7 +15,7 @@
 				{href}
 				variant="ghost"
 				aria-current={isCurrentPage}
-				class="px-2 py-1 h-fit {isCurrentPage ? 'text-primary' : ''}"
+				class="px-2 py-1 h-fit {isCurrentPage ? 'text-primary brightness-125' : ''}"
 			>
 				{title}
 			</Button>

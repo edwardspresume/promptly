@@ -6,7 +6,7 @@
 	import Button from '$globalComponents/ui/button/button.svelte';
 </script>
 
-<div class="grid gap-6 p-4 mx-auto mt-10 accountWrapper">
+<div class="grid w-full max-w-6xl gap-6 p-4 mx-auto mt-10 accountWrapper">
 	<header class="pb-6 border-b">
 		<h1 class="text-xl">Account</h1>
 

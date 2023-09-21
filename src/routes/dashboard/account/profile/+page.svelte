@@ -11,6 +11,7 @@
 
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 
+	import PageSubHeader from '$dashboardComponents/account/PageSubHeader.svelte';
 	import InputField from '$globalComponents/form/InputField.svelte';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
 
@@ -42,11 +43,7 @@
 	});
 </script>
 
-<header class="pb-4 mb-8 border-b">
-	<h2>Profile</h2>
-
-	<p class="text-muted-foreground">Your profile information</p>
-</header>
+<PageSubHeader heading="Profile" subheading="Your profile information" />
 
 <form use:enhance method="POST" aria-label="Profile form" class="grid gap-10">
 	<input type="hidden" name="id" value={$form.id} />

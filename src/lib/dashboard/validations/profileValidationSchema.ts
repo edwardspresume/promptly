@@ -6,9 +6,7 @@ export const MAX_USERNAME_LENGTH = 25;
 export const MAX_FULL_NAME_LENGTH = 50;
 
 export const ProfileValidationSchema = createInsertSchema(profilesTable, {
-	id: (schema) => schema.id.optional(),
-
-	email: (schema) => schema.email.email().transform((email) => email.trim()),
+	email: (schema) => schema.email.optional(),
 
 	username: (schema) =>
 		schema.username

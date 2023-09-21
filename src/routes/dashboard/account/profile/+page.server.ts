@@ -48,8 +48,8 @@ export const actions: Actions = {
 
 		try {
 			delete sanitizedData.id;
-			delete sanitizedData.email;
 			delete sanitizedData.avatarUrl;
+			delete sanitizedData.isActive;
 
 			if (profileId) {
 				const isUsernameTaken = await drizzleClient.query.profilesTable.findFirst({

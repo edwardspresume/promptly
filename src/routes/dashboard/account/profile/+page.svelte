@@ -51,17 +51,6 @@
 <form use:enhance method="POST" aria-label="Profile form" class="grid gap-10">
 	<input type="hidden" name="id" value={$form.id} />
 
-	<InputField
-		readonly
-		type="email"
-		name="email"
-		label="Email"
-		enterkeyhint="send"
-		placeholder="Enter email address"
-		bind:value={$form.email}
-		class="opacity-50 cursor-not-allowed"
-	/>
-
 	<fieldset>
 		<InputField
 			type="text"

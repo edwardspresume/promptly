@@ -12,6 +12,7 @@ const mainNav: NavLink[] = [
 ];
 
 const accountNav: NavLink[] = [
+	createNavLink('Main', RoutePaths.DASHBOARD_ACCOUNT),
 	createNavLink('Profile', RoutePaths.DASHBOARD_PROFILE),
 	createNavLink('Billing', RoutePaths.DASHBOARD_BILLING)
 ];

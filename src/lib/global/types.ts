@@ -22,10 +22,12 @@ export enum RoutePaths {
 
 	DASHBOARD_PROMPTS = '/dashboard/prompts',
 	DASHBOARD_TAGS = '/dashboard/tags',
-	DASHBOARD_PROFILE = '/dashboard/profile',
-	DASHBOARD_BILLING = '/dashboard/billing',
-	DASHBOARD_SHARED_PROMPT = '/dashboard/shared-prompt',
 	DASHBOARD_COMMUNITY_PROMPTS = '/dashboard/community-prompts',
+	DASHBOARD_SHARED_PROMPT = '/dashboard/shared-prompt',
+
+	DASHBOARD_ACCOUNT = '/dashboard/account',
+	DASHBOARD_PROFILE = '/dashboard/account/profile',
+	DASHBOARD_BILLING = '/dashboard/account/billing',
 
 	MARKETING_LANDING = '/',
 	MARKETING_PRICING = '/pricing'

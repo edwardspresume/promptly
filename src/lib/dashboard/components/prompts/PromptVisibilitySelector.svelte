@@ -49,7 +49,7 @@
 			{/each}
 		</select>
 
-		{#if persistedVisibility !== 'Private'}
+		{#if persistedVisibility && persistedVisibility !== 'Private'}
 			<Button
 				size="icon"
 				type="button"

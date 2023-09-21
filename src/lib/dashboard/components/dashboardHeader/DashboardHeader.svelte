@@ -11,9 +11,9 @@
 	<div class="container flex items-center justify-between max-w-6xl">
 		<nav class="flex items-center gap-2">
 			<Logo href={RoutePaths.DASHBOARD_PROMPTS} linkTitle="Go to prompts page" />
-
-			<DashboardHeaderLinks />
 		</nav>
+
+		<DashboardHeaderLinks />
 
 		<aside class="flex items-center gap-2">
 			<ThemeToggleBtn />

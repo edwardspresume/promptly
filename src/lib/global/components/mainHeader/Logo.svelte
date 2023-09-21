@@ -3,7 +3,6 @@
 
 	import { cn } from '$globalUtils';
 
-	import src from '$assets/logo.png';
 	import Button from '$globalComponents/ui/button/button.svelte';
 
 	let className: HTMLButtonAttributes['class'] = undefined;
@@ -17,9 +16,25 @@
 	{href}
 	title={linkTitle}
 	aria-label={linkTitle}
-	class={cn('gap-1 px-2 text-2xl font-bold text-secondary-foreground', className)}
+	class={cn('gap-1 px-2 text-3xl font-bold text-secondary-foreground logo ', className)}
 >
-	<img {src} alt="Promptly logo" title="Promptly" width="33" height="50" />
-
-	<span>Promptly</span>
+	Promptly
 </Button>
+
+<style>
+	@font-face {
+		font-family: 'croissantone';
+		font-weight: 400;
+		src:
+			url('/fonts/croissantone-regular-webfont.woff2') format('woff2'),
+			url('/fonts/croissantone-regular-webfont.woff') format('woff');
+	}
+
+	:global(.logo) {
+		letter-spacing: 2px;
+		font-family: 'croissantone', cursive;
+		background: linear-gradient(to right, #7a30f0, #a57de4);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+</style>

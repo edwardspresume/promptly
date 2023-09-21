@@ -44,3 +44,9 @@
 	aria-invalid={errorMessage ? 'true' : undefined}
 	{...$$restProps}
 />
+
+<style>
+	textarea {
+		form-sizing: normal;
+	}
+</style>

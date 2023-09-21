@@ -15,6 +15,11 @@
 	$: isLoggedIn = session?.user;
 </script>
 
+<svelte:head>
+	<title>Promptly | Shared Prompt</title>
+	<meta name="description" content="Shared Prompt Details" />
+</svelte:head>
+
 <main class="grid h-full py-4 place-items-center">
 	<article
 		aria-label="Shared Prompt Details"

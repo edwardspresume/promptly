@@ -8,8 +8,7 @@ type DashboardLinks = {
 const mainNav: NavLink[] = [
 	createNavLink('My Prompts', RoutePaths.DASHBOARD_PROMPTS),
 	createNavLink('My Tags', RoutePaths.DASHBOARD_TAGS),
-	createNavLink('Community Prompts', RoutePaths.DASHBOARD_COMMUNITY_PROMPTS),
-	createNavLink('Prompt Tester', RoutePaths.DASHBOARD_PROMPT_TESTER)
+	createNavLink('Community Prompts', RoutePaths.DASHBOARD_COMMUNITY_PROMPTS)
 ];
 
 const accountNav: NavLink[] = [

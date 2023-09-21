@@ -4,6 +4,7 @@
 	import type { PromptSchema } from '$databaseDir/schema';
 	import { RoutePaths } from '$globalTypes';
 
+	import { userPromptsStore } from '$dashboardStores/userPromptsStore';
 	import { copyToClipboard } from '$dashboardUtils/functions';
 
 	import Icon from '$globalComponents/Icon.svelte';
@@ -25,6 +26,8 @@
 
 		copyToClipboard(promptToShare, 'Prompt link copied!', 'baseModal');
 	}
+
+	$: persistedVisibility = $userPromptsStore.find((prompt) => prompt.id === promptId)?.visibility;
 </script>
 
 <fieldset class="grid gap-1">
@@ -46,7 +49,7 @@
 			{/each}
 		</select>
 
-		{#if promptVisibility !== 'Private'}
+		{#if persistedVisibility !== 'Private'}
 			<Button
 				size="icon"
 				type="button"

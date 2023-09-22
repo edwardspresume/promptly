@@ -6,13 +6,13 @@
 <button
 	aria-expanded={isMainNavMenuOpen}
 	aria-controls={ariaControls}
-	class="relative ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:hidden"
+	class="relative px-2 border rounded ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:hidden"
 >
 	<input
 		type="checkbox"
 		bind:checked={isMainNavMenuOpen}
 		aria-label="Navigation main Toggle"
-		class="absolute z-10 h-full opacity-0 cursor-pointer"
+		class="absolute top-0 left-0 z-10 h-full opacity-0 cursor-pointer"
 	/>
 
 	<div></div>
@@ -22,11 +22,11 @@
 
 <style lang="postcss">
 	button div {
-		@apply bg-foreground w-8 h-1 rounded transition-all duration-300 ease-in-out;
+		@apply bg-foreground w-7 h-[0.1875rem] rounded transition-all duration-300 ease-in-out;
 	}
 
 	button div:not(:last-of-type) {
-		@apply mb-[.32rem];
+		@apply mb-[0.375rem];
 	}
 
 	button input:checked ~ div:nth-child(3) {
@@ -34,10 +34,10 @@
 	}
 
 	button input:checked ~ div:nth-child(2) {
-		transform: translateY(9px) rotate(45deg);
+		transform: translateY(0.5625rem) rotate(45deg);
 	}
 
 	button input:checked ~ div:nth-child(4) {
-		transform: translateY(-9px) rotate(-45deg);
+		transform: translateY(-0.5625rem) rotate(-45deg);
 	}
 </style>

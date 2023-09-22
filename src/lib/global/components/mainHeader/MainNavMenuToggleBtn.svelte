@@ -1,11 +1,17 @@
 <script>
+	import { onNavigate } from '$app/navigation';
+
 	export let isMainNavMenuOpen = false;
-	export let ariaControls = 'menu';
+	export let ariaControls = 'main-nav';
+
+	onNavigate(() => {
+		isMainNavMenuOpen = false;
+	});
 </script>
 
 <button
-	aria-expanded={isMainNavMenuOpen}
 	aria-controls={ariaControls}
+	aria-expanded={isMainNavMenuOpen}
 	class="relative px-2 border rounded ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:hidden"
 >
 	<input

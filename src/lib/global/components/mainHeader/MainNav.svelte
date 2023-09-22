@@ -11,7 +11,7 @@
 	export { className as class };
 </script>
 
-<nav
+<nav id="main-nav"
 	class={cn(
 		`absolute top-0 left-0 px-2 mt-24 w-full h-full bg-background transition-transform duration-300 sm:relative sm:w-fit sm:-translate-x-0 sm:mt-0 sm:bg-transparent ${
 			!isMainNavMenuOpen ? '-translate-x-full' : ''

@@ -20,7 +20,7 @@
     "migration:check": "drizzle-kit check:pg"
   },
   "devDependencies": {
-    "@playwright/test": "^1.38.0",
+    "@playwright/test": "^1.38.1",
     "@sveltejs/adapter-auto": "^2.1.0",
     "@sveltejs/kit": "^1.25.0",
     "@total-typescript/ts-reset": "^0.5.1",
@@ -30,7 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "@zerodevx/svelte-toast": "^0.9.5",
-    "autoprefixer": "^10.4.15",
+    "autoprefixer": "^10.4.16",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^8.10.0",
@@ -57,7 +57,7 @@
   "dependencies": {
     "@fontsource/poppins": "^5.0.8",
     "@supabase/auth-helpers-sveltekit": "^0.10.3",
-    "@supabase/supabase-js": "^2.34.0",
+    "@supabase/supabase-js": "^2.36.0",
     "@tabler/icons-svelte": "^2.34.0",
     "@vercel/analytics": "^1.0.2",
     "bits-ui": "^0.0.27",
@@ -68,7 +68,7 @@
     "drizzle-zod": "^0.5.1",
     "lucide-svelte": "^0.268.0",
     "nodemailer": "^6.9.5",
-    "openai": "^4.8.0",
+    "openai": "^4.10.0",
     "postcss-preset-env": "^9.1.4",
     "postgres": "^3.3.5",
     "tailwind-merge": "^1.14.0",

@@ -2,6 +2,7 @@
 	import { RoutePaths } from '$globalTypes';
 
 	import Logo from '$globalComponents/mainHeader/Logo.svelte';
+	import MainNav from '$globalComponents/mainHeader/MainNav.svelte';
 	import MarketingHeaderLinks from './MarketingHeaderLinks.svelte';
 </script>
 
@@ -9,8 +10,8 @@
 	<div class="container flex items-center justify-between">
 		<Logo href={RoutePaths.MARKETING_LANDING} linkTitle="Go to homepage" />
 
-		<nav>
+		<MainNav>
 			<MarketingHeaderLinks />
-		</nav>
+		</MainNav>
 	</div>
 </header>

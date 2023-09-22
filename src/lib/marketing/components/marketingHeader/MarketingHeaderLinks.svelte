@@ -9,14 +9,14 @@
 	$: isLoggedIn = $page.data.session?.user;
 </script>
 
-<ul class="flex items-center gap-3 sm:gap-2">
+<ul class="grid items-center gap-5 sm:gap-2 sm:flex">
 	{#each marketingLinks as { title, href } (title)}
 		{#if !isLoggedIn || !href.includes('auth')}
 			<li>
 				<Button
 					{href}
-					variant={title === 'Dashboard' ? 'default' : 'ghost'}
-					class="px-2 py-1 h-fit"
+					variant={title === 'Dashboard' ? 'default' : 'outline'}
+					class="w-full sm:py-1 sm:px-2 sm:h-fit"
 				>
 					{title}
 				</Button>

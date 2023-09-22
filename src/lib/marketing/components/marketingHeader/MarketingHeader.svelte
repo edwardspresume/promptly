@@ -7,7 +7,7 @@
 </script>
 
 <header class="py-2 border-b">
-	<div class="container flex items-center justify-between">
+	<div class="container flex justify-between">
 		<Logo href={RoutePaths.MARKETING_LANDING} linkTitle="Go to homepage" />
 
 		<MainNav>

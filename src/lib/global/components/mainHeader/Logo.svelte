@@ -6,9 +6,10 @@
 	import Button from '$globalComponents/ui/button/button.svelte';
 
 	let className: HTMLButtonAttributes['class'] = undefined;
+	export { className as class };
+
 	export let href: string;
 	export let linkTitle: string;
-	export { className as class };
 </script>
 
 <Button
@@ -26,8 +27,8 @@
 		font-family: 'croissantone';
 		font-weight: 400;
 		src:
-			url('/fonts/croissantone-regular-webfont.woff2') format('woff2'),
-			url('/fonts/croissantone-regular-webfont.woff') format('woff');
+			url('/fonts/merienda-variablefont_wght-webfont.woff2') format('woff2'),
+			url('/fonts/merienda-variablefont_wght-webfont.woff') format('woff');
 	}
 
 	:global(.logo) {

@@ -1,9 +1,13 @@
 <script lang="ts">
+	import type { HTMLButtonAttributes } from 'svelte/elements';
+
+	import { cn } from '$globalUtils';
+
 	import Icon from '$globalComponents/Icon.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
 
-	// Property to control the visibility of the button text.
-	export let hideText: boolean = true;
+	let className: HTMLButtonAttributes['class'] = undefined;
+	export { className as class };
 
 	//  Variable to store the dark mode state.
 	let isDarkMode: boolean = false;
@@ -42,9 +46,7 @@
 	aria-label={buttonText}
 	aria-checked={isDarkMode}
 	on:click={toggleDarkMode}
+	class={cn(className)}
 >
 	<Icon name={iconName} />
-	{#if !hideText}
-		<span>{buttonText}</span>
-	{/if}
 </Button>

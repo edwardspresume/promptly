@@ -25,6 +25,6 @@
 	{/each}
 
 	<li>
-		<ThemeToggleBtn />
+		<ThemeToggleBtn class="hidden sm:flex" />
 	</li>
 </ul>

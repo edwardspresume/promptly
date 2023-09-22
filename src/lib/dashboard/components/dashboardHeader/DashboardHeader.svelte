@@ -12,9 +12,9 @@
 	<div class="container flex items-center justify-between max-w-6xl">
 		<Logo href={RoutePaths.DASHBOARD_PROMPTS} linkTitle="Go to prompts page" />
 
-		<DashboardHeaderLinks class="hidden sm:flex" />
+		<div class="flex gap-2 sm:items-center">
+			<DashboardHeaderLinks class="hidden sm:flex" />
 
-		<div class="flex gap-2">
 			<ThemeToggleBtn />
 
 			<AccountDropdownMenu />

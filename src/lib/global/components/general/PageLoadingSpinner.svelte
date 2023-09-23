@@ -11,7 +11,7 @@
 		clearTimeout(timeoutId);
 
 		if (isNavigating) {
-			timeoutId = setTimeout(() => (showSpinner = true), 1000);
+			timeoutId = setTimeout(() => (showSpinner = true), 500);
 		} else {
 			showSpinner = false;
 		}

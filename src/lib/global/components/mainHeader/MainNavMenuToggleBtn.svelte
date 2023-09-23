@@ -1,12 +1,10 @@
 <script>
-	import { onNavigate } from '$app/navigation';
+	import { navigating } from '$app/stores';
 
 	export let isMainNavMenuOpen = false;
 	export let ariaControls = 'main-nav';
 
-	onNavigate(() => {
-		isMainNavMenuOpen = false;
-	});
+	$: if ($navigating) isMainNavMenuOpen = false;
 </script>
 
 <button

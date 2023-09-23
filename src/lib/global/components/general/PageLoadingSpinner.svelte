@@ -11,7 +11,7 @@
 		clearTimeout(timeoutId);
 
 		if (isNavigating) {
-			timeoutId = setTimeout(() => (showSpinner = true), 500);
+			timeoutId = setTimeout(() => (showSpinner = true), 100);
 		} else {
 			showSpinner = false;
 		}
@@ -24,7 +24,7 @@
 </script>
 
 {#if showSpinner}
-	<div class="grid w-full h-full place-content-center">
+	<div class="grid h-full place-content-center">
 		<Icon name="loading-spinner" size={60} class="animate-spin" />
 	</div>
 {:else}

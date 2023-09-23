@@ -13,6 +13,7 @@
 
 	import DashboardHeader from '$dashboardComponents/dashboardHeader/DashboardHeader.svelte';
 	import FeedbackForm from '$dashboardComponents/forms/FeedbackForm.svelte';
+	import PageLoadingSpinner from '$globalComponents/general/PageLoadingSpinner.svelte';
 
 	export let data: LayoutData;
 
@@ -37,7 +38,9 @@
 <div class="h-[100dvh] flex flex-col">
 	<DashboardHeader />
 
-	<slot />
+	<PageLoadingSpinner>
+		<slot />
+	</PageLoadingSpinner>
 </div>
 
 <FeedbackForm feedbackFormData={feedbackForm} />

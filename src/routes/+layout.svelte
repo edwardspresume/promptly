@@ -1,11 +1,15 @@
 <script>
+	import { navigating } from '$app/stores';
+	import { onMount } from 'svelte';
+
 	import { dev } from '$app/environment';
 	import { inject } from '@vercel/analytics';
 
 	import { invalidate, onNavigate } from '$app/navigation';
-	import { onMount } from 'svelte';
 
 	import '$globalStyles';
+
+	import { isNavigatingStore } from '$globalStores/isNavigatingStore';
 
 	export let data;
 
@@ -14,6 +18,8 @@
 
 	// Update the data if it changes
 	$: ({ supabase, session } = data);
+
+	$: $isNavigatingStore = !!$navigating;
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;

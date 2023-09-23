@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { isNavigatingStore } from '$globalStores/isNavigatingStore';
 	import { onDestroy } from 'svelte';
+	import { fade } from 'svelte/transition';
 
 	import Icon from '$globalComponents/Icon.svelte';
 
@@ -24,8 +25,8 @@
 </script>
 
 {#if showSpinner}
-	<div class="grid h-full place-content-center">
-		<Icon name="loading-spinner" size={60} class="animate-spin" />
+	<div class="grid h-full place-content-center" transition:fade>
+		<Icon name="loading-spinner" size={90} class="-mt-40 animate-spin" />
 	</div>
 {:else}
 	<slot />

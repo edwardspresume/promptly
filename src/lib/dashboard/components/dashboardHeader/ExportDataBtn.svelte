@@ -1,76 +1,19 @@
-<script context="module" lang="ts">
-	import { get } from 'svelte/store';
-
-	import { logError } from '$globalUtils';
-
-	import { userTagsStore } from '$dashboardStores/userTagsStore';
-	import { userProfileStore } from '$dashboardStores/userProfileStore';
+<script lang="ts">
 	import { userPromptsStore } from '$dashboardStores/userPromptsStore';
+	import { userTagsStore } from '$dashboardStores/userTagsStore';
+	import { exportUserData } from '$dashboardUtils/exportUserData';
 
 	import Icon from '$globalComponents/Icon.svelte';
 
-	/**
-	 * Function to prepare data for export, creating a downloadable JSON file
-	 * containing data from the userProfile, prompts and tags stores.
-	 * @returns {string} downloadUrl - The URL of the downloadable JSON file
-	 */
-	export function prepareDataForExport() {
-		// Retrieve prompts and tags data from the store
-		const profile = get(userProfileStore);
-		const prompts = get(userPromptsStore);
-		const tags = get(userTagsStore);
-
-		// Combine the data into a single object
-		const exportData = {
-			...(profile && { profile }),
-			prompts,
-			tags
-		};
-
-		// Create a Blob object from the JSON string
-		const exportBlob = new Blob([JSON.stringify(exportData)], {
-			type: 'application/json'
-		});
-
-		// Create a URL for the Blob object
-		const downloadUrl = URL.createObjectURL(exportBlob);
-
-		return downloadUrl;
-	}
-
-	/**
-	 * Function to handle the download of exported data.
-	 * @param {string} url - The URL of the exported data
-	 */
-	export function downloadData(url: string) {
-		// Create a temporary downloadable link and click it programmatically
-		const downloadLink = document.createElement('a');
-		downloadLink.href = url;
-		downloadLink.download = 'promptly-data.json';
-		downloadLink.setAttribute('aria-hidden', 'true');
-		document.body.appendChild(downloadLink);
-		downloadLink.click();
-		if (process.env.NODE_ENV !== 'test') {
-			document.body.removeChild(downloadLink);
-		}
-	}
-
-	/**
-	 * Function to handle the full process of exporting prompts and tags data.
-	 */
-	export function exportData() {
-		try {
-			const url = prepareDataForExport();
-			downloadData(url);
-		} catch (error) {
-			logError(error, 'Data export');
-		}
-	}
+	const userData = {
+		prompts: $userPromptsStore,
+		tags: $userTagsStore
+	};
 </script>
 
 <button
 	type="button"
-	on:click={exportData}
+	on:click={() => exportUserData(userData)}
 	title="Export prompts and tags data"
 	aria-label="Export prompts and tags data"
 >

@@ -1,5 +1,11 @@
 import type { PageServerLoad } from './$types';
 
-export const load = (async () => {
-	return {};
+import { getUserPrompts } from '$databaseDir/databaseUtils.server';
+
+export const load = (async ({ parent }) => {
+	const { session } = await parent();
+
+	const userPrompts = getUserPrompts(session?.user.id);
+
+	return { userPrompts };
 }) satisfies PageServerLoad;

@@ -1,7 +1,9 @@
 import { relations } from 'drizzle-orm';
 import {
 	boolean,
+	jsonb,
 	pgEnum,
+	pgSchema,
 	pgTable,
 	primaryKey,
 	text,
@@ -32,6 +34,37 @@ export const codeChallengeMethod = pgEnum('code_challenge_method', ['s256', 'pla
 export const subscriptionPlan = pgEnum('subscription_plan', ['free', 'pro', 'enterprise']);
 export const promptVisibility = pgEnum('prompt_visibility', ['Private', 'Public', 'Private-Link']);
 
+export const stripe = pgSchema('stripe');
+
+export const customers = stripe.table('customers', {
+	id: text('id'),
+	email: text('email'),
+	name: text('name'),
+	description: text('description'),
+	created: timestamp('created', { mode: 'string' }),
+	attrs: jsonb('attrs')
+});
+
+export const products = stripe.table('products', {
+	id: text('id'),
+	name: text('name'),
+	active: boolean('active'),
+	defaultPrice: text('default_price'),
+	description: text('description'),
+	created: timestamp('created', { mode: 'string' }),
+	updated: timestamp('updated', { mode: 'string' }),
+	attrs: jsonb('attrs')
+});
+
+export const subscriptions = stripe.table('subscriptions', {
+	id: text('id'),
+	customer: text('customer'),
+	currency: text('currency'),
+	currentPeriodStart: timestamp('current_period_start', { mode: 'string' }),
+	currentPeriodEnd: timestamp('current_period_end', { mode: 'string' }),
+	attrs: jsonb('attrs')
+});
+
 export const profilesTable = pgTable(
 	'profiles_table',
 	{
@@ -40,7 +73,6 @@ export const profilesTable = pgTable(
 		email: varchar('email').notNull(),
 		fullName: text('full_name'),
 		avatarUrl: text('avatar_url'),
-		isActive: boolean('is_active').default(true).notNull(),
 		subscriptionPlan: subscriptionPlan('subscription_plan').default('free').notNull(),
 		lastLogin: timestamp('last_login', { withTimezone: true, mode: 'string' })
 			.defaultNow()
@@ -50,7 +82,8 @@ export const profilesTable = pgTable(
 			.notNull(),
 		updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' })
 			.defaultNow()
-			.notNull()
+			.notNull(),
+		stripeCustomerId: text('stripe_customer_id')
 	},
 	(table) => {
 		return {

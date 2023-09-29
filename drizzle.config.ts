@@ -6,6 +6,7 @@ dotenv.config();
 export default {
 	schema: 'src/lib/database/schema.ts',
 	out: './drizzle',
+	schemaFilter: ['public', 'stripe'],
 	driver: 'pg',
 	verbose: true,
 	strict: true,

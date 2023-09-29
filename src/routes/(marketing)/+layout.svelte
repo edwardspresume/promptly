@@ -8,9 +8,7 @@
 
 	<PageLoadingSpinner>
 		<main class="flex-1">
-			<div class="container grid items-center h-full">
-				<slot />
-			</div>
+			<slot />
 		</main>
 
 		<footer>

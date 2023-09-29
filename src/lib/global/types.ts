@@ -48,3 +48,13 @@ export const createNavLink = (title: string, href: string, isExternal?: boolean)
 export type Prettify<T> = {
 	[K in keyof T]: T[K];
 } & Record<string, never>;
+
+export enum PlanType {
+	FREE = 'FREE',
+	PRO = 'PRO'
+}
+
+export type PlanFeature = {
+	description: string;
+	availability: PlanType;
+};

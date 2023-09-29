@@ -13,7 +13,7 @@
 		<p>{$page.error?.message}</p>
 
 		<div class="flex gap-2">
-			<Button href={RoutePaths.AUTH}>Log in</Button>
+			<Button href={RoutePaths.SIGNIN}>Log in</Button>
 
 			<Button href={RoutePaths.SIGNUP}>Sign up</Button>
 		</div>

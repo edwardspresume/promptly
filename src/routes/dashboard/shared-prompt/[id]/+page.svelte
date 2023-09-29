@@ -49,7 +49,7 @@
 
 	{#if !isLoggedIn}
 		<p class="self-start italic font-medium text-center text-accent-foreground">
-			<Button variant="link" href={RoutePaths.AUTH} class="p-0">Sign in</Button> to save this prompt
+			<Button variant="link" href={RoutePaths.SIGNIN} class="p-0">Sign in</Button> to save this prompt
 			to your account
 		</p>
 	{/if}

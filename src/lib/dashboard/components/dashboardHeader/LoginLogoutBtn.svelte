@@ -23,7 +23,7 @@
 		<span>Logout</span>
 	</button>
 {:else}
-	<a href={RoutePaths.AUTH} aria-label="Go to the sign in page">
+	<a href={RoutePaths.SIGNIN} aria-label="Go to the sign in page">
 		<Icon name="login" />
 		<span>Log in</span>
 	</a>

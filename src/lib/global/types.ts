@@ -17,7 +17,7 @@ export type EnterKeyHint =
 	| undefined;
 
 export enum RoutePaths {
-	AUTH = '/auth',
+	SIGNIN = '/auth',
 	SIGNUP = '/auth?signup=true',
 
 	DASHBOARD_PROMPTS = '/dashboard/prompts',

@@ -3,11 +3,11 @@
 </script>
 
 <svelte:head>
-	<title>Save, find, and Manage Your AI Prompts with Promptly</title>
+	<title>Save, find, share, and Manage Your AI Prompts with Promptly</title>
 
 	<meta
 		name="description"
-		content="Welcome to Promptly, the central place to save, find, and manage your AI prompts. Discover our powerful tools and features to improve your AI prompting process"
+		content="Welcome to Promptly, the central place to save, find, share, and manage your AI prompts. Discover our powerful tools and features to improve your AI prompting process"
 	/>
 </svelte:head>
 
@@ -22,7 +22,7 @@
 	</h1>
 
 	<p class="mt-6 mb-12 text-lg text-muted-foreground">
-		Central place to save, find, and manage your prompts.
+		Central place to save, find, share, and manage your prompts.
 	</p>
 
 	<DashboardLink text="Try it out" class="text-xl" />

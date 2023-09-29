@@ -11,21 +11,19 @@
 	/>
 </svelte:head>
 
-<div class="container grid items-center h-full">
-	<section class="text-center">
-		<h1 class="text-4xl md:text-8xl">
-			Prompt <span class="text-primary">AI</span>
-			<br />
+<div class="text-center">
+	<h1 class="text-4xl sm:text-8xl">
+		Prompt <span class="text-primary">AI</span>
+		<br />
 
-			<span>
-				The <span class="underline text-primary">Simple</span> Way
-			</span>
-		</h1>
+		<span>
+			The <span class="underline text-primary">Simple</span> Way
+		</span>
+	</h1>
 
-		<p class="mt-6 mb-12 text-lg text-muted-foreground">
-			Central place to save, find, share, and manage your prompts.
-		</p>
+	<p class="mt-6 mb-12 text-lg text-muted-foreground">
+		Central place to save, find, share, and manage your prompts.
+	</p>
 
-		<DashboardLink text="Try it out" class="text-xl" />
-	</section>
+	<DashboardLink text="Try it out" class="text-xl" />
 </div>

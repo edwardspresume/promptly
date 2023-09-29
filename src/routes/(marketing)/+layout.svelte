@@ -7,14 +7,14 @@
 	<MarketingHeader />
 
 	<PageLoadingSpinner>
-		<main class="flex-1">
+		<main class="container grid flex-1 px-4 place-items-center">
 			<slot />
 		</main>
-
-		<footer>
-			<div class="container py-2">
-				<p class="text-muted-foreground">&copy; Promptly</p>
-			</div>
-		</footer>
 	</PageLoadingSpinner>
+
+	<footer>
+		<div class="container py-2">
+			<p class="text-muted-foreground">&copy; Promptly</p>
+		</div>
+	</footer>
 </div>

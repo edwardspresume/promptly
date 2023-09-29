@@ -24,7 +24,7 @@
 
 	<Button
 		variant={planType === PlanType.PRO ? 'default' : 'outline'}
-		href={planType === PlanType.PRO ? '#' : RoutePaths.DASHBOARD_PROMPTS}
+		href={planType === PlanType.PRO ? RoutePaths.SIGNUP : RoutePaths.DASHBOARD_PROMPTS}
 		class="w-full"
 	>
 		{planType === PlanType.PRO ? 'Start Free Trial' : 'Start Now'}

@@ -11,7 +11,7 @@
 	const proPlan = $page.data.subscriptionPlans[0];
 </script>
 
-<div class="p-4 border rounded-md {planType === PlanType.PRO ? 'border-primary border-2' : ''}">
+<div class="p-4 border rounded-md shadow-md {planType === PlanType.PRO ? 'border-primary border-2' : ''}">
 	<header class="grid gap-2">
 		<h2 class="text-2xl font-bold capitalize">{planType.toLowerCase()}</h2>
 		<p class="text-xl">

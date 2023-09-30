@@ -1,9 +1,9 @@
 import type { PageServerLoad } from './$types';
 
-import { stripe } from '$lib/global/stripe.server';
+import { stripeClient } from '$lib/global/stripe.server';
 
 export const load = (async () => {
-	const { data: prices } = await stripe.prices.list();
+	const { data: prices } = await stripeClient.prices.list();
 
 	const subscriptionPlans = [];
 

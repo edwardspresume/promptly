@@ -36,35 +36,6 @@ export const promptVisibility = pgEnum('prompt_visibility', ['Private', 'Public'
 
 export const stripe = pgSchema('stripe');
 
-export const customers = stripe.table('customers', {
-	id: text('id'),
-	email: text('email'),
-	name: text('name'),
-	description: text('description'),
-	created: timestamp('created', { mode: 'string' }),
-	attrs: jsonb('attrs')
-});
-
-export const products = stripe.table('products', {
-	id: text('id'),
-	name: text('name'),
-	active: boolean('active'),
-	defaultPrice: text('default_price'),
-	description: text('description'),
-	created: timestamp('created', { mode: 'string' }),
-	updated: timestamp('updated', { mode: 'string' }),
-	attrs: jsonb('attrs')
-});
-
-export const subscriptions = stripe.table('subscriptions', {
-	id: text('id'),
-	customer: text('customer'),
-	currency: text('currency'),
-	currentPeriodStart: timestamp('current_period_start', { mode: 'string' }),
-	currentPeriodEnd: timestamp('current_period_end', { mode: 'string' }),
-	attrs: jsonb('attrs')
-});
-
 export const profilesTable = pgTable(
 	'profiles_table',
 	{
@@ -128,6 +99,35 @@ export const tagsTable = pgTable(
 		};
 	}
 );
+
+export const customersTable = stripe.table('customers_table', {
+	id: text('id'),
+	email: text('email'),
+	name: text('name'),
+	created: timestamp('created', { mode: 'string' }),
+	attrs: jsonb('attrs')
+});
+
+export const subscriptionsTable = stripe.table('subscriptions_table', {
+	id: text('id'),
+	customer: text('customer'),
+	currency: text('currency'),
+	currentPeriodStart: timestamp('current_period_start', { mode: 'string' }),
+	currentPeriodEnd: timestamp('current_period_end', { mode: 'string' }),
+	attrs: jsonb('attrs'),
+	status: text('status')
+});
+
+export const productsTable = stripe.table('products_table', {
+	id: text('id'),
+	name: text('name'),
+	active: boolean('active'),
+	defaultPrice: text('default_price'),
+	created: timestamp('created', { mode: 'string' }),
+	updated: timestamp('updated', { mode: 'string' }),
+	attrs: jsonb('attrs'),
+	description: text('description')
+});
 
 export const tagPromptLinkTable = pgTable(
 	'tag_prompt_link_table',

@@ -2,8 +2,15 @@
 	import { page } from '$app/stores';
 
 	import { dashboardLinks } from '$dashboardNavLinks';
+	import { userProfileStore } from '$dashboardStores/userProfileStore';
+	import { ALLOWED_SUBSCRIPTION_STATUSES } from '$dashboardTypes';
 
 	import Button from '$globalComponents/ui/button/button.svelte';
+	import { RoutePaths } from '$globalTypes';
+
+	$: onlyShowMainLink = !ALLOWED_SUBSCRIPTION_STATUSES.includes(
+		$userProfileStore?.subscriptionStatus ?? ''
+	);
 </script>
 
 <div class="grid w-full max-w-6xl gap-6 p-4 mx-auto mt-10 accountWrapper">
@@ -17,19 +24,20 @@
 		<ul class="flex gap-1 md:flex-col md:gap-2">
 			{#each dashboardLinks.accountNav as { title, href } (title)}
 				{@const isCurrentPage = $page.url.pathname === href ? 'page' : undefined}
-
-				<li>
-					<Button
-						{href}
-						variant="link"
-						aria-current={isCurrentPage}
-						class="w-full py-1 text-forground h-fit hover:bg-accent"
-					>
-						<span>
-							{title}
-						</span>
-					</Button>
-				</li>
+				{#if !onlyShowMainLink || href === RoutePaths.DASHBOARD_ACCOUNT}
+					<li>
+						<Button
+							{href}
+							variant="link"
+							aria-current={isCurrentPage}
+							class="w-full py-1 text-forground h-fit hover:bg-accent"
+						>
+							<span>
+								{title}
+							</span>
+						</Button>
+					</li>
+				{/if}
 			{/each}
 		</ul>
 	</nav>

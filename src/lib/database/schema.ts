@@ -33,6 +33,17 @@ export const aalLevel = pgEnum('aal_level', ['aal1', 'aal2', 'aal3']);
 export const codeChallengeMethod = pgEnum('code_challenge_method', ['s256', 'plain']);
 export const subscriptionPlan = pgEnum('subscription_plan', ['free', 'pro', 'enterprise']);
 export const promptVisibility = pgEnum('prompt_visibility', ['Private', 'Public', 'Private-Link']);
+export const subscriptionStatus = pgEnum('subscription_status', [
+	'trialing',
+	'active',
+	'paused',
+	'ended',
+	'canceled',
+	'past_due',
+	'unpaid',
+	'incomplete',
+	'incomplete_expired'
+]);
 
 export const stripe = pgSchema('stripe');
 
@@ -54,7 +65,8 @@ export const profilesTable = pgTable(
 		updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' })
 			.defaultNow()
 			.notNull(),
-		stripeCustomerId: text('stripe_customer_id')
+		stripeCustomerId: text('stripe_customer_id'),
+		subscriptionStatus: subscriptionStatus('subscription_status').default('trialing').notNull()
 	},
 	(table) => {
 		return {
@@ -193,7 +205,7 @@ export const tagPromptLinkTableRelations = relations(tagPromptLinkTable, ({ one 
 
 export type ProfileSchema = Pick<
 	typeof profilesTable.$inferSelect,
-	'id' | 'username' | 'email' | 'fullName' | 'avatarUrl'
+	'id' | 'username' | 'email' | 'subscriptionStatus' | 'fullName' | 'avatarUrl'
 >;
 
 export type PromptSchema = typeof promptsTable.$inferSelect;

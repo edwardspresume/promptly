@@ -1,3 +1,4 @@
+import type { ProfileSchema } from '$databaseDir/schema';
 import type { AlertMessage } from '$globalTypes';
 
 export type ItemType = 'userTag' | 'userPrompt' | 'communityPrompt';
@@ -29,3 +30,8 @@ export interface ConfirmationInfo {
 	subheading: string;
 	callback: () => Promise<AlertMessage>;
 }
+
+export const ALLOWED_SUBSCRIPTION_STATUSES: ProfileSchema['subscriptionStatus'][] = [
+	'trialing',
+	'active'
+];

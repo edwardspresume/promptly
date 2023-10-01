@@ -86,6 +86,7 @@ export async function getUserProfile(profileId: string | undefined) {
 				id: profilesTable.id,
 				email: profilesTable.email,
 				username: profilesTable.username,
+				subscriptionStatus: profilesTable.subscriptionStatus,
 				fullName: profilesTable.fullName,
 				avatarUrl: profilesTable.avatarUrl
 			})

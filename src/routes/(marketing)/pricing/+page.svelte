@@ -27,7 +27,7 @@
 </script>
 
 <div class="w-full">
-	<header class="grid gap-3 mt-10 mb-10 text-center">
+	<header class="grid gap-4 mt-10 text-center mb-14">
 		<h1 class="text-4xl">Pricing</h1>
 
 		<h2 class="text-xl text-muted-foreground">

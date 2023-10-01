@@ -36,9 +36,9 @@
 
 	<p class="mt-4 text-sm text-muted-foreground">
 		{#if planType === PlanType.PRO}
-			No credit card required for the free trial. Cancel your subscription at any time.
+			No credit card needed for the free trial. Cancel your subscription at any time
 		{:else}
-			No credit card or login required.
+			No credit card or login needed
 		{/if}
 	</p>
 </div>

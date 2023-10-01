@@ -6,7 +6,7 @@
 	export let planType: PlanType;
 </script>
 
-<ul class="grid gap-3 my-7">
+<ul class="grid gap-3 my-9">
 	{#each features as { description } (description)}
 		<li class="grid grid-cols-[auto,1fr] gap-3">
 			<span

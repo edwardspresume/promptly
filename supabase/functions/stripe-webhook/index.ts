@@ -36,6 +36,8 @@ serve(async (request) => {
 		return new Response(err.message, { status: 400 });
 	}
 
+	console.log(`🔔 Event received: ${receivedEvent.type}`, receivedEvent);
+
 	if (receivedEvent.type === 'customer.subscription.updated') {
 		const subscription = receivedEvent.data.object;
 		const customerId = subscription.customer;
@@ -54,8 +56,6 @@ serve(async (request) => {
 			console.log('✅ User profile Subscription status updated: ', newStatus);
 		}
 	}
-
-	console.log(`🔔 Event received: ${receivedEvent.type}`, receivedEvent);
 
 	return new Response(JSON.stringify({ ok: true }), { status: 200 });
 });

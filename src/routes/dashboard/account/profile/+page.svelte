@@ -54,6 +54,7 @@
 			name="username"
 			label="Username"
 			enterkeyhint="send"
+			inputFieldId="username"
 			placeholder="Enter username"
 			bind:value={$form.username}
 			errorMessage={$errors.username}
@@ -72,6 +73,7 @@
 			name="fullName"
 			label="Full Name"
 			enterkeyhint="send"
+			inputFieldId="fullName"
 			placeholder="Enter full name"
 			bind:value={$form.fullName}
 			errorMessage={$errors.fullName}

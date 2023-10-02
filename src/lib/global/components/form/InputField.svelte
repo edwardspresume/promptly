@@ -2,7 +2,6 @@
 	import type { EnterKeyHint } from '$globalTypes';
 
 	import Input from '$globalComponents/ui/input/input.svelte';
-	import Label from '$globalComponents/ui/label/label.svelte';
 
 	export let type: string;
 	export let value: string | null | undefined = '';
@@ -11,6 +10,7 @@
 	export let placeholder: string = '';
 	export let spellcheck: boolean = true;
 	export let autocomplete: string = 'on';
+	export let inputFieldId: string = 'inputField';
 	export let enterkeyhint: EnterKeyHint = 'next';
 	export let labelIsScreenReaderOnly: boolean = false;
 	export let maxlength: number | undefined = undefined;
@@ -19,7 +19,10 @@
 	$: valueLength = value?.length;
 </script>
 
-<Label class="grid gap-1">
+<label
+	for={inputFieldId}
+	class="grid gap-1 text-sm font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+>
 	<div>
 		<span class={labelIsScreenReaderOnly ? 'sr-only' : ''}>{label}</span>
 
@@ -44,8 +47,9 @@
 		{placeholder}
 		{autocomplete}
 		{enterkeyhint}
+		id={inputFieldId}
 		aria-label={label}
 		aria-invalid={errorMessage ? 'true' : undefined}
 		{...$$restProps}
 	/>
-</Label>
+</label>

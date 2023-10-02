@@ -148,6 +148,6 @@
 	confirmationInfo={confirmationModalInfoForPromptDeletion}
 />
 
-<PromptCreationForm bind:promptCreationModalRef />
+<PromptCreationForm bind:promptCreationModalRef isFavoritesTabSelected={selectedTabIndex === 1} />
 
 <PromptEditForm bind:promptEditModalRef {selectedPromptForEdit} />

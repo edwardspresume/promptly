@@ -21,6 +21,7 @@
 	import TextArea from '$globalComponents/form/TextArea.svelte';
 
 	export let promptCreationModalRef: HTMLDialogElement;
+	export let isFavoritesTabSelected: boolean = false;
 
 	const userSession = $page.data.session?.user;
 
@@ -60,6 +61,8 @@
 			notificationFunction(alertText, { target: 'baseModal' });
 		}
 	});
+
+	$: $form.isFavorited = isFavoritesTabSelected;
 </script>
 
 <BaseModal modalTitle="Create Prompt" bind:dialogElement={promptCreationModalRef}>

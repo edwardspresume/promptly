@@ -56,6 +56,7 @@
 				// reset selected tags
 				selectedTagIds = [];
 				$form.visibility = 'Private';
+				$form.isFavorited = isFavoritesTabSelected;
 			}
 
 			notificationFunction(alertText, { target: 'baseModal' });

@@ -35,7 +35,7 @@
 
 <BaseModal
 	modalTitle="Feedback"
-	modalDescription="Let me know if you experience any issues or have any suggestions to improve this site"
+	modalDescription="Let us know if you experience any issues or have any suggestions to improve this site"
 	bind:dialogElement={feedbackModalRef}
 	on:close={() => isFeedbackModalOpen.set(false)}
 >
@@ -51,7 +51,7 @@
 				rows="6"
 				name="message"
 				label="Message"
-				placeholder="Message"
+				placeholder="Enter your message"
 				bind:value={$form.message}
 				errorMessage={$errors.message}
 			/>

@@ -25,5 +25,5 @@
 		Central place to save, find, share, and manage your prompts.
 	</p>
 
-	<DashboardLink text="Try it out" class="text-xl" />
+	<DashboardLink text="Try it for free" class="text-xl" />
 </div>

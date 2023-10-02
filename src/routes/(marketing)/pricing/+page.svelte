@@ -20,6 +20,11 @@
 		},
 
 		{
+			description: 'Improve your existing prompts with GPT-4',
+			availability: PlanType.PRO
+		},
+
+		{
 			description: 'Sharing prompts via a private link or publicly',
 			availability: PlanType.PRO
 		},

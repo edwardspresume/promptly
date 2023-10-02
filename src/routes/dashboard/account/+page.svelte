@@ -46,7 +46,9 @@
 			<h3>{currentStatus.title}</h3>
 			<p>{currentStatus.message}</p>
 
-			<Button class="w-fit">{currentStatus.buttonText}</Button>
+			<Button class="gap-2 w-fit">
+                <Icon name='crown' />
+                {currentStatus.buttonText}</Button>
 		</article>
 	</section>
 {/if}

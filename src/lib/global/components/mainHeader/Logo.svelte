@@ -1,22 +1,20 @@
 <script lang="ts">
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 
+	import { RoutePaths } from '$globalTypes';
 	import { cn } from '$globalUtils';
 
 	import Button from '$globalComponents/ui/button/button.svelte';
 
 	let className: HTMLButtonAttributes['class'] = undefined;
 	export { className as class };
-
-	export let href: string;
-	export let linkTitle: string;
 </script>
 
 <Button
 	variant="link"
-	{href}
-	title={linkTitle}
-	aria-label={linkTitle}
+	title="Return to homepage"
+	aria-label="Return to homepage"
+	href={RoutePaths.MARKETING_LANDING}
 	class={cn('text-3xl font-bold logo p-0', className)}
 >
 	Promptly

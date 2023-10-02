@@ -36,7 +36,7 @@
 			variant={planType === PlanType.PRO ? 'default' : 'outline'}
 			href={planType === PlanType.PRO ? RoutePaths.SIGNUP : RoutePaths.DASHBOARD_PROMPTS}
 		>
-			{planType === PlanType.PRO ? 'Start Free Trial' : 'Start Now'}
+			{planType === PlanType.PRO ? 'Start 7 Day Free Trial' : 'Start Now'}
 		</Button>
 	</article>
 

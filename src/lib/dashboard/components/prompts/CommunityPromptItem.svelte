@@ -18,13 +18,13 @@
 	title={`View prompt: ${title}`}
 	onItemClickOrKeyPress={() => dispatch('viewPrompt', prompt)}
 >
-	<h2 class="flex gap-2 font-normal leading-none select-none">
+	<h3 class="flex gap-2 font-normal leading-none select-none">
 		<Icon name="lightbulb" size={15} class="self-start" />
 
 		<span>
 			{title}
 		</span>
-	</h2>
+	</h3>
 
 	<div class="flex items-center gap-1 text-muted-foreground">
 		<CopyPromptDescriptionBtn

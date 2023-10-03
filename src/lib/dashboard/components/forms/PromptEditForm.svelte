@@ -16,8 +16,8 @@
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 
-	import { userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
 	import { userPromptsStore } from '$dashboardStores/userPromptsStore';
+	import { userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
 
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
 	import DeleteItemBtn from '$dashboardComponents/list/DeleteItemBtn.svelte';
@@ -125,6 +125,7 @@
 
 			if (formAction === '?/refinePrompt' && alertType === 'success') {
 				refinedPrompt = refinedPromptValue;
+				$form.visibility = selectedPromptForEdit?.visibility;
 				isRefinedPromptVisible = true;
 				return;
 			}

@@ -59,13 +59,11 @@ export const load = (async ({ locals: { getSession } }) => {
 
 	const promptForm = superValidate(PromptsValidationSchema);
 
-	if (userId) {
-		const userPrompts = getUserPrompts(userId);
+	if (!userId) return { promptForm };
 
-		return { userPrompts, promptForm };
-	}
+	const userPrompts = getUserPrompts(userId);
 
-	return { promptForm };
+	return { userPrompts, promptForm };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

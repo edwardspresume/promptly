@@ -72,6 +72,32 @@ export async function checkEmailExists(email: string) {
 }
 
 /**
+ * Fetch the user's stripe customer ID based on the profileId.
+ * @param {string} profileId - The ID of the profile.
+ * @returns Returns the stripe customer ID or null if not found.
+ * @throws Will throw an error if the query fails.
+ */
+export async function getStripeCustomerId(profileId: string) {
+	try {
+		const userProfile = await drizzleClient.query.profilesTable.findFirst({
+			where: eq(profilesTable.id, profileId),
+
+			columns: {
+				stripeCustomerId: true
+			}
+		});
+
+		return userProfile?.stripeCustomerId ?? null;
+	} catch (error) {
+		logError(error, 'Error fetching stripe customer ID', {
+			profileId
+		});
+
+		throw new Error('Error fetching stripe customer ID');
+	}
+}
+
+/**
  * Fetch the user profile based on the profileId.
  * @param {string} profileId - The ID of the profile.
  * @returns Returns the user profile or null if not found.
@@ -109,7 +135,7 @@ export async function getUserProfile(profileId: string | undefined) {
  * @returns Returns the user prompts or null if not found.
  * @throws Will throw an error if the query fails.
  */
-export async function getUserPrompts(profileId: string | undefined) {
+export async function getUserPrompts(profileId: string) {
 	try {
 		const userPrompts = await drizzleClient
 			.select()

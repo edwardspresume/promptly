@@ -20,9 +20,10 @@ export const load: LayoutServerLoad = async ({ locals: { getSession }, url }) =>
 
 	const shouldRedirect =
 		!ALLOWED_SUBSCRIPTION_STATUSES.includes(userProfile?.subscriptionStatus ?? '') &&
-		url.pathname !== RoutePaths.DASHBOARD_ACCOUNT;
+		url.pathname !== RoutePaths.DASHBOARD_ACCOUNT &&
+		url.pathname !== RoutePaths.DASHBOARD_BILLING;
 
-	if (shouldRedirect) throw redirect(303, RoutePaths.DASHBOARD_ACCOUNT);
+	if (shouldRedirect) throw redirect(303, RoutePaths.DASHBOARD_BILLING);
 
 	return { userProfile, userTags, feedbackForm };
 };

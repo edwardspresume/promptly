@@ -24,7 +24,7 @@
 		<ul class="flex gap-1 md:flex-col md:gap-2">
 			{#each dashboardLinks.accountNav as { title, href } (title)}
 				{@const isCurrentPage = $page.url.pathname === href ? 'page' : undefined}
-				{#if !onlyShowMainLink || href === RoutePaths.DASHBOARD_ACCOUNT}
+				{#if !onlyShowMainLink || href !== RoutePaths.DASHBOARD_PROFILE}
 					<li>
 						<Button
 							{href}

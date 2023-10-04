@@ -8,6 +8,7 @@
 	import * as DropdownMenu from '$globalComponents/ui/dropdown-menu';
 	import ExportDataBtn from './ExportDataBtn.svelte';
 	import LoginLogoutBtn from './LoginLogoutBtn.svelte';
+	import UpgradeToProBtn from './UpgradeToProBtn.svelte';
 
 	$: userAvatarUrl = $userProfileStore?.avatarUrl;
 	$: userEmail = $userProfileStore?.email;
@@ -40,19 +41,11 @@
 				<DropdownMenu.Separator />
 			{/if}
 
-			<DropdownMenu.Item>
-				<a href="#plans" title="Upgrade to Pro" aria-label="Upgrade to Pro">
-					<Icon name="crown" />
-
-					<span>
-						Upgrade to <span
-							class="py-1 text-white rounded-md pe-2 ps-2 bg-gradient-to-r from-sky-500 to-indigo-500"
-						>
-							Pro
-						</span>
-					</span>
-				</a>
-			</DropdownMenu.Item>
+			{#if !$userProfileStore || $userProfileStore.subscriptionStatus !== 'active'}
+				<DropdownMenu.Item>
+					<UpgradeToProBtn />
+				</DropdownMenu.Item>
+			{/if}
 
 			{#if $userProfileStore}
 				<DropdownMenu.Item>

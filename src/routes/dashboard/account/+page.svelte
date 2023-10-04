@@ -3,9 +3,11 @@
 
 	import { userProfileStore } from '$dashboardStores/userProfileStore';
 	import { userTagsStore } from '$dashboardStores/userTagsStore';
+	import type { ConfirmationInfo } from '$dashboardTypes';
 	import { exportUserData } from '$dashboardUtils/exportUserData';
 
 	import PageSubHeader from '$dashboardComponents/account/PageSubHeader.svelte';
+	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
 	import Icon from '$globalComponents/Icon.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
 
@@ -16,6 +18,49 @@
 		prompts: data.userPrompts,
 		tags: $userTagsStore
 	};
+
+	let confirmationModalRef: HTMLDialogElement;
+	let accountDeleteConfirmationInfo: ConfirmationInfo;
+
+	/**
+	 * Deletes user account.
+	 * @async
+	 * @returns {ReturnType<ConfirmationInfo['callback']>} - The alert type and text of the delete operation.
+	 */
+	async function executeAccountDeletion(): ReturnType<ConfirmationInfo['callback']> {
+		try {
+			const response = await fetch(`?/deleteAccount`, {
+				method: 'POST',
+				body: JSON.stringify({ id: $userProfileStore?.id })
+			});
+
+			if (!response.ok) {
+				throw new Error('Failed to delete account');
+			}
+
+			return {
+				alertType: 'success',
+				alertText: 'Account deleted successfully'
+			};
+		} catch (e) {
+			console.error('Failed to delete account');
+
+			return {
+				alertType: 'error',
+				alertText: 'Failed to delete account'
+			};
+		}
+	}
+
+	function handleDeleteAccount() {
+		accountDeleteConfirmationInfo = {
+			heading: `Delete Account`,
+			subheading: `Are you sure you want to <span style="color: red;">permanently</span> your account? This action cannot be undone.`,
+			callback: executeAccountDeletion
+		};
+
+		confirmationModalRef.showModal();
+	}
 </script>
 
 <PageSubHeader heading="Main" subheading="Your account information" />
@@ -43,12 +88,14 @@
 			<span>Export Data</span>
 		</Button>
 
-		<Button formaction="?/deleteAccount" type="button" variant="destructive" class="gap-2">
+		<Button type="button" variant="destructive" on:click={handleDeleteAccount} class="gap-2">
 			<Icon name="delete" />
 			<span>Delete Account</span>
 		</Button>
 	</div>
 </section>
+
+<ConfirmationModal bind:confirmationModalRef confirmationInfo={accountDeleteConfirmationInfo} />
 
 <style lang="postcss">
 	li {

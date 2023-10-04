@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 
 	import { userProfileStore } from '$dashboardStores/userProfileStore';
 	import { userTagsStore } from '$dashboardStores/userTagsStore';
 	import { exportUserData } from '$dashboardUtils/exportUserData';
 
-	import { page } from '$app/stores';
 	import PageSubHeader from '$dashboardComponents/account/PageSubHeader.svelte';
+	import type { ProfileSchema } from '$databaseDir/schema';
 	import Icon from '$globalComponents/Icon.svelte';
 	import SubmitButton from '$globalComponents/form/SubmitButton.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
@@ -20,21 +21,27 @@
 		tags: $userTagsStore
 	};
 
-	const statusMessages: Record<string, { title: string; message: string; buttonText: string }> = {
+	type SubscriptionStatus = ProfileSchema['subscriptionStatus'];
+
+	type SubscriptionStatusMessages = Partial<
+		Record<SubscriptionStatus, { title: string; message: string; buttonText: string }>
+	>;
+
+	const subscriptionStatusMessages: SubscriptionStatusMessages = {
 		trialing: {
 			title: 'Enjoy Your Free Trial!',
-			message: 'Experience all the features we offer',
-			buttonText: 'Upgrade Now'
+			message: 'Explore all the premium features we have to offer.',
+			buttonText: 'Subscribe to Our Pro Plan'
 		},
 		paused: {
 			title: 'Your Free Trial Has Ended',
 			message: 'Please upgrade to continue enjoying our services',
-			buttonText: 'Purchase Pro Plan'
+			buttonText: 'Subscribe to Our Pro Plan'
 		},
 		canceled: {
 			title: "We're sorry to see you go",
 			message: 'You can rejoin anytime',
-			buttonText: 'Reactivate Subscription'
+			buttonText: 'Reactivate Your Subscription'
 		}
 	};
 
@@ -54,14 +61,16 @@
 					Your subscription has been activated! You can now enjoy all the features of the Pro plan!
 				</h3>
 			{:else if $userProfileStore?.subscriptionStatus !== 'active'}
-				{@const currentStatus = statusMessages[$userProfileStore?.subscriptionStatus || 'trialing']}
+				{@const currentStatus =
+					subscriptionStatusMessages[$userProfileStore?.subscriptionStatus || 'trialing']}
 
 				<h3>{currentStatus?.title}</h3>
 				<p>{currentStatus?.message}</p>
 
 				<form
-					action="?/stripeCheckout"
 					method="POST"
+					action="?/stripeCheckout"
+					aria-label="Subscribe to Pro Plan"
 					use:enhance={() => {
 						isLoading = true;
 						return async ({ update }) => {

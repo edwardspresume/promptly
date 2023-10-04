@@ -1,12 +1,9 @@
 import { redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
-import { drizzleClient } from '$databaseDir/drizzleClient.server';
-import { profilesTable } from '$databaseDir/schema';
-import { eq } from 'drizzle-orm';
-
 import { stripeClient } from '$lib/global/stripe.server';
 
+import { getStripeCustomerId } from '$databaseDir/databaseUtils.server';
 import { RoutePaths } from '$globalTypes';
 import { logError } from '$globalUtils';
 
@@ -16,7 +13,6 @@ export const actions: Actions = {
 
 		if (!userId) return;
 
-		let stripeCustomerId: string | null | undefined = null;
 		let billingPortalURL: string | null = '';
 
 		try {
@@ -44,15 +40,7 @@ export const actions: Actions = {
 				}
 			});
 
-			const userProfile = await drizzleClient.query.profilesTable.findFirst({
-				where: eq(profilesTable.id, userId),
-
-				columns: {
-					stripeCustomerId: true
-				}
-			});
-
-			stripeCustomerId = userProfile?.stripeCustomerId;
+			const stripeCustomerId = await getStripeCustomerId(userId);
 
 			if (!stripeCustomerId) throw new Error('User does not have a stripe customer id');
 

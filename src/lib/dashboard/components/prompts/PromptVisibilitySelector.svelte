@@ -12,7 +12,7 @@
 	import Label from '$globalComponents/ui/label/label.svelte';
 
 	export let promptId: PromptSchema['id'];
-	export let promptVisibility: PromptSchema['visibility'];
+	export let promptVisibility: PromptSchema['visibility'] = 'Private';
 
 	const visibilityOptions: PromptSchema['visibility'][] = ['Private', 'Private-Link', 'Public'];
 
@@ -27,6 +27,7 @@
 		copyToClipboard(promptToShare, 'Prompt link copied!', 'baseModal');
 	}
 
+	$: promptVisibility = promptVisibility ?? 'Private';
 	$: persistedVisibility = $userPromptsStore.find((prompt) => prompt.id === promptId)?.visibility;
 </script>
 

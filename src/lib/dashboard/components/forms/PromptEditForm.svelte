@@ -125,7 +125,6 @@
 
 			if (formAction === '?/refinePrompt' && alertType === 'success') {
 				refinedPrompt = refinedPromptValue;
-				$form.visibility = selectedPromptForEdit?.visibility;
 				isRefinedPromptVisible = true;
 				return;
 			}

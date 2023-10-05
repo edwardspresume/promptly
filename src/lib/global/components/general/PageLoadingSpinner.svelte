@@ -23,8 +23,8 @@
 </script>
 
 {#if showSpinner}
-	<div class="grid h-full gap-4 justify-items-center -mt-36 place-content-center">
-		<Icon name="loading-spinner" size={50} class="animate-spin" />
+	<div class="grid flex-1 h-full gap-4 justify-items-center place-content-center">
+		<Icon name="loading-spinner" size={60} class="animate-spin" />
 		<p class="text-xl animate-pulse">Loading</p>
 	</div>
 {:else}

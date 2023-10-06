@@ -1,10 +1,13 @@
+import { SECRET_OPENAI_API_KEY } from '$env/static/private';
+import type { Actions, PageServerLoad } from './$types';
+
+import OpenAI from 'openai';
+
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
 import { promptsTable, tagPromptLinkTable } from '$databaseDir/schema';
 import { eq } from 'drizzle-orm';
 
 import { message, superValidate } from 'sveltekit-superforms/server';
-
-import type { Actions, PageServerLoad } from './$types';
 
 import type { AlertMessage } from '$globalTypes';
 
@@ -21,6 +24,53 @@ import {
 import { logError } from '$globalUtils';
 
 const ERROR_INVALID_PROMPT = 'The prompt you entered is invalid. Please enter a valid prompt.';
+
+type PromptData = {
+	promptTitle: string;
+	promptDescription: string;
+};
+
+/**
+ * Improves the quality of a given prompt using the OpenAI API.
+ * @param {PromptData} promptData - The original title and description of the prompt.
+ * @returns {Promise<string>} Refined description of the prompt.
+ * @throws {Error} Throws an error if the API call fails or if environment variables are missing.
+ */
+async function fetchRefinedPrompt(promptData: PromptData) {
+	const openai = new OpenAI({
+		apiKey: SECRET_OPENAI_API_KEY
+	});
+
+	const { promptTitle, promptDescription } = promptData;
+
+	const systemPrompt =
+		'Given the title and description of a prompt, please output a refined version of the description that is clearer, more effective, and more detailed, while preserving its original meaning and intent. Please ensure that the output consists solely of the refined description, without any additional text, prefixes, or clarifications.';
+
+	const userPrompt = `Prompt title: "${promptTitle}". Prompt description: "${promptDescription}"`;
+
+	const params: OpenAI.Chat.ChatCompletionCreateParams = {
+		messages: [
+			{ role: 'system', content: systemPrompt },
+			{ role: 'user', content: userPrompt }
+		],
+
+		model: 'gpt-4'
+	};
+
+	try {
+		const completion: OpenAI.Chat.ChatCompletion = await openai.chat.completions.create(params);
+		const refinedPrompt = completion.choices[0]?.message.content;
+
+		return refinedPrompt;
+	} catch (error) {
+		logError(error, 'Error generating refined prompt', {
+			promptData,
+			params
+		});
+
+		throw new Error('Failed to generate refined prompt. Please try again.');
+	}
+}
 
 async function createPrompt(profileId: string, promptData: PromptFormData) {
 	// Start transaction
@@ -114,8 +164,8 @@ export const actions: Actions = {
 		});
 	},
 
-	refinePrompt: async ({ request, fetch }) => {
-		type NewRefinedPrompt = AlertMessage & { refinedPrompt?: string };
+	refinePrompt: async ({ request }) => {
+		type NewRefinedPrompt = AlertMessage & { refinedPrompt?: string | null };
 
 		const promptForm = await superValidate<typeof PromptsValidationSchema, NewRefinedPrompt>(
 			request,
@@ -132,34 +182,22 @@ export const actions: Actions = {
 		const { title: promptTitle, description: promptDescription } = promptForm.data;
 
 		try {
-			const response = await fetch('./api/refinePrompt', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					promptTitle: sanitizeContentOnServer(promptTitle),
-					promptDescription: sanitizeContentOnServer(promptDescription)
-				})
+			const refinedPrompt = await fetchRefinedPrompt({
+				promptTitle: sanitizeContentOnServer(promptTitle),
+				promptDescription: sanitizeContentOnServer(promptDescription)
 			});
-
-			if (response.status >= 400) {
-				throw new Error(response.statusText);
-			}
-
-			const refinedPrompt = await response.text();
 
 			return message(promptForm, {
 				alertType: 'success',
-				alertText: response.statusText,
+				alertText: 'Refined prompt successfully generated!',
 				refinedPrompt
 			});
 		} catch (error) {
-			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-
 			return message(
 				promptForm,
 				{
 					alertType: 'error',
-					alertText: errorMessage
+					alertText: 'Internal Server Error. Failed to refine prompt.'
 				},
 				{
 					status: 500

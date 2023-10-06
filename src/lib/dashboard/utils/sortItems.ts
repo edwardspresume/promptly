@@ -2,9 +2,9 @@ import type { SortableItemProperties } from '$dashboardTypes';
 
 /**
  * A utility function to compare strings.
- * @param {string | undefined} a - The first string to compare.
- * @param {string | undefined} b - The second string to compare.
- * @returns {number} - A negative, zero, or positive number based on the comparison.
+ * @param a - The first string to compare.
+ * @param b - The second string to compare.
+ * @returns - A negative, zero, or positive number based on the comparison.
  */
 export function compareStrings(a: string | undefined, b: string | undefined): number {
 	if (typeof a === 'undefined' || typeof b === 'undefined') {
@@ -14,9 +14,9 @@ export function compareStrings(a: string | undefined, b: string | undefined): nu
 	}
 
 	// This regex matches emojis and spaces
-	const emojiSpaceRegex = /\p{Extended_Pictographic}|\s+/gu;
+	const emojiSpaceRegex = /\p{Extended_Pictographic}|\s/gu;
 
-	// Remove leading emojis and spaces
+	// Remove emojis and spaces from the strings before comparing them
 	const aClean = a.replace(emojiSpaceRegex, '');
 	const bClean = b.replace(emojiSpaceRegex, '');
 

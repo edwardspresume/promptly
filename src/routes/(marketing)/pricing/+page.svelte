@@ -5,6 +5,14 @@
 
 	const features: PlanFeature[] = [
 		{
+			description: 'Export data',
+			availability: PlanType.FREE
+		},
+		{
+			description: 'Export data',
+			availability: PlanType.PRO
+		},
+		{
 			description: '5MB of storage space',
 			availability: PlanType.FREE
 		},

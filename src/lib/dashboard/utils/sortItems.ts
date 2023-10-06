@@ -13,7 +13,14 @@ export function compareStrings(a: string | undefined, b: string | undefined): nu
 		else return 1;
 	}
 
-	return a.localeCompare(b);
+	// This regex matches emojis and spaces
+	const emojiSpaceRegex = /\p{Extended_Pictographic}|\s+/gu;
+
+	// Remove leading emojis and spaces
+	const aClean = a.replace(emojiSpaceRegex, '');
+	const bClean = b.replace(emojiSpaceRegex, '');
+
+	return aClean.localeCompare(bClean);
 }
 
 /**

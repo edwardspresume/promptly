@@ -1,14 +1,45 @@
-import { message, superValidate } from 'sveltekit-superforms/server';
-
+import { SECRET_GMAIL_PASS, SECRET_GMAIL_USERNAME } from '$env/static/private';
 import type { Actions } from './$types';
+
+import nodemailer from 'nodemailer';
+
+import { message, superValidate } from 'sveltekit-superforms/server';
 
 import type { AlertMessage } from '$globalTypes';
 
 import { FeedbackValidationSchema } from '$dashboardValidationSchemas/feedbackValidationSchema';
 import { sanitizeContentOnServer } from '$databaseDir/databaseUtils.server';
 
+import { logError } from '$globalUtils';
+
+/**
+ * Creates a nodemailer Transporter instance
+ * @returns {nodemailer.Transporter} nodemailer Transporter instance
+ */
+function createEmailTransport() {
+	return nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: SECRET_GMAIL_USERNAME,
+			pass: SECRET_GMAIL_PASS
+		}
+	});
+}
+
+/**
+ *  Sends an email using nodemailer
+ * @param {object} mailOptions nodemailer mail options
+ * @returns {Promise<nodemailer.SentMessageInfo>} nodemailer SentMessageInfo
+ * @see https://nodemailer.com/about/
+ * @see https://nodemailer.com/message/
+ */
+async function sendEmail(mailOptions: object) {
+	const emailTransporter = createEmailTransport();
+	return emailTransporter.sendMail(mailOptions);
+}
+
 export const actions: Actions = {
-	default: async ({ request, fetch }) => {
+	default: async ({ request }) => {
 		const feedbackForm = await superValidate<typeof FeedbackValidationSchema, AlertMessage>(
 			request,
 			FeedbackValidationSchema
@@ -26,28 +57,28 @@ export const actions: Actions = {
 		const sanitizedMessage = sanitizeContentOnServer(feedbackMessage);
 
 		try {
-			const response = await fetch('./api/sendFeedbackToEmail', {
-				method: 'POST',
-				headers: { 'Content-Type': 'text/plain' },
-				body: sanitizedMessage
+			await sendEmail({
+				from: SECRET_GMAIL_USERNAME,
+				to: SECRET_GMAIL_USERNAME,
+				subject: `Promptly Feedback`,
+				html: `
+                <h2>New Feedback</h2>
+                <p>${sanitizedMessage}</p>
+            `
 			});
-
-			if (response.status >= 400) {
-				throw new Error(response.statusText);
-			}
 
 			return message(feedbackForm, {
 				alertType: 'success',
-				alertText: response.statusText
+				alertText: 'Message sent!'
 			});
 		} catch (error) {
-			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+			logError(error, 'Error sending feedback email');
 
 			return message(
 				feedbackForm,
 				{
 					alertType: 'error',
-					alertText: errorMessage
+					alertText: `There was an error sending your message. Please try again later.`
 				},
 				{
 					status: 500

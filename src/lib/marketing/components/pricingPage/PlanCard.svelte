@@ -14,7 +14,7 @@
 
 <div class="flex flex-col gap-4">
 	<article
-		class="p-4 border rounded-md shadow-md flex flex-col justify-between h-full gap-9 {planType ===
+		class="p-4 border rounded-md shadow-md bg-background flex flex-col justify-between h-full gap-9 {planType ===
 		PlanType.PRO
 			? 'border-primary border-2'
 			: ''}"
@@ -40,7 +40,7 @@
 		</Button>
 	</article>
 
-	<p class="text-sm text-muted-foreground">
+	<p class="text-sm text-[#9CA3AF]">
 		{#if planType === PlanType.FREE}
 			No credit card or login needed
 		{:else}

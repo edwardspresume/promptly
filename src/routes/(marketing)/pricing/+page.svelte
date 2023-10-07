@@ -46,9 +46,9 @@
 
 <div class="container">
 	<header class="grid gap-4 mt-10 text-center mb-14 xl:mt-0">
-		<h1 class="text-4xl">Pricing</h1>
+		<h1 class="text-4xl text-white">Pricing</h1>
 
-		<h2 class="text-xl text-muted-foreground">
+		<h2 class="text-xl text-[#9CA3AF]">
 			Choose Your Promptly Plan: Free to Start, Easy to Upgrade
 		</h2>
 	</header>

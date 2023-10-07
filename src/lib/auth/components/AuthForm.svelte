@@ -22,7 +22,8 @@
 		signUp: {
 			buttonTitle: 'Sign up',
 			heading: 'Get Started Today',
-			subHeading: 'Create an account and unlock our exclusive features'
+			subHeading:
+				'Create an account and unlock our exclusive features. A Free 7 day trial automatically starts when you sign up.'
 		}
 	};
 

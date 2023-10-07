@@ -11,12 +11,12 @@
 	/>
 </svelte:head>
 
-<div class="text-center max-w-7xl">
-	<h1 class="text-4xl sm:text-6xl">
-		<span class="text-primary">Optimize Your AI Interactions</span> with a Personalized Prompt Library
+<div class="container text-center">
+	<h1 class="text-4xl text-white sm:text-6xl">
+		<span class="text-[#7C3AED]">Optimize Your AI Interactions</span> with a Personalized Prompt Library
 	</h1>
 
-	<p class="mt-6 mb-10 text-xl text-muted-foreground">
+	<p class="mt-6 mb-10 text-xl text-[#9CA3AF]">
 		The central place to save, find, share, and manage your prompts.
 	</p>
 

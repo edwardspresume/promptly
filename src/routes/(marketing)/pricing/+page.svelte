@@ -44,7 +44,7 @@
 	];
 </script>
 
-<div class="w-full">
+<div class="container">
 	<header class="grid gap-4 mt-10 text-center mb-14 xl:mt-0">
 		<h1 class="text-4xl">Pricing</h1>
 

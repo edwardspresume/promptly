@@ -20,7 +20,9 @@
 				{href}
 				variant="outline"
 				aria-current={isCurrentPage}
-				class="w-full sm:py-1 sm:px-2 sm:h-fit {isCurrentPage ? 'text-primary' : ''}"
+				class="w-full sm:py-1 sm:px-2 sm:h-fit {isCurrentPage
+					? 'text-primary  dark:text-primary dark:brightness-150'
+					: ''}"
 			>
 				{title}
 			</Button>

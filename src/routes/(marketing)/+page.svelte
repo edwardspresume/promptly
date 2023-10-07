@@ -11,18 +11,13 @@
 	/>
 </svelte:head>
 
-<div class="text-center">
-	<h1 class="text-4xl sm:text-8xl">
-		Prompt <span class="text-primary">AI</span>
-		<br />
-
-		<span>
-			The <span class="underline text-primary">Simple</span> Way
-		</span>
+<div class="text-center max-w-7xl">
+	<h1 class="text-4xl sm:text-6xl">
+		<span class="text-primary">Optimize Your AI Interactions</span> with a Personalized Prompt Library
 	</h1>
 
-	<p class="mt-6 mb-12 text-lg text-muted-foreground">
-		Central place to save, find, share, and manage your prompts.
+	<p class="mt-6 mb-10 text-xl text-muted-foreground">
+		The central place to save, find, share, and manage your prompts.
 	</p>
 
 	<DashboardLink text="Try it for free" class="text-xl" />

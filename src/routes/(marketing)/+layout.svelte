@@ -14,12 +14,6 @@
 			<slot />
 		</main>
 	</PageLoadingSpinner>
-
-	<footer>
-		<div class="container py-2">
-			<p class="text-muted-foreground">&copy; Promptly</p>
-		</div>
-	</footer>
 </div>
 
 {#if isLandingPage}

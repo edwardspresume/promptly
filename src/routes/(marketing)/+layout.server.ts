@@ -3,6 +3,8 @@ import type { LayoutServerLoad } from './$types';
 
 import { RoutePaths } from '$globalTypes';
 
+export const prerender = true;
+
 export const load = (async ({ parent }) => {
 	const { session } = await parent();
 

@@ -7,7 +7,7 @@
 	export let title: string = 'Promptly: Your Central Hub for AI Prompt Management';
 
 	export let description: string =
-		'Discover a seamless way to save, find, share, and manage your AI prompts with Promptly. Our powerful features help you optimize and organize prompts.';
+		'Promptly allows you to seamlessly save, copy, find, share, and manage your artificial intelligence (AI) prompts. Our powerful features help you optimize and organize prompts for Chat GPT, mid-journey, Bing, or any other AI tool you use.';
 
 	export let image = { src: '/icon', alt: 'promptly Icon' };
 

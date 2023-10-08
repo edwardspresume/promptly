@@ -1,7 +1,10 @@
 <script>
+	import MetaTags from '$globalComponents/MetaTags.svelte';
 	import PageLoadingSpinner from '$globalComponents/general/PageLoadingSpinner.svelte';
 	import MarketingHeader from '$marketingComponents/marketingHeader/MarketingHeader.svelte';
 </script>
+
+
 
 <div class="h-[100dvh] flex flex-col">
 	<MarketingHeader />

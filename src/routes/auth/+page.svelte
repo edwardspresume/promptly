@@ -5,6 +5,7 @@
 
 	import AuthForm from '$authComponents/AuthForm.svelte';
 	import Icon from '$globalComponents/Icon.svelte';
+	import MetaTags from '$globalComponents/MetaTags.svelte';
 	import Logo from '$globalComponents/mainHeader/Logo.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
 	import * as Tabs from '$globalComponents/ui/tabs';
@@ -12,14 +13,10 @@
 	const initialTabValue = $page.url.searchParams.get('signup') === 'true' ? 'signUp' : 'signIn';
 </script>
 
-<svelte:head>
-	<title>Sign In or Sign Up - Manage Your AI Prompts with Promptly</title>
-
-	<meta
-		name="description"
-		content="Join Promptly to save, find, share, and manage your AI prompts in one central location. Sign in or sign up now to get started."
-	/>
-</svelte:head>
+<MetaTags
+	title="Access Your Prompt Library: Sign In or Sign Up | Promptly"
+	description="Unlock a centralized hub for managing your AI prompts. Whether you're returning or new, sign in or sign up to start your 7-day free trial with Promptly."
+/>
 
 <main class="grid grid-cols-1 lg:grid-cols-[minmax(0,44rem),1fr] min-h-[100dvh] items-center">
 	<section class="grid w-full max-w-xl gap-12 p-2 mx-auto justify-items-center lg:p-4">

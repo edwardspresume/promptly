@@ -1,15 +1,9 @@
 <script>
+	import MetaTags from '$globalComponents/MetaTags.svelte';
 	import DashboardLink from '$marketingComponents/DashboardLink.svelte';
 </script>
 
-<svelte:head>
-	<title>Save, find, share, and Manage Your AI Prompts with Promptly</title>
-
-	<meta
-		name="description"
-		content="Welcome to Promptly, the central place to save, find, share, and manage your AI prompts. Discover our powerful tools and features to improve your AI prompting process"
-	/>
-</svelte:head>
+<MetaTags />
 
 <div class="container text-center">
 	<h1 class="text-4xl text-white sm:text-6xl">

@@ -21,6 +21,7 @@
 	import PromptsFiltersModal from '$dashboardComponents/modals/PromptsFiltersModal.svelte';
 	import PromptList from '$dashboardComponents/prompts/PromptList.svelte';
 	import TabGroup from '$dashboardComponents/prompts/TabGroup.svelte';
+	import MetaTags from '$globalComponents/MetaTags.svelte';
 
 	export let data: PageData;
 
@@ -110,10 +111,10 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Promptly</title>
-	<meta name="description" content="Promptly Dashboard" />
-</svelte:head>
+<MetaTags
+	title="Your Prompt Dashboard | Promptly: Create, View, Edit, and Favorite with Ease"
+	description="Dive into your personalized prompt dashboard on Promptly. Create new prompts, view existing ones, make edits, and mark your favorites—all in one intuitive workspace."
+/>
 
 <TabGroup on:tabItemClicked={({ detail }) => (selectedTabIndex = detail.selectedTabIndex)} />
 

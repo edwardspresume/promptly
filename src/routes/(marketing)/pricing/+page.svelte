@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { PlanType, type PlanFeature } from '$globalTypes';
+    import { PlanType, type PlanFeature } from '$globalTypes';
 
+	import MetaTags from '$globalComponents/MetaTags.svelte';
 	import PlanCard from '$marketingComponents/pricingPage/PlanCard.svelte';
 
 	const features: PlanFeature[] = [
@@ -43,6 +44,11 @@
 		}
 	];
 </script>
+
+<MetaTags
+	title="Promptly Pricing: Tailored Plans for Every Prompt Management Need"
+	description="Explore Promptly's flexible pricing options, starting free with essential features, or upgrade to Pro at $5/month for advanced prompt enhancements, unlimited storage, and seamless data sync across devices. Kickstart your journey with a 7-day free trial, no credit card required."
+/>
 
 <div class="container">
 	<header class="grid gap-4 mt-10 text-center mb-14 xl:mt-0">

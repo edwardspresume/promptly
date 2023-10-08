@@ -14,6 +14,7 @@
 	import ListControls from '$dashboardComponents/list/ListControls.svelte';
 	import ConfirmationModal from '$dashboardComponents/modals/ConfirmationModal.svelte';
 	import TagList from '$dashboardComponents/tags/TagList.svelte';
+	import MetaTags from '$globalComponents/MetaTags.svelte';
 
 	export let data: PageData;
 	let { session, supabase } = data;
@@ -89,10 +90,10 @@
 	};
 </script>
 
-<svelte:head>
-	<title>Tag Management</title>
-	<meta name="description" content="Manage your tags with ease using our tag management system." />
-</svelte:head>
+<MetaTags
+	title="Tag Management Dashboard | Promptly: Organize Your Prompts Efficiently"
+	description="Harness the power of tagging in your Promptly dashboard. Create, view, edit, and manage tags to categorize and organize your prompts for streamlined access and enhanced workflow."
+/>
 
 <h1 class="text-xl text-center mb-7">Tag Management</h1>
 

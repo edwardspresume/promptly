@@ -11,6 +11,7 @@
 	import BaseModal from '$dashboardComponents/modals/BaseModal.svelte';
 	import PromptsFiltersModal from '$dashboardComponents/modals/PromptsFiltersModal.svelte';
 	import CommunityPromptList from '$dashboardComponents/prompts/CommunityPromptList.svelte';
+	import MetaTags from '$globalComponents/MetaTags.svelte';
 
 	export let data: PageData;
 
@@ -46,13 +47,10 @@
 	};
 </script>
 
-<svelte:head>
-	<title>Community Prompts</title>
-	<meta
-		name="description"
-		content="Community prompts are prompts that are made public by the community."
-	/>
-</svelte:head>
+<MetaTags
+	title="Community Prompts Dashboard | Promptly: Discover and Save Creative Inspirations"
+	description="Venture into Promptly's community prompts dashboard to explore a diverse collection of prompts shared by others. Find inspirations and easily save prompts that spark your interest for future use."
+/>
 
 <h1 class="text-xl text-center mb-7">Community Prompts</h1>
 

@@ -42,11 +42,6 @@
 				width: 192,
 				height: 192
 			}
-		},
-		mainEntity: {
-			'@type': 'SoftwareApplication',
-			name: 'Promptly',
-			applicationCategory: 'Productivity software'
 		}
 	};
 </script>

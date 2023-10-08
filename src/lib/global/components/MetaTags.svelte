@@ -39,8 +39,8 @@
 			logo: {
 				'@type': 'ImageObject',
 				url: imageURL,
-				width: 192,
-				height: 192
+				width: 1200,
+				height: 600
 			}
 		}
 	};
@@ -77,8 +77,8 @@
 	<meta property="og:image:url" content={imageURL} />
 	<meta property="og:image:secure_url" content={imageURL} />
 	<meta property="og:image:type" content={`image/${imageType}`} />
-	<meta property="og:image:width" content="192" />
-	<meta property="og:image:height" content="192" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="600" />
 	<meta property="og:image:alt" content={image.alt} />
 
 	<!-- Twitter -->

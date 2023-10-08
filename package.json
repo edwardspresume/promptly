@@ -18,7 +18,7 @@
 		"migration:pull": "drizzle-kit introspect:pg",
 		"migration:drop": "drizzle-kit drop",
 		"migration:check": "drizzle-kit check:pg",
-		"serve:stripe-webhook": "px supabase functions serve --no-verify-jwt stripe-webhook --env-file ./supabase/functions/.env",
+		"serve:stripe-webhook": "pnpx supabase functions serve --no-verify-jwt stripe-webhook --env-file ./supabase/functions/.env",
 		"stripe:listen": "stripe listen --forward-to localhost:54321/functions/v1/stripe-webhook"
 	},
 	"devDependencies": {

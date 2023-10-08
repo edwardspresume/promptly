@@ -36,11 +36,11 @@
 	const flash = getFlash(page);
 
 	$: if ($flash) {
-		const { alertType, alertText } = $flash;
+		const { type, message } = $flash;
 
-		const notificationFunction = getNotificationFunction(alertType);
+		const notificationFunction = getNotificationFunction(type);
 
-		notificationFunction(alertText, { target: 'dashboardLayout' });
+		notificationFunction(message, { target: 'dashboardLayout' });
 	}
 
 	let promptCreationModalRef: HTMLDialogElement;

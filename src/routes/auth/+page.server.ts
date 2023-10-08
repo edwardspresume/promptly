@@ -59,8 +59,8 @@ export const load: PageServerLoad = async (event) => {
 		throw redirect(
 			RoutePaths.DASHBOARD_PROMPTS,
 			{
-				alertType: 'success',
-				alertText: 'You are already logged in.'
+				type: 'success',
+				message: 'You are already logged in.'
 			},
 			event
 		);

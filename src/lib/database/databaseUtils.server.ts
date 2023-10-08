@@ -394,8 +394,8 @@ export async function saveSharedPrompt(
 		throw redirect(
 			RoutePaths.DASHBOARD_PROMPTS,
 			{
-				alertType: 'success',
-				alertText: 'Prompt successfully saved!'
+				type: 'success',
+				message: 'Prompt successfully saved!'
 			},
 			event
 		);

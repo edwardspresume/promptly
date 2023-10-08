@@ -52,7 +52,7 @@ export const actions: Actions = {
 
 			billingPortalURL = customerBillingPortal.url;
 		} catch (error) {
-			logError(error, 'Billing Portal Error', { stripeCustomerId });
+			logError(error, 'Billing Portal Error');
 		}
 
 		if (billingPortalURL) throw redirect(303, billingPortalURL);

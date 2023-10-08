@@ -9,7 +9,7 @@
 	export let description: string =
 		'Discover a seamless way to save, find, share, and manage your AI prompts with Promptly. Our powerful features help you optimize and organize prompts.';
 
-	export let image = { src: '/icon.png', alt: 'promptly Icon' };
+	export let image = { src: '/test-crop.jpeg', alt: 'promptly Icon' };
 
 	const imageURL = $page.url.origin + image.src;
 
@@ -39,8 +39,8 @@
 			logo: {
 				'@type': 'ImageObject',
 				url: imageURL,
-				width: 512,
-				height: 512
+				width: 1196,
+				height: 515
 			}
 		}
 	};
@@ -77,8 +77,8 @@
 	<meta property="og:image:url" content={imageURL} />
 	<meta property="og:image:secure_url" content={imageURL} />
 	<meta property="og:image:type" content={`image/${imageType}`} />
-	<meta property="og:image:width" content="512" />
-	<meta property="og:image:height" content="512" />
+	<meta property="og:image:width" content="1196" />
+	<meta property="og:image:height" content="515" />
 	<meta property="og:image:alt" content={image.alt} />
 
 	<!-- Twitter -->

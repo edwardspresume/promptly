@@ -9,9 +9,7 @@ export const GET: RequestHandler = async ({ url, locals: { supabase } }) => {
 
 	const redirectTo = previousRoute ?? RoutePaths.DASHBOARD_PROMPTS;
 
-	console.log(url.origin + redirectTo);
-
 	if (code) await supabase.auth.exchangeCodeForSession(code);
 
-	throw redirect(303, url.origin + redirectTo);
+	throw redirect(303, redirectTo);
 };

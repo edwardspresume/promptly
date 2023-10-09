@@ -9,7 +9,12 @@
 	export let description: string =
 		'Promptly allows you to seamlessly save, copy, find, share, and manage your artificial intelligence (AI) prompts. Our powerful features help you optimize and organize prompts for Chat GPT, Bing, MidJourney,Stable Diffusion, or any other AI tool you use.';
 
-	export let image = { src: '/meta_image.png', alt: 'promptly Icon', width: '1100', height: '275' };
+	export let image = {
+		src: '/meta_image.png',
+		alt: 'promptly site info',
+		width: '1150',
+		height: '288'
+	};
 
 	const imageURL = $page.url.origin + image.src;
 

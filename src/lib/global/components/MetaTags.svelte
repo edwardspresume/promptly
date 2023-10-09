@@ -9,7 +9,7 @@
 	export let description: string =
 		'Promptly allows you to seamlessly save, copy, find, share, and manage your artificial intelligence (AI) prompts. Our powerful features help you optimize and organize prompts for Chat GPT, Bing, MidJourney,Stable Diffusion, or any other AI tool you use.';
 
-	export let image = { src: '/meta_image.png', alt: 'promptly Icon' };
+	export let image = { src: '/meta_image.png', alt: 'promptly Icon', width: '1100', height: '275' };
 
 	const imageURL = $page.url.origin + image.src;
 
@@ -39,8 +39,8 @@
 			logo: {
 				'@type': 'ImageObject',
 				url: imageURL,
-				width: 192,
-				height: 192
+				width: image.width,
+				height: image.height
 			}
 		}
 	};
@@ -77,8 +77,8 @@
 	<meta property="og:image:url" content={imageURL} />
 	<meta property="og:image:secure_url" content={imageURL} />
 	<meta property="og:image:type" content={`image/${imageType}`} />
-	<meta property="og:image:width" content="192" />
-	<meta property="og:image:height" content="192" />
+	<meta property="og:image:width" content={image.width} />
+	<meta property="og:image:height" content={image.height} />
 	<meta property="og:image:alt" content={image.alt} />
 
 	<!-- Twitter -->

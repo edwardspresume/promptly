@@ -20,7 +20,7 @@
 			: ''}"
 	>
 		<div class="grid gap-7">
-			<header class="grid gap-2">
+			<header class="grid gap-2 pb-3 border-b">
 				<h3 class="text-2xl font-bold capitalize">{planType.toLowerCase()}</h3>
 
 				<p class="text-xl">

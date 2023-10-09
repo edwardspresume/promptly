@@ -18,7 +18,7 @@
 
 <style>
 	main {
-		background-image: url('/src/assets/hero.webp');
+		background-image: url('hero.webp');
 		background-size: cover;
 		background-position: center;
 		background-blend-mode: darken;

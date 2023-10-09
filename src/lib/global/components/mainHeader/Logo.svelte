@@ -21,13 +21,6 @@
 </Button>
 
 <style>
-	@font-face {
-		font-family: 'croissantone';
-		font-weight: 400;
-		src:
-			url('/fonts/merienda-variablefont_wght-webfont.woff2') format('woff2'),
-			url('/fonts/merienda-variablefont_wght-webfont.woff') format('woff');
-	}
 
 	:global(.logo) {
 		letter-spacing: 2px;

@@ -48,8 +48,22 @@
 		</Button>
 	</section>
 
-	<figure
-		class="hidden min-h-full bg-center bg-cover border-l border-gray-700 lg:block"
-		style="background-image: url('/test.png');"
-	/>
+	<aside
+		class="hidden min-h-screen bg-center bg-cover border-l border-gray-700 lg:grid place-content-center bg-blend-darken bg-black/70"
+		style="background-image: url('books.webp');"
+	>
+		<div class="p-2 px-3 rounded-lg bg-black/80">
+			<p class="text-3xl">Your Prompt Library Awaits</p>
+		</div>
+	</aside>
 </main>
+
+<style lang="postcss">
+	aside p {
+		letter-spacing: 2px;
+		background: linear-gradient(to right, #7a30f0, #a57de4);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		font-family: 'croissantone', cursive;
+	}
+</style>

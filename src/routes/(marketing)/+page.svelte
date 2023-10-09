@@ -10,7 +10,7 @@
 		<span class="text-[#7C3AED]">Optimize Your AI Interactions</span> with a Personalized Prompt Library
 	</h1>
 
-	<p class="mt-6 mb-9 text-xl text-[#9CA3AF]">
+	<p class="mt-7 mb-10 text-xl sm:text-2xl text-[#9CA3AF]">
 		The central place to save, copy, find, share, and manage your AI prompts
 	</p>
 

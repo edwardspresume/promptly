@@ -12,8 +12,8 @@
 	export let image = {
 		src: '/meta_image.png',
 		alt: 'promptly site info',
-		width: '1150',
-		height: '288'
+		width: '700',
+		height: '175'
 	};
 
 	const imageURL = $page.url.origin + image.src;

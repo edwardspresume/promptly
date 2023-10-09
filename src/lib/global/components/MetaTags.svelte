@@ -10,7 +10,7 @@
 		'Promptly allows you to seamlessly save, copy, find, share, and manage your artificial intelligence (AI) prompts. Our powerful features help you optimize and organize prompts for Chat GPT, Bing, MidJourney,Stable Diffusion, or any other AI tool you use.';
 
 	export let image = {
-		src: '/meta_image.png',
+		src: '/meta_image1.png',
 		alt: 'promptly site info',
 		width: '700',
 		height: '175'

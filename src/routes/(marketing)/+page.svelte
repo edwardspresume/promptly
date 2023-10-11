@@ -16,7 +16,5 @@
 
 	<DashboardLink text="Try it for free" class="text-xl font-bold" />
 
-	<p class="p-2 px-3 mx-auto mt-10 font-bold text-white bg-black rounded w-fit">
-		Chrome Extension in the Pipeline — Stay Tuned!
-	</p>
+	<p class="mx-auto mt-12 font-bold text-white">Chrome Extension in the Pipeline — Stay Tuned!</p>
 </div>

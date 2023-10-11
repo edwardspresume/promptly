@@ -17,7 +17,7 @@
 		signIn: {
 			buttonTitle: 'Sign in',
 			heading: 'Welcome back',
-			subHeading: 'Sign in to your account'
+			subHeading: 'Sign in to your account <br><br>'
 		},
 		signUp: {
 			buttonTitle: 'Sign up',
@@ -52,7 +52,7 @@
 
 	<header class="mb-10">
 		<h2 class="text-2xl">{heading}</h2>
-		<p class="text-muted-foreground">{subHeading}</p>
+		<p class="text-muted-foreground">{@html subHeading}</p>
 	</header>
 
 	<form

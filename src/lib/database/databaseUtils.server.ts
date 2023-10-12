@@ -135,7 +135,9 @@ export async function getUserProfile(profileId: string | undefined) {
  * @returns Returns the user prompts or null if not found.
  * @throws Will throw an error if the query fails.
  */
-export async function getUserPrompts(profileId: string) {
+export async function getUserPrompts(profileId: string | undefined) {
+	if (!profileId) return null;
+
 	try {
 		const userPrompts = await drizzleClient
 			.select()

@@ -1,8 +1,9 @@
 import { SECRET_SERVICE_ROLE_KEY } from '$env/static/private';
 import { PUBLIC_SUPABASE_URL } from '$env/static/public';
 
-import { createClient } from '@supabase/supabase-js';
 import type { Actions, PageServerLoad } from './$types';
+
+import { createClient } from '@supabase/supabase-js';
 
 import { drizzleClient } from '$databaseDir/drizzleClient.server';
 import { customersTable } from '$databaseDir/schema';
@@ -18,14 +19,10 @@ const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SECRET_SERVICE_ROLE_KEY,
 	}
 });
 
-export const load = (async ({ parent }) => {
-	const { session } = await parent();
+export const load = (async ({ locals: { getSession } }) => {
+	const session = await getSession();
 
-	const userId = session?.user.id;
-
-	if (!userId) return;
-
-	const userPrompts = getUserPrompts(userId);
+	const userPrompts = getUserPrompts(session?.user.id);
 
 	return { userPrompts };
 }) satisfies PageServerLoad;

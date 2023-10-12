@@ -53,7 +53,7 @@ function getRedirectUrl(url: URL, previousRoute: string | null) {
 }
 
 export const load: PageServerLoad = async (event) => {
-	const { session } = await event.parent();
+	const session = await event.locals.getSession();
 
 	if (session) {
 		throw redirect(

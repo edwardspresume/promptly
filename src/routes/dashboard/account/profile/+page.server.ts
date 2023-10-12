@@ -12,8 +12,8 @@ import { ProfileValidationSchema } from '$dashboardValidationSchemas/profileVali
 import { getUserProfile, sanitizeFormData } from '$databaseDir/databaseUtils.server';
 import { logError } from '$globalUtils';
 
-export const load = (async ({ parent }) => {
-	const { session } = await parent();
+export const load = (async ({ locals: { getSession } }) => {
+	const session = await getSession();
 
 	const userProfile = await getUserProfile(session?.user.id);
 

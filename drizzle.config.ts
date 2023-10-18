@@ -11,6 +11,6 @@ export default {
 	verbose: true,
 	strict: true,
 	dbCredentials: {
-		connectionString: process.env.SECRET_DATABASE_URL || ''
+		connectionString: process.env.SECRET_DB_CONNECTION_STRING || ''
 	}
 } satisfies Config;

@@ -35,6 +35,8 @@
 
 	const flash = getFlash(page);
 
+	$: console.log($flash);
+
 	$: if ($flash) {
 		const { type, message } = $flash;
 

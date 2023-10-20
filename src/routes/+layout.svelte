@@ -1,15 +1,16 @@
 <script>
-	import { navigating } from '$app/stores';
+	import { invalidate, onNavigate } from '$app/navigation';
+	import { navigating, page } from '$app/stores';
 	import { onMount } from 'svelte';
 
 	import { dev } from '$app/environment';
 	import { inject } from '@vercel/analytics';
 
-	import { invalidate, onNavigate } from '$app/navigation';
-
-	import '$globalStyles';
+	import { getFlash } from 'sveltekit-flash-message/client';
 
 	import { isNavigatingStore } from '$globalStores/isNavigatingStore';
+
+	import '$globalStyles';
 
 	export let data;
 
@@ -20,6 +21,8 @@
 	$: ({ supabase, session } = data);
 
 	$: $isNavigatingStore = !!$navigating;
+
+	getFlash(page);
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;

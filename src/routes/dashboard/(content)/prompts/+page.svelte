@@ -1,8 +1,7 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-
 	import { page } from '$app/stores';
 	import { fly } from 'svelte/transition';
+	import type { PageData } from './$types';
 
 	import { getFlash } from 'sveltekit-flash-message';
 
@@ -11,7 +10,7 @@
 
 	import { userPromptTotalCount, userPromptsStore } from '$dashboardStores/userPromptsStore';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
-	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
+	import { notifySuccess } from '$dashboardUtils/toastUtils';
 
 	import FilterDisplayButton from '$dashboardComponents/filters/FilterDisplayButton.svelte';
 	import SearchBar from '$dashboardComponents/filters/SearchBar.svelte';
@@ -35,14 +34,10 @@
 
 	const flash = getFlash(page);
 
-	$: console.log($flash);
-
-	$: if ($flash) {
-		const { type, message } = $flash;
-
-		const notificationFunction = getNotificationFunction(type);
-
-		notificationFunction(message, { target: 'dashboardLayout' });
+	$: if ($flash && typeof window !== 'undefined') {
+		notifySuccess($flash.message, {
+			target: 'dashboardLayout'
+		});
 	}
 
 	let promptCreationModalRef: HTMLDialogElement;

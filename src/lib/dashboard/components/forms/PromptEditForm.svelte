@@ -34,8 +34,9 @@
 	export let promptEditModalRef: HTMLDialogElement;
 	export let selectedPromptForEdit: PromptSchema | undefined = undefined;
 
-	const userSession = $page.data.session?.user;
 
+	$: userSession = $page.data.session?.user;
+    
 	let confirmationModalRef: HTMLDialogElement;
 	let promptDeleteConfirmationInfo: ConfirmationInfo;
 
@@ -239,7 +240,7 @@
 		{/if}
 
 		<fieldset class="grid gap-1 textAreaGrid">
-			{#if selectedPromptForEdit && selectedPromptForEdit.description.length >= 10}
+			{#if userSession && selectedPromptForEdit && selectedPromptForEdit.description.length >= 10}
 				<Button
 					formaction="?/refinePrompt"
 					disabled={isRefiningPrompt}

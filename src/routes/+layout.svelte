@@ -6,7 +6,7 @@
 	import { dev } from '$app/environment';
 	import { inject } from '@vercel/analytics';
 
-	import { getFlash } from 'sveltekit-flash-message/client';
+	import { getFlash } from 'sveltekit-flash-message';
 
 	import { isNavigatingStore } from '$globalStores/isNavigatingStore';
 

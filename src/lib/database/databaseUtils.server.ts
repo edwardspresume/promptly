@@ -143,7 +143,7 @@ export async function getUserPrompts(profileId: string | undefined) {
 			.select()
 			.from(promptsTable)
 			.where(eq(promptsTable.profileId, profileId))
-			.orderBy(desc(promptsTable.createdAt));
+			.orderBy(desc(promptsTable.updatedAt));
 
 		return userPrompts ?? null;
 	} catch (error) {
@@ -210,7 +210,7 @@ export async function getPublicPrompts() {
 	try {
 		const promptsData = await drizzleClient.query.promptsTable.findMany({
 			where: eq(promptsTable.visibility, 'Public'),
-			orderBy: [desc(promptsTable.createdAt)],
+			orderBy: [desc(promptsTable.updatedAt)],
 
 			columns: {
 				title: true,
@@ -259,7 +259,7 @@ export async function getUserTags(profileId: string) {
 			.select()
 			.from(tagsTable)
 			.where(eq(tagsTable.profileId, profileId))
-			.orderBy(desc(tagsTable.createdAt));
+			.orderBy(desc(tagsTable.updatedAt));
 
 		return userTags ?? null;
 	} catch (error) {

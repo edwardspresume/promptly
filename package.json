@@ -22,6 +22,7 @@
 		"stripe:listen": "stripe listen --forward-to localhost:54321/functions/v1/stripe-webhook"
 	},
 	"devDependencies": {
+		"@bobbymannino/svelte-progress": "^2.3.0",
 		"@playwright/test": "^1.39.0",
 		"@sveltejs/adapter-auto": "^2.1.0",
 		"@sveltejs/kit": "^1.26.0",

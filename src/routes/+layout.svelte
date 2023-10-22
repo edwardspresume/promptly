@@ -1,18 +1,21 @@
-<script>
+<script lang="ts">
 	import { invalidate, onNavigate } from '$app/navigation';
 	import { navigating, page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import type { LayoutData } from './$types';
 
 	import { dev } from '$app/environment';
 	import { inject } from '@vercel/analytics';
 
 	import { getFlash } from 'sveltekit-flash-message';
 
+	import { Bar } from '@bobbymannino/svelte-progress';
+
 	import { isNavigatingStore } from '$globalStores/isNavigatingStore';
 
 	import '$globalStyles';
 
-	export let data;
+	export let data: LayoutData;
 
 	// Initialize the data
 	let { supabase, session } = data;
@@ -49,5 +52,7 @@
 
 	inject({ mode: dev ? 'development' : 'production' });
 </script>
+
+<Bar color="#6D28D9" size="big" shadow="show" speed="fast" />
 
 <slot />

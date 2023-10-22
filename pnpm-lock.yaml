@@ -67,6 +67,9 @@ dependencies:
     version: 1.0.7(tailwindcss@3.3.3)
 
 devDependencies:
+  '@bobbymannino/svelte-progress':
+    specifier: ^2.3.0
+    version: 2.3.0
   '@playwright/test':
     specifier: ^1.39.0
     version: 1.39.0
@@ -181,6 +184,10 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.20
+
+  /@bobbymannino/svelte-progress@2.3.0:
+    resolution: {integrity: sha512-WONB/rhKh3Rxo509bNqNxhBXv5OpVXlEsxM2K8/sj9kqEf6BD+Q6ugx7egzX1Qg2nxNmZpzd4JCD4k1uWggMUA==}
+    dev: true
 
   /@csstools/cascade-layer-name-parser@1.0.5(@csstools/css-parser-algorithms@2.3.2)(@csstools/css-tokenizer@2.2.1):
     resolution: {integrity: sha512-v/5ODKNBMfBl0us/WQjlfsvSlYxfZLhNMVIsuCPib2ulTwGKYbKJbwqw671+qH9Y4wvWVnu7LBChvml/wBKjFg==}

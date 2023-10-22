@@ -49,11 +49,11 @@
 	</section>
 
 	<aside
-		class="hidden min-h-screen bg-center bg-cover border-l border-gray-700 lg:grid place-content-center bg-blend-darken bg-black/70"
+		class="hidden min-h-screen p-2 bg-center bg-cover border-l border-gray-700 lg:grid place-content-center bg-blend-darken bg-black/70"
 		style="background-image: url('books.webp');"
 	>
 		<div class="p-2 px-3 rounded-lg bg-black/90">
-			<p class="text-3xl">Your Prompt Library Awaits</p>
+			<p class="text-3xl text-center">Your Prompt Library Awaits</p>
 		</div>
 	</aside>
 </main>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { PlanType, type PlanFeature } from '$globalTypes';
+	import { PlanType, type PlanFeature } from '$globalTypes';
 
 	import MetaTags from '$globalComponents/MetaTags.svelte';
 	import PlanCard from '$marketingComponents/pricingPage/PlanCard.svelte';
@@ -40,6 +40,11 @@
 
 		{
 			description: 'Save prompts from the community page with a single click',
+			availability: PlanType.PRO
+		},
+
+		{
+			description: 'Contextual AI suggestions for Prompt and Tag form fields',
 			availability: PlanType.PRO
 		}
 	];

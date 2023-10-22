@@ -29,6 +29,11 @@
 		},
 
 		{
+			description: 'AI suggestions for Prompt and Tag fields',
+			availability: PlanType.PRO
+		},
+
+		{
 			description: 'Improve your existing prompts with GPT-4',
 			availability: PlanType.PRO
 		},
@@ -40,11 +45,6 @@
 
 		{
 			description: 'Save prompts from the community page with a single click',
-			availability: PlanType.PRO
-		},
-
-		{
-			description: 'Contextual AI suggestions for Prompt and Tag form fields',
 			availability: PlanType.PRO
 		}
 	];

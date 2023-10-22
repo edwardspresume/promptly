@@ -27,6 +27,8 @@
 	let previousTag: TagSchema | undefined = undefined;
 	let isTagModified: boolean = false;
 
+	$: userSession = $page.data.session?.user;
+
 	// Watch if selectedTagForEdit is changed, and populate the form if it has
 	$: if (selectedTagForEdit && selectedTagForEdit !== previousTag) {
 		const { id, name } = selectedTagForEdit;
@@ -69,7 +71,7 @@
 			if (alertType === 'success') {
 				const { id, name } = form.data;
 
-				if (!$page.data.session) {
+				if (!userSession) {
 					tagLocalStorageManager.updateItem(id, { name });
 				}
 
@@ -96,7 +98,7 @@
 			errorMessage={$errors.name}
 			maxlength={MAX_TAG_NAME_LENGTH}
 			data-aicontext={TAG_NAME_AI_CONTEXT}
-			class="enhanceai"
+			class={userSession ? 'enhanceai' : ''}
 		/>
 
 		<SubmitButton showSpinner={$delayed} disabled={!isTagModified || $delayed}>

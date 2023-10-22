@@ -18,6 +18,8 @@
 
 	export let tagCreationModalRef: HTMLDialogElement;
 
+	$: userSession = $page.data.session?.user;
+
 	const { enhance, form, errors, delayed, message } = superForm($page.data.tagForm, {
 		id: 'createTag',
 		resetForm: true,
@@ -43,7 +45,7 @@
 
 			const notificationFunction = getNotificationFunction(alertType);
 
-			if (alertType === 'success' && !$page.data.session) {
+			if (alertType === 'success' && !userSession) {
 				tagLocalStorageManager.addItem({ name: form.data.name });
 			}
 
@@ -64,7 +66,7 @@
 			errorMessage={$errors.name}
 			maxlength={MAX_TAG_NAME_LENGTH}
 			data-aicontext={TAG_NAME_AI_CONTEXT}
-			class="enhanceai"
+			class={userSession ? 'enhanceai' : ''}
 		/>
 
 		<SubmitButton disabled={$delayed}>

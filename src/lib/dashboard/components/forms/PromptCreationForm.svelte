@@ -4,7 +4,10 @@
 	import { superForm } from 'sveltekit-superforms/client';
 
 	import { userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
-	import { PROMPT_DESCRIPTION_AI_CONTEXT, PROMPT_TITLE_AI_CONTEXT } from '$dashboardUtils/ai_context';
+	import {
+		PROMPT_DESCRIPTION_AI_CONTEXT,
+		PROMPT_TITLE_AI_CONTEXT
+	} from '$dashboardUtils/ai_context';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 	import {
@@ -24,7 +27,7 @@
 	export let promptCreationModalRef: HTMLDialogElement;
 	export let isFavoritesTabSelected: boolean = false;
 
-	const userSession = $page.data.session?.user;
+	$: userSession = $page.data.session?.user;
 
 	// An array to keep track of the selected tags by their IDs
 	let selectedTagIds: string[] = [];
@@ -84,7 +87,7 @@
 			errorMessage={$errors.title}
 			maxlength={MAX_PROMPT_TITLE_LENGTH}
 			data-aicontext={PROMPT_TITLE_AI_CONTEXT}
-			class="enhanceai"
+			class={userSession ? 'enhanceai' : ''}
 		/>
 
 		<fieldset class="grid gap-1">
@@ -98,7 +101,7 @@
 				errorMessage={$errors.description}
 				maxlength={MAX_PROMPT_DESCRIPTION_LENGTH}
 				data-aicontext={PROMPT_DESCRIPTION_AI_CONTEXT}
-				class="enhanceai"
+				class={userSession ? 'enhanceai' : ''}
 			/>
 		</fieldset>
 

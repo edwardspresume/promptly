@@ -1,9 +1,13 @@
 <script lang="ts">
+	import type { HTMLTextareaAttributes } from 'svelte/elements';
+
 	import type { EnterKeyHint } from '$globalTypes';
 
 	import Label from '$globalComponents/ui/label/label.svelte';
 	import Textarea from '$globalComponents/ui/textarea/textarea.svelte';
 
+	let className: HTMLTextareaAttributes['class'] = undefined;
+	export { className as class };
 	export let value: string = '';
 	export let name: string = '';
 	export let label: string = '';
@@ -41,12 +45,7 @@
 	{enterkeyhint}
 	id={textAreaId}
 	aria-label={label}
+	class={className}
 	aria-invalid={errorMessage ? 'true' : undefined}
 	{...$$restProps}
 />
-
-<style>
-	textarea {
-		form-sizing: normal;
-	}
-</style>

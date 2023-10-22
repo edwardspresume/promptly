@@ -18,6 +18,7 @@
 
 	import { userPromptsStore } from '$dashboardStores/userPromptsStore';
 	import { userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
+	import { PROMPT_DESCRIPTION_AI_CONTEXT, PROMPT_TITLE_AI_CONTEXT } from '$dashboardUtils/ai_context';
 
 	import TagSelector from '$dashboardComponents/filters/TagSelector.svelte';
 	import DeleteItemBtn from '$dashboardComponents/list/DeleteItemBtn.svelte';
@@ -34,9 +35,8 @@
 	export let promptEditModalRef: HTMLDialogElement;
 	export let selectedPromptForEdit: PromptSchema | undefined = undefined;
 
-
 	$: userSession = $page.data.session?.user;
-    
+
 	let confirmationModalRef: HTMLDialogElement;
 	let promptDeleteConfirmationInfo: ConfirmationInfo;
 
@@ -203,6 +203,8 @@
 			bind:value={$form.title}
 			errorMessage={$errors.title}
 			maxlength={MAX_PROMPT_TITLE_LENGTH}
+			data-aicontext={PROMPT_TITLE_AI_CONTEXT}
+			class="enhanceai"
 		/>
 
 		{#if isRefinedPromptVisible}
@@ -262,6 +264,8 @@
 				bind:value={$form.description}
 				errorMessage={$errors.description}
 				maxlength={MAX_PROMPT_DESCRIPTION_LENGTH}
+				data-aicontext={PROMPT_DESCRIPTION_AI_CONTEXT}
+				class="enhanceai"
 			/>
 		</fieldset>
 
@@ -326,7 +330,8 @@
 		grid-area: errorMessage;
 	}
 
-	.textAreaGrid :global(textarea) {
+	.textAreaGrid :global(textarea),
+	.textAreaGrid :global(.enhanceai-wrapper) {
 		grid-area: promptDescription;
 	}
 </style>

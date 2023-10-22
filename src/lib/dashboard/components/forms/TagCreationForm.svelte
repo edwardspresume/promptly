@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 
 	import { doesTagExist } from '$dashboardStores/userTagsStore';
+	import { TAG_NAME_AI_CONTEXT } from '$dashboardUtils/ai_context';
 	import { tagLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 	import {
@@ -62,6 +63,8 @@
 			bind:value={$form.name}
 			errorMessage={$errors.name}
 			maxlength={MAX_TAG_NAME_LENGTH}
+			data-aicontext={TAG_NAME_AI_CONTEXT}
+			class="enhanceai"
 		/>
 
 		<SubmitButton disabled={$delayed}>

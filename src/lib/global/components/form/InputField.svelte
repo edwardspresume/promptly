@@ -1,8 +1,10 @@
 <script lang="ts">
+	import type { HTMLInputAttributes } from 'svelte/elements';
+
 	import type { EnterKeyHint } from '$globalTypes';
 
-	import Input from '$globalComponents/ui/input/input.svelte';
-
+	let className: HTMLInputAttributes['class'] = undefined;
+	export { className as class };
 	export let type: string;
 	export let value: string | null | undefined = '';
 	export let name: string = '';
@@ -10,7 +12,6 @@
 	export let placeholder: string = '';
 	export let spellcheck: boolean = true;
 	export let autocomplete: string = 'on';
-	export let inputFieldId: string = 'inputField';
 	export let enterkeyhint: EnterKeyHint = 'next';
 	export let labelIsScreenReaderOnly: boolean = false;
 	export let maxlength: number | undefined = undefined;
@@ -20,7 +21,6 @@
 </script>
 
 <label
-	for={inputFieldId}
 	class="grid gap-1 text-sm font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 >
 	<div>
@@ -37,9 +37,9 @@
 		<p class="text-red-500">{errorMessage}</p>
 	{/if}
 
-	<Input
+	<input
 		{name}
-		{type}
+		{...{ type }}
 		dir="auto"
 		bind:value
 		{maxlength}
@@ -47,8 +47,8 @@
 		{placeholder}
 		{autocomplete}
 		{enterkeyhint}
-		id={inputFieldId}
 		aria-label={label}
+		class={className}
 		aria-invalid={errorMessage ? 'true' : undefined}
 		{...$$restProps}
 	/>

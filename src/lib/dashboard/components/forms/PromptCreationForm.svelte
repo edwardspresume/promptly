@@ -4,6 +4,7 @@
 	import { superForm } from 'sveltekit-superforms/client';
 
 	import { userTagsTotalCountStore } from '$dashboardStores/userTagsStore';
+	import { PROMPT_DESCRIPTION_AI_CONTEXT, PROMPT_TITLE_AI_CONTEXT } from '$dashboardUtils/ai_context';
 	import { promptLocalStorageManager } from '$dashboardUtils/localStorageManager';
 	import { getNotificationFunction } from '$dashboardUtils/toastUtils';
 	import {
@@ -82,6 +83,8 @@
 			bind:value={$form.title}
 			errorMessage={$errors.title}
 			maxlength={MAX_PROMPT_TITLE_LENGTH}
+			data-aicontext={PROMPT_TITLE_AI_CONTEXT}
+			class="enhanceai"
 		/>
 
 		<fieldset class="grid gap-1">
@@ -94,6 +97,8 @@
 				bind:value={$form.description}
 				errorMessage={$errors.description}
 				maxlength={MAX_PROMPT_DESCRIPTION_LENGTH}
+				data-aicontext={PROMPT_DESCRIPTION_AI_CONTEXT}
+				class="enhanceai"
 			/>
 		</fieldset>
 

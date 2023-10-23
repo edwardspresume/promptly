@@ -3,6 +3,8 @@ import type { AlertMessage } from '$globalTypes';
 
 export type ItemType = 'userTag' | 'userPrompt' | 'communityPrompt';
 
+export type ActivePromptTabLabel = 'All Prompts' | 'Favorites';
+
 /**
  * Interface for sortable item properties.
  * It's utilized for sorting both prompts and tags on a page.

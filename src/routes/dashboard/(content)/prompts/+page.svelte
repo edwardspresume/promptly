@@ -5,7 +5,7 @@
 
 	import { getFlash } from 'sveltekit-flash-message';
 
-	import type { ConfirmationInfo } from '$dashboardTypes';
+	import type { ActivePromptTabLabel, ConfirmationInfo } from '$dashboardTypes';
 	import type { PromptSchema } from '$databaseDir/schema';
 
 	import { userPromptTotalCount, userPromptsStore } from '$dashboardStores/userPromptsStore';
@@ -45,7 +45,7 @@
 	let promptsFiltersModalRef: HTMLDialogElement;
 	let promptEditModalRef: HTMLDialogElement;
 
-	let selectedTabIndex: number = 0;
+	let activePromptTab: ActivePromptTabLabel = 'All Prompts';
 	let selectedPromptForEdit: PromptSchema;
 	let confirmationModalInfoForPromptDeletion: ConfirmationInfo;
 
@@ -113,14 +113,14 @@
 	description="Dive into your personalized prompt dashboard on Promptly. Create new prompts, view existing ones, make edits, and mark your favorites—all in one intuitive workspace."
 />
 
-<TabGroup on:tabItemClicked={({ detail }) => (selectedTabIndex = detail.selectedTabIndex)} />
+<TabGroup on:tabItemClicked={({ detail }) => (activePromptTab = detail.activePromptTab)} />
 
 <nav aria-label="Filter prompts" class="flex flex-col gap-3 my-5 sm:flex-row">
 	<SearchBar searchTargetType="userPrompt" />
 	<FilterDisplayButton on:showFilters={() => promptsFiltersModalRef.showModal()} />
 </nav>
 
-{#if selectedTabIndex === 0}
+{#if activePromptTab === 'All Prompts'}
 	<div in:fly={{ x: 100, delay: 50 }} class="grid overflow-hidden">
 		<PromptList
 			on:addItem={() => promptCreationModalRef.showModal()}
@@ -128,7 +128,7 @@
 			on:deleteAllItems={handleDeleteAllPromptsEvent}
 		/>
 	</div>
-{:else if selectedTabIndex === 1}
+{:else if activePromptTab === 'Favorites'}
 	<div in:fly={{ x: -100, delay: 50 }} class="grid overflow-hidden">
 		<PromptList
 			isShowingOnlyFavorites={true}
@@ -146,6 +146,9 @@
 	confirmationInfo={confirmationModalInfoForPromptDeletion}
 />
 
-<PromptCreationForm bind:promptCreationModalRef isFavoritesTabSelected={selectedTabIndex === 1} />
+<PromptCreationForm
+	bind:promptCreationModalRef
+	isFavoritesTabSelected={activePromptTab === 'Favorites'}
+/>
 
 <PromptEditForm bind:promptEditModalRef {selectedPromptForEdit} />

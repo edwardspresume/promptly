@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
+	import type { ActivePromptTabLabel } from '$dashboardTypes';
+
 	import Icon from '$globalComponents/Icon.svelte';
 	import Button from '$globalComponents/ui/button/button.svelte';
 
 	const dispatch = createEventDispatcher();
 
 	interface Tab {
-		label: string;
+		label: ActivePromptTabLabel;
 		iconName: string;
 	}
 
@@ -23,32 +25,30 @@
 		}
 	];
 
-	let selectedTabIndex: number = 0;
+	let activePromptTab: ActivePromptTabLabel = 'All Prompts';
 
 	/**
-	 * this function will set the active tab index and dispatch the custom event.
-	 * @param {number} index - The index of the tab
+	 * This function will set the active tab and dispatch the custom event.
+	 * @param tab - The tab to be activated
 	 */
-	function handleTabSelection(index: number) {
-		selectedTabIndex = index;
-
-		dispatch('tabItemClicked', { selectedTabIndex });
+	function handleTabSelection(tab: ActivePromptTabLabel) {
+		activePromptTab = tab;
+		dispatch('tabItemClicked', { activePromptTab });
 	}
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
 <nav role="tablist" aria-label="Tab Group" class="flex justify-center p-1">
-	{#each tabs as { label, iconName }, index}
+	{#each tabs as { label, iconName } (label)}
 		<Button
 			role="tab"
 			variant="ghost"
 			type="button"
-			on:click={() => handleTabSelection(index)}
-			aria-controls={`tabpanel-${index}`}
-			aria-selected={selectedTabIndex === index}
-			tabindex={selectedTabIndex === index ? 0 : -1}
-			class="flex w-full gap-2 border-b rounded-sm rounded-b-none text-lg {selectedTabIndex ===
-			index
+			on:click={() => handleTabSelection(label)}
+			aria-controls={`tabpanel-${label}`}
+			aria-selected={activePromptTab === label}
+			tabindex={activePromptTab === label ? 0 : -1}
+			class="flex w-full gap-2 border-b rounded-sm rounded-b-none text-lg {activePromptTab === label
 				? 'border-primary border-b-2'
 				: 'text-muted-foreground'}"
 		>
